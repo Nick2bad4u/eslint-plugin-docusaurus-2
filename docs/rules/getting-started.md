@@ -23,7 +23,7 @@ export default [docusaurus2.configs.recommended];
 
 Every preset already gives you a stable plugin contract:
 
-- `files: ["**/*.{ts,tsx,mts,cts}"]`
+- `files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"]`
 - `@typescript-eslint/parser`
 - `ecmaVersion: "latest"`
 - `sourceType: "module"`
@@ -31,21 +31,29 @@ Every preset already gives you a stable plugin contract:
 
 The typed presets also enable `projectService: true` automatically.
 
-The currently shipped rules focus on Docusaurus config and sidebar correctness first, then add stricter site-source CSS checks in the broader presets:
+The currently shipped rules start with the broadly useful config and sidebar checks, then add stricter page-module and site-source CSS architecture checks in the broader presets:
 
+- `no-deprecated-on-broken-markdown-links`
 - `no-ignored-site-validations`
+- `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
+- `prefer-sidebars-config-satisfies`
+- `prefer-to-for-internal-links`
+- `require-doc-sidebar-link-type`
+- `require-generated-index-link-type`
+
+The stricter presets also add:
+
 - `prefer-css-modules-in-site-src`
 - `no-page-css-module-imports-in-components`
-- `prefer-to-for-internal-links`
-- `require-generated-index-link-type`
+- `require-default-export-pages`
 
 ## Choosing a preset
 
-- Start with `recommended` if you want the default future upgrade path.
+- Start with `recommended` if you want the default future upgrade path and the stable config/sidebar rules.
 - Start with `minimal` if you want the smallest baseline.
 - Move to `recommended-type-checked` once you are ready for type-aware rules.
-- Use `strict`, `all`, or `experimental` only when you intentionally want broader future coverage.
+- Use `strict`, `all`, or `experimental` when you also want the stricter Docusaurus page-module and site-source CSS checks.
 
 ## Manual scoped setup
 
@@ -57,7 +65,7 @@ import docusaurus2 from "eslint-plugin-docusaurus-2";
 
 export default [
     {
-        files: ["**/*.{ts,tsx,mts,cts}"],
+        files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
         languageOptions: {
             parser: tsParser,
             parserOptions: {
@@ -79,7 +87,7 @@ export default [
 
 ## Important expectation
 
-The plugin still has a deliberately small rule catalog.
+The plugin still has a deliberately focused rule catalog.
 
 That means you can adopt the public runtime and start with a focused Docusaurus-specific baseline instead of inheriting a large bundle of speculative rules.
 

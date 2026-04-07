@@ -23,12 +23,31 @@ const supportedStyleExtensions = new Set([
     ".scss",
 ]);
 
+const supportedScriptExtensions = new Set([
+    ".cjs",
+    ".cts",
+    ".js",
+    ".jsx",
+    ".mjs",
+    ".mts",
+    ".ts",
+    ".tsx",
+]);
+
 const supportedTypeScriptExtensions = new Set([
     ".cts",
     ".mts",
     ".ts",
     ".tsx",
 ]);
+
+const generatedIndexMetadataPropertyNames = [
+    "description",
+    "image",
+    "keywords",
+    "slug",
+    "title",
+] as const;
 
 const defaultExportDeclarationType = "ExportDefaultDeclaration" as const;
 
@@ -162,6 +181,22 @@ export const isDocusaurusSidebarFilePath = (filePath: string): boolean => {
 };
 
 /**
+ * Determine whether a filename is a TypeScript-based Docusaurus sidebars
+ * module.
+ */
+export const isTypeScriptDocusaurusSidebarFilePath = (
+    filePath: string
+): boolean => {
+    const normalizedPath = normalizeFilePath(filePath);
+    const baseName = path.posix.basename(normalizedPath);
+
+    return (
+        baseName.startsWith("sidebars") &&
+        supportedTypeScriptExtensions.has(path.posix.extname(baseName))
+    );
+};
+
+/**
  * Determine whether a filename is a TypeScript-based Docusaurus config module.
  */
 export const isTypeScriptDocusaurusConfigFilePath = (
@@ -187,6 +222,40 @@ export const isDocusaurusSiteComponentFilePath = (filePath: string): boolean =>
  */
 export const isDocusaurusSitePageFilePath = (filePath: string): boolean =>
     hasPathSegmentSequence(filePath, ["src", "pages"]);
+
+/**
+ * Determine whether a filename is a routable Docusaurus site page module.
+ *
+ * @remarks
+ * Docusaurus ignores files prefixed with `_`, common test-file patterns, and
+ * `__tests__` folders under `src/pages` by default. This helper follows those
+ * same default routing exclusions when narrowing page modules for rules.
+ */
+export const isRoutableDocusaurusSitePageFilePath = (
+    filePath: string
+): boolean => {
+    if (!isDocusaurusSitePageFilePath(filePath)) {
+        return false;
+    }
+
+    const normalizedPath = normalizeFilePath(filePath);
+    const baseName = path.posix.basename(normalizedPath);
+    const extension = path.posix.extname(baseName);
+
+    if (!supportedScriptExtensions.has(extension)) {
+        return false;
+    }
+
+    if (baseName.startsWith("_")) {
+        return false;
+    }
+
+    if (/\.(?:spec|test)\.[^.]+$/u.test(baseName)) {
+        return false;
+    }
+
+    return !hasPathSegmentSequence(normalizedPath, ["__tests__"]);
+};
 
 /**
  * Determine whether an import specifier points at a stylesheet.
@@ -323,6 +392,36 @@ export const getStaticStringValue = (
 
     return null;
 };
+
+/**
+ * Determine whether an object expression looks like a Docusaurus sidebar
+ * category item.
+ */
+export const isDocusaurusSidebarCategoryObject = (
+    objectExpression: Readonly<TSESTree.ObjectExpression>
+): boolean => {
+    const typeProperty = findObjectPropertyByName(objectExpression, "type");
+    const typeValue =
+        typeProperty === null
+            ? null
+            : getStaticStringValue(typeProperty.value as TSESTree.Expression);
+
+    return (
+        typeValue === "category" ||
+        findObjectPropertyByName(objectExpression, "items") !== null
+    );
+};
+
+/**
+ * Determine whether an object expression uses generated-index metadata keys.
+ */
+export const hasGeneratedIndexMetadataProperties = (
+    objectExpression: Readonly<TSESTree.ObjectExpression>
+): boolean =>
+    generatedIndexMetadataPropertyNames.some(
+        (propertyName) =>
+            findObjectPropertyByName(objectExpression, propertyName) !== null
+    );
 
 /**
  * Determine whether a string is an internal route-like value for Docusaurus.

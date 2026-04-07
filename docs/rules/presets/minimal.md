@@ -14,7 +14,9 @@ description: Smallest preset exposed by eslint-plugin-docusaurus-2.
 - `ecmaVersion: "latest"`
 - `sourceType: "module"`
 - plugin registration under `"docusaurus-2"`
-- no bundled rules yet
+- no bundled rules by design
+
+`minimal` intentionally stays empty even though the plugin ships stable rules in the broader presets. That lets repositories adopt the package, parser setup, and public preset contract before enabling any bundled Docusaurus rules.
 
 ## Flat config example
 

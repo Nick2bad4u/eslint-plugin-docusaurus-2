@@ -9,7 +9,7 @@ description: Experimental preset for eslint-plugin-docusaurus-2.
 
 ## What it configures today
 
-Like `all`, it currently includes the stable shipped rules plus the current experimental rollout surface for Docusaurus site-architecture checks.
+Like `all`, it currently includes the stable shipped rules plus the current experimental rollout surface for Docusaurus page-module and site-architecture checks.
 
 This preset is reserved for additional rule candidates once genuinely experimental Docusaurus rules are introduced.
 

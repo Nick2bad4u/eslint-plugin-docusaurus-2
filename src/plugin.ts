@@ -25,7 +25,9 @@ import { docusaurusRules } from "./_internal/rules-registry.js";
 const ERROR_SEVERITY = "error" as const;
 
 /** Default file globs targeted by plugin presets when `files` is omitted. */
-const TYPE_SCRIPT_FILES = ["**/*.{ts,tsx,mts,cts}"] as const;
+const DEFAULT_PLUGIN_FILE_GLOBS = [
+    "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}",
+] as const;
 
 /** Flat-config preset shape produced by this plugin. */
 export type Docusaurus2PresetConfig = Linter.Config & {
@@ -219,7 +221,7 @@ function withDocusaurusPlugin(
 
     return {
         ...config,
-        files: config.files ?? [...TYPE_SCRIPT_FILES],
+        files: config.files ?? [...DEFAULT_PLUGIN_FILE_GLOBS],
         languageOptions,
         plugins: {
             ...config.plugins,

@@ -20,20 +20,25 @@ This repository is being built to enforce Docusaurus-specific best practices suc
 
 The runtime, docs site, tests, and preset infrastructure have been re-identified for `eslint-plugin-docusaurus-2`.
 
-The plugin now ships its first Docusaurus-specific config and sidebar rules:
+The plugin now ships Docusaurus-specific rules across config validation, deprecated-config migration, config typing, sidebar hygiene, page-module routing, and site-source CSS architecture:
 
 - a stable plugin namespace: `"docusaurus-2"`
 - a documented flat-config preset surface
 - TypeScript parser wiring inside each preset
 - `projectService: true` for the typed presets
+- `no-deprecated-on-broken-markdown-links`
 - `no-ignored-site-validations`
+- `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
 - `prefer-css-modules-in-site-src`
 - `no-page-css-module-imports-in-components`
+- `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-links`
+- `require-default-export-pages`
+- `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
 
-The rule catalog is still intentionally small while the higher-value Docusaurus rule space is explored.
+The rule catalog is still intentionally focused while the higher-value Docusaurus rule space is explored.
 
 ## Installation
 
@@ -63,9 +68,20 @@ export default [docusaurus2.configs.recommended];
 ## Current rule areas
 
 - Docusaurus config typing and validation hygiene
+- Docusaurus deprecated-config migration hygiene
 - Docusaurus theme config link hygiene
 - Docusaurus sidebar generated-index hygiene
+- Docusaurus sidebar collapse-state hygiene
+- Docusaurus sidebar typing hygiene
+- Docusaurus sidebar doc-link schema hygiene
+- Docusaurus page-module routing and default export hygiene
 - Docusaurus site-source CSS architecture hygiene
+
+## Current rollout shape
+
+- `recommended` and `recommended-type-checked` carry the broadly applicable config and sidebar rules.
+- `strict`, `all`, and `experimental` add the stricter page-module and site-source CSS architecture rules.
+- `minimal` stays intentionally empty so repositories can adopt the runtime and preset surface before enabling any bundled rules.
 
 ## Planned next areas
 

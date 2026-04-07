@@ -11,13 +11,16 @@ description: Default preset for eslint-plugin-docusaurus-2.
 
 It includes the same parser and plugin registration behavior as `minimal`, plus the stable config/sidebar rules that are broadly useful across Docusaurus sites:
 
+- `no-deprecated-on-broken-markdown-links`
 - `no-ignored-site-validations`
-
+- `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
-
+- `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-links`
-
+- `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
+
+These rules cover the most common Docusaurus config mistakes without imposing the stricter site-source CSS architecture checks from the broader presets.
 
 ## Flat config example
 

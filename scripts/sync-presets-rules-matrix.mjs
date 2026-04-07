@@ -171,7 +171,7 @@ export const generatePresetsRulesMatrixSectionFromRules = (rules) =>
  *
  * @returns {string}
  */
-const normalizeMatrixSectionMarkdown = (markdown) =>
+export const normalizeMatrixSectionMarkdown = (markdown) =>
     markdown
         .replace(/\r\n/gv, "\n")
         .split("\n")

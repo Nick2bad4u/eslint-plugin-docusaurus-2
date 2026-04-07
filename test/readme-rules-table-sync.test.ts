@@ -66,15 +66,28 @@ describe("readme rules table synchronization", () => {
             "utf8"
         );
 
+        expect(generatedRulesSection).toContain(
+            "no-deprecated-on-broken-markdown-links"
+        );
         expect(generatedRulesSection).toContain("no-ignored-site-validations");
+        expect(generatedRulesSection).toContain(
+            "no-useless-collapsed-sidebar-categories"
+        );
         expect(generatedRulesSection).toContain("prefer-config-satisfies");
         expect(generatedRulesSection).toContain(
             "prefer-css-modules-in-site-src"
         );
         expect(generatedRulesSection).toContain(
+            "prefer-sidebars-config-satisfies"
+        );
+        expect(generatedRulesSection).toContain(
             "no-page-css-module-imports-in-components"
         );
         expect(generatedRulesSection).toContain("prefer-to-for-internal-links");
+        expect(generatedRulesSection).toContain("require-default-export-pages");
+        expect(generatedRulesSection).toContain(
+            "require-doc-sidebar-link-type"
+        );
         expect(generatedRulesSection).toContain(
             "require-generated-index-link-type"
         );

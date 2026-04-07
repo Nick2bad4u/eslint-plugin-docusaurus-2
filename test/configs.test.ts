@@ -24,7 +24,9 @@ describe("docusaurus-2 plugin configs", () => {
         expect.hasAssertions();
 
         for (const config of Object.values(docusaurus2Plugin.configs)) {
-            expect(config.files).toStrictEqual(["**/*.{ts,tsx,mts,cts}"]);
+            expect(config.files).toStrictEqual([
+                "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}",
+            ]);
             expect(config.plugins).toHaveProperty("docusaurus-2");
             expect(config.languageOptions?.["parser"]).toBeDefined();
             expect(config.languageOptions?.["parserOptions"]).toStrictEqual(
@@ -82,17 +84,26 @@ describe("docusaurus-2 plugin configs", () => {
         ).toHaveLength(0);
 
         const expectedRecommendedRuleIds = [
+            "docusaurus-2/no-deprecated-on-broken-markdown-links",
             "docusaurus-2/no-ignored-site-validations",
+            "docusaurus-2/no-useless-collapsed-sidebar-categories",
             "docusaurus-2/prefer-config-satisfies",
+            "docusaurus-2/prefer-sidebars-config-satisfies",
             "docusaurus-2/prefer-to-for-internal-links",
+            "docusaurus-2/require-doc-sidebar-link-type",
             "docusaurus-2/require-generated-index-link-type",
         ];
         const expectedStrictRuleIds = [
+            "docusaurus-2/no-deprecated-on-broken-markdown-links",
             "docusaurus-2/no-ignored-site-validations",
             "docusaurus-2/no-page-css-module-imports-in-components",
+            "docusaurus-2/no-useless-collapsed-sidebar-categories",
             "docusaurus-2/prefer-config-satisfies",
             "docusaurus-2/prefer-css-modules-in-site-src",
+            "docusaurus-2/prefer-sidebars-config-satisfies",
             "docusaurus-2/prefer-to-for-internal-links",
+            "docusaurus-2/require-default-export-pages",
+            "docusaurus-2/require-doc-sidebar-link-type",
             "docusaurus-2/require-generated-index-link-type",
         ];
 

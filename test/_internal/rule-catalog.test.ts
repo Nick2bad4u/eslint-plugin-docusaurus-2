@@ -20,7 +20,7 @@ describe("rule-catalog", () => {
             (left, right) => left.localeCompare(right)
         );
 
-        expect(ruleCatalogEntries).toHaveLength(6);
+        expect(ruleCatalogEntries).toHaveLength(11);
         expect(
             catalogRuleNames.toSorted((left, right) =>
                 left.localeCompare(right)
@@ -42,6 +42,16 @@ describe("rule-catalog", () => {
             ruleId: "R002",
             ruleName: "require-generated-index-link-type",
             ruleNumber: 2,
+        });
+        expect(getRuleCatalogEntryForRuleId("R009")).toStrictEqual({
+            ruleId: "R009",
+            ruleName: "require-default-export-pages",
+            ruleNumber: 9,
+        });
+        expect(getRuleCatalogEntryForRuleId("R011")).toStrictEqual({
+            ruleId: "R011",
+            ruleName: "no-useless-collapsed-sidebar-categories",
+            ruleNumber: 11,
         });
     });
 

@@ -33,8 +33,39 @@ const extractMatrixSection = (markdown: string): string => {
     return markdown.slice(headingOffset, sectionEndOffset).trimEnd();
 };
 
-const normalizeLineEndings = (markdown: string): string =>
-    markdown.replaceAll("\r\n", "\n").trimEnd();
+const normalizedAlignmentCellByKey = new Map<string, string>([
+    ["00", "---"],
+    ["01", "--:"],
+    ["10", ":--"],
+    ["11", ":-:"],
+]);
+
+const normalizeMatrixCell = (cell: string): string => {
+    const trimmedCell = cell.trim();
+    const alignmentKey = `${Number(trimmedCell.startsWith(":"))}${Number(trimmedCell.endsWith(":"))}`;
+
+    return /^:?-+:?$/v.test(trimmedCell)
+        ? (normalizedAlignmentCellByKey.get(alignmentKey) ?? trimmedCell)
+        : trimmedCell;
+};
+
+const normalizeMatrixSectionMarkdown = (markdown: string): string =>
+    markdown
+        .replaceAll("\r\n", "\n")
+        .split("\n")
+        .map((line) => {
+            const trimmedLine = line.trimEnd();
+
+            return /^\|.*\|$/v.test(trimmedLine)
+                ? `| ${trimmedLine
+                      .split("|")
+                      .slice(1, -1)
+                      .map((cell) => normalizeMatrixCell(cell))
+                      .join(" | ")} |`
+                : trimmedLine;
+        })
+        .join("\n")
+        .trimEnd();
 
 describe("presets rules matrix synchronization", () => {
     it("matches the canonical matrix generated from plugin metadata", async () => {
@@ -57,8 +88,8 @@ describe("presets rules matrix synchronization", () => {
                 docusaurus2Plugin.rules
             ).trimEnd();
 
-        expect(normalizeLineEndings(presetsMatrixSection)).toBe(
-            normalizeLineEndings(expectedMatrixSection)
+        expect(normalizeMatrixSectionMarkdown(presetsMatrixSection)).toBe(
+            normalizeMatrixSectionMarkdown(expectedMatrixSection)
         );
     });
 });

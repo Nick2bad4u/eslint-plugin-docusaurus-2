@@ -1,6 +1,6 @@
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
-const sidebars: SidebarsConfig = {
+const sidebars = {
     rules: [
         {
             id: "overview",
@@ -58,6 +58,11 @@ const sidebars: SidebarsConfig = {
             collapsible: true,
             items: [
                 {
+                    id: "no-deprecated-on-broken-markdown-links",
+                    label: "no-deprecated-on-broken-markdown-links",
+                    type: "doc",
+                },
+                {
                     id: "no-ignored-site-validations",
                     label: "no-ignored-site-validations",
                     type: "doc",
@@ -65,6 +70,11 @@ const sidebars: SidebarsConfig = {
                 {
                     id: "no-page-css-module-imports-in-components",
                     label: "no-page-css-module-imports-in-components",
+                    type: "doc",
+                },
+                {
+                    id: "no-useless-collapsed-sidebar-categories",
+                    label: "no-useless-collapsed-sidebar-categories",
                     type: "doc",
                 },
                 {
@@ -78,8 +88,23 @@ const sidebars: SidebarsConfig = {
                     type: "doc",
                 },
                 {
+                    id: "prefer-sidebars-config-satisfies",
+                    label: "prefer-sidebars-config-satisfies",
+                    type: "doc",
+                },
+                {
                     id: "prefer-to-for-internal-links",
                     label: "prefer-to-for-internal-links",
+                    type: "doc",
+                },
+                {
+                    id: "require-default-export-pages",
+                    label: "require-default-export-pages",
+                    type: "doc",
+                },
+                {
+                    id: "require-doc-sidebar-link-type",
+                    label: "require-doc-sidebar-link-type",
                     type: "doc",
                 },
                 {
@@ -92,6 +117,6 @@ const sidebars: SidebarsConfig = {
             type: "category",
         },
     ],
-};
+} satisfies SidebarsConfig;
 
 export default sidebars;

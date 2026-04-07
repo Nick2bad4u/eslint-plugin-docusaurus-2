@@ -18,13 +18,18 @@ description: Preset reference for eslint-plugin-docusaurus-2.
 
 ## Current rule count
 
-The plugin currently ships **6 rules**.
+The plugin currently ships **11 rules**.
 
+- `no-deprecated-on-broken-markdown-links`
 - `no-ignored-site-validations`
 - `no-page-css-module-imports-in-components`
+- `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
 - `prefer-css-modules-in-site-src`
+- `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-links`
+- `require-default-export-pages`
+- `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
 
 The preset ladder still matters because it defines how broader future Docusaurus rule sets will roll out.
@@ -33,11 +38,16 @@ The preset ladder still matters because it defines how broader future Docusaurus
 
 This matrix is the canonical place to show how the current Docusaurus rule catalog maps onto each preset tier.
 
-| Rule                                                                                                                                                      |  🟢 |  🟡 |  🟠 |  🔴 |  🟣 |  🧪 |
-| --------------------------------------------------------------------------------------------------------------------------------------------------------- | :-: | :-: | :-: | :-: | :-: | :-: |
-| [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations)                           |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-| [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components) |  —  |  —  |  —  |  ✅  |  ✅  |  ✅  |
-| [`prefer-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies)                                   |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-| [`prefer-css-modules-in-site-src`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src)                     |  —  |  —  |  —  |  ✅  |  ✅  |  ✅  |
-| [`prefer-to-for-internal-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-links)                         |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
-| [`require-generated-index-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-generated-index-link-type)               |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
+| Rule | 🟢 | 🟡 | 🟠 | 🔴 | 🟣 | 🧪 |
+| --- | :-: | :-: | :-: | :-: | :-: | :-: |
+| [`no-deprecated-on-broken-markdown-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-on-broken-markdown-links) | — | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations) | — | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components) | — | — | — | ✅ | ✅ | ✅ |
+| [`no-useless-collapsed-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-useless-collapsed-sidebar-categories) | — | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [`prefer-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies) | — | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [`prefer-css-modules-in-site-src`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src) | — | — | — | ✅ | ✅ | ✅ |
+| [`prefer-sidebars-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-sidebars-config-satisfies) | — | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [`prefer-to-for-internal-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-links) | — | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [`require-default-export-pages`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-default-export-pages) | — | — | — | ✅ | ✅ | ✅ |
+| [`require-doc-sidebar-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-doc-sidebar-link-type) | — | ✅ | ✅ | ✅ | ✅ | ✅ |
+| [`require-generated-index-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-generated-index-link-type) | — | ✅ | ✅ | ✅ | ✅ | ✅ |

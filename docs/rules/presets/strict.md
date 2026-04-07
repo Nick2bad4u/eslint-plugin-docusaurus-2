@@ -9,10 +9,11 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 
 ## What it configures today
 
-`strict` includes all of `recommended`, plus the stricter Docusaurus site-source CSS rules:
+`strict` includes all of `recommended`, plus the stricter Docusaurus page-module and site-source CSS rules:
 
 - `prefer-css-modules-in-site-src`
 - `no-page-css-module-imports-in-components`
+- `require-default-export-pages`
 
 It also keeps the typed parser baseline for future stricter Docusaurus checks.
 

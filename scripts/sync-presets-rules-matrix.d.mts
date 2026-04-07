@@ -18,6 +18,8 @@ export function generatePresetsRulesMatrixSectionFromRules(
     rules: Readonly<Record<string, PresetsRuleModule>>
 ): string;
 
+export function normalizeMatrixSectionMarkdown(markdown: string): string;
+
 export function syncPresetsRulesMatrix(input?: {
     readonly writeChanges?: boolean;
 }): Promise<Readonly<{ changed: boolean }>>;
