@@ -28,10 +28,14 @@ Today it ships:
 - documented Flat Config presets
 - TypeScript parser setup inside each preset
 - typed preset support via `projectService: true`
+- `no-ignored-site-validations`
+- `no-page-css-module-imports-in-components`
+- `prefer-config-satisfies`
+- `prefer-css-modules-in-site-src`
+- `prefer-to-for-internal-links`
+- `require-generated-index-link-type`
 
-It does **not** ship bundled rules yet.
-
-That is intentional. A clean empty scaffold is better than publishing fake starter rules copied from an unrelated plugin.
+The rule catalog is intentionally focused while the higher-value Docusaurus rule space is explored.
 
 ## Installation
 
@@ -55,14 +59,14 @@ export default [docusaurus2.configs.recommended];
 
 ## Presets
 
-| Preset | Type-aware | Purpose |
-| --- | --- | --- |
-| `docusaurus2.configs.minimal` | No | Smallest future-ready baseline. |
-| `docusaurus2.configs.recommended` | No | Default starting point for most repositories. |
-| `docusaurus2.configs["recommended-type-checked"]` | Yes | Recommended plus typed parser setup. |
-| `docusaurus2.configs.strict` | Yes | Stricter future tier for mature sites. |
-| `docusaurus2.configs.all` | Yes | Every stable rule once the catalog grows. |
-| `docusaurus2.configs.experimental` | Yes | Future experimental rule candidates. |
+| Preset                                            | Type-aware | Purpose                                       |
+| ------------------------------------------------- | ---------- | --------------------------------------------- |
+| `docusaurus2.configs.minimal`                     | No         | Smallest future-ready baseline.               |
+| `docusaurus2.configs.recommended`                 | No         | Default starting point for most repositories. |
+| `docusaurus2.configs["recommended-type-checked"]` | Yes        | Recommended plus typed parser setup.          |
+| `docusaurus2.configs.strict`                      | Yes        | Stricter future tier for mature sites.        |
+| `docusaurus2.configs.all`                         | Yes        | Every stable rule once the catalog grows.     |
+| `docusaurus2.configs.experimental`                | Yes        | Future experimental rule candidates.          |
 
 ## What the presets configure today
 
@@ -78,9 +82,9 @@ The typed presets also enable `projectService: true` automatically.
 
 ## Rules
 
-The first Docusaurus-specific rules are still in development.
+The current rule catalog focuses on Docusaurus config, validation, sidebar, and site-source CSS correctness.
 
-The public preset surface is stable, but the bundled rule catalog is intentionally empty for now.
+The public preset surface is stable, and the rule catalog is intentionally focused while higher-value Docusaurus rule gaps are explored.
 
 - `Fix` legend:
   - `🔧` = autofixable
@@ -94,9 +98,14 @@ The public preset surface is stable, but the bundled rule catalog is intentional
   - [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) — [`docusaurus2.configs.all`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all)
   - [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) — [`docusaurus2.configs.experimental`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental)
 
-| Rule | Fix | Preset key |
-| --- | :-: | --- |
-| — | — | — |
+| Rule                                                                                                                                                      | Fix | Preset key     |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------- | :-: | -------------- |
+| [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations)                           |  🔧 | 🟡 🟠 🔴 🟣 🧪 |
+| [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components) |  —  | 🔴 🟣 🧪       |
+| [`prefer-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies)                                   |  🔧 | 🟡 🟠 🔴 🟣 🧪 |
+| [`prefer-css-modules-in-site-src`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src)                     |  —  | 🔴 🟣 🧪       |
+| [`prefer-to-for-internal-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-links)                         |  🔧 | 🟡 🟠 🔴 🟣 🧪 |
+| [`require-generated-index-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-generated-index-link-type)               |  🔧 | 🟡 🟠 🔴 🟣 🧪 |
 
 ## Documentation
 
@@ -107,7 +116,7 @@ The public preset surface is stable, but the bundled rule catalog is intentional
 
 ## Roadmap direction
 
-The next phase of the plugin is focused on real Docusaurus rules rather than generic placeholder content. Likely areas include:
+The next phase of the plugin is focused on expanding the Docusaurus rule catalog with more high-signal checks. Likely areas include:
 
 - Docusaurus config and route metadata rules
 - sidebar and docs-structure validation rules

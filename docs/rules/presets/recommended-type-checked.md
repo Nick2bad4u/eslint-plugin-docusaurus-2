@@ -11,7 +11,7 @@ description: Typed preset for eslint-plugin-docusaurus-2.
 
 In addition to the base parser setup, this preset enables `projectService: true` automatically.
 
-That keeps the preset ready for future Docusaurus rules that need full TypeScript type information.
+Today it contains the same two rules as `recommended`, because the initial rule set does not require type information yet.
 
 ## Flat config example
 

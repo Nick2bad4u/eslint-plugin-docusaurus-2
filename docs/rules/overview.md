@@ -5,7 +5,7 @@ description: Overview of eslint-plugin-docusaurus-2 and its preset surface.
 
 # eslint-plugin-docusaurus-2
 
-`eslint-plugin-docusaurus-2` is a future-ready ESLint plugin scaffold for Docusaurus sites, docs repositories, and documentation apps that mix content, React pages, and TypeDoc-generated API references.
+`eslint-plugin-docusaurus-2` is an ESLint plugin for Docusaurus sites, docs repositories, and documentation apps that mix content, React pages, and TypeDoc-generated API references.
 
 ## What this plugin is for
 
@@ -20,16 +20,20 @@ This repository is being built to enforce Docusaurus-specific best practices suc
 
 The runtime, docs site, tests, and preset infrastructure have been re-identified for `eslint-plugin-docusaurus-2`.
 
-The first Docusaurus-specific rules are still being authored, so the plugin currently ships:
+The plugin now ships its first Docusaurus-specific config and sidebar rules:
 
 - a stable plugin namespace: `"docusaurus-2"`
 - a documented flat-config preset surface
 - TypeScript parser wiring inside each preset
 - `projectService: true` for the typed presets
+- `no-ignored-site-validations`
+- `prefer-config-satisfies`
+- `prefer-css-modules-in-site-src`
+- `no-page-css-module-imports-in-components`
+- `prefer-to-for-internal-links`
+- `require-generated-index-link-type`
 
-It does **not** ship rule modules yet.
-
-That is intentional: an honest empty scaffold is better than carrying unrelated starter rules from another plugin template.
+The rule catalog is still intentionally small while the higher-value Docusaurus rule space is explored.
 
 ## Installation
 
@@ -47,16 +51,23 @@ export default [docusaurus2.configs.recommended];
 
 ## Presets
 
-| Preset | Purpose |
-| --- | --- |
-| [🟢 `docusaurus2.configs.minimal`](./presets/minimal.md) | Smallest baseline for future Docusaurus-specific linting. |
-| [🟡 `docusaurus2.configs.recommended`](./presets/recommended.md) | Default preset for most documentation repositories. |
+| Preset                                                                                        | Purpose                                                          |
+| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [🟢 `docusaurus2.configs.minimal`](./presets/minimal.md)                                      | Smallest baseline for future Docusaurus-specific linting.        |
+| [🟡 `docusaurus2.configs.recommended`](./presets/recommended.md)                              | Default preset for most documentation repositories.              |
 | [🟠 `docusaurus2.configs["recommended-type-checked"]`](./presets/recommended-type-checked.md) | Recommended plus typed parser setup for future type-aware rules. |
-| [🔴 `docusaurus2.configs.strict`](./presets/strict.md) | Stricter adoption path for mature sites. |
-| [🟣 `docusaurus2.configs.all`](./presets/all.md) | Every stable rule once the rule catalog grows. |
-| [🧪 `docusaurus2.configs.experimental`](./presets/experimental.md) | Future experimental rules and rollout candidates. |
+| [🔴 `docusaurus2.configs.strict`](./presets/strict.md)                                        | Stricter adoption path for mature sites.                         |
+| [🟣 `docusaurus2.configs.all`](./presets/all.md)                                              | Every stable rule once the rule catalog grows.                   |
+| [🧪 `docusaurus2.configs.experimental`](./presets/experimental.md)                            | Future experimental rules and rollout candidates.                |
 
-## Planned rule areas
+## Current rule areas
+
+- Docusaurus config typing and validation hygiene
+- Docusaurus theme config link hygiene
+- Docusaurus sidebar generated-index hygiene
+- Docusaurus site-source CSS architecture hygiene
+
+## Planned next areas
 
 The plugin is being shaped around Docusaurus-specific concerns instead of generic utility-library rules. Likely rule areas include:
 

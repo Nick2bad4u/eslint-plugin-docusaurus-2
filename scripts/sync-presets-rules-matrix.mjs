@@ -159,12 +159,61 @@ export const generatePresetsRulesMatrixSectionFromRules = (rules) =>
     [
         matrixSectionHeading,
         "",
-        "No bundled rules ship yet, but this matrix remains the canonical place to show preset coverage as the Docusaurus rule catalog grows.",
+        "This matrix is the canonical place to show how the current Docusaurus rule catalog maps onto each preset tier.",
         "",
         createTableHeader(),
         ...createRuleRows(rules),
         "",
     ].join("\n");
+
+/**
+ * @param {string} markdown
+ *
+ * @returns {string}
+ */
+const normalizeMatrixSectionMarkdown = (markdown) =>
+    markdown
+        .replace(/\r\n/gv, "\n")
+        .split("\n")
+        .map((line) => {
+            const trimmedLine = line.trimEnd();
+
+            if (!/^\|.*\|$/v.test(trimmedLine)) {
+                return trimmedLine;
+            }
+
+            const cells = trimmedLine
+                .split("|")
+                .slice(1, -1)
+                .map((cell) => {
+                    const trimmedCell = cell.trim();
+
+                    if (!/^:?-+:?$/v.test(trimmedCell)) {
+                        return trimmedCell;
+                    }
+
+                    const hasStartColon = trimmedCell.startsWith(":");
+                    const hasEndColon = trimmedCell.endsWith(":");
+
+                    if (hasStartColon && hasEndColon) {
+                        return ":-:";
+                    }
+
+                    if (hasStartColon) {
+                        return ":--";
+                    }
+
+                    if (hasEndColon) {
+                        return "--:";
+                    }
+
+                    return "---";
+                });
+
+            return `| ${cells.join(" | ")} |`;
+        })
+        .join("\n")
+        .trimEnd();
 
 /**
  * @param {string} markdown
@@ -205,11 +254,35 @@ export const syncPresetsRulesMatrix = async (input = {}) => {
         generatePresetsRulesMatrixSectionFromRules(builtPlugin.rules),
         lineEnding
     );
+    const headingOffset = presetsIndexMarkdown.indexOf(matrixSectionHeading);
+    const nextHeadingOffset =
+        headingOffset === -1
+            ? -1
+            : presetsIndexMarkdown.indexOf(
+                  "\n## ",
+                  headingOffset + matrixSectionHeading.length
+              );
+    const currentMatrixSection =
+        headingOffset === -1
+            ? ""
+            : presetsIndexMarkdown.slice(
+                  headingOffset,
+                  nextHeadingOffset === -1
+                      ? presetsIndexMarkdown.length
+                      : nextHeadingOffset
+              );
+    const changed =
+        normalizeMatrixSectionMarkdown(currentMatrixSection) !==
+        normalizeMatrixSectionMarkdown(generatedSection);
+
+    if (!changed) {
+        return Object.freeze({ changed: false });
+    }
+
     const updatedMarkdown = upsertMatrixSection(
         presetsIndexMarkdown,
         generatedSection
     );
-    const changed = updatedMarkdown !== presetsIndexMarkdown;
 
     if (changed && writeChanges) {
         await writeFile(presetsIndexPath, updatedMarkdown);

@@ -4,10 +4,7 @@ import { describe, expect, it } from "vitest";
 
 import type { UnknownArray } from "../../src/_internal/types";
 
-import {
-    isImportInsertionFixesDisabledForNode,
-    registerProgramSettingsForContext,
-} from "../../src/_internal/plugin-settings";
+import { registerProgramSettingsForContext } from "../../src/_internal/plugin-settings";
 
 const createProgramNode = (): TSESTree.Program =>
     ({
@@ -44,34 +41,23 @@ const createContext = ({
         },
     }) as unknown as TSESLint.RuleContext<string, UnknownArray>;
 
-const createNodeInProgram = (program: TSESTree.Program): TSESTree.Node =>
-    ({
-        parent: program,
-        type: "Identifier",
-    }) as unknown as TSESTree.Node;
-
 describe(registerProgramSettingsForContext, () => {
-    it("reads disableImportInsertionFixes from the docusaurus-2 settings key", () => {
+    it("defaults to leaving autofixes enabled when plugin settings are absent", () => {
         expect.hasAssertions();
 
         const program = createProgramNode();
         const context = createContext({
             program,
-            settings: {
-                "docusaurus-2": {
-                    disableImportInsertionFixes: true,
-                },
-            },
+            settings: {},
         });
 
         const parsedSettings = registerProgramSettingsForContext(context);
 
         expect(parsedSettings.disableAllAutofixes).toBeFalsy();
-        expect(parsedSettings.disableImportInsertionFixes).toBeTruthy();
         expect(Object.isFrozen(parsedSettings)).toBeTruthy();
     });
 
-    it("treats disableAllAutofixes as dominant over import-only settings", () => {
+    it("reads disableAllAutofixes from the docusaurus-2 settings key", () => {
         expect.hasAssertions();
 
         const program = createProgramNode();
@@ -87,7 +73,6 @@ describe(registerProgramSettingsForContext, () => {
         const parsedSettings = registerProgramSettingsForContext(context);
 
         expect(parsedSettings.disableAllAutofixes).toBeTruthy();
-        expect(parsedSettings.disableImportInsertionFixes).toBeTruthy();
     });
 
     it("reuses cached settings for the same program", () => {
@@ -98,7 +83,7 @@ describe(registerProgramSettingsForContext, () => {
             program,
             settings: {
                 "docusaurus-2": {
-                    disableImportInsertionFixes: true,
+                    disableAllAutofixes: true,
                 },
             },
         });
@@ -106,7 +91,7 @@ describe(registerProgramSettingsForContext, () => {
             program,
             settings: {
                 "docusaurus-2": {
-                    disableImportInsertionFixes: false,
+                    disableAllAutofixes: false,
                 },
             },
         });
@@ -115,7 +100,7 @@ describe(registerProgramSettingsForContext, () => {
         const secondSettings = registerProgramSettingsForContext(secondContext);
 
         expect(secondSettings).toBe(firstSettings);
-        expect(secondSettings.disableImportInsertionFixes).toBeTruthy();
+        expect(secondSettings.disableAllAutofixes).toBeTruthy();
     });
 
     it("treats invalid plugin settings as disabled", () => {
@@ -132,27 +117,5 @@ describe(registerProgramSettingsForContext, () => {
         const parsedSettings = registerProgramSettingsForContext(context);
 
         expect(parsedSettings.disableAllAutofixes).toBeFalsy();
-        expect(parsedSettings.disableImportInsertionFixes).toBeFalsy();
-    });
-});
-
-describe(isImportInsertionFixesDisabledForNode, () => {
-    it("reads memoized settings from the enclosing program", () => {
-        expect.hasAssertions();
-
-        const program = createProgramNode();
-        const context = createContext({
-            program,
-            settings: {
-                "docusaurus-2": {
-                    disableImportInsertionFixes: true,
-                },
-            },
-        });
-        const node = createNodeInProgram(program);
-
-        registerProgramSettingsForContext(context);
-
-        expect(isImportInsertionFixesDisabledForNode(node)).toBeTruthy();
     });
 });

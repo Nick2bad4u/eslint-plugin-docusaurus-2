@@ -9,9 +9,9 @@ description: Experimental preset for eslint-plugin-docusaurus-2.
 
 ## What it configures today
 
-Like `all`, it currently carries no bundled rules.
+Like `all`, it currently includes the stable shipped rules plus the current experimental rollout surface for Docusaurus site-architecture checks.
 
-The preset still exists now so the runtime contract and documentation are stable before experimental Docusaurus rules are introduced.
+This preset is reserved for additional rule candidates once genuinely experimental Docusaurus rules are introduced.
 
 ## Flat config example
 

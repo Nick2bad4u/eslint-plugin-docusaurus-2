@@ -14,10 +14,9 @@
     "out": "site-docs/developer/api",
     "plugin": [
         "typedoc-plugin-markdown",
-        "typedoc-plugin-mdn-links",
-        "typedoc-plugin-missing-exports"
+        "typedoc-plugin-mdn-links"
     ],
-    "readme": "none",
+    "readme": "./typedoc.readme.md",
     "sort": [
         "source-order"
     ],

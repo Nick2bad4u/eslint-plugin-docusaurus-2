@@ -21,7 +21,7 @@ export default [docusaurus2.configs.recommended];
 
 ## What the presets provide today
 
-Even before the first Docusaurus-specific rules land, every preset already gives you a stable plugin contract:
+Every preset already gives you a stable plugin contract:
 
 - `files: ["**/*.{ts,tsx,mts,cts}"]`
 - `@typescript-eslint/parser`
@@ -31,10 +31,19 @@ Even before the first Docusaurus-specific rules land, every preset already gives
 
 The typed presets also enable `projectService: true` automatically.
 
+The currently shipped rules focus on Docusaurus config and sidebar correctness first, then add stricter site-source CSS checks in the broader presets:
+
+- `no-ignored-site-validations`
+- `prefer-config-satisfies`
+- `prefer-css-modules-in-site-src`
+- `no-page-css-module-imports-in-components`
+- `prefer-to-for-internal-links`
+- `require-generated-index-link-type`
+
 ## Choosing a preset
 
 - Start with `recommended` if you want the default future upgrade path.
-- Start with `minimal` if you want the smallest baseline while rules are still being introduced.
+- Start with `minimal` if you want the smallest baseline.
 - Move to `recommended-type-checked` once you are ready for type-aware rules.
 - Use `strict`, `all`, or `experimental` only when you intentionally want broader future coverage.
 
@@ -70,9 +79,9 @@ export default [
 
 ## Important expectation
 
-The plugin currently exposes **preset infrastructure first** and **rule behavior second**.
+The plugin still has a deliberately small rule catalog.
 
-That means your config can adopt the public runtime today without inheriting fake placeholder rules copied from another plugin template.
+That means you can adopt the public runtime and start with a focused Docusaurus-specific baseline instead of inheriting a large bundle of speculative rules.
 
 ## Where to go next
 

@@ -11,7 +11,6 @@ import type { UnknownArray } from "./_internal/types.js";
 
 import packageJson from "../package.json" with { type: "json" };
 import {
-    type PresetConfigName as InternalPresetConfigName,
     presetConfigMetadataByName,
     presetConfigNames,
 } from "./_internal/preset-config-references.js";
@@ -28,31 +27,13 @@ const ERROR_SEVERITY = "error" as const;
 /** Default file globs targeted by plugin presets when `files` is omitted. */
 const TYPE_SCRIPT_FILES = ["**/*.{ts,tsx,mts,cts}"] as const;
 
-/** Canonical flat-config preset keys exposed through `plugin.configs`. */
-export type Docusaurus2ConfigName = InternalPresetConfigName;
-
 /** Flat-config preset shape produced by this plugin. */
 export type Docusaurus2PresetConfig = Linter.Config & {
     rules: NonNullable<Linter.Config["rules"]>;
 };
 
-/** Contract for the `configs` object exported by this plugin. */
-type Docusaurus2ConfigsContract = Record<
-    Docusaurus2ConfigName,
-    Docusaurus2PresetConfig
->;
-
-/** Fully assembled plugin contract used by the runtime default export. */
-type Docusaurus2PluginContract = Omit<ESLint.Plugin, "configs" | "rules"> & {
-    configs: Docusaurus2ConfigsContract;
-    meta: {
-        name: string;
-        namespace: string;
-        version: string;
-    };
-    processors: NonNullable<ESLint.Plugin["processors"]>;
-    rules: NonNullable<ESLint.Plugin["rules"]>;
-};
+/** Canonical flat-config preset keys exposed through `plugin.configs`. */
+type Docusaurus2ConfigName = (typeof presetConfigNames)[number];
 
 /** Internal alias for flat config objects handled by preset builders. */
 type FlatConfig = Linter.Config;
@@ -253,8 +234,14 @@ const pluginForConfigs: ESLint.Plugin = {
 };
 
 /** Flat config presets distributed by eslint-plugin-docusaurus-2. */
-const createConfigsDefinition = (): Docusaurus2ConfigsContract => {
-    const configs = {} as Docusaurus2ConfigsContract;
+const createConfigsDefinition = (): Record<
+    Docusaurus2ConfigName,
+    Docusaurus2PresetConfig
+> => {
+    const configs = {} as Record<
+        Docusaurus2ConfigName,
+        Docusaurus2PresetConfig
+    >;
 
     for (const configName of presetConfigNames) {
         const configMetadata = presetConfigMetadataByName[configName];
@@ -279,13 +266,22 @@ const createConfigsDefinition = (): Docusaurus2ConfigsContract => {
 const configsDefinition = createConfigsDefinition();
 
 /** Finalized typed view of all exported preset configurations. */
-const docusaurus2Configs: Docusaurus2ConfigsContract = configsDefinition;
-
-/** Runtime type for the plugin's generated config presets. */
-export type Docusaurus2Configs = typeof docusaurus2Configs;
+const docusaurus2Configs: Record<
+    Docusaurus2ConfigName,
+    Docusaurus2PresetConfig
+> = configsDefinition;
 
 /** Main plugin object exported for ESLint consumption. */
-const docusaurus2Plugin: Docusaurus2PluginContract = {
+const docusaurus2Plugin: Omit<ESLint.Plugin, "configs" | "rules"> & {
+    configs: Record<Docusaurus2ConfigName, Docusaurus2PresetConfig>;
+    meta: {
+        name: string;
+        namespace: string;
+        version: string;
+    };
+    processors: NonNullable<ESLint.Plugin["processors"]>;
+    rules: NonNullable<ESLint.Plugin["rules"]>;
+} = {
     configs: docusaurus2Configs,
     meta: {
         name: "eslint-plugin-docusaurus-2",

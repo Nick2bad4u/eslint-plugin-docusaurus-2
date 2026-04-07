@@ -74,11 +74,52 @@ describe("docusaurus-2 plugin configs", () => {
         }
     });
 
-    it("keeps every preset rule map intentionally empty until rules are added", () => {
+    it("keeps minimal empty while the broader presets include the current rule catalog", () => {
         expect.hasAssertions();
 
-        for (const config of Object.values(docusaurus2Plugin.configs)) {
-            expect(Object.keys(config.rules)).toHaveLength(0);
-        }
+        expect(
+            Object.keys(docusaurus2Plugin.configs.minimal.rules)
+        ).toHaveLength(0);
+
+        const expectedRecommendedRuleIds = [
+            "docusaurus-2/no-ignored-site-validations",
+            "docusaurus-2/prefer-config-satisfies",
+            "docusaurus-2/prefer-to-for-internal-links",
+            "docusaurus-2/require-generated-index-link-type",
+        ];
+        const expectedStrictRuleIds = [
+            "docusaurus-2/no-ignored-site-validations",
+            "docusaurus-2/no-page-css-module-imports-in-components",
+            "docusaurus-2/prefer-config-satisfies",
+            "docusaurus-2/prefer-css-modules-in-site-src",
+            "docusaurus-2/prefer-to-for-internal-links",
+            "docusaurus-2/require-generated-index-link-type",
+        ];
+
+        expect(
+            Object.keys(docusaurus2Plugin.configs.recommended.rules).toSorted(
+                (left, right) => left.localeCompare(right)
+            )
+        ).toStrictEqual(expectedRecommendedRuleIds);
+        expect(
+            Object.keys(
+                docusaurus2Plugin.configs["recommended-type-checked"].rules
+            ).toSorted((left, right) => left.localeCompare(right))
+        ).toStrictEqual(expectedRecommendedRuleIds);
+        expect(
+            Object.keys(docusaurus2Plugin.configs.strict.rules).toSorted(
+                (left, right) => left.localeCompare(right)
+            )
+        ).toStrictEqual(expectedStrictRuleIds);
+        expect(
+            Object.keys(docusaurus2Plugin.configs.all.rules).toSorted(
+                (left, right) => left.localeCompare(right)
+            )
+        ).toStrictEqual(expectedStrictRuleIds);
+        expect(
+            Object.keys(docusaurus2Plugin.configs.experimental.rules).toSorted(
+                (left, right) => left.localeCompare(right)
+            )
+        ).toStrictEqual(expectedStrictRuleIds);
     });
 });

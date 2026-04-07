@@ -9,9 +9,7 @@ description: All stable rules preset for eslint-plugin-docusaurus-2.
 
 ## What it configures today
 
-Today it is effectively identical to the other typed presets because the plugin does not ship stable rule modules yet.
-
-That will change once the first Docusaurus-specific rules are added.
+Today it contains the current stable rule catalog, which is the same two-rule set exposed by the broader stable presets.
 
 ## Flat config example
 

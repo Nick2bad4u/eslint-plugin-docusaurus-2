@@ -1,0 +1,126 @@
+/**
+ * @packageDocumentation
+ * RuleTester coverage for `prefer-to-for-internal-links`.
+ */
+import { createRuleTester, getPluginRule } from "./_internal/ruleTester";
+
+const ruleTester = createRuleTester();
+
+ruleTester.run(
+    "prefer-to-for-internal-links",
+    getPluginRule("prefer-to-for-internal-links"),
+    {
+        invalid: [
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        navbar: {",
+                    "            items: [",
+                    "                {",
+                    '                    label: "Docs",',
+                    '                    href: "/docs/intro",',
+                    '                    position: "left",',
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                errors: [{ messageId: "preferToForInternalLinks" }],
+                filename: "docs/docusaurus/docusaurus.config.ts",
+                output: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        navbar: {",
+                    "            items: [",
+                    "                {",
+                    '                    label: "Docs",',
+                    '                    to: "/docs/intro",',
+                    '                    position: "left",',
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+            },
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        footer: {",
+                    "            links: [",
+                    "                {",
+                    '                    title: "Docs",',
+                    "                    items: [",
+                    "                        {",
+                    '                            label: "Rules",',
+                    '                            "href": "/docs/rules/overview",',
+                    "                        },",
+                    "                    ],",
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                errors: [{ messageId: "preferToForInternalLinks" }],
+                filename: "docs/docusaurus/docusaurus.config.ts",
+                output: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        footer: {",
+                    "            links: [",
+                    "                {",
+                    '                    title: "Docs",',
+                    "                    items: [",
+                    "                        {",
+                    '                            label: "Rules",',
+                    '                            "to": "/docs/rules/overview",',
+                    "                        },",
+                    "                    ],",
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+            },
+        ],
+        valid: [
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        navbar: {",
+                    "            items: [",
+                    "                {",
+                    '                    label: "Docs",',
+                    '                    to: "/docs/intro",',
+                    '                    position: "left",',
+                    "                },",
+                    "                {",
+                    '                    label: "GitHub",',
+                    '                    href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",',
+                    '                    position: "right",',
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+            {
+                code: [
+                    "export const unrelated = {",
+                    '    href: "/docs/intro",',
+                    '    label: "Docs",',
+                    "};",
+                ].join("\n"),
+                filename: "src/config.ts",
+            },
+        ],
+    }
+);

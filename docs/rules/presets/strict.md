@@ -9,9 +9,12 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 
 ## What it configures today
 
-At the moment, `strict` is effectively the typed parser baseline with no bundled rules yet.
+`strict` includes all of `recommended`, plus the stricter Docusaurus site-source CSS rules:
 
-It still exists now so teams can standardize on the public preset name before the rule catalog grows.
+- `prefer-css-modules-in-site-src`
+- `no-page-css-module-imports-in-components`
+
+It also keeps the typed parser baseline for future stricter Docusaurus checks.
 
 ## Flat config example
 

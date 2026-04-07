@@ -6,7 +6,6 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import type { JsonObject, UnknownArray } from "./types.js";
 
-import { getProgramNode } from "./ast-node.js";
 import { isPresent, objectHasOwn } from "./runtime-utils.js";
 
 /** Top-level `settings` key for this plugin. */
@@ -15,15 +14,11 @@ const PLUGIN_SETTINGS_KEY = "docusaurus-2";
 /** Flag that disables all plugin autofix behavior. */
 const DISABLE_ALL_AUTOFIXES_KEY = "disableAllAutofixes";
 
-/** Flag that disables import-insertion fix helpers only. */
-const DISABLE_IMPORT_INSERTION_FIXES_KEY = "disableImportInsertionFixes";
-
 /**
  * Normalized per-program settings consumed by fix-generation helpers.
  */
 type ProgramSettings = {
     disableAllAutofixes: boolean;
-    disableImportInsertionFixes: boolean;
 };
 
 /**
@@ -70,24 +65,6 @@ const readBooleanFlag = (object: Readonly<JsonObject>, key: string): boolean =>
     objectHasOwn(object, key) && object[key] === true;
 
 /**
- * Reads the import-insertion disable flag from plugin settings.
- *
- * @param settings - ESLint settings value from rule context.
- *
- * @returns `true` when import insertion fixes are explicitly disabled.
- */
-const readDisableImportInsertionFixesFromSettings = (
-    settings: unknown
-): boolean => {
-    const pluginSettings = getPluginSettings(settings);
-    if (!isPresent(pluginSettings)) {
-        return false;
-    }
-
-    return readBooleanFlag(pluginSettings, DISABLE_IMPORT_INSERTION_FIXES_KEY);
-};
-
-/**
  * Reads the global autofix disable flag from plugin settings.
  *
  * @param settings - ESLint settings value from rule context.
@@ -124,13 +101,9 @@ export const registerProgramSettingsForContext = (
     const disableAllAutofixes = readDisableAllAutofixesFromSettings(
         context.settings
     );
-    const disableImportInsertionFixes =
-        disableAllAutofixes ||
-        readDisableImportInsertionFixesFromSettings(context.settings);
 
     const parsedSettings: Readonly<ProgramSettings> = Object.freeze({
         disableAllAutofixes,
-        disableImportInsertionFixes,
     });
 
     if (!isWeakMapKeyObject(programNode)) {
@@ -145,25 +118,4 @@ export const registerProgramSettingsForContext = (
     settingsByProgram.set(programNode, parsedSettings);
 
     return parsedSettings;
-};
-
-/**
- * Determine whether import insertion autofixes are globally disabled for the
- * file containing the provided node.
- *
- * @param node - AST node used to resolve the enclosing Program.
- *
- * @returns `true` when import insertion fixes should be suppressed.
- */
-export const isImportInsertionFixesDisabledForNode = (
-    node: Readonly<TSESTree.Node>
-): boolean => {
-    const programNode = getProgramNode(node);
-    if (!isPresent(programNode)) {
-        return false;
-    }
-
-    const settings = settingsByProgram.get(programNode);
-
-    return settings?.disableImportInsertionFixes === true;
 };

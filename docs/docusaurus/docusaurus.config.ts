@@ -25,7 +25,7 @@ const suppressKnownWebpackWarningsPlugin = () => ({
     name: "suppress-known-webpack-warnings",
 });
 
-const config: Config = {
+const config = {
     title: "eslint-plugin-docusaurus-2",
     tagline:
         "ESLint plugin for Docusaurus sites and TypeDoc-integrated documentation workflows.",
@@ -148,6 +148,6 @@ const config: Config = {
         },
     },
     themes: ["@docusaurus/theme-mermaid"],
-};
+} satisfies Config;
 
 export default config;

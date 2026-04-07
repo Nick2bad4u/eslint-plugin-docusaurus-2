@@ -66,9 +66,17 @@ describe("readme rules table synchronization", () => {
             "utf8"
         );
 
+        expect(generatedRulesSection).toContain("no-ignored-site-validations");
+        expect(generatedRulesSection).toContain("prefer-config-satisfies");
         expect(generatedRulesSection).toContain(
-            "The first Docusaurus-specific rules are still in development."
+            "prefer-css-modules-in-site-src"
         );
-        expect(generatedRulesSection).toContain("| — | — | — |");
+        expect(generatedRulesSection).toContain(
+            "no-page-css-module-imports-in-components"
+        );
+        expect(generatedRulesSection).toContain("prefer-to-for-internal-links");
+        expect(generatedRulesSection).toContain(
+            "require-generated-index-link-type"
+        );
     });
 });

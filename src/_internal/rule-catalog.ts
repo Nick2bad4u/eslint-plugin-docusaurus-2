@@ -21,7 +21,14 @@ export type RuleCatalogId = `R${string}`;
  * @remarks
  * Append new rules to preserve existing IDs.
  */
-const orderedRuleNames = [] as const satisfies readonly string[];
+const orderedRuleNames = [
+    "prefer-to-for-internal-links",
+    "require-generated-index-link-type",
+    "no-ignored-site-validations",
+    "no-page-css-module-imports-in-components",
+    "prefer-config-satisfies",
+    "prefer-css-modules-in-site-src",
+] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>
     `R${String(ruleNumber).padStart(3, "0")}`;

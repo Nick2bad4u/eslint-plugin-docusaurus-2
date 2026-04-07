@@ -674,6 +674,7 @@ export default defineConfig([
     // ═══════════════════════════════════════════════════════════════════════════════
     {
         files: [
+            "docs/docusaurus/src/**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}",
             "src/**/*.{ts,tsx,mts,cts}",
             //    "test/**/*.{ts,tsx,mts,cts}"
         ],
@@ -683,6 +684,19 @@ export default defineConfig([
         },
         rules: {
             ...docusaurus2Plugin.configs.experimental.rules,
+        },
+    },
+    {
+        files: [
+            "docs/docusaurus/docusaurus.config.ts",
+            "docs/docusaurus/sidebars*.ts",
+        ],
+        name: "Docusaurus-2 Rules for Docusaurus config",
+        plugins: {
+            "docusaurus-2": docusaurus2Plugin,
+        },
+        rules: {
+            ...docusaurus2Plugin.configs.recommended.rules,
         },
     },
     // #endregion

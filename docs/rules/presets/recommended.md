@@ -9,9 +9,15 @@ description: Default preset for eslint-plugin-docusaurus-2.
 
 ## What it configures today
 
-It includes the same parser and plugin registration behavior as `minimal`, but it is the intended long-term default tier for the plugin.
+It includes the same parser and plugin registration behavior as `minimal`, plus the stable config/sidebar rules that are broadly useful across Docusaurus sites:
 
-Today that still means **0 bundled rules**.
+- `no-ignored-site-validations`
+
+- `prefer-config-satisfies`
+
+- `prefer-to-for-internal-links`
+
+- `require-generated-index-link-type`
 
 ## Flat config example
 

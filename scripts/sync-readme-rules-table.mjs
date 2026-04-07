@@ -228,7 +228,43 @@ export const normalizeRulesSectionMarkdown = (markdown) =>
     markdown
         .replace(/\r\n/gv, "\n")
         .split("\n")
-        .map((line) => line.trimEnd())
+        .map((line) => {
+            const trimmedLine = line.trimEnd();
+
+            if (!/^\|.*\|$/v.test(trimmedLine)) {
+                return trimmedLine;
+            }
+
+            const cells = trimmedLine
+                .split("|")
+                .slice(1, -1)
+                .map((cell) => {
+                    const trimmedCell = cell.trim();
+
+                    if (!/^:?-+:?$/v.test(trimmedCell)) {
+                        return trimmedCell;
+                    }
+
+                    const hasStartColon = trimmedCell.startsWith(":");
+                    const hasEndColon = trimmedCell.endsWith(":");
+
+                    if (hasStartColon && hasEndColon) {
+                        return ":-:";
+                    }
+
+                    if (hasStartColon) {
+                        return ":--";
+                    }
+
+                    if (hasEndColon) {
+                        return "--:";
+                    }
+
+                    return "---";
+                });
+
+            return `| ${cells.join(" | ")} |`;
+        })
         .join("\n")
         .trimEnd();
 
@@ -243,9 +279,9 @@ export const generateReadmeRulesSectionFromRules = (rules) => {
     return [
         rulesSectionHeading,
         "",
-        "The first Docusaurus-specific rules are still in development.",
+        "The current rule catalog focuses on Docusaurus config, validation, sidebar, and site-source CSS correctness.",
         "",
-        "The public preset surface is stable, but the bundled rule catalog is intentionally empty for now.",
+        "The public preset surface is stable, and the rule catalog is intentionally focused while higher-value Docusaurus rule gaps are explored.",
         "",
         "- `Fix` legend:",
         "  - `🔧` = autofixable",
@@ -274,13 +310,21 @@ export const syncReadmeRulesTable = async ({ writeChanges }) => {
         generateReadmeRulesSectionFromRules(builtPlugin.rules),
         lineEnding
     );
+    const currentRulesSection = extractReadmeRulesSection(readmeMarkdown);
+    const changed =
+        normalizeRulesSectionMarkdown(currentRulesSection) !==
+        normalizeRulesSectionMarkdown(generatedSection);
+
+    if (!changed) {
+        return Object.freeze({ changed: false });
+    }
+
     const { endOffset, startOffset } =
         getReadmeRulesSectionBounds(readmeMarkdown);
     const updatedReadme =
         readmeMarkdown.slice(0, startOffset) +
         generatedSection +
         readmeMarkdown.slice(endOffset);
-    const changed = updatedReadme !== readmeMarkdown;
 
     if (changed && writeChanges) {
         await writeFile(readmePath, updatedReadme);

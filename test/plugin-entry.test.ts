@@ -45,12 +45,23 @@ describe("plugin entry module", () => {
         );
     });
 
-    it("exposes the documented preset keys and an intentionally empty rule registry", () => {
+    it("exposes the documented preset keys and registered rules", () => {
         expect.hasAssertions();
         expect(docusaurus2Plugin.configs).toStrictEqual(
             expectedConfigRegistryShape
         );
-        expect(Object.keys(docusaurus2Plugin.rules)).toHaveLength(0);
+        expect(
+            Object.keys(docusaurus2Plugin.rules).toSorted((left, right) =>
+                left.localeCompare(right)
+            )
+        ).toStrictEqual([
+            "no-ignored-site-validations",
+            "no-page-css-module-imports-in-components",
+            "prefer-config-satisfies",
+            "prefer-css-modules-in-site-src",
+            "prefer-to-for-internal-links",
+            "require-generated-index-link-type",
+        ]);
     });
 
     it("exports the same runtime shape from plugin.mjs", async () => {
