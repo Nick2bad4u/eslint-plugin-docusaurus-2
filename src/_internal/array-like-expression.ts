@@ -11,10 +11,10 @@ import {
     isTypeArrayTypeOrUnionOfArrayTypes,
     isTypeUnknownType,
 } from "@typescript-eslint/type-utils";
-import { isDefined } from "ts-extras";
 
 import { getParentNode } from "./ast-node.js";
 import { getConstrainedTypeAtLocationWithFallback } from "./constrained-type-at-location.js";
+import { isDefined } from "./runtime-utils.js";
 import { safeTypeOperation } from "./safe-type-operation.js";
 import { setContainsValue } from "./set-membership.js";
 import {

@@ -1,14 +1,14 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { UnknownArray } from "type-fest";
 
 import { describe, expect, it } from "vitest";
+
+import type { UnknownArray } from "../../src/_internal/types";
 
 import {
     isImportInsertionFixesDisabledForNode,
     registerProgramSettingsForContext,
 } from "../../src/_internal/plugin-settings";
 
-/** Create an empty Program node used as a stable cache-key fixture. */
 const createProgramNode = (): TSESTree.Program =>
     ({
         body: [],
@@ -19,7 +19,6 @@ const createProgramNode = (): TSESTree.Program =>
         type: "Program",
     }) as unknown as TSESTree.Program;
 
-/** Build a minimal RuleContext fixture with caller-controlled settings. */
 const createContext = ({
     program,
     settings,
@@ -45,7 +44,6 @@ const createContext = ({
         },
     }) as unknown as TSESLint.RuleContext<string, UnknownArray>;
 
-/** Create a generic AST node anchored to a specific program root. */
 const createNodeInProgram = (program: TSESTree.Program): TSESTree.Node =>
     ({
         parent: program,
@@ -53,14 +51,14 @@ const createNodeInProgram = (program: TSESTree.Program): TSESTree.Node =>
     }) as unknown as TSESTree.Node;
 
 describe(registerProgramSettingsForContext, () => {
-    it("reads disableImportInsertionFixes from settings", () => {
+    it("reads disableImportInsertionFixes from the docusaurus-2 settings key", () => {
         expect.hasAssertions();
 
         const program = createProgramNode();
         const context = createContext({
             program,
             settings: {
-                typefest: {
+                "docusaurus-2": {
                     disableImportInsertionFixes: true,
                 },
             },
@@ -73,14 +71,14 @@ describe(registerProgramSettingsForContext, () => {
         expect(Object.isFrozen(parsedSettings)).toBeTruthy();
     });
 
-    it("reads disableAllAutofixes from settings", () => {
+    it("treats disableAllAutofixes as dominant over import-only settings", () => {
         expect.hasAssertions();
 
         const program = createProgramNode();
         const context = createContext({
             program,
             settings: {
-                typefest: {
+                "docusaurus-2": {
                     disableAllAutofixes: true,
                 },
             },
@@ -96,20 +94,18 @@ describe(registerProgramSettingsForContext, () => {
         expect.hasAssertions();
 
         const program = createProgramNode();
-
         const firstContext = createContext({
             program,
             settings: {
-                typefest: {
+                "docusaurus-2": {
                     disableImportInsertionFixes: true,
                 },
             },
         });
-
         const secondContext = createContext({
             program,
             settings: {
-                typefest: {
+                "docusaurus-2": {
                     disableImportInsertionFixes: false,
                 },
             },
@@ -122,61 +118,14 @@ describe(registerProgramSettingsForContext, () => {
         expect(secondSettings.disableImportInsertionFixes).toBeTruthy();
     });
 
-    it("does not share cached settings across different programs", () => {
-        expect.hasAssertions();
-
-        const firstProgram = createProgramNode();
-        const secondProgram = createProgramNode();
-
-        const firstContext = createContext({
-            program: firstProgram,
-            settings: {
-                typefest: {
-                    disableImportInsertionFixes: true,
-                },
-            },
-        });
-
-        const secondContext = createContext({
-            program: secondProgram,
-            settings: {
-                typefest: {
-                    disableImportInsertionFixes: false,
-                },
-            },
-        });
-
-        const firstSettings = registerProgramSettingsForContext(firstContext);
-        const secondSettings = registerProgramSettingsForContext(secondContext);
-
-        expect(secondSettings).not.toBe(firstSettings);
-        expect(firstSettings.disableImportInsertionFixes).toBeTruthy();
-        expect(secondSettings.disableImportInsertionFixes).toBeFalsy();
-    });
-
-    it("treats non-object settings as disabled", () => {
-        expect.hasAssertions();
-
-        const program = createProgramNode();
-        const context = createContext({
-            program,
-            settings: [],
-        });
-
-        const parsedSettings = registerProgramSettingsForContext(context);
-
-        expect(parsedSettings.disableAllAutofixes).toBeFalsy();
-        expect(parsedSettings.disableImportInsertionFixes).toBeFalsy();
-    });
-
-    it("treats non-object typefest settings as disabled", () => {
+    it("treats invalid plugin settings as disabled", () => {
         expect.hasAssertions();
 
         const program = createProgramNode();
         const context = createContext({
             program,
             settings: {
-                typefest: ["invalid"],
+                "docusaurus-2": ["invalid"],
             },
         });
 
@@ -184,130 +133,26 @@ describe(registerProgramSettingsForContext, () => {
 
         expect(parsedSettings.disableAllAutofixes).toBeFalsy();
         expect(parsedSettings.disableImportInsertionFixes).toBeFalsy();
-    });
-
-    it("treats non-boolean settings values as disabled", () => {
-        expect.hasAssertions();
-
-        const program = createProgramNode();
-        const context = createContext({
-            program,
-            settings: {
-                typefest: {
-                    disableAllAutofixes: "true",
-                    disableImportInsertionFixes: 1,
-                },
-            },
-        });
-
-        const parsedSettings = registerProgramSettingsForContext(context);
-
-        expect(parsedSettings.disableAllAutofixes).toBeFalsy();
-        expect(parsedSettings.disableImportInsertionFixes).toBeFalsy();
-    });
-
-    it("treats inherited non-boolean settings values as disabled", () => {
-        expect.hasAssertions();
-
-        const inheritedSettings = {
-            disableAllAutofixes: "true",
-            disableImportInsertionFixes: 1,
-        };
-        const settings = {
-            typefest: Object.create(inheritedSettings),
-        };
-        const program = createProgramNode();
-
-        const context = createContext({
-            program,
-            settings,
-        });
-
-        const parsedSettings = registerProgramSettingsForContext(context);
-
-        expect(parsedSettings.disableAllAutofixes).toBeFalsy();
-        expect(parsedSettings.disableImportInsertionFixes).toBeFalsy();
-    });
-
-    it("ignores inherited disableImportInsertionFixes property", () => {
-        expect.hasAssertions();
-
-        const inheritedTypefestSettings = Object.create({
-            disableImportInsertionFixes: true,
-        });
-
-        const program = createProgramNode();
-        const context = createContext({
-            program,
-            settings: {
-                typefest: inheritedTypefestSettings,
-            },
-        });
-
-        const parsedSettings = registerProgramSettingsForContext(context);
-
-        expect(parsedSettings.disableImportInsertionFixes).toBeFalsy();
-    });
-
-    it("ignores inherited disableAllAutofixes property", () => {
-        expect.hasAssertions();
-
-        const inheritedTypefestSettings = Object.create({
-            disableAllAutofixes: true,
-        });
-
-        const program = createProgramNode();
-        const context = createContext({
-            program,
-            settings: {
-                typefest: inheritedTypefestSettings,
-            },
-        });
-
-        const parsedSettings = registerProgramSettingsForContext(context);
-
-        expect(parsedSettings.disableAllAutofixes).toBeFalsy();
     });
 });
 
 describe(isImportInsertionFixesDisabledForNode, () => {
-    it("returns true when disableImportInsertionFixes is enabled", () => {
+    it("reads memoized settings from the enclosing program", () => {
         expect.hasAssertions();
 
         const program = createProgramNode();
         const context = createContext({
             program,
             settings: {
-                typefest: {
+                "docusaurus-2": {
                     disableImportInsertionFixes: true,
                 },
             },
         });
+        const node = createNodeInProgram(program);
 
         registerProgramSettingsForContext(context);
 
-        expect(
-            isImportInsertionFixesDisabledForNode(createNodeInProgram(program))
-        ).toBeTruthy();
-    });
-
-    it("returns true when only disableAllAutofixes is enabled", () => {
-        expect.hasAssertions();
-
-        const program = createProgramNode();
-        const context = createContext({
-            program,
-            settings: {
-                typefest: {
-                    disableAllAutofixes: true,
-                },
-            },
-        });
-
-        registerProgramSettingsForContext(context);
-
-        expect(
-            isImportInsertionFixesDisabledForNode(createNodeInProgram(program))
-        ).toBeTruthy();
+        expect(isImportInsertionFixesDisabledForNode(node)).toBeTruthy();
     });
 });

@@ -4,10 +4,10 @@
  * nodes used by safe-fix heuristics.
  */
 import type { TSESTree } from "@typescript-eslint/utils";
-import type { JsonObject } from "type-fest";
 
-import { isDefined, objectHasOwn, objectKeys } from "ts-extras";
+import type { JsonObject } from "./types.js";
 
+import { isDefined, objectHasOwn } from "./runtime-utils.js";
 import { setContainsValue } from "./set-membership.js";
 
 /**
@@ -46,9 +46,7 @@ const isComparableRecord = (value: unknown): value is ComparableObject =>
  * Return stable comparable keys after stripping metadata properties.
  */
 const getComparableKeys = (value: ComparableObject): readonly string[] =>
-    objectKeys(value).filter(
-        (key) => !setContainsValue(ignoredPropertyKeys, key)
-    );
+    Object.keys(value).filter((key) => !ignoredPropertyKeys.has(key));
 
 /**
  * Read comparable keys with per-comparison caching to reduce repeated

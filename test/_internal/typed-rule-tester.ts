@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * Shared testing utilities for eslint-plugin-typefest RuleTester and Vitest suites.
+ * Shared testing utilities for typed RuleTester and Vitest suites.
  */
 import type { ParserOptions } from "@typescript-eslint/parser";
 

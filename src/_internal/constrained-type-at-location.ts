@@ -7,8 +7,8 @@ import type { TSESTree } from "@typescript-eslint/utils";
 import type ts from "typescript";
 
 import { getConstrainedTypeAtLocation } from "@typescript-eslint/type-utils";
-import { isDefined, safeCastTo } from "ts-extras";
 
+import { isDefined, safeCastTo } from "./runtime-utils.js";
 import { safeTypeOperation } from "./safe-type-operation.js";
 import { getTypeCheckerBaseConstraintType } from "./type-checker-compat.js";
 import {

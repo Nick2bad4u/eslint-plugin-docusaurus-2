@@ -1,9 +1,7 @@
 /**
  * @packageDocumentation
- * Internal shared utilities used by eslint-plugin-typefest rule modules and
- * plugin wiring.
+ * Internal shared utilities used by plugin rule modules and plugin wiring.
  */
-import type { UnknownArray } from "type-fest";
 import type ts from "typescript";
 
 import {
@@ -11,17 +9,23 @@ import {
     type TSESLint,
     type TSESTree,
 } from "@typescript-eslint/utils";
-import { assertDefined, isDefined } from "ts-extras";
 
-import type { TypefestConfigReference } from "./typefest-config-references.js";
+import type { PresetConfigName } from "./preset-config-references.js";
+import type { UnknownArray } from "./types.js";
 
 import { registerProgramSettingsForContext } from "./plugin-settings.js";
 import { getRuleCatalogEntryForRuleNameOrNull } from "./rule-catalog.js";
 import { createRuleDocsUrl } from "./rule-docs-url.js";
+import { isDefined } from "./runtime-utils.js";
 import { safeTypeOperation } from "./safe-type-operation.js";
 import { getScopeFromContextSourceCode } from "./scope-resolution.js";
 import { getVariableInScopeChain } from "./scope-variable.js";
 import { getTypeCheckerIsTypeAssignableToResult } from "./type-checker-compat.js";
+
+/** Shared typed-rule context contract used by helper utilities. */
+export type TypedRuleContext = Readonly<
+    TSESLint.RuleContext<string, UnknownArray>
+>;
 
 /**
  * Parser services and type checker bundle used by typed rules.
@@ -31,13 +35,8 @@ export type TypedRuleServices = {
     parserServices: ReturnType<typeof ESLintUtils.getParserServices>;
 };
 
-/** Shared typed-rule context contract used by helper utilities. */
-type TypedRuleContext = Readonly<TSESLint.RuleContext<string, UnknownArray>>;
-
-export type { TypedRuleContext };
-
-type TypefestRuleCreator = ReturnType<
-    typeof ESLintUtils.RuleCreator<TypefestRuleDocs>
+type PluginRuleCreator = ReturnType<
+    typeof ESLintUtils.RuleCreator<PluginRuleDocs>
 >;
 
 /**
@@ -46,20 +45,18 @@ type TypefestRuleCreator = ReturnType<
  * @remarks
  * `eslint-plugin/require-meta-docs-recommended` expects `meta.docs.recommended`
  * to be boolean. Preset membership is tracked separately via
- * `meta.docs.typefestConfigs`.
+ * `meta.docs.presets`.
  *
  * `ruleId` and `ruleNumber` are injected centrally by `createTypedRule` for
  * cataloged `prefer-*` rules. Rule authors should not hand-author those fields
  * in individual rule modules.
  */
-type TypefestRuleDocs = {
+type PluginRuleDocs = {
+    presets?: PresetConfigName | readonly PresetConfigName[];
     recommended?: boolean;
     requiresTypeChecking?: boolean;
     ruleId?: string;
     ruleNumber?: number;
-    typefestConfigs?:
-        | readonly TypefestConfigReference[]
-        | TypefestConfigReference;
 };
 
 /**
@@ -76,13 +73,19 @@ type TypefestRuleDocs = {
  * @returns Rule module factory output that auto-registers program settings and
  *   preserves the authored rule contract.
  */
-export const createTypedRule: TypefestRuleCreator = (ruleDefinition) => {
+export const createTypedRule: PluginRuleCreator = (ruleDefinition) => {
     const catalogEntry = getRuleCatalogEntryForRuleNameOrNull(
         ruleDefinition.name
     );
     const createdRule = ESLintUtils.RuleCreator.withoutDocs(ruleDefinition);
     const ruleDocs = createdRule.meta.docs;
-    assertDefined(ruleDocs);
+
+    if (ruleDocs === undefined) {
+        throw new TypeError(
+            `Rule '${ruleDefinition.name}' must define meta.docs.`
+        );
+    }
+
     const canonicalDocsUrl = createRuleDocsUrl(ruleDefinition.name);
 
     if (typeof ruleDocs.url === "string" && ruleDocs.url !== canonicalDocsUrl) {
@@ -97,7 +100,7 @@ export const createTypedRule: TypefestRuleCreator = (ruleDefinition) => {
         );
     }
 
-    const docsWithCatalog: TSESLint.RuleMetaDataDocs & TypefestRuleDocs =
+    const docsWithCatalog: PluginRuleDocs & TSESLint.RuleMetaDataDocs =
         catalogEntry === null
             ? {
                   ...ruleDocs,

@@ -4,9 +4,8 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
-import { keyIn } from "ts-extras";
-
 import { resolveFirstValueInLinkedStructure } from "./cycle-safe-linked-search.js";
+import { keyIn } from "./runtime-utils.js";
 
 /**
  * AST node shape that may carry a parser-populated `parent` reference.

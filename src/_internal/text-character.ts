@@ -3,7 +3,7 @@
  * Shared character classification helpers for lightweight parser/token logic.
  */
 
-import { isDefined } from "ts-extras";
+import { isDefined } from "./runtime-utils.js";
 
 const ASCII_DIGIT_ZERO = 48 as const;
 const ASCII_DIGIT_NINE = 57 as const;

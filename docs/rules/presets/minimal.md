@@ -1,42 +1,29 @@
 ---
-title: Minimal preset
+title: minimal
+description: Smallest preset exposed by eslint-plugin-docusaurus-2.
 ---
 
-# 🟢 Minimal
+# minimal
 
-Use when you want the smallest baseline footprint.
+`minimal` is the smallest preset exposed by `eslint-plugin-docusaurus-2`.
 
-## Config key
+## What it configures today
+
+- TypeScript file globs
+- `@typescript-eslint/parser`
+- `ecmaVersion: "latest"`
+- `sourceType: "module"`
+- plugin registration under `"docusaurus-2"`
+- no bundled rules yet
+
+## Flat config example
 
 ```ts
-typefest.configs.minimal
+import docusaurus2 from "eslint-plugin-docusaurus-2";
+
+export default [docusaurus2.configs.minimal];
 ```
 
-## Flat Config example
+## When to use it
 
-```ts
-import typefest from "eslint-plugin-typefest";
-
-export default [typefest.configs.minimal];
-```
-
-## Rules in this preset
-
-- `Fix` legend:
-  - `🔧` = autofixable
-  - `💡` = suggestions available
-  - `—` = report only
-
-| Rule | Fix |
-| --- | :-: |
-| [`prefer-ts-extras-is-defined-filter`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-defined-filter) | 🔧 |
-| [`prefer-ts-extras-is-present-filter`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-ts-extras-is-present-filter) | 🔧 |
-| [`prefer-type-fest-arrayable`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-arrayable) | 🔧 |
-| [`prefer-type-fest-except`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-except) | 🔧 |
-| [`prefer-type-fest-json-array`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-array) | 🔧 |
-| [`prefer-type-fest-json-object`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-object) | 🔧 |
-| [`prefer-type-fest-json-primitive`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-primitive) | 🔧 |
-| [`prefer-type-fest-json-value`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-json-value) | 💡 |
-| [`prefer-type-fest-primitive`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-primitive) | 🔧 |
-| [`prefer-type-fest-promisable`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-promisable) | 🔧 |
-| [`prefer-type-fest-unknown-record`](https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/prefer-type-fest-unknown-record) | 🔧 |
+Use `minimal` when you want to adopt the package early, keep future churn low, and opt into stricter Docusaurus-specific rules later in a controlled rollout.

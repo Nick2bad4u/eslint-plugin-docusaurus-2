@@ -1,38 +1,50 @@
 ---
 title: Getting Started
-description: Enable eslint-plugin-typefest quickly in Flat Config.
+description: Enable eslint-plugin-docusaurus-2 in Flat Config.
 ---
 
 # Getting Started
 
-Install the plugin:
+Install the plugin and TypeScript:
 
 ```bash
-npm install --save-dev eslint-plugin-typefest typescript
+npm install --save-dev eslint-plugin-docusaurus-2 typescript
 ```
 
-Enable one preset in your Flat Config:
+Enable one preset in your flat config:
 
 ```ts
-import typefest from "eslint-plugin-typefest";
+import docusaurus2 from "eslint-plugin-docusaurus-2";
 
-export default [
-    typefest.configs.recommended,
-];
+export default [docusaurus2.configs.recommended];
 ```
 
-`recommended` does not require type information.
+## What the presets provide today
 
-If you want the same baseline plus type-aware helper rules, use
-`typefest.configs["recommended-type-checked"]`.
+Even before the first Docusaurus-specific rules land, every preset already gives you a stable plugin contract:
 
-## Alternative: manual scoped setup
+- `files: ["**/*.{ts,tsx,mts,cts}"]`
+- `@typescript-eslint/parser`
+- `ecmaVersion: "latest"`
+- `sourceType: "module"`
+- plugin registration under `"docusaurus-2"`
 
-If you prefer to apply plugin rules inside your own file-scoped config object, spread the preset rules manually.
+The typed presets also enable `projectService: true` automatically.
+
+## Choosing a preset
+
+- Start with `recommended` if you want the default future upgrade path.
+- Start with `minimal` if you want the smallest baseline while rules are still being introduced.
+- Move to `recommended-type-checked` once you are ready for type-aware rules.
+- Use `strict`, `all`, or `experimental` only when you intentionally want broader future coverage.
+
+## Manual scoped setup
+
+If you prefer to spread a preset into your own file-scoped config object, you can do that too:
 
 ```ts
 import tsParser from "@typescript-eslint/parser";
-import typefest from "eslint-plugin-typefest";
+import docusaurus2 from "eslint-plugin-docusaurus-2";
 
 export default [
     {
@@ -41,35 +53,28 @@ export default [
             parser: tsParser,
             parserOptions: {
                 ecmaVersion: "latest",
-                // Enable only when using a type-aware preset.
-                // projectService: true,
                 sourceType: "module",
+                // Enable when you opt into a typed preset.
+                // projectService: true,
             },
         },
         plugins: {
-            typefest,
+            "docusaurus-2": docusaurus2,
         },
         rules: {
-            ...typefest.configs.recommended.rules,
+            ...docusaurus2.configs.recommended.rules,
         },
     },
 ];
 ```
 
-Use this pattern when you only extend rules and want full control over parser setup per scope.
+## Important expectation
 
-## Recommended rollout
+The plugin currently exposes **preset infrastructure first** and **rule behavior second**.
 
-1. Start with `recommended` (or `minimal` if you want low initial noise).
-2. Fix violations in small batches.
-3. Move to `recommended-type-checked` when you are ready for typed rules.
-4. Move to `strict` once your baseline is stable.
-5. Use `all` when you want every stable rule.
-6. Use `experimental` only when you want report-only candidate rules under active evaluation.
+That means your config can adopt the public runtime today without inheriting fake placeholder rules copied from another plugin template.
 
-## Need a subset instead of a full preset?
+## Where to go next
 
-- 💠 `typefest.configs["type-fest/types"]`
-- ✴️ `typefest.configs["ts-extras/type-guards"]`
-
-See the **Presets** section in this sidebar for details and examples.
+- Read the [Overview](./overview.md) for the product direction.
+- Compare presets in the [Preset index](./presets/index.md).

@@ -1,8 +1,7 @@
 /**
  * @packageDocumentation
- * Shared testing utilities for eslint-plugin-typefest RuleTester and Vitest suites.
+ * Shared testing utilities for RuleTester and Vitest suites.
  */
-import type { UnknownArray, UnknownRecord } from "type-fest";
 
 import tsParser from "@typescript-eslint/parser";
 import { RuleTester } from "@typescript-eslint/rule-tester";
@@ -10,7 +9,9 @@ import * as path from "node:path";
 import pc from "picocolors";
 import { afterAll, describe, it } from "vitest";
 
-import typefestPlugin from "../../src/plugin";
+import type { UnknownArray, UnknownRecord } from "../../src/_internal/types";
+
+import docusaurus2Plugin from "../../src/plugin";
 
 /**
  * Assert that a dynamic runtime value is callable for RuleTester hook wiring.
@@ -245,15 +246,17 @@ const isRuleModule = (value: unknown): value is PluginRuleModule => {
 /**
  * Lookup a rule module from the plugin by its unqualified rule id.
  *
- * @param ruleId - Rule id without the `typefest/` prefix.
+ * @param ruleId - Rule id without the plugin namespace prefix.
  *
  * @returns Matching RuleTester-compatible rule module.
  */
 export const getPluginRule = (ruleId: string): PluginRuleModule => {
-    const { rules } = typefestPlugin;
+    const { rules } = docusaurus2Plugin;
     const dynamicRules = rules as UnknownRecord;
     if (!Object.hasOwn(dynamicRules, ruleId)) {
-        throw new Error(`Rule '${ruleId}' is not registered in typefestPlugin`);
+        throw new Error(
+            `Rule '${ruleId}' is not registered in docusaurus2Plugin`
+        );
     }
 
     const rule = dynamicRules[ruleId];

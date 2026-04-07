@@ -4,7 +4,7 @@
  * parser/type-analysis caches.
  */
 
-import { isSafeInteger } from "ts-extras";
+import { isSafeInteger } from "./runtime-utils.js";
 
 /**
  * Result shape returned by bounded-cache lookups.

@@ -184,7 +184,7 @@ That is important because sibling plugin docs sites already vary in real ways.
 
 For example:
 
-- `eslint-plugin-typefest` uses `minimal`, `recommended`, `recommended-type-checked`, `strict`, `all`, and focused family presets.
+- `eslint-plugin-docusaurus-2` uses `minimal`, `recommended`, `recommended-type-checked`, `strict`, `all`, and `experimental`.
 - `eslint-plugin-immutable-2` uses `functional-lite`, `functional`, `immutable`, `recommended`, and `all`.
 - `eslint-plugin-copilot` keeps a simpler `minimal` / `recommended` / `strict` / `all` style and different developer/footer copy.
 

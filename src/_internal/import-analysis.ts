@@ -4,7 +4,7 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
-import { isDefined } from "ts-extras";
+import { isDefined } from "./runtime-utils.js";
 
 /**
  * Grouped mapping from imported symbol name to all local alias names.

@@ -35,24 +35,24 @@ describe("indexnow script helpers", () => {
         expect.hasAssertions();
         expect(
             normalizeSiteUrl(
-                "https://nick2bad4u.github.io/eslint-plugin-typefest?ref=main#docs"
+                "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2?ref=main#docs"
             )
-        ).toBe("https://nick2bad4u.github.io/eslint-plugin-typefest/");
+        ).toBe("https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/");
     });
 
     it("derives sitemap and key-file URLs from a project site URL", () => {
         expect.hasAssertions();
         expect(
             deriveSiteConfiguration(
-                "https://nick2bad4u.github.io/eslint-plugin-typefest/"
+                "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/"
             )
         ).toStrictEqual({
             host: "nick2bad4u.github.io",
             keyFileUrl:
-                "https://nick2bad4u.github.io/eslint-plugin-typefest/indexnow-key.txt",
+                "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/indexnow-key.txt",
             sitemapUrl:
-                "https://nick2bad4u.github.io/eslint-plugin-typefest/sitemap.xml",
-            siteUrl: "https://nick2bad4u.github.io/eslint-plugin-typefest/",
+                "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/sitemap.xml",
+            siteUrl: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/",
         });
     });
 
@@ -68,11 +68,12 @@ describe("indexnow script helpers", () => {
     it("normalizes Docusaurus source paths to repository-relative paths", () => {
         expect.hasAssertions();
         expect(
-            normalizeDocusaurusSourcePath(
-                "@site/../rules/prefer-ts-extras-array-at.md"
-            )
-        ).toBe("docs/rules/prefer-ts-extras-array-at.md");
-        expect(normalizeDocusaurusSourcePath("@site/src/pages/index.jsx")).toBe(
+            normalizeDocusaurusSourcePath("@site/../rules/getting-started.md")
+        ).toBe("docs/rules/getting-started.md");
+        expect(normalizeDocusaurusSourcePath("@site/site-docs/intro.md")).toBe(
+            "docs/docusaurus/site-docs/intro.md"
+        );
+        expect(normalizeDocusaurusSourcePath("@site/src/pages/index.tsx")).toBe(
             "docs/docusaurus/src/pages/index.tsx"
         );
     });
@@ -134,11 +135,11 @@ describe("indexnow script helpers", () => {
                 host: "nick2bad4u.github.io",
                 key: "abcd1234-XYZ",
                 keyLocation:
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/indexnow-key.txt",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/indexnow-key.txt",
                 urlList: [
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/",
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/foo",
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/blog/bar",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/getting-started",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/intro",
                 ],
             })
         ).toStrictEqual([
@@ -146,19 +147,19 @@ describe("indexnow script helpers", () => {
                 host: "nick2bad4u.github.io",
                 key: "abcd1234-XYZ",
                 keyLocation:
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/indexnow-key.txt",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/indexnow-key.txt",
                 urlList: [
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/",
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/foo",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/getting-started",
                 ],
             },
             {
                 host: "nick2bad4u.github.io",
                 key: "abcd1234-XYZ",
                 keyLocation:
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/indexnow-key.txt",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/indexnow-key.txt",
                 urlList: [
-                    "https://nick2bad4u.github.io/eslint-plugin-typefest/blog/bar",
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/intro",
                 ],
             },
         ]);
@@ -172,24 +173,24 @@ describe("indexnow script helpers", () => {
                     entries: [
                         {
                             permalink:
-                                "/eslint-plugin-typefest/docs/rules/getting-started",
+                                "/eslint-plugin-docusaurus-2/docs/rules/getting-started",
                             source: "@site/../rules/getting-started.md",
                         },
                         {
-                            permalink:
-                                "/eslint-plugin-typefest/docs/developer/",
-                            source: "@site/site-docs/developer/index.md",
+                            permalink: "/eslint-plugin-docusaurus-2/docs/intro",
+                            source: "@site/site-docs/intro.md",
                         },
                     ],
                 },
             })
         ).toStrictEqual([
             {
-                permalink: "/eslint-plugin-typefest/docs/developer/",
-                sourcePath: "docs/docusaurus/site-docs/developer/index.md",
+                permalink: "/eslint-plugin-docusaurus-2/docs/intro",
+                sourcePath: "docs/docusaurus/site-docs/intro.md",
             },
             {
-                permalink: "/eslint-plugin-typefest/docs/rules/getting-started",
+                permalink:
+                    "/eslint-plugin-docusaurus-2/docs/rules/getting-started",
                 sourcePath: "docs/rules/getting-started.md",
             },
         ]);
@@ -220,25 +221,25 @@ describe("indexnow script helpers", () => {
             resolveChangedUrlsFromManifest({
                 changedPaths: [
                     "docs/rules/getting-started.md",
-                    "docs/docusaurus/site-docs/developer/index.md",
+                    "docs/docusaurus/site-docs/intro.md",
                 ],
                 manifestEntries: [
                     {
                         permalink:
-                            "/eslint-plugin-typefest/docs/rules/getting-started",
+                            "/eslint-plugin-docusaurus-2/docs/rules/getting-started",
                         sourcePath: "docs/rules/getting-started.md",
                     },
                     {
-                        permalink: "/eslint-plugin-typefest/docs/developer/",
-                        sourcePath:
-                            "docs/docusaurus/site-docs/developer/index.md",
+                        permalink: "/eslint-plugin-docusaurus-2/docs/intro",
+                        sourcePath: "docs/docusaurus/site-docs/intro.md",
                     },
                 ],
-                siteUrl: "https://nick2bad4u.github.io/eslint-plugin-typefest/",
+                siteUrl:
+                    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/",
             })
         ).toStrictEqual([
-            "https://nick2bad4u.github.io/eslint-plugin-typefest/docs/rules/getting-started",
-            "https://nick2bad4u.github.io/eslint-plugin-typefest/docs/developer/",
+            "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/getting-started",
+            "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/intro",
         ]);
     });
 

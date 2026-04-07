@@ -4,7 +4,8 @@
  * suggestion fallbacks.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { UnknownArray } from "type-fest";
+
+import type { UnknownArray } from "./types.js";
 
 import { registerProgramSettingsForContext } from "./plugin-settings.js";
 import { omitAutofixFromReportDescriptor } from "./report-adapter.js";
@@ -32,7 +33,7 @@ type ReportDescriptor<
 /**
  * Report using plugin-aware autofix policy handling.
  */
-export const reportWithTypefestPolicy = <
+export const reportWithPluginPolicy = <
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
 >({
@@ -82,7 +83,7 @@ export const reportWithOptionalFix = <
         node,
     };
 
-    reportWithTypefestPolicy({
+    reportWithPluginPolicy({
         context,
         descriptor,
     });
@@ -144,7 +145,7 @@ export const reportResolvedAutofixOrSuggestionOutcome = <
     suggestionMessageId: MessageIds;
 }>): void => {
     if (outcome.kind === "suggestion") {
-        reportWithTypefestPolicy({
+        reportWithPluginPolicy({
             context,
             descriptor: {
                 ...(data === undefined ? {} : { data }),

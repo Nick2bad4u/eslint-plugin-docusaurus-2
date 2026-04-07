@@ -3,9 +3,10 @@
  * Explicit report-adapter utilities for rule-level autofix policy handling.
  */
 import type { TSESLint } from "@typescript-eslint/utils";
-import type { UnknownArray } from "type-fest";
 
-import { isDefined, objectHasOwn } from "ts-extras";
+import type { UnknownArray } from "./types.js";
+
+import { isDefined, objectHasOwn } from "./runtime-utils.js";
 
 /**
  * Report callback type for a given message/options pair.

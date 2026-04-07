@@ -2,7 +2,7 @@
  * @packageDocumentation
  * Shared helpers for explicit boolean Set membership checks.
  */
-import { setHas } from "ts-extras";
+import { setHas } from "./runtime-utils.js";
 
 /**
  * Check whether a Set contains a candidate value while intentionally exposing

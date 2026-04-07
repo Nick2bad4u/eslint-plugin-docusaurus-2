@@ -87,11 +87,11 @@ import * as yamlEslintParser from "yaml-eslint-parser";
  * @remarks
  * When bootstrapping a new ESLint plugin, do the following:
  *
- * 1. Import `typefest` from the npm package and add it above
- * 2. Change the `typefest` local import below to be the new plugin's name and path
+ * 1. Import the local plugin from the built package entrypoint
+ * 2. Wire the plugin under its public ESLint namespace in the local config block
  * 3. Setup the `🚢 Local Plugin Import` section below for new plugin
  */
-import typefest from "./plugin.mjs";
+import docusaurus2Plugin from "./plugin.mjs";
 
 // NOTE: eslint-plugin-json-schema-validator may attempt to fetch remote schemas
 // at lint time. That makes linting flaky/offline-hostile.
@@ -149,7 +149,6 @@ const HIDE_PROGRESS_FILENAMES = ESLINT_PROGRESS_MODE === "nofile";
 /** @type {import("eslint").Linter.Config} */
 const fileProgressOverridesConfig = {
     name: "CLI: file progress overrides",
-    plugins: { "file-progress": progress },
     rules: {
         // The preset already auto-hides on CI, but we also support explicit
         // local toggles.
@@ -662,28 +661,28 @@ export default defineConfig([
     //     ],
     //     name: "Local Plugin Rules from Source",
     //     plugins: {
-    //         typefest: typefest,
+    //         "docusaurus-2": docusaurus2Plugin,
     //     },
     //     rules: {
-    //         ...typefest.configs.all.rules,
+    //         ...docusaurus2Plugin.configs.all.rules,
     //     },
     // },
     // #endregion
-    // #region ⌨️ Typefest
+    // #region ⌨️ Local Plugin
     // ═══════════════════════════════════════════════════════════════════════════════
-    // SECTION: ⌨️ Typefest (typefest/*)
+    // SECTION: ⌨️ Local plugin (docusaurus-2/*)
     // ═══════════════════════════════════════════════════════════════════════════════
     {
         files: [
             "src/**/*.{ts,tsx,mts,cts}",
             //    "test/**/*.{ts,tsx,mts,cts}"
         ],
-        name: "Typefest Rules for Source",
+        name: "Docusaurus-2 Rules for Source",
         plugins: {
-            typefest: typefest,
+            "docusaurus-2": docusaurus2Plugin,
         },
         rules: {
-            ...typefest.configs.experimental.rules,
+            ...docusaurus2Plugin.configs.experimental.rules,
         },
     },
     // #endregion

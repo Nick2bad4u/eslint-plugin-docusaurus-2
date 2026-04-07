@@ -3,7 +3,8 @@
  * Shared helpers for validating canonical `throw new TypeError(...)` shapes.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { UnknownArray } from "type-fest";
+
+import type { UnknownArray } from "./types.js";
 
 import { isGlobalIdentifierNamed } from "./typed-rule.js";
 

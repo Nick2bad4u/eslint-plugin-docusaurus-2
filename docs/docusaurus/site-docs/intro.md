@@ -1,20 +1,30 @@
 ---
-sidebar_position: 1
+id: intro
+title: Overview
+slug: /intro
 ---
 
-# eslint-plugin-typefest
+# eslint-plugin-docusaurus-2
 
-`eslint-plugin-typefest` helps TypeScript codebases adopt more explicit, safer patterns with:
+Welcome to the documentation site for `eslint-plugin-docusaurus-2`.
 
-- [`type-fest`](https://github.com/sindresorhus/type-fest) utility types.
-- [`ts-extras`](https://github.com/sindresorhus/ts-extras) runtime helpers.
+This plugin is being built for Docusaurus repositories that need stronger linting around docs structure, Docusaurus conventions, and TypeDoc-integrated documentation workflows.
 
-## What this documentation includes
+## What is already stable
 
-- A complete **rule reference** with examples for every rule.
-- **Getting Started** guidance for Flat Config projects.
-- A small **Developer API** section generated with TypeDoc.
+- package identity and plugin namespace
+- Flat Config preset surface
+- Docusaurus docs site scaffold
+- TypeDoc generation entrypoints
 
-## Next step
+## What is still in progress
 
-Next, open the **Getting Started** page in the sidebar to enable the plugin in your project.
+The first Docusaurus-specific rules are still being authored.
+
+That is why the rule catalog is currently empty even though the presets and documentation site are already live.
+
+## Where to start
+
+- Read [Getting Started](./getting-started.md)
+- Review the [rules overview](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/overview)
+- Compare the [preset tiers](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets)

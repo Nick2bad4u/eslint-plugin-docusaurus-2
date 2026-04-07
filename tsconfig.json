@@ -69,6 +69,9 @@
             ],
             "@plugin/*": [
                 "./src/*"
+            ],
+            "eslint-plugin-docusaurus-2": [
+                "./src/plugin.ts"
             ]
         },
         "preserveConstEnums": true,

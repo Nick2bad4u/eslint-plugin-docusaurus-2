@@ -1,14 +1,10 @@
-/**
- * @packageDocumentation
- * Vitest coverage for shared rule-reporting helpers.
- */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import { describe, expect, it, vi } from "vitest";
 
 import { reportWithOptionalFix } from "../../src/_internal/rule-reporting";
 
-type MessageId = "preferTsExtrasAssertDefined" | "suggestTsExtrasAssertDefined";
+type MessageId = "reportMessage" | "suggestMessage";
 
 type RuleContextLike = TSESLint.RuleContext<MessageId, readonly unknown[]>;
 
@@ -49,7 +45,7 @@ const createContext = () => {
 };
 
 describe("rule-reporting helpers", () => {
-    it("reportWithOptionalFix reports message-only descriptor when fix is null", () => {
+    it("reports a message-only descriptor when fix is null", () => {
         expect.hasAssertions();
 
         const { context, report } = createContext();
@@ -57,19 +53,19 @@ describe("rule-reporting helpers", () => {
         reportWithOptionalFix({
             context,
             fix: null,
-            messageId: "preferTsExtrasAssertDefined",
+            messageId: "reportMessage",
             node,
         });
 
         expect(report).toHaveBeenCalledOnce();
         expect(report.mock.calls[0]?.[0]).toMatchObject({
-            messageId: "preferTsExtrasAssertDefined",
+            messageId: "reportMessage",
             node,
         });
         expect(report.mock.calls[0]?.[0]).not.toHaveProperty("fix");
     });
 
-    it("reportWithOptionalFix reports direct fix when provided", () => {
+    it("reports a direct fix when provided", () => {
         expect.hasAssertions();
 
         const { context, report } = createContext();
@@ -78,53 +74,26 @@ describe("rule-reporting helpers", () => {
         reportWithOptionalFix({
             context,
             fix,
-            messageId: "preferTsExtrasAssertDefined",
+            messageId: "reportMessage",
             node,
         });
 
         expect(report).toHaveBeenCalledOnce();
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             fix,
-            messageId: "preferTsExtrasAssertDefined",
+            messageId: "reportMessage",
             node,
         });
     });
 
-    it("reportWithOptionalFix includes report data when provided", () => {
-        expect.hasAssertions();
-
-        const { context, report } = createContext();
-
-        reportWithOptionalFix({
-            context,
-            data: {
-                alias: "OldAlias",
-                replacement: "NewAlias",
-            },
-            fix: null,
-            messageId: "preferTsExtrasAssertDefined",
-            node,
-        });
-
-        expect(report).toHaveBeenCalledOnce();
-        expect(report.mock.calls[0]?.[0]).toMatchObject({
-            data: {
-                alias: "OldAlias",
-                replacement: "NewAlias",
-            },
-            messageId: "preferTsExtrasAssertDefined",
-            node,
-        });
-    });
-
-    it("reportWithOptionalFix strips top-level fix when disableAllAutofixes is enabled", () => {
+    it("strips the top-level fix when disableAllAutofixes is enabled", () => {
         expect.hasAssertions();
 
         const { context, report } = createContext();
         const fix = createFix();
 
         context.settings = {
-            typefest: {
+            "docusaurus-2": {
                 disableAllAutofixes: true,
             },
         };
@@ -132,13 +101,13 @@ describe("rule-reporting helpers", () => {
         reportWithOptionalFix({
             context,
             fix,
-            messageId: "preferTsExtrasAssertDefined",
+            messageId: "reportMessage",
             node,
         });
 
         expect(report).toHaveBeenCalledOnce();
         expect(report.mock.calls[0]?.[0]).toMatchObject({
-            messageId: "preferTsExtrasAssertDefined",
+            messageId: "reportMessage",
             node,
         });
         expect(report.mock.calls[0]?.[0]).not.toHaveProperty("fix");

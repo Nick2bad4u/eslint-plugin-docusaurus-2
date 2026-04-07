@@ -4,12 +4,11 @@
  */
 import type { ESLint } from "eslint";
 
-import typefestPlugin from "eslint-plugin-typefest";
+import docusaurus2Plugin from "eslint-plugin-docusaurus-2";
 import { assertType } from "vitest";
 
-assertType<ESLint.Plugin>(typefestPlugin);
-
-assertType<ESLint.Plugin["configs"] | undefined>(typefestPlugin.configs);
-assertType<string | undefined>(typefestPlugin.meta?.name);
-assertType<string | undefined>(typefestPlugin.meta?.version);
-assertType<ESLint.Plugin["rules"] | undefined>(typefestPlugin.rules);
+assertType<ESLint.Plugin>(docusaurus2Plugin);
+assertType<ESLint.Plugin["configs"] | undefined>(docusaurus2Plugin.configs);
+assertType<string | undefined>(docusaurus2Plugin.meta?.name);
+assertType<string | undefined>(docusaurus2Plugin.meta?.version);
+assertType<ESLint.Plugin["rules"] | undefined>(docusaurus2Plugin.rules);

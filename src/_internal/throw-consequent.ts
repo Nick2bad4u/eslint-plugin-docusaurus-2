@@ -4,7 +4,7 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
-import { arrayFirst } from "ts-extras";
+import { arrayFirst } from "./runtime-utils.js";
 
 /**
  * Extract the single throw statement from a block consequent when present.

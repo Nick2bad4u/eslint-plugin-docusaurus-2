@@ -5,10 +5,10 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import parser from "@typescript-eslint/parser";
-import { arrayAt, isInteger } from "ts-extras";
 
 import { getProgramNode } from "./ast-node.js";
 import { getBoundedCacheValue, setBoundedCacheValue } from "./bounded-cache.js";
+import { arrayAt, isInteger } from "./runtime-utils.js";
 import { safeTypeOperation } from "./safe-type-operation.js";
 import { isKnownWhitespaceCharacter } from "./text-character.js";
 

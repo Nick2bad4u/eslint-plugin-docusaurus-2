@@ -1,38 +1,33 @@
 ---
-sidebar_position: 2
+id: getting-started
+title: Getting Started
+slug: /getting-started
 ---
 
 # Getting Started
 
-Install the plugin:
+Install the package:
 
 ```bash
-npm install --save-dev eslint-plugin-typefest
+npm install --save-dev eslint-plugin-docusaurus-2 typescript
 ```
 
-Then enable it in your Flat Config:
+Enable a preset:
 
 ```ts
-import typefest from "eslint-plugin-typefest";
+import docusaurus2 from "eslint-plugin-docusaurus-2";
 
-export default [
-    {
-        plugins: {
-            typefest,
-        },
-        rules: {
-            "typefest/prefer-ts-extras-is-defined": "error",
-        },
-    },
-];
+export default [docusaurus2.configs.recommended];
 ```
 
-## Recommended approach
+## Typed presets
 
-- Start with one ruleset (`typefest.configs.recommended` or `typefest.configs.strict`).
-- Fix violations in small batches.
-- Promote warnings to errors after stabilization.
+If you want the future type-aware tier from day one, use:
 
-## Rule navigation
+```ts
+import docusaurus2 from "eslint-plugin-docusaurus-2";
 
-Use the sidebar **Rules** section for the full list of rule docs synced from the repository.
+export default [docusaurus2.configs["recommended-type-checked"]];
+```
+
+That preset enables `projectService: true` automatically.

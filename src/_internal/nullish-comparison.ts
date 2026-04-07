@@ -4,7 +4,7 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
-import { arrayIncludes, isDefined } from "ts-extras";
+import { arrayIncludes, isDefined } from "./runtime-utils.js";
 
 /**
  * Normalized representation of one binary comparison against null/undefined.

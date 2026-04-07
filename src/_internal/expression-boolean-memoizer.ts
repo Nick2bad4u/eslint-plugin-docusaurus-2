@@ -5,7 +5,7 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
-import { isDefined } from "ts-extras";
+import { isDefined } from "./runtime-utils.js";
 
 /**
  * Memoize a boolean expression predicate using a `WeakMap` keyed by expression

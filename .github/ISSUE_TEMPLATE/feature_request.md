@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a new rule or improvement for eslint-plugin-typefest
+about: Suggest a new rule or improvement for eslint-plugin-docusaurus-2
 title: "Feature: "
 labels:
     - enhancement
@@ -10,37 +10,35 @@ assignees: []
 
 ## Problem statement
 
-<!-- What developer pain does this solve? -->
+<!-- What Docusaurus or docs-workflow pain does this solve? -->
 
 ## Proposed solution
 
-<!-- Describe expected behavior, messages, and fixer/suggestion expectations. -->
+<!-- Describe expected behavior, diagnostics, and fixer/suggestion expectations. -->
 
 ## Scope
 
-- Type: New rule / Rule enhancement / Config preset / Docs / Tooling
+- Type: New rule / Rule enhancement / Preset / Docs / Tooling
 - Affected rule IDs (if any):
 - Requires type checking?: Yes / No / Unsure
-
-## Alternatives considered
 
 ## Examples
 
 ### Before
 
 ```ts
-// Code that should be reported (if applicable)
+// Code or config that should be reported (if applicable)
 ```
 
 ### After
 
 ```ts
-// Desired code after fix/suggestion
+// Desired code or config after the improvement
 ```
 
 ## Acceptance criteria
 
-- [ ] Clear, actionable diagnostic message(s)
-- [ ] Safe autofix or suggestion behavior defined
-- [ ] Test coverage plan (valid/invalid/edge/fixer)
-- [ ] Documentation impact identified (`docs/rules/<rule-id>.md` if rule-related)
+- [ ] Clear diagnostic or docs outcome
+- [ ] Safe autofix or suggestion behavior defined when relevant
+- [ ] Test coverage plan identified
+- [ ] Documentation impact identified

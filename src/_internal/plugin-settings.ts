@@ -3,14 +3,14 @@
  * Parsing and memoization helpers for plugin-level runtime settings.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { JsonObject, UnknownArray } from "type-fest";
 
-import { isPresent, objectHasOwn } from "ts-extras";
+import type { JsonObject, UnknownArray } from "./types.js";
 
 import { getProgramNode } from "./ast-node.js";
+import { isPresent, objectHasOwn } from "./runtime-utils.js";
 
 /** Top-level `settings` key for this plugin. */
-const TYPEFEST_SETTINGS_KEY = "typefest";
+const PLUGIN_SETTINGS_KEY = "docusaurus-2";
 
 /** Flag that disables all plugin autofix behavior. */
 const DISABLE_ALL_AUTOFIXES_KEY = "disableAllAutofixes";
@@ -42,22 +42,20 @@ const isObject = (value: unknown): value is Readonly<JsonObject> =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
 /**
- * Extract the `settings.typefest` object when present and valid.
+ * Extract the plugin settings object when present and valid.
  *
  * @param settings - ESLint settings value from rule context.
  *
- * @returns Parsed `settings.typefest` object when valid; otherwise `null`.
+ * @returns Parsed plugin settings object when valid; otherwise `null`.
  */
-const getTypefestSettings = (
-    settings: unknown
-): null | Readonly<JsonObject> => {
+const getPluginSettings = (settings: unknown): null | Readonly<JsonObject> => {
     if (!isObject(settings)) {
         return null;
     }
 
-    const typefestSettings = settings[TYPEFEST_SETTINGS_KEY];
+    const pluginSettings = settings[PLUGIN_SETTINGS_KEY];
 
-    return isObject(typefestSettings) ? typefestSettings : null;
+    return isObject(pluginSettings) ? pluginSettings : null;
 };
 
 /**
@@ -81,15 +79,12 @@ const readBooleanFlag = (object: Readonly<JsonObject>, key: string): boolean =>
 const readDisableImportInsertionFixesFromSettings = (
     settings: unknown
 ): boolean => {
-    const typefestSettings = getTypefestSettings(settings);
-    if (!isPresent(typefestSettings)) {
+    const pluginSettings = getPluginSettings(settings);
+    if (!isPresent(pluginSettings)) {
         return false;
     }
 
-    return readBooleanFlag(
-        typefestSettings,
-        DISABLE_IMPORT_INSERTION_FIXES_KEY
-    );
+    return readBooleanFlag(pluginSettings, DISABLE_IMPORT_INSERTION_FIXES_KEY);
 };
 
 /**
@@ -100,12 +95,12 @@ const readDisableImportInsertionFixesFromSettings = (
  * @returns `true` when all plugin autofixes are explicitly disabled.
  */
 const readDisableAllAutofixesFromSettings = (settings: unknown): boolean => {
-    const typefestSettings = getTypefestSettings(settings);
-    if (!isPresent(typefestSettings)) {
+    const pluginSettings = getPluginSettings(settings);
+    if (!isPresent(pluginSettings)) {
         return false;
     }
 
-    return readBooleanFlag(typefestSettings, DISABLE_ALL_AUTOFIXES_KEY);
+    return readBooleanFlag(pluginSettings, DISABLE_ALL_AUTOFIXES_KEY);
 };
 
 /**

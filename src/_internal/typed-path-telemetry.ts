@@ -6,7 +6,7 @@
  * @packageDocumentation
  * Lightweight runtime telemetry for typed-rule hot paths.
  */
-import { isDefined } from "ts-extras";
+import { isDefined } from "./runtime-utils.js";
 
 /** Immutable typed-path counter view exposed to consumers. */
 export type TypedPathCounters = Readonly<{

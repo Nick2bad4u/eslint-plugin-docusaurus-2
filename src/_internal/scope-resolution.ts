@@ -3,9 +3,10 @@
  * Context/source-code scope-resolution helpers.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { UnknownArray } from "type-fest";
 
-import { safeCastTo } from "ts-extras";
+import type { UnknownArray } from "./types.js";
+
+import { safeCastTo } from "./runtime-utils.js";
 
 type SourceCodeScopeGetter = Readonly<{
     getScope: (node: Readonly<TSESTree.Node>) => TSESLint.Scope.Scope;

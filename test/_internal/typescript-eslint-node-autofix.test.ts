@@ -3,10 +3,11 @@
  * Unit tests for `@typescript-eslint` node-expression skip-checker fallbacks.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { UnknownArray } from "type-fest";
 import type ts from "typescript";
 
 import { describe, expect, it, vi } from "vitest";
+
+import type { UnknownArray } from "../../src/_internal/types";
 
 import {
     createTypeScriptEslintNodeExpressionSkipChecker,

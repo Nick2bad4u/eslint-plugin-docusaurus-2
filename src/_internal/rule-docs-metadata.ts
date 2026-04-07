@@ -3,65 +3,51 @@
  * Derivation helpers for canonical rule docs metadata.
  */
 import type { TSESLint } from "@typescript-eslint/utils";
-import type { UnknownArray, UnknownRecord } from "type-fest";
 
+import type { PresetConfigName } from "./preset-config-references.js";
+import type { UnknownArray, UnknownRecord } from "./types.js";
+
+import { isPresetConfigName } from "./preset-config-references.js";
+import { createRuleDocsUrl } from "./rule-docs-url.js";
 import {
     arrayIncludes,
     isDefined,
     isEmpty,
     isInteger,
     objectEntries,
-} from "ts-extras";
-
-import type { TypefestRuleNamePattern } from "./rules-registry.js";
-
-import { createRuleDocsUrl } from "./rule-docs-url.js";
-import {
-    isTypefestConfigReference,
-    type TypefestConfigName,
-    type TypefestConfigReference,
-    typefestConfigReferenceToName,
-} from "./typefest-config-references.js";
+} from "./runtime-utils.js";
 
 /** Normalized docs metadata derived for each rule. */
 export type RuleDocsMetadata = Readonly<{
     description: string;
+    presetNames: readonly PresetConfigName[];
     recommended: boolean;
     requiresTypeChecking: boolean;
     ruleId: string;
     ruleNumber: number;
-    typefestConfigNames: readonly TypefestConfigName[];
-    typefestConfigReferences: readonly TypefestConfigReference[];
     url: string;
 }>;
 
 /** Rule-name keyed metadata map derived from static docs contracts. */
-export type RuleDocsMetadataByName = Readonly<
-    Record<TypefestRuleNamePattern, RuleDocsMetadata>
+export type RuleDocsMetadataByName<RuleName extends string = string> = Readonly<
+    Record<RuleName, RuleDocsMetadata>
 >;
 
-/** Rule-map contract accepted by docs metadata derivation helpers. */
-type RuleMap = Readonly<
-    Record<
-        TypefestRuleNamePattern,
-        TSESLint.RuleModule<string, Readonly<UnknownArray>>
-    >
->;
-
-/**
- * Canonical docs contract required on every plugin rule.
- */
-type TypefestRuleDocsContract = Readonly<{
+/** Canonical docs contract required on every plugin rule. */
+type PluginRuleDocsContract = Readonly<{
     description: string;
+    presets: PresetConfigName | readonly PresetConfigName[];
     recommended: boolean;
     requiresTypeChecking: boolean;
     ruleId: string;
     ruleNumber: number;
-    typefestConfigs:
-        | readonly TypefestConfigReference[]
-        | TypefestConfigReference;
     url: string;
 }>;
+
+/** Rule-map contract accepted by docs metadata derivation helpers. */
+type RuleMap<RuleName extends string = string> = Readonly<
+    Record<RuleName, TSESLint.RuleModule<string, Readonly<UnknownArray>>>
+>;
 
 const RULE_ID_PREFIX = "R" as const;
 const RULE_ID_LENGTH = 4 as const;
@@ -70,9 +56,7 @@ const RULE_ID_DIGIT_END_INDEX = 4 as const;
 const ASCII_ZERO_CODE_POINT = 48 as const;
 const ASCII_NINE_CODE_POINT = 57 as const;
 
-/**
- * Guard dynamic rule ids to the canonical `R###` identifier contract.
- */
+/** Guard dynamic rule ids to the canonical `R###` identifier contract. */
 const isRuleIdInCanonicalFormat = (value: string): boolean => {
     if (value.length !== RULE_ID_LENGTH || !value.startsWith(RULE_ID_PREFIX)) {
         return false;
@@ -100,64 +84,46 @@ const isRuleIdInCanonicalFormat = (value: string): boolean => {
     return true;
 };
 
-/**
- * Guard dynamic values to object-shaped records.
- */
+/** Guard dynamic values to object-shaped records. */
 const isUnknownRecord = (value: unknown): value is Readonly<UnknownRecord> =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
-/**
- * Guard dynamic rule ids to the plugin naming contract.
- */
-const isTypefestRuleNamePattern = (
-    value: string
-): value is TypefestRuleNamePattern => value.startsWith("prefer-");
-
-/**
- * Convert rule docs `typefestConfigs` into a normalized, deduped reference
- * list.
- */
-const normalizeTypefestConfigReferences = (
+/** Convert rule docs `presets` into a normalized, deduped preset-name list. */
+const normalizePresetNames = (
     ruleName: string,
-    typefestConfigs: TypefestRuleDocsContract["typefestConfigs"]
-): readonly TypefestConfigReference[] => {
-    const candidates =
-        typeof typefestConfigs === "string"
-            ? [typefestConfigs]
-            : [...typefestConfigs];
-
-    const references: TypefestConfigReference[] = [];
+    presets: PluginRuleDocsContract["presets"]
+): readonly PresetConfigName[] => {
+    const candidates = typeof presets === "string" ? [presets] : [...presets];
+    const normalizedPresetNames: PresetConfigName[] = [];
 
     for (const candidate of candidates) {
-        if (!isTypefestConfigReference(candidate)) {
+        if (!isPresetConfigName(candidate)) {
             throw new TypeError(
-                `Rule '${ruleName}' has invalid docs.typefestConfigs reference '${String(candidate)}'.`
+                `Rule '${ruleName}' has invalid docs.presets value '${String(candidate)}'.`
             );
         }
 
-        if (arrayIncludes(references, candidate)) {
+        if (arrayIncludes(normalizedPresetNames, candidate)) {
             continue;
         }
 
-        references.push(candidate);
+        normalizedPresetNames.push(candidate);
     }
 
-    if (isEmpty(references)) {
+    if (isEmpty(normalizedPresetNames)) {
         throw new TypeError(
-            `Rule '${ruleName}' must declare at least one docs.typefestConfigs reference.`
+            `Rule '${ruleName}' must declare at least one docs.presets entry.`
         );
     }
 
-    return references;
+    return normalizedPresetNames;
 };
 
-/**
- * Validate and narrow dynamic `meta.docs` values to the plugin docs contract.
- */
+/** Validate and narrow dynamic `meta.docs` values to the plugin docs contract. */
 const getRuleDocsContract = (
     ruleName: string,
     docs: unknown
-): TypefestRuleDocsContract => {
+): PluginRuleDocsContract => {
     if (!isUnknownRecord(docs)) {
         throw new TypeError(`Rule '${ruleName}' must declare meta.docs.`);
     }
@@ -167,7 +133,7 @@ const getRuleDocsContract = (
     const requiresTypeChecking = docs["requiresTypeChecking"];
     const ruleId = docs["ruleId"];
     const ruleNumber = docs["ruleNumber"];
-    const typefestConfigs = docs["typefestConfigs"];
+    const presets = docs["presets"];
     const url = docs["url"];
 
     if (typeof description !== "string" || description.trim().length === 0) {
@@ -221,149 +187,109 @@ const getRuleDocsContract = (
         );
     }
 
-    if (typeof typefestConfigs === "string") {
-        if (!isTypefestConfigReference(typefestConfigs)) {
+    if (typeof presets === "string") {
+        if (!isPresetConfigName(presets)) {
             throw new TypeError(
-                `Rule '${ruleName}' has invalid docs.typefestConfigs reference '${typefestConfigs}'.`
+                `Rule '${ruleName}' has invalid docs.presets value '${presets}'.`
             );
         }
 
         return {
             description,
+            presets,
             recommended,
             requiresTypeChecking,
             ruleId,
             ruleNumber,
-            typefestConfigs,
             url,
         };
     }
 
-    if (!Array.isArray(typefestConfigs)) {
+    if (!Array.isArray(presets)) {
         throw new TypeError(
-            `Rule '${ruleName}' must declare docs.typefestConfigs as a preset reference or array.`
+            `Rule '${ruleName}' must declare docs.presets as a preset key or array.`
         );
     }
 
-    const normalizedTypefestConfigs: TypefestConfigReference[] = [];
+    const normalizedPresetNames: PresetConfigName[] = [];
 
-    for (const candidate of typefestConfigs) {
-        if (
-            typeof candidate !== "string" ||
-            !isTypefestConfigReference(candidate)
-        ) {
+    for (const candidate of presets) {
+        if (typeof candidate !== "string" || !isPresetConfigName(candidate)) {
             throw new TypeError(
-                `Rule '${ruleName}' has invalid docs.typefestConfigs reference '${String(candidate)}'.`
+                `Rule '${ruleName}' has invalid docs.presets value '${String(candidate)}'.`
             );
         }
 
-        normalizedTypefestConfigs.push(candidate);
+        normalizedPresetNames.push(candidate);
     }
 
     return {
         description,
+        presets: normalizedPresetNames,
         recommended,
         requiresTypeChecking,
         ruleId,
         ruleNumber,
-        typefestConfigs: normalizedTypefestConfigs,
         url,
     };
 };
 
-/**
- * Derive normalized docs metadata for all plugin rules.
- */
-export const deriveRuleDocsMetadataByName = (
-    rules: RuleMap
-): RuleDocsMetadataByName => {
-    const metadataByRuleName: Record<
-        TypefestRuleNamePattern,
-        RuleDocsMetadata
-    > = {};
+/** Derive normalized docs metadata for every registered rule. */
+export const deriveRuleDocsMetadataByName = <RuleName extends string>(
+    rules: RuleMap<RuleName>
+): RuleDocsMetadataByName<RuleName> => {
+    const metadataByRuleName = {} as Record<RuleName, RuleDocsMetadata>;
 
-    for (const [ruleName, ruleModule] of objectEntries(rules)) {
-        if (!isTypefestRuleNamePattern(ruleName)) {
-            throw new TypeError(
-                `Unexpected rule id '${ruleName}' while deriving docs metadata.`
-            );
-        }
-
-        const ruleDocs = getRuleDocsContract(ruleName, ruleModule.meta?.docs);
-        const typefestConfigReferences = normalizeTypefestConfigReferences(
+    for (const [ruleName, rule] of objectEntries(rules)) {
+        const ruleDocsContract = getRuleDocsContract(ruleName, rule.meta?.docs);
+        const presetNames = normalizePresetNames(
             ruleName,
-            ruleDocs.typefestConfigs
-        );
-        const typefestConfigNames = typefestConfigReferences.map(
-            (reference) => typefestConfigReferenceToName[reference]
+            ruleDocsContract.presets
         );
 
         metadataByRuleName[ruleName] = {
-            description: ruleDocs.description,
-            recommended: ruleDocs.recommended,
-            requiresTypeChecking: ruleDocs.requiresTypeChecking,
-            ruleId: ruleDocs.ruleId,
-            ruleNumber: ruleDocs.ruleNumber,
-            typefestConfigNames,
-            typefestConfigReferences,
-            url: ruleDocs.url,
+            description: ruleDocsContract.description,
+            presetNames,
+            recommended: ruleDocsContract.recommended,
+            requiresTypeChecking: ruleDocsContract.requiresTypeChecking,
+            ruleId: ruleDocsContract.ruleId,
+            ruleNumber: ruleDocsContract.ruleNumber,
+            url: ruleDocsContract.url,
         };
     }
 
     return metadataByRuleName;
 };
 
-/**
- * Derive a typed-rule set from normalized docs metadata.
- */
-export const deriveTypeCheckedRuleNameSet = (
-    ruleDocsMetadataByName: RuleDocsMetadataByName
-): ReadonlySet<TypefestRuleNamePattern> => {
-    const ruleNames: TypefestRuleNamePattern[] = [];
+/** Derive rule-to-preset membership from normalized docs metadata. */
+export const deriveRulePresetMembershipByRuleName = <RuleName extends string>(
+    ruleDocsMetadataByName: RuleDocsMetadataByName<RuleName>
+): Readonly<Record<RuleName, readonly PresetConfigName[]>> => {
+    const membershipByRuleName = {} as Record<
+        RuleName,
+        readonly PresetConfigName[]
+    >;
+
+    for (const [ruleName, metadata] of objectEntries(ruleDocsMetadataByName)) {
+        membershipByRuleName[ruleName] = metadata.presetNames;
+    }
+
+    return membershipByRuleName;
+};
+
+/** Collect the subset of rules that require full TypeScript type information. */
+export const deriveTypeCheckedRuleNameSet = <RuleName extends string>(
+    ruleDocsMetadataByName: RuleDocsMetadataByName<RuleName>
+): ReadonlySet<RuleName> => {
+    const ruleNames = new Set<RuleName>();
 
     for (const [ruleName, metadata] of objectEntries(ruleDocsMetadataByName)) {
         if (!metadata.requiresTypeChecking) {
             continue;
         }
 
-        if (!isTypefestRuleNamePattern(ruleName)) {
-            throw new TypeError(
-                `Unexpected rule id '${ruleName}' while deriving typed-rule metadata.`
-            );
-        }
-
-        ruleNames.push(ruleName);
+        ruleNames.add(ruleName);
     }
 
-    return new Set(ruleNames);
-};
-
-/**
- * Derive canonical preset-membership map from normalized docs metadata.
- */
-export const deriveRulePresetMembershipByRuleName = (
-    ruleDocsMetadataByName: RuleDocsMetadataByName
-): Readonly<Record<TypefestRuleNamePattern, readonly TypefestConfigName[]>> => {
-    const membershipByRuleName: Record<
-        TypefestRuleNamePattern,
-        readonly TypefestConfigName[]
-    > = {};
-
-    for (const [ruleName, metadata] of objectEntries(ruleDocsMetadataByName)) {
-        if (!isTypefestRuleNamePattern(ruleName)) {
-            throw new TypeError(
-                `Unexpected rule id '${ruleName}' while deriving preset membership.`
-            );
-        }
-
-        membershipByRuleName[ruleName] = metadata.typefestConfigNames;
-    }
-
-    if (isEmpty(objectEntries(membershipByRuleName))) {
-        throw new TypeError(
-            "Rule metadata derivation produced no membership entries."
-        );
-    }
-
-    return membershipByRuleName;
+    return ruleNames;
 };

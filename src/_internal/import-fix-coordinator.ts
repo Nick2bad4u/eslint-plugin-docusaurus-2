@@ -4,10 +4,9 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
-import { isDefined } from "ts-extras";
-
 import { getProgramNode } from "./ast-node.js";
 import { isImportInsertionFixesDisabledForNode } from "./plugin-settings.js";
+import { isDefined } from "./runtime-utils.js";
 
 /** Classification for coordinated import insertion keys. */
 export type ImportBindingKind = "type" | "value";

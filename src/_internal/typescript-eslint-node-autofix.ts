@@ -4,7 +4,6 @@
  * `@typescript-eslint` AST-node expressions.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-import type { UnknownArray, UnknownRecord } from "type-fest";
 import type ts from "typescript";
 
 import parser from "@typescript-eslint/parser";
@@ -12,19 +11,20 @@ import {
     isTypeAnyType,
     isTypeUnknownType,
 } from "@typescript-eslint/type-utils";
+
+import type { TypedRuleServices } from "./typed-rule.js";
+import type { UnknownArray, UnknownRecord } from "./types.js";
+
+import { getBoundedCacheValue, setBoundedCacheValue } from "./bounded-cache.js";
+import { getConstrainedTypeAtLocationWithFallback } from "./constrained-type-at-location.js";
+import { TYPESCRIPT_ESLINT_UTILS_MODULE_SOURCE } from "./module-source.js";
 import {
     arrayIncludes,
     isDefined,
     objectHasOwn,
     safeCastTo,
     stringSplit,
-} from "ts-extras";
-
-import type { TypedRuleServices } from "./typed-rule.js";
-
-import { getBoundedCacheValue, setBoundedCacheValue } from "./bounded-cache.js";
-import { getConstrainedTypeAtLocationWithFallback } from "./constrained-type-at-location.js";
-import { TYPESCRIPT_ESLINT_UTILS_MODULE_SOURCE } from "./module-source.js";
+} from "./runtime-utils.js";
 import { safeTypeOperation } from "./safe-type-operation.js";
 import { getVariableInScopeChain } from "./scope-variable.js";
 import { setContainsValue } from "./set-membership.js";
@@ -186,7 +186,7 @@ const createDefinitionTextParseCandidates = (
     const parseCandidates = new Set<string>([
         `(${trimmedText});`,
         `const ${trimmedText};`,
-        `type __typefest_tmp__ = ${trimmedText};`,
+        `type __docusaurus_plugin_tmp__ = ${trimmedText};`,
         trimmedText,
     ]);
 
