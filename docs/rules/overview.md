@@ -27,8 +27,10 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - TypeScript parser wiring inside each preset
 - `projectService: true` for the typed presets
 - `no-conflicting-config-link-props`
+- `no-conflicting-config-link-content-props`
 - `no-deprecated-on-broken-markdown-links`
 - `no-duplicate-sidebar-doc-ids`
+- `no-conflicting-footer-html-item-props`
 - `no-ignored-site-validations`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -37,16 +39,28 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
 - `prefer-css-modules-in-site-src`
+- `prefer-href-for-external-link-components`
 - `prefer-href-for-external-links`
 - `no-page-css-module-imports-in-components`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
 - `prefer-use-base-url-for-static-assets`
+- `require-config-link-content`
+- `require-config-link-destination`
 - `require-default-export-pages`
+- `require-navbar-doc-item-doc-id`
+- `require-navbar-doc-sidebar-item-sidebar-id`
+- `require-navbar-dropdown-items`
+- `require-navbar-dropdown-label`
+- `require-sidebar-category-items`
+- `require-sidebar-category-label`
 - `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
 - `require-pages-plugin-excludes`
+- `require-sidebar-category-type`
+- `require-theme-config-image`
+- `validate-theme-config-metadata`
 
 The rule catalog is still intentionally focused while the higher-value Docusaurus rule space is explored.
 
@@ -78,17 +92,25 @@ export default [docusaurus2.configs.recommended];
 ## Current rule areas
 
 - Docusaurus config destination-prop conflict hygiene
+- Docusaurus config link content-shape conflict hygiene
+- Docusaurus config link minimal-schema hygiene
 - Docusaurus config typing and validation hygiene
 - Docusaurus deprecated-config migration hygiene
 - Docusaurus external link config-key hygiene
 - Docusaurus social-card metadata redundancy hygiene
+- Docusaurus themeConfig default social-image hygiene
+- Docusaurus themeConfig metadata schema hygiene
 - Docusaurus theme config link hygiene
+- Docusaurus footer HTML pass-through schema hygiene
+- Docusaurus navbar dropdown schema hygiene
+- Docusaurus navbar special-item schema hygiene
 - Docusaurus Link component prop hygiene
 - Docusaurus `useBaseUrl` link-wrapper hygiene
 - Docusaurus mixed sidebar link-kind hygiene
 - Docusaurus sidebar generated-index hygiene
 - Docusaurus duplicate sidebar doc-association hygiene
 - Docusaurus sidebar collapse-state hygiene
+- Docusaurus sidebar category required-field hygiene
 - Docusaurus sidebar typing hygiene
 - Docusaurus sidebar doc-link schema hygiene
 - Docusaurus page-module routing and default export hygiene

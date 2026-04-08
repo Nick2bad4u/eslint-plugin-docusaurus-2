@@ -14,18 +14,30 @@ In addition to the base parser setup, this preset enables `projectService: true`
 Today it contains the same stable rule catalog as `recommended`:
 
 - `no-conflicting-config-link-props`
+- `no-conflicting-config-link-content-props`
 - `no-deprecated-on-broken-markdown-links`
+- `no-conflicting-footer-html-item-props`
 - `no-ignored-site-validations`
-- `no-redundant-social-card-metadata`
 - `no-useless-collapsed-sidebar-categories`
 - `no-use-base-url-for-internal-link-components`
 - `prefer-config-satisfies`
+- `prefer-href-for-external-link-components`
 - `prefer-href-for-external-links`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
+- `require-config-link-content`
+- `require-config-link-destination`
+- `require-navbar-doc-item-doc-id`
+- `require-navbar-doc-sidebar-item-sidebar-id`
+- `require-navbar-dropdown-items`
+- `require-navbar-dropdown-label`
+- `require-sidebar-category-items`
+- `require-sidebar-category-label`
 - `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
+- `require-sidebar-category-type`
+- `validate-theme-config-metadata`
 
 The difference is not current rule behavior. The difference is that this preset already enables the typed parser setup that future type-aware Docusaurus rules will need.
 

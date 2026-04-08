@@ -4,6 +4,7 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     getArrayExpressionPropertyValueByName,
     getDefaultExportedObjectExpression,
@@ -20,37 +21,9 @@ type MessageIds = "noRedundantSocialCardMetadata";
 
 const socialCardMetadataNames = new Set(["og:image", "twitter:image"]);
 
-const createRemoveArrayElementFix = (
-    fixer: Readonly<TSESLint.RuleFixer>,
-    arrayExpression: Readonly<TSESTree.ArrayExpression>,
-    elementToRemove: Readonly<TSESTree.Expression>
-): TSESLint.RuleFix => {
-    const elementIndex = arrayExpression.elements.indexOf(elementToRemove);
-
-    if (elementIndex === -1 || arrayExpression.elements.length === 1) {
-        return fixer.remove(elementToRemove);
-    }
-
-    const nextElement = arrayExpression.elements[elementIndex + 1];
-
-    if (nextElement !== undefined && nextElement !== null) {
-        return fixer.removeRange([
-            elementToRemove.range[0],
-            nextElement.range[0],
-        ]);
-    }
-
-    const previousElement = arrayExpression.elements[elementIndex - 1];
-
-    if (previousElement === undefined || previousElement === null) {
-        return fixer.remove(elementToRemove);
-    }
-
-    return fixer.removeRange([
-        previousElement.range[1],
-        elementToRemove.range[1],
-    ]);
-};
+const isPresentArrayElement = (
+    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
+): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
 /** Rule module for `no-redundant-social-card-metadata`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -96,6 +69,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
+                    const metadataArrayItems =
+                        metadataArrayExpression.elements.filter(
+                            isPresentArrayElement
+                        );
+
                     for (const metadataElement of metadataArrayExpression.elements) {
                         if (metadataElement?.type !== "ObjectExpression") {
                             continue;
@@ -131,10 +109,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 metadataName,
                             },
                             fix: (fixer) =>
-                                createRemoveArrayElementFix(
+                                createRemoveCommaSeparatedItemsFixes(
                                     fixer,
-                                    metadataArrayExpression,
-                                    metadataElement
+                                    context.sourceCode,
+                                    {
+                                        container: metadataArrayExpression,
+                                        items: metadataArrayItems,
+                                        itemsToRemove: [metadataElement],
+                                    }
                                 ),
                             messageId: "noRedundantSocialCardMetadata",
                             node: metadataElement,

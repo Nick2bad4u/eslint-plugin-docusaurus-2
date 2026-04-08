@@ -43,6 +43,20 @@ const orderedRuleNames = [
     "no-use-base-url-for-internal-link-components",
     "no-mixed-sidebar-link-kinds",
     "no-redundant-social-card-metadata",
+    "prefer-href-for-external-link-components",
+    "require-sidebar-category-type",
+    "require-theme-config-image",
+    "validate-theme-config-metadata",
+    "require-sidebar-category-items",
+    "require-sidebar-category-label",
+    "require-navbar-dropdown-items",
+    "require-navbar-dropdown-label",
+    "require-config-link-content",
+    "require-config-link-destination",
+    "no-conflicting-config-link-content-props",
+    "no-conflicting-footer-html-item-props",
+    "require-navbar-doc-item-doc-id",
+    "require-navbar-doc-sidebar-item-sidebar-id",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

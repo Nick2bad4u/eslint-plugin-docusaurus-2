@@ -4,6 +4,7 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
     isDocusaurusSidebarCategoryObject,
@@ -22,42 +23,6 @@ const getBooleanLiteralValue = (
     expression.type === "Literal" && typeof expression.value === "boolean"
         ? expression.value
         : undefined;
-
-const createRemoveObjectPropertyFix = (
-    fixer: Readonly<TSESLint.RuleFixer>,
-    objectExpression: Readonly<TSESTree.ObjectExpression>,
-    propertyToRemove: Readonly<TSESTree.Property>
-): TSESLint.RuleFix => {
-    const propertyIndex = objectExpression.properties.indexOf(propertyToRemove);
-
-    if (propertyIndex === -1) {
-        return fixer.remove(propertyToRemove);
-    }
-
-    if (objectExpression.properties.length === 1) {
-        return fixer.remove(propertyToRemove);
-    }
-
-    const nextProperty = objectExpression.properties[propertyIndex + 1];
-
-    if (nextProperty !== undefined) {
-        return fixer.removeRange([
-            propertyToRemove.range[0],
-            nextProperty.range[0],
-        ]);
-    }
-
-    const previousProperty = objectExpression.properties[propertyIndex - 1];
-
-    if (previousProperty === undefined) {
-        return fixer.remove(propertyToRemove);
-    }
-
-    return fixer.removeRange([
-        previousProperty.range[1],
-        propertyToRemove.range[1],
-    ]);
-};
 
 /** Rule module for `no-useless-collapsed-sidebar-categories`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -100,10 +65,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     reportWithOptionalFix({
                         context,
                         fix(fixer) {
-                            return createRemoveObjectPropertyFix(
+                            return createRemoveCommaSeparatedItemsFixes(
                                 fixer,
-                                node,
-                                collapsedProperty
+                                context.sourceCode,
+                                {
+                                    container: node,
+                                    items: node.properties,
+                                    itemsToRemove: [collapsedProperty],
+                                }
                             );
                         },
                         messageId: "noUselessCollapsedSidebarCategory",

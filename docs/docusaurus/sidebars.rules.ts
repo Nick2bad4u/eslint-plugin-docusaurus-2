@@ -67,8 +67,18 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    id: "no-conflicting-config-link-content-props",
+                    label: "no-conflicting-config-link-content-props",
+                    type: "doc",
+                },
+                {
                     id: "no-deprecated-on-broken-markdown-links",
                     label: "no-deprecated-on-broken-markdown-links",
+                    type: "doc",
+                },
+                {
+                    id: "no-conflicting-footer-html-item-props",
+                    label: "no-conflicting-footer-html-item-props",
                     type: "doc",
                 },
                 {
@@ -122,6 +132,11 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    id: "prefer-href-for-external-link-components",
+                    label: "prefer-href-for-external-link-components",
+                    type: "doc",
+                },
+                {
                     id: "prefer-href-for-external-links",
                     label: "prefer-href-for-external-links",
                     type: "doc",
@@ -147,8 +162,28 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    id: "require-config-link-content",
+                    label: "require-config-link-content",
+                    type: "doc",
+                },
+                {
+                    id: "require-config-link-destination",
+                    label: "require-config-link-destination",
+                    type: "doc",
+                },
+                {
                     id: "require-default-export-pages",
                     label: "require-default-export-pages",
+                    type: "doc",
+                },
+                {
+                    id: "require-navbar-doc-item-doc-id",
+                    label: "require-navbar-doc-item-doc-id",
+                    type: "doc",
+                },
+                {
+                    id: "require-navbar-doc-sidebar-item-sidebar-id",
+                    label: "require-navbar-doc-sidebar-item-sidebar-id",
                     type: "doc",
                 },
                 {
@@ -164,6 +199,41 @@ const sidebars = {
                 {
                     id: "require-pages-plugin-excludes",
                     label: "require-pages-plugin-excludes",
+                    type: "doc",
+                },
+                {
+                    id: "require-navbar-dropdown-items",
+                    label: "require-navbar-dropdown-items",
+                    type: "doc",
+                },
+                {
+                    id: "require-navbar-dropdown-label",
+                    label: "require-navbar-dropdown-label",
+                    type: "doc",
+                },
+                {
+                    id: "require-sidebar-category-items",
+                    label: "require-sidebar-category-items",
+                    type: "doc",
+                },
+                {
+                    id: "require-sidebar-category-label",
+                    label: "require-sidebar-category-label",
+                    type: "doc",
+                },
+                {
+                    id: "require-sidebar-category-type",
+                    label: "require-sidebar-category-type",
+                    type: "doc",
+                },
+                {
+                    id: "require-theme-config-image",
+                    label: "require-theme-config-image",
+                    type: "doc",
+                },
+                {
+                    id: "validate-theme-config-metadata",
+                    label: "validate-theme-config-metadata",
                     type: "doc",
                 },
             ],

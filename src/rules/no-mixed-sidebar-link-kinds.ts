@@ -4,6 +4,7 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
     getObjectPropertyName,
@@ -34,40 +35,6 @@ type MixedSidebarLinkKindSuggestion = NonNullable<
         TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
     >[0]["suggest"]
 >[number];
-
-const createRemoveObjectPropertyFixes = (
-    fixer: Readonly<TSESLint.RuleFixer>,
-    objectExpression: Readonly<TSESTree.ObjectExpression>,
-    propertiesToRemove: readonly Readonly<TSESTree.Property>[]
-): readonly TSESLint.RuleFix[] =>
-    propertiesToRemove.map((propertyToRemove) => {
-        const propertyIndex =
-            objectExpression.properties.indexOf(propertyToRemove);
-
-        if (propertyIndex === -1 || objectExpression.properties.length === 1) {
-            return fixer.remove(propertyToRemove);
-        }
-
-        const nextProperty = objectExpression.properties[propertyIndex + 1];
-
-        if (nextProperty !== undefined) {
-            return fixer.removeRange([
-                propertyToRemove.range[0],
-                nextProperty.range[0],
-            ]);
-        }
-
-        const previousProperty = objectExpression.properties[propertyIndex - 1];
-
-        if (previousProperty === undefined) {
-            return fixer.remove(propertyToRemove);
-        }
-
-        return fixer.removeRange([
-            previousProperty.range[1],
-            propertyToRemove.range[1],
-        ]);
-    });
 
 /** Rule module for `no-mixed-sidebar-link-kinds`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -145,10 +112,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             ? [
                                   {
                                       fix: (fixer) =>
-                                          createRemoveObjectPropertyFixes(
+                                          createRemoveCommaSeparatedItemsFixes(
                                               fixer,
-                                              linkObject,
-                                              [idProperty]
+                                              context.sourceCode,
+                                              {
+                                                  container: linkObject,
+                                                  items: linkObject.properties,
+                                                  itemsToRemove: [idProperty],
+                                              }
                                           ),
                                       messageId:
                                           "removeDocIdFromGeneratedIndexLink",
@@ -159,10 +130,15 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                               ? [
                                     {
                                         fix: (fixer) =>
-                                            createRemoveObjectPropertyFixes(
+                                            createRemoveCommaSeparatedItemsFixes(
                                                 fixer,
-                                                linkObject,
-                                                metadataProperties
+                                                context.sourceCode,
+                                                {
+                                                    container: linkObject,
+                                                    items: linkObject.properties,
+                                                    itemsToRemove:
+                                                        metadataProperties,
+                                                }
                                             ),
                                         messageId:
                                             "removeGeneratedIndexMetadataFromDocLink",

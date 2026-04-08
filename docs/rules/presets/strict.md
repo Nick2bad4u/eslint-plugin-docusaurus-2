@@ -22,6 +22,7 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 - `prefer-use-base-url-for-static-assets`
 - `require-default-export-pages`
 - `require-pages-plugin-excludes`
+- `require-theme-config-image`
 
 The recommended link-semantics rules also remain enabled here, so `strict` covers both config/sidebar correctness and component-level routing conventions.
 

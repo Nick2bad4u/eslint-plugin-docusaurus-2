@@ -34,8 +34,10 @@ The typed presets also enable `projectService: true` automatically.
 The currently shipped rules start with the broadly useful config and sidebar checks, then add stricter page-module and site-source CSS architecture checks in the broader presets:
 
 - `no-conflicting-config-link-props`
+- `no-conflicting-config-link-content-props`
 - `no-deprecated-on-broken-markdown-links`
 - `no-duplicate-sidebar-doc-ids`
+- `no-conflicting-footer-html-item-props`
 - `no-ignored-site-validations`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -43,20 +45,33 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `no-use-base-url-for-internal-link-components`
 - `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
+- `prefer-href-for-external-link-components`
 - `prefer-href-for-external-links`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
 - `prefer-use-base-url-for-static-assets`
+- `require-config-link-content`
+- `require-config-link-destination`
+- `require-navbar-doc-item-doc-id`
+- `require-navbar-doc-sidebar-item-sidebar-id`
+- `require-navbar-dropdown-items`
+- `require-navbar-dropdown-label`
+- `require-sidebar-category-items`
+- `require-sidebar-category-label`
 - `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
 - `require-pages-plugin-excludes`
+- `require-sidebar-category-type`
+- `require-theme-config-image`
+- `validate-theme-config-metadata`
 
 The stricter presets also add:
 
 - `prefer-css-modules-in-site-src`
 - `no-page-css-module-imports-in-components`
 - `require-default-export-pages`
+- `require-theme-config-image`
 
 ## Choosing a preset
 

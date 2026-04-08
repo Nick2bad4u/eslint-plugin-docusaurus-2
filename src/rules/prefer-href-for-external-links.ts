@@ -9,6 +9,7 @@ import {
     getObjectPropertyName,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
+    isExternalLinkLikeValue,
 } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -16,15 +17,6 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 
 type MessageIds = "preferHrefForExternalLinks";
-
-const hasHttpProtocolPrefix = (value: string): boolean =>
-    /^https?:\/\//u.test(value);
-
-const isExternalLinkLikeValue = (value: string): boolean =>
-    hasHttpProtocolPrefix(value) ||
-    value.startsWith("mailto:") ||
-    value.startsWith("tel:") ||
-    value.startsWith("//");
 
 const getReplacementKeyText = (
     key: Readonly<TSESTree.Property["key"]>

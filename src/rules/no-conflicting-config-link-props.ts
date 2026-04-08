@@ -4,10 +4,12 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
+    isExternalLinkLikeValue,
     isInternalRouteLikeValue,
 } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
@@ -17,47 +19,9 @@ const defaultOptions = [] as const;
 
 type MessageIds = "noConflictingConfigLinkProps";
 
-const isExternalLinkLikeValue = (value: string): boolean =>
-    /^https?:\/\//u.test(value) ||
-    value.startsWith("mailto:") ||
-    value.startsWith("tel:") ||
-    value.startsWith("//");
-
 const isLikelyDocusaurusConfigLinkItemObject = (
     objectExpression: Readonly<TSESTree.ObjectExpression>
 ): boolean => findObjectPropertyByName(objectExpression, "label") !== null;
-
-const createRemoveObjectPropertyFix = (
-    fixer: Readonly<TSESLint.RuleFixer>,
-    objectExpression: Readonly<TSESTree.ObjectExpression>,
-    propertyToRemove: Readonly<TSESTree.Property>
-): TSESLint.RuleFix => {
-    const propertyIndex = objectExpression.properties.indexOf(propertyToRemove);
-
-    if (propertyIndex === -1 || objectExpression.properties.length === 1) {
-        return fixer.remove(propertyToRemove);
-    }
-
-    const nextProperty = objectExpression.properties[propertyIndex + 1];
-
-    if (nextProperty !== undefined) {
-        return fixer.removeRange([
-            propertyToRemove.range[0],
-            nextProperty.range[0],
-        ]);
-    }
-
-    const previousProperty = objectExpression.properties[propertyIndex - 1];
-
-    if (previousProperty === undefined) {
-        return fixer.remove(propertyToRemove);
-    }
-
-    return fixer.removeRange([
-        previousProperty.range[1],
-        propertyToRemove.range[1],
-    ]);
-};
 
 const getRedundantPropertyToRemove = (
     options: Readonly<{
@@ -129,10 +93,16 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             redundantPropertyToRemove === null
                                 ? null
                                 : (fixer) =>
-                                      createRemoveObjectPropertyFix(
+                                      createRemoveCommaSeparatedItemsFixes(
                                           fixer,
-                                          node,
-                                          redundantPropertyToRemove
+                                          context.sourceCode,
+                                          {
+                                              container: node,
+                                              items: node.properties,
+                                              itemsToRemove: [
+                                                  redundantPropertyToRemove,
+                                              ],
+                                          }
                                       ),
                         messageId: "noConflictingConfigLinkProps",
                         node: toProperty.key,

@@ -10,15 +10,50 @@ import {
 } from "../src/_internal/preset-config-references";
 import docusaurus2Plugin from "../src/plugin";
 
-const getNormalizedRulePresetNames = (ruleName: string): readonly string[] => {
-    const ruleModule = docusaurus2Plugin.rules[ruleName];
-    const rawPresets = ruleModule?.meta.docs?.presets;
+type RuleDocsWithPresets = Readonly<{
+    presets?: readonly string[] | string;
+}>;
 
-    return Array.isArray(rawPresets)
-        ? rawPresets
-        : typeof rawPresets === "string"
-          ? [rawPresets]
-          : [];
+const isStringPresetList = (value: unknown): value is readonly string[] =>
+    Array.isArray(value) && value.every((entry) => typeof entry === "string");
+
+const isRuleDocsWithPresets = (
+    value: unknown
+): value is RuleDocsWithPresets => {
+    if (typeof value !== "object" || value === null) {
+        return false;
+    }
+
+    const presets = Reflect.get(value, "presets");
+
+    return (
+        presets === undefined ||
+        typeof presets === "string" ||
+        isStringPresetList(presets)
+    );
+};
+
+const getRuleDocsWithPresets = (
+    ruleName: string
+): RuleDocsWithPresets | undefined => {
+    const ruleModule = docusaurus2Plugin.rules[ruleName];
+    const docs = ruleModule?.meta?.docs;
+
+    return isRuleDocsWithPresets(docs) ? docs : undefined;
+};
+
+const getNormalizedRulePresetNames = (ruleName: string): readonly string[] => {
+    const rawPresets = getRuleDocsWithPresets(ruleName)?.presets;
+
+    if (isStringPresetList(rawPresets)) {
+        return rawPresets;
+    }
+
+    if (typeof rawPresets === "string") {
+        return [rawPresets];
+    }
+
+    return [];
 };
 
 const getExpectedRuleIdsForPreset = (presetName: string): readonly string[] =>

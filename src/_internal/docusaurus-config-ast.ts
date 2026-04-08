@@ -538,6 +538,19 @@ export const isInternalRouteLikeValue = (value: string): boolean =>
     value.startsWith("/") && !value.startsWith("//");
 
 /**
+ * Determine whether a string is an external link-like value for Docusaurus.
+ *
+ * @param value - Static string value to inspect.
+ *
+ * @returns `true` when the string looks like an external destination.
+ */
+export const isExternalLinkLikeValue = (value: string): boolean =>
+    /^https?:\/\//u.test(value) ||
+    value.startsWith("mailto:") ||
+    value.startsWith("tel:") ||
+    value.startsWith("//");
+
+/**
  * Resolve the default-exported object expression from a Docusaurus config file.
  */
 export const getDefaultExportedObjectExpression = (
