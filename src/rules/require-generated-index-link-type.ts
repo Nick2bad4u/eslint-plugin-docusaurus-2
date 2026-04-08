@@ -100,6 +100,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const linkObject = node.value;
 
+                    if (findObjectPropertyByName(linkObject, "id") !== null) {
+                        return;
+                    }
+
                     if (!hasGeneratedIndexMetadata(linkObject)) {
                         return;
                     }

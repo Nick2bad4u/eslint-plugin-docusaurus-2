@@ -16,6 +16,7 @@ Today it contains the same stable rule catalog as `recommended`:
 - `no-conflicting-config-link-props`
 - `no-deprecated-on-broken-markdown-links`
 - `no-ignored-site-validations`
+- `no-redundant-social-card-metadata`
 - `no-useless-collapsed-sidebar-categories`
 - `no-use-base-url-for-internal-link-components`
 - `prefer-config-satisfies`

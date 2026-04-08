@@ -20,7 +20,9 @@ describe("rule-catalog", () => {
             (left, right) => left.localeCompare(right)
         );
 
-        expect(ruleCatalogEntries).toHaveLength(19);
+        expect(ruleCatalogEntries).toHaveLength(
+            Object.keys(docusaurusRules).length
+        );
         expect(
             catalogRuleNames.toSorted((left, right) =>
                 left.localeCompare(right)
@@ -68,11 +70,13 @@ describe("rule-catalog", () => {
             ruleName: "prefer-use-base-url-for-static-assets",
             ruleNumber: 17,
         });
-        expect(getRuleCatalogEntryForRuleId("R019")).toStrictEqual({
-            ruleId: "R019",
-            ruleName: "no-use-base-url-for-internal-link-components",
-            ruleNumber: 19,
-        });
+
+        const lastCatalogEntry = ruleCatalogEntries.at(-1);
+
+        expect(lastCatalogEntry).toBeDefined();
+        expect(
+            getRuleCatalogEntryForRuleId(lastCatalogEntry!.ruleId)
+        ).toStrictEqual(lastCatalogEntry);
     });
 
     it("returns null or undefined for unknown lookups", () => {

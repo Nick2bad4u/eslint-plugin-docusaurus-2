@@ -11,7 +11,9 @@ import noConflictingConfigLinkPropsRule from "../rules/no-conflicting-config-lin
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
+import noMixedSidebarLinkKindsRule from "../rules/no-mixed-sidebar-link-kinds.js";
 import noPageCssModuleImportsInComponentsRule from "../rules/no-page-css-module-imports-in-components.js";
+import noRedundantSocialCardMetadataRule from "../rules/no-redundant-social-card-metadata.js";
 import noSvgSocialCardImageRule from "../rules/no-svg-social-card-image.js";
 import noUseBaseUrlForInternalLinkComponentsRule from "../rules/no-use-base-url-for-internal-link-components.js";
 import noUselessCollapsedSidebarCategoriesRule from "../rules/no-useless-collapsed-sidebar-categories.js";
@@ -39,8 +41,10 @@ const docusaurusRuleRegistry = {
         noDeprecatedOnBrokenMarkdownLinksRule,
     "no-duplicate-sidebar-doc-ids": noDuplicateSidebarDocIdsRule,
     "no-ignored-site-validations": noIgnoredSiteValidationsRule,
+    "no-mixed-sidebar-link-kinds": noMixedSidebarLinkKindsRule,
     "no-page-css-module-imports-in-components":
         noPageCssModuleImportsInComponentsRule,
+    "no-redundant-social-card-metadata": noRedundantSocialCardMetadataRule,
     "no-svg-social-card-image": noSvgSocialCardImageRule,
     "no-use-base-url-for-internal-link-components":
         noUseBaseUrlForInternalLinkComponentsRule,

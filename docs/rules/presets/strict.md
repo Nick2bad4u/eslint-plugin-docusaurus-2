@@ -13,6 +13,8 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 
 - `no-conflicting-config-link-props`
 - `no-duplicate-sidebar-doc-ids`
+- `no-mixed-sidebar-link-kinds`
+- `no-redundant-social-card-metadata`
 - `no-svg-social-card-image`
 - `no-use-base-url-for-internal-link-components`
 - `prefer-css-modules-in-site-src`

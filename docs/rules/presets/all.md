@@ -15,7 +15,9 @@ Today it contains the current full stable rule catalog:
 - `no-deprecated-on-broken-markdown-links`
 - `no-duplicate-sidebar-doc-ids`
 - `no-ignored-site-validations`
+- `no-mixed-sidebar-link-kinds`
 - `no-page-css-module-imports-in-components`
+- `no-redundant-social-card-metadata`
 - `no-svg-social-card-image`
 - `no-use-base-url-for-internal-link-components`
 - `no-useless-collapsed-sidebar-categories`
@@ -29,6 +31,7 @@ Today it contains the current full stable rule catalog:
 - `require-default-export-pages`
 - `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
+- `require-pages-plugin-excludes`
 - `require-pages-plugin-excludes`
 
 That means `all` includes the broadly applicable config/sidebar rules plus the stricter Docusaurus page-module and site-source CSS architecture rules.

@@ -6,6 +6,7 @@ import { createRequire } from "node:module";
 import { describe, expect, it } from "vitest";
 
 import { presetConfigNames } from "../src/_internal/preset-config-references";
+import { docusaurusRules } from "../src/_internal/rules-registry";
 import docusaurus2Plugin from "../src/plugin";
 
 const requireFromTestModule = createRequire(import.meta.url);
@@ -54,27 +55,11 @@ describe("plugin entry module", () => {
             Object.keys(docusaurus2Plugin.rules).toSorted((left, right) =>
                 left.localeCompare(right)
             )
-        ).toStrictEqual([
-            "no-conflicting-config-link-props",
-            "no-deprecated-on-broken-markdown-links",
-            "no-duplicate-sidebar-doc-ids",
-            "no-ignored-site-validations",
-            "no-page-css-module-imports-in-components",
-            "no-svg-social-card-image",
-            "no-use-base-url-for-internal-link-components",
-            "no-useless-collapsed-sidebar-categories",
-            "prefer-config-satisfies",
-            "prefer-css-modules-in-site-src",
-            "prefer-href-for-external-links",
-            "prefer-sidebars-config-satisfies",
-            "prefer-to-for-internal-link-components",
-            "prefer-to-for-internal-links",
-            "prefer-use-base-url-for-static-assets",
-            "require-default-export-pages",
-            "require-doc-sidebar-link-type",
-            "require-generated-index-link-type",
-            "require-pages-plugin-excludes",
-        ]);
+        ).toStrictEqual(
+            Object.keys(docusaurusRules).toSorted((left, right) =>
+                left.localeCompare(right)
+            )
+        );
     });
 
     it("exports the same runtime shape from plugin.mjs", async () => {

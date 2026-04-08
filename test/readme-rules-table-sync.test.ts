@@ -66,50 +66,8 @@ describe("readme rules table synchronization", () => {
             "utf8"
         );
 
-        expect(generatedRulesSection).toContain(
-            "no-conflicting-config-link-props"
-        );
-        expect(generatedRulesSection).toContain(
-            "no-deprecated-on-broken-markdown-links"
-        );
-        expect(generatedRulesSection).toContain("no-duplicate-sidebar-doc-ids");
-        expect(generatedRulesSection).toContain("no-ignored-site-validations");
-        expect(generatedRulesSection).toContain("no-svg-social-card-image");
-        expect(generatedRulesSection).toContain(
-            "no-use-base-url-for-internal-link-components"
-        );
-        expect(generatedRulesSection).toContain(
-            "no-useless-collapsed-sidebar-categories"
-        );
-        expect(generatedRulesSection).toContain("prefer-config-satisfies");
-        expect(generatedRulesSection).toContain(
-            "prefer-css-modules-in-site-src"
-        );
-        expect(generatedRulesSection).toContain(
-            "prefer-href-for-external-links"
-        );
-        expect(generatedRulesSection).toContain(
-            "prefer-sidebars-config-satisfies"
-        );
-        expect(generatedRulesSection).toContain(
-            "prefer-to-for-internal-link-components"
-        );
-        expect(generatedRulesSection).toContain(
-            "no-page-css-module-imports-in-components"
-        );
-        expect(generatedRulesSection).toContain("prefer-to-for-internal-links");
-        expect(generatedRulesSection).toContain(
-            "prefer-use-base-url-for-static-assets"
-        );
-        expect(generatedRulesSection).toContain("require-default-export-pages");
-        expect(generatedRulesSection).toContain(
-            "require-doc-sidebar-link-type"
-        );
-        expect(generatedRulesSection).toContain(
-            "require-generated-index-link-type"
-        );
-        expect(generatedRulesSection).toContain(
-            "require-pages-plugin-excludes"
-        );
+        for (const ruleName of Object.keys(docusaurus2Plugin.rules)) {
+            expect(generatedRulesSection).toContain(ruleName);
+        }
     });
 });

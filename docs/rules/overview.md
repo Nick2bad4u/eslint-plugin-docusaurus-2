@@ -30,6 +30,8 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `no-deprecated-on-broken-markdown-links`
 - `no-duplicate-sidebar-doc-ids`
 - `no-ignored-site-validations`
+- `no-mixed-sidebar-link-kinds`
+- `no-redundant-social-card-metadata`
 - `no-svg-social-card-image`
 - `no-use-base-url-for-internal-link-components`
 - `no-useless-collapsed-sidebar-categories`
@@ -79,9 +81,11 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus config typing and validation hygiene
 - Docusaurus deprecated-config migration hygiene
 - Docusaurus external link config-key hygiene
+- Docusaurus social-card metadata redundancy hygiene
 - Docusaurus theme config link hygiene
 - Docusaurus Link component prop hygiene
 - Docusaurus `useBaseUrl` link-wrapper hygiene
+- Docusaurus mixed sidebar link-kind hygiene
 - Docusaurus sidebar generated-index hygiene
 - Docusaurus duplicate sidebar doc-association hygiene
 - Docusaurus sidebar collapse-state hygiene

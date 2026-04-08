@@ -16,7 +16,7 @@ This plugin is being built for Docusaurus repositories that need stronger lintin
 - Flat Config preset surface
 - Docusaurus docs site scaffold
 - TypeDoc generation entrypoints
-- nineteen shipped Docusaurus-specific rules across config validation, deprecated-config migration, config typing, link semantics, social-card image hygiene, sidebar hygiene, page-module routing, pages-plugin setup, and site-source CSS architecture
+- twenty-one shipped Docusaurus-specific rules across config validation, deprecated-config migration, config typing, link semantics, social-card image hygiene, sidebar hygiene, page-module routing, pages-plugin setup, and site-source CSS architecture
 
 ## What is still in progress
 

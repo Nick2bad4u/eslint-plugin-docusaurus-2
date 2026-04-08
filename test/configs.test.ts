@@ -10,6 +10,25 @@ import {
 } from "../src/_internal/preset-config-references";
 import docusaurus2Plugin from "../src/plugin";
 
+const getNormalizedRulePresetNames = (ruleName: string): readonly string[] => {
+    const ruleModule = docusaurus2Plugin.rules[ruleName];
+    const rawPresets = ruleModule?.meta.docs?.presets;
+
+    return Array.isArray(rawPresets)
+        ? rawPresets
+        : typeof rawPresets === "string"
+          ? [rawPresets]
+          : [];
+};
+
+const getExpectedRuleIdsForPreset = (presetName: string): readonly string[] =>
+    Object.keys(docusaurus2Plugin.rules)
+        .filter((ruleName) =>
+            getNormalizedRulePresetNames(ruleName).includes(presetName)
+        )
+        .map((ruleName) => `docusaurus-2/${ruleName}`)
+        .toSorted((left, right) => left.localeCompare(right));
+
 describe("docusaurus-2 plugin configs", () => {
     it("exports exactly the supported preset keys", () => {
         expect.hasAssertions();
@@ -83,42 +102,14 @@ describe("docusaurus-2 plugin configs", () => {
             Object.keys(docusaurus2Plugin.configs.minimal.rules)
         ).toHaveLength(0);
 
-        const expectedRecommendedRuleIds = [
-            "docusaurus-2/no-conflicting-config-link-props",
-            "docusaurus-2/no-deprecated-on-broken-markdown-links",
-            "docusaurus-2/no-ignored-site-validations",
-            "docusaurus-2/no-svg-social-card-image",
-            "docusaurus-2/no-use-base-url-for-internal-link-components",
-            "docusaurus-2/no-useless-collapsed-sidebar-categories",
-            "docusaurus-2/prefer-config-satisfies",
-            "docusaurus-2/prefer-href-for-external-links",
-            "docusaurus-2/prefer-sidebars-config-satisfies",
-            "docusaurus-2/prefer-to-for-internal-link-components",
-            "docusaurus-2/prefer-to-for-internal-links",
-            "docusaurus-2/require-doc-sidebar-link-type",
-            "docusaurus-2/require-generated-index-link-type",
-        ];
-        const expectedStrictRuleIds = [
-            "docusaurus-2/no-conflicting-config-link-props",
-            "docusaurus-2/no-deprecated-on-broken-markdown-links",
-            "docusaurus-2/no-duplicate-sidebar-doc-ids",
-            "docusaurus-2/no-ignored-site-validations",
-            "docusaurus-2/no-page-css-module-imports-in-components",
-            "docusaurus-2/no-svg-social-card-image",
-            "docusaurus-2/no-use-base-url-for-internal-link-components",
-            "docusaurus-2/no-useless-collapsed-sidebar-categories",
-            "docusaurus-2/prefer-config-satisfies",
-            "docusaurus-2/prefer-css-modules-in-site-src",
-            "docusaurus-2/prefer-href-for-external-links",
-            "docusaurus-2/prefer-sidebars-config-satisfies",
-            "docusaurus-2/prefer-to-for-internal-link-components",
-            "docusaurus-2/prefer-to-for-internal-links",
-            "docusaurus-2/prefer-use-base-url-for-static-assets",
-            "docusaurus-2/require-default-export-pages",
-            "docusaurus-2/require-doc-sidebar-link-type",
-            "docusaurus-2/require-generated-index-link-type",
-            "docusaurus-2/require-pages-plugin-excludes",
-        ];
+        const expectedRecommendedRuleIds =
+            getExpectedRuleIdsForPreset("recommended");
+        const expectedRecommendedTypeCheckedRuleIds =
+            getExpectedRuleIdsForPreset("recommended-type-checked");
+        const expectedStrictRuleIds = getExpectedRuleIdsForPreset("strict");
+        const expectedAllRuleIds = getExpectedRuleIdsForPreset("all");
+        const expectedExperimentalRuleIds =
+            getExpectedRuleIdsForPreset("experimental");
 
         expect(
             Object.keys(docusaurus2Plugin.configs.recommended.rules).toSorted(
@@ -129,7 +120,7 @@ describe("docusaurus-2 plugin configs", () => {
             Object.keys(
                 docusaurus2Plugin.configs["recommended-type-checked"].rules
             ).toSorted((left, right) => left.localeCompare(right))
-        ).toStrictEqual(expectedRecommendedRuleIds);
+        ).toStrictEqual(expectedRecommendedTypeCheckedRuleIds);
         expect(
             Object.keys(docusaurus2Plugin.configs.strict.rules).toSorted(
                 (left, right) => left.localeCompare(right)
@@ -139,11 +130,11 @@ describe("docusaurus-2 plugin configs", () => {
             Object.keys(docusaurus2Plugin.configs.all.rules).toSorted(
                 (left, right) => left.localeCompare(right)
             )
-        ).toStrictEqual(expectedStrictRuleIds);
+        ).toStrictEqual(expectedAllRuleIds);
         expect(
             Object.keys(docusaurus2Plugin.configs.experimental.rules).toSorted(
                 (left, right) => left.localeCompare(right)
             )
-        ).toStrictEqual(expectedStrictRuleIds);
+        ).toStrictEqual(expectedExperimentalRuleIds);
     });
 });

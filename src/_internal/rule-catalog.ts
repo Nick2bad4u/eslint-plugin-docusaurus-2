@@ -41,6 +41,8 @@ const orderedRuleNames = [
     "prefer-use-base-url-for-static-assets",
     "no-conflicting-config-link-props",
     "no-use-base-url-for-internal-link-components",
+    "no-mixed-sidebar-link-kinds",
+    "no-redundant-social-card-metadata",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

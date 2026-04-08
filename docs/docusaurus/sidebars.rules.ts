@@ -82,8 +82,18 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    id: "no-mixed-sidebar-link-kinds",
+                    label: "no-mixed-sidebar-link-kinds",
+                    type: "doc",
+                },
+                {
                     id: "no-page-css-module-imports-in-components",
                     label: "no-page-css-module-imports-in-components",
+                    type: "doc",
+                },
+                {
+                    id: "no-redundant-social-card-metadata",
+                    label: "no-redundant-social-card-metadata",
                     type: "doc",
                 },
                 {

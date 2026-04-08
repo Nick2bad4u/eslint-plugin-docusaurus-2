@@ -37,6 +37,8 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `no-deprecated-on-broken-markdown-links`
 - `no-duplicate-sidebar-doc-ids`
 - `no-ignored-site-validations`
+- `no-mixed-sidebar-link-kinds`
+- `no-redundant-social-card-metadata`
 - `no-svg-social-card-image`
 - `no-use-base-url-for-internal-link-components`
 - `no-useless-collapsed-sidebar-categories`
