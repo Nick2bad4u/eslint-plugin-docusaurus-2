@@ -26,17 +26,25 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - a documented flat-config preset surface
 - TypeScript parser wiring inside each preset
 - `projectService: true` for the typed presets
+- `no-conflicting-config-link-props`
 - `no-deprecated-on-broken-markdown-links`
+- `no-duplicate-sidebar-doc-ids`
 - `no-ignored-site-validations`
+- `no-svg-social-card-image`
+- `no-use-base-url-for-internal-link-components`
 - `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
 - `prefer-css-modules-in-site-src`
+- `prefer-href-for-external-links`
 - `no-page-css-module-imports-in-components`
 - `prefer-sidebars-config-satisfies`
+- `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
+- `prefer-use-base-url-for-static-assets`
 - `require-default-export-pages`
 - `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
+- `require-pages-plugin-excludes`
 
 The rule catalog is still intentionally focused while the higher-value Docusaurus rule space is explored.
 
@@ -67,14 +75,20 @@ export default [docusaurus2.configs.recommended];
 
 ## Current rule areas
 
+- Docusaurus config destination-prop conflict hygiene
 - Docusaurus config typing and validation hygiene
 - Docusaurus deprecated-config migration hygiene
+- Docusaurus external link config-key hygiene
 - Docusaurus theme config link hygiene
+- Docusaurus Link component prop hygiene
+- Docusaurus `useBaseUrl` link-wrapper hygiene
 - Docusaurus sidebar generated-index hygiene
+- Docusaurus duplicate sidebar doc-association hygiene
 - Docusaurus sidebar collapse-state hygiene
 - Docusaurus sidebar typing hygiene
 - Docusaurus sidebar doc-link schema hygiene
 - Docusaurus page-module routing and default export hygiene
+- Docusaurus pages-plugin include/exclude hygiene
 - Docusaurus site-source CSS architecture hygiene
 
 ## Current rollout shape
@@ -98,3 +112,9 @@ The plugin is being shaped around Docusaurus-specific concerns instead of generi
 - Read [Getting Started](./getting-started.md) for the preset setup flow.
 - Browse the [Preset reference pages](./presets/index.md) to choose a rollout level.
 - Use the Docusaurus site docs for maintainer-facing architecture guidance as the first rule set lands.
+
+## TypeDoc pairing note
+
+This plugin can enforce Docusaurus-side integration and configuration patterns around TypeDoc, but it is not trying to replace dedicated TypeDoc linting by itself.
+
+If you want stricter TypeDoc-specific policy, pair it with [`eslint-plugin-typedoc`](https://www.npmjs.com/package/eslint-plugin-typedoc).

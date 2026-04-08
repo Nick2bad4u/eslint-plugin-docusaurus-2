@@ -33,6 +33,14 @@ const orderedRuleNames = [
     "require-default-export-pages",
     "prefer-sidebars-config-satisfies",
     "no-useless-collapsed-sidebar-categories",
+    "require-pages-plugin-excludes",
+    "no-duplicate-sidebar-doc-ids",
+    "prefer-href-for-external-links",
+    "prefer-to-for-internal-link-components",
+    "no-svg-social-card-image",
+    "prefer-use-base-url-for-static-assets",
+    "no-conflicting-config-link-props",
+    "no-use-base-url-for-internal-link-components",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

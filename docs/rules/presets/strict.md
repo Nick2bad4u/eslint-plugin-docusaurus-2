@@ -11,9 +11,17 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 
 `strict` includes all of `recommended`, plus the stricter Docusaurus page-module and site-source CSS rules:
 
+- `no-conflicting-config-link-props`
+- `no-duplicate-sidebar-doc-ids`
+- `no-svg-social-card-image`
+- `no-use-base-url-for-internal-link-components`
 - `prefer-css-modules-in-site-src`
 - `no-page-css-module-imports-in-components`
+- `prefer-use-base-url-for-static-assets`
 - `require-default-export-pages`
+- `require-pages-plugin-excludes`
+
+The recommended link-semantics rules also remain enabled here, so `strict` covers both config/sidebar correctness and component-level routing conventions.
 
 It also keeps the typed parser baseline for future stricter Docusaurus checks.
 

@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * ESLint rule implementation for `prefer-to-for-internal-links`.
+ * ESLint rule implementation for `prefer-href-for-external-links`.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
@@ -9,14 +9,22 @@ import {
     getObjectPropertyName,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
-    isInternalRouteLikeValue,
 } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 
-type MessageIds = "preferToForInternalLinks";
+type MessageIds = "preferHrefForExternalLinks";
+
+const hasHttpProtocolPrefix = (value: string): boolean =>
+    /^https?:\/\//u.test(value);
+
+const isExternalLinkLikeValue = (value: string): boolean =>
+    hasHttpProtocolPrefix(value) ||
+    value.startsWith("mailto:") ||
+    value.startsWith("tel:") ||
+    value.startsWith("//");
 
 const getReplacementKeyText = (
     key: Readonly<TSESTree.Property["key"]>
@@ -26,23 +34,23 @@ const getReplacementKeyText = (
         typeof key.raw === "string" &&
         key.raw.startsWith("'")
     ) {
-        return "'to'";
+        return "'href'";
     }
 
     if (key.type === "Literal") {
-        return '"to"';
+        return '"href"';
     }
 
-    return "to";
+    return "href";
 };
 
-const isLikelyDocusaurusLinkItemObject = (
+const isLikelyDocusaurusConfigLinkItemObject = (
     objectExpression: Readonly<TSESTree.ObjectExpression>
 ): boolean =>
     findObjectPropertyByName(objectExpression, "label") !== null &&
-    findObjectPropertyByName(objectExpression, "to") === null;
+    findObjectPropertyByName(objectExpression, "href") === null;
 
-/** Rule module for `prefer-to-for-internal-links`. */
+/** Rule module for `prefer-href-for-external-links`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
         create(context) {
@@ -51,7 +59,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             }
 
             return {
-                'Property[key.type="Identifier"][key.name="href"], Property[key.type="Literal"][key.value="href"]'(
+                'Property[key.type="Identifier"][key.name="to"], Property[key.type="Literal"][key.value="to"]'(
                     node: TSESTree.Node
                 ) {
                     if (node.type !== "Property") {
@@ -62,25 +70,22 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     if (
                         parentObject?.type !== "ObjectExpression" ||
-                        !isLikelyDocusaurusLinkItemObject(parentObject)
+                        !isLikelyDocusaurusConfigLinkItemObject(parentObject)
                     ) {
                         return;
                     }
 
                     const propertyName = getObjectPropertyName(node);
 
-                    if (propertyName !== "href") {
+                    if (propertyName !== "to") {
                         return;
                     }
 
-                    const hrefValue = getStaticStringValue(
+                    const toValue = getStaticStringValue(
                         node.value as TSESTree.Expression
                     );
 
-                    if (
-                        hrefValue === null ||
-                        !isInternalRouteLikeValue(hrefValue)
-                    ) {
+                    if (toValue === null || !isExternalLinkLikeValue(toValue)) {
                         return;
                     }
 
@@ -92,7 +97,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 getReplacementKeyText(node.key)
                             );
                         },
-                        messageId: "preferToForInternalLinks",
+                        messageId: "preferHrefForExternalLinks",
                         node: node.key,
                     });
                 },
@@ -103,7 +108,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             deprecated: false,
             docs: {
                 description:
-                    "require `to` instead of `href` for internal Docusaurus config links.",
+                    "require `href` instead of `to` for external Docusaurus config links.",
                 frozen: false,
                 presets: [
                     "recommended",
@@ -114,17 +119,17 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 ],
                 recommended: true,
                 requiresTypeChecking: false,
-                url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-links",
+                url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-links",
             },
             fixable: "code",
             messages: {
-                preferToForInternalLinks:
-                    "Use `to` instead of `href` for internal Docusaurus links so client-side routing and baseUrl handling are used.",
+                preferHrefForExternalLinks:
+                    "Use `href` instead of `to` for external Docusaurus config links so the config matches the documented theme link semantics.",
             },
             schema: [],
             type: "suggestion",
         },
-        name: "prefer-to-for-internal-links",
+        name: "prefer-href-for-external-links",
     });
 
 export default rule;

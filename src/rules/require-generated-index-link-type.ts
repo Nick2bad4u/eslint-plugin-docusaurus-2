@@ -149,9 +149,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     'require `type: "generated-index"` when sidebar link objects use generated-index metadata.',
+                frozen: false,
                 presets: [
                     "recommended",
                     "recommended-type-checked",

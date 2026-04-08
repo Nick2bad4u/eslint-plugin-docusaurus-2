@@ -110,9 +110,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "require `satisfies SidebarsConfig` over direct `SidebarsConfig` annotations in TypeScript Docusaurus sidebar files.",
+                frozen: false,
                 presets: [
                     "recommended",
                     "recommended-type-checked",

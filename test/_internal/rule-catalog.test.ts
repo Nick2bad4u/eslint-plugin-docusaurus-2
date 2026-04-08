@@ -20,7 +20,7 @@ describe("rule-catalog", () => {
             (left, right) => left.localeCompare(right)
         );
 
-        expect(ruleCatalogEntries).toHaveLength(11);
+        expect(ruleCatalogEntries).toHaveLength(19);
         expect(
             catalogRuleNames.toSorted((left, right) =>
                 left.localeCompare(right)
@@ -52,6 +52,26 @@ describe("rule-catalog", () => {
             ruleId: "R011",
             ruleName: "no-useless-collapsed-sidebar-categories",
             ruleNumber: 11,
+        });
+        expect(getRuleCatalogEntryForRuleId("R013")).toStrictEqual({
+            ruleId: "R013",
+            ruleName: "no-duplicate-sidebar-doc-ids",
+            ruleNumber: 13,
+        });
+        expect(getRuleCatalogEntryForRuleId("R015")).toStrictEqual({
+            ruleId: "R015",
+            ruleName: "prefer-to-for-internal-link-components",
+            ruleNumber: 15,
+        });
+        expect(getRuleCatalogEntryForRuleId("R017")).toStrictEqual({
+            ruleId: "R017",
+            ruleName: "prefer-use-base-url-for-static-assets",
+            ruleNumber: 17,
+        });
+        expect(getRuleCatalogEntryForRuleId("R019")).toStrictEqual({
+            ruleId: "R019",
+            ruleName: "no-use-base-url-for-internal-link-components",
+            ruleNumber: 19,
         });
     });
 

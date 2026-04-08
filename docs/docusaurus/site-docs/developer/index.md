@@ -22,3 +22,5 @@ The Docusaurus workspace exists to document the plugin, host generated API pages
 - generated API pages under `docs/docusaurus/site-docs/developer/api/**`
 
 When the rule catalog changes, update the authored docs first, then rerun the sync scripts for the README rules section and preset matrix.
+
+For stronger TypeDoc-specific linting beyond the Docusaurus integration concerns this plugin covers, pair the docs site with `eslint-plugin-typedoc`.

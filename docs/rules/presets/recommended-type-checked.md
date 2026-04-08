@@ -13,11 +13,15 @@ In addition to the base parser setup, this preset enables `projectService: true`
 
 Today it contains the same stable rule catalog as `recommended`:
 
+- `no-conflicting-config-link-props`
 - `no-deprecated-on-broken-markdown-links`
 - `no-ignored-site-validations`
 - `no-useless-collapsed-sidebar-categories`
+- `no-use-base-url-for-internal-link-components`
 - `prefer-config-satisfies`
+- `prefer-href-for-external-links`
 - `prefer-sidebars-config-satisfies`
+- `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
 - `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`

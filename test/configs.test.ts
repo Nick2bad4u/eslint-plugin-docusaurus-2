@@ -84,27 +84,40 @@ describe("docusaurus-2 plugin configs", () => {
         ).toHaveLength(0);
 
         const expectedRecommendedRuleIds = [
+            "docusaurus-2/no-conflicting-config-link-props",
             "docusaurus-2/no-deprecated-on-broken-markdown-links",
             "docusaurus-2/no-ignored-site-validations",
+            "docusaurus-2/no-svg-social-card-image",
+            "docusaurus-2/no-use-base-url-for-internal-link-components",
             "docusaurus-2/no-useless-collapsed-sidebar-categories",
             "docusaurus-2/prefer-config-satisfies",
+            "docusaurus-2/prefer-href-for-external-links",
             "docusaurus-2/prefer-sidebars-config-satisfies",
+            "docusaurus-2/prefer-to-for-internal-link-components",
             "docusaurus-2/prefer-to-for-internal-links",
             "docusaurus-2/require-doc-sidebar-link-type",
             "docusaurus-2/require-generated-index-link-type",
         ];
         const expectedStrictRuleIds = [
+            "docusaurus-2/no-conflicting-config-link-props",
             "docusaurus-2/no-deprecated-on-broken-markdown-links",
+            "docusaurus-2/no-duplicate-sidebar-doc-ids",
             "docusaurus-2/no-ignored-site-validations",
             "docusaurus-2/no-page-css-module-imports-in-components",
+            "docusaurus-2/no-svg-social-card-image",
+            "docusaurus-2/no-use-base-url-for-internal-link-components",
             "docusaurus-2/no-useless-collapsed-sidebar-categories",
             "docusaurus-2/prefer-config-satisfies",
             "docusaurus-2/prefer-css-modules-in-site-src",
+            "docusaurus-2/prefer-href-for-external-links",
             "docusaurus-2/prefer-sidebars-config-satisfies",
+            "docusaurus-2/prefer-to-for-internal-link-components",
             "docusaurus-2/prefer-to-for-internal-links",
+            "docusaurus-2/prefer-use-base-url-for-static-assets",
             "docusaurus-2/require-default-export-pages",
             "docusaurus-2/require-doc-sidebar-link-type",
             "docusaurus-2/require-generated-index-link-type",
+            "docusaurus-2/require-pages-plugin-excludes",
         ];
 
         expect(

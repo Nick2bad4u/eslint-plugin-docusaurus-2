@@ -108,9 +108,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "require `satisfies Config` over direct `Config` annotations in TypeScript Docusaurus config files.",
+                frozen: false,
                 presets: [
                     "recommended",
                     "recommended-type-checked",

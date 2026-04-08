@@ -82,9 +82,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "require routable Docusaurus page modules to default-export a React page component.",
+                frozen: false,
                 presets: [
                     "strict",
                     "all",

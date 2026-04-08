@@ -11,8 +11,8 @@ import type {
 import { assertType } from "vitest";
 
 const validConfigName = "recommended-type-checked";
-const validRuleId = "docusaurus-2/prefer-sidebars-config-satisfies";
-const validRuleName = "no-useless-collapsed-sidebar-categories";
+const validRuleId = "docusaurus-2/no-conflicting-config-link-props";
+const validRuleName = "no-use-base-url-for-internal-link-components";
 
 type Docusaurus2ConfigName = keyof Docusaurus2Plugin["configs"];
 

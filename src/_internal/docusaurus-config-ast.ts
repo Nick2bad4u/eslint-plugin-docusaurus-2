@@ -6,6 +6,8 @@ import type { TSESTree } from "@typescript-eslint/utils";
  */
 import * as path from "node:path";
 
+import { safeCastTo } from "./runtime-utils.js";
+
 const supportedConfigExtensions = new Set([
     ".cjs",
     ".cts",
@@ -48,6 +50,11 @@ const generatedIndexMetadataPropertyNames = [
     "slug",
     "title",
 ] as const;
+
+const docusaurusClassicPresetModuleNames = new Set([
+    "@docusaurus/preset-classic",
+    "classic",
+]);
 
 const defaultExportDeclarationType = "ExportDefaultDeclaration" as const;
 
@@ -113,6 +120,31 @@ const getObjectExpressionFromExpression = (
     return unwrappedExpression.type === "ObjectExpression"
         ? unwrappedExpression
         : null;
+};
+
+const resolveExpressionForIdentifier = (
+    identifierName: string,
+    programNode: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.Expression> => {
+    for (const statement of programNode.body) {
+        if (statement.type !== "VariableDeclaration") {
+            continue;
+        }
+
+        for (const declaration of statement.declarations) {
+            if (
+                declaration.id.type !== "Identifier" ||
+                declaration.id.name !== identifierName ||
+                declaration.init === null
+            ) {
+                continue;
+            }
+
+            return declaration.init;
+        }
+    }
+
+    return null;
 };
 
 const resolveObjectExpressionForIdentifier = (
@@ -335,6 +367,50 @@ export const findObjectPropertyByName = (
 };
 
 /**
+ * Resolve an object-property value expression by property name.
+ */
+export const getObjectPropertyValueByName = (
+    objectExpression: Readonly<TSESTree.ObjectExpression>,
+    propertyName: string
+): null | Readonly<TSESTree.Expression> => {
+    const property = findObjectPropertyByName(objectExpression, propertyName);
+
+    return property === null
+        ? null
+        : safeCastTo<Readonly<TSESTree.Expression>>(property.value);
+};
+
+/**
+ * Resolve an object-expression property value by property name.
+ */
+export const getObjectExpressionPropertyValueByName = (
+    objectExpression: Readonly<TSESTree.ObjectExpression>,
+    propertyName: string
+): null | Readonly<TSESTree.ObjectExpression> => {
+    const propertyValue = getObjectPropertyValueByName(
+        objectExpression,
+        propertyName
+    );
+
+    return propertyValue?.type === "ObjectExpression" ? propertyValue : null;
+};
+
+/**
+ * Resolve an array-expression property value by property name.
+ */
+export const getArrayExpressionPropertyValueByName = (
+    objectExpression: Readonly<TSESTree.ObjectExpression>,
+    propertyName: string
+): null | Readonly<TSESTree.ArrayExpression> => {
+    const propertyValue = getObjectPropertyValueByName(
+        objectExpression,
+        propertyName
+    );
+
+    return propertyValue?.type === "ArrayExpression" ? propertyValue : null;
+};
+
+/**
  * Resolve a nested property by a sequence of object-property names.
  */
 export const findNestedObjectPropertyByNamePath = (
@@ -391,6 +467,34 @@ export const getStaticStringValue = (
     }
 
     return null;
+};
+
+/**
+ * Resolve a static string value from a literal, template, or identifier bound
+ * to a static string expression in the same program.
+ */
+export const getStaticStringValueFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): null | string => {
+    const directValue = getStaticStringValue(expression);
+
+    if (directValue !== null) {
+        return directValue;
+    }
+
+    if (expression.type !== "Identifier") {
+        return null;
+    }
+
+    const resolvedExpression = resolveExpressionForIdentifier(
+        expression.name,
+        programNode
+    );
+
+    return resolvedExpression === null
+        ? null
+        : getStaticStringValue(resolvedExpression);
 };
 
 /**
@@ -467,4 +571,43 @@ export const getDefaultExportedObjectExpression = (
     }
 
     return null;
+};
+
+/**
+ * Find all classic-preset option objects declared in a Docusaurus config.
+ */
+export const findClassicPresetOptionsObjects = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+): readonly Readonly<TSESTree.ObjectExpression>[] => {
+    const presetsArrayExpression = getArrayExpressionPropertyValueByName(
+        configObjectExpression,
+        "presets"
+    );
+
+    if (presetsArrayExpression === null) {
+        return [];
+    }
+
+    const presetOptionsObjects: TSESTree.ObjectExpression[] = [];
+
+    for (const element of presetsArrayExpression.elements) {
+        if (element?.type !== "ArrayExpression") {
+            continue;
+        }
+
+        const [presetSpecifier, presetOptions] = element.elements;
+
+        if (
+            presetSpecifier?.type !== "Literal" ||
+            typeof presetSpecifier.value !== "string" ||
+            !docusaurusClassicPresetModuleNames.has(presetSpecifier.value) ||
+            presetOptions?.type !== "ObjectExpression"
+        ) {
+            continue;
+        }
+
+        presetOptionsObjects.push(presetOptions);
+    }
+
+    return presetOptionsObjects;
 };

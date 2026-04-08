@@ -129,9 +129,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     'require `type: "doc"` when a Docusaurus sidebar category link object uses `id`.',
+                frozen: false,
                 presets: [
                     "recommended",
                     "recommended-type-checked",

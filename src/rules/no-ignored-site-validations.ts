@@ -120,9 +120,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "disallow `ignore` severities for Docusaurus site validation settings.",
+                frozen: false,
                 presets: [
                     "recommended",
                     "recommended-type-checked",

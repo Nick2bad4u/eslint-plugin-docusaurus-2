@@ -33,14 +33,22 @@ The typed presets also enable `projectService: true` automatically.
 
 The currently shipped rules start with the broadly useful config and sidebar checks, then add stricter page-module and site-source CSS architecture checks in the broader presets:
 
+- `no-conflicting-config-link-props`
 - `no-deprecated-on-broken-markdown-links`
+- `no-duplicate-sidebar-doc-ids`
 - `no-ignored-site-validations`
+- `no-svg-social-card-image`
+- `no-use-base-url-for-internal-link-components`
 - `no-useless-collapsed-sidebar-categories`
 - `prefer-config-satisfies`
+- `prefer-href-for-external-links`
 - `prefer-sidebars-config-satisfies`
+- `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
+- `prefer-use-base-url-for-static-assets`
 - `require-doc-sidebar-link-type`
 - `require-generated-index-link-type`
+- `require-pages-plugin-excludes`
 
 The stricter presets also add:
 
@@ -90,6 +98,8 @@ export default [
 The plugin still has a deliberately focused rule catalog.
 
 That means you can adopt the public runtime and start with a focused Docusaurus-specific baseline instead of inheriting a large bundle of speculative rules.
+
+For stronger TypeDoc-only linting, pair this plugin with `eslint-plugin-typedoc` instead of expecting every TypeDoc concern to live here.
 
 ## Where to go next
 

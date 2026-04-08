@@ -55,17 +55,25 @@ describe("plugin entry module", () => {
                 left.localeCompare(right)
             )
         ).toStrictEqual([
+            "no-conflicting-config-link-props",
             "no-deprecated-on-broken-markdown-links",
+            "no-duplicate-sidebar-doc-ids",
             "no-ignored-site-validations",
             "no-page-css-module-imports-in-components",
+            "no-svg-social-card-image",
+            "no-use-base-url-for-internal-link-components",
             "no-useless-collapsed-sidebar-categories",
             "prefer-config-satisfies",
             "prefer-css-modules-in-site-src",
+            "prefer-href-for-external-links",
             "prefer-sidebars-config-satisfies",
+            "prefer-to-for-internal-link-components",
             "prefer-to-for-internal-links",
+            "prefer-use-base-url-for-static-assets",
             "require-default-export-pages",
             "require-doc-sidebar-link-type",
             "require-generated-index-link-type",
+            "require-pages-plugin-excludes",
         ]);
     });
 

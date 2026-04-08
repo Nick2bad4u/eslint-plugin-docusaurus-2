@@ -114,9 +114,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "disallow `collapsed` on Docusaurus sidebar categories that already set `collapsible: false`.",
+                frozen: false,
                 presets: [
                     "recommended",
                     "recommended-type-checked",

@@ -85,9 +85,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "disallow the deprecated top-level `onBrokenMarkdownLinks` Docusaurus config property.",
+                frozen: false,
                 presets: [
                     "recommended",
                     "recommended-type-checked",

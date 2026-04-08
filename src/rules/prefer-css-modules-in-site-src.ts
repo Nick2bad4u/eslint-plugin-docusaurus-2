@@ -55,9 +55,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "disallow global stylesheet imports in Docusaurus component and page source files when CSS modules should be used instead.",
+                frozen: false,
                 presets: [
                     "strict",
                     "all",

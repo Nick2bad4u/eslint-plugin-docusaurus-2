@@ -3,16 +3,19 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 const sidebars = {
     docs: [
         {
+            className: "sb-doc-overview",
             id: "intro",
             label: "🏁 Overview",
             type: "doc",
         },
         {
+            className: "sb-doc-getting-started",
             id: "getting-started",
             label: "🚀 Getting Started",
             type: "doc",
         },
         {
+            className: "sb-cat-developer",
             collapsible: true,
             items: [
                 {
@@ -21,11 +24,13 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    className: "sb-doc-site-contract",
                     id: "developer/docusaurus-site-contract",
                     label: "Docs Site Contract",
                     type: "doc",
                 },
                 {
+                    className: "sb-cat-developer-ops",
                     id: "developer/deploy-pages-seo-and-indexnow",
                     label: "Pages SEO & IndexNow",
                     type: "doc",

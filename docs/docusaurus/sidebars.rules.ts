@@ -3,16 +3,19 @@ import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 const sidebars = {
     rules: [
         {
+            className: "sb-doc-overview",
             id: "overview",
             label: "🏁 Overview",
             type: "doc",
         },
         {
+            className: "sb-doc-getting-started",
             id: "getting-started",
             label: "🚀 Getting Started",
             type: "doc",
         },
         {
+            className: "sb-cat-presets",
             collapsible: true,
             items: [
                 {
@@ -55,11 +58,22 @@ const sidebars = {
             type: "category",
         },
         {
+            className: "sb-cat-rules",
             collapsible: true,
             items: [
                 {
+                    id: "no-conflicting-config-link-props",
+                    label: "no-conflicting-config-link-props",
+                    type: "doc",
+                },
+                {
                     id: "no-deprecated-on-broken-markdown-links",
                     label: "no-deprecated-on-broken-markdown-links",
+                    type: "doc",
+                },
+                {
+                    id: "no-duplicate-sidebar-doc-ids",
+                    label: "no-duplicate-sidebar-doc-ids",
                     type: "doc",
                 },
                 {
@@ -73,8 +87,18 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    id: "no-svg-social-card-image",
+                    label: "no-svg-social-card-image",
+                    type: "doc",
+                },
+                {
                     id: "no-useless-collapsed-sidebar-categories",
                     label: "no-useless-collapsed-sidebar-categories",
+                    type: "doc",
+                },
+                {
+                    id: "no-use-base-url-for-internal-link-components",
+                    label: "no-use-base-url-for-internal-link-components",
                     type: "doc",
                 },
                 {
@@ -88,13 +112,28 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    id: "prefer-href-for-external-links",
+                    label: "prefer-href-for-external-links",
+                    type: "doc",
+                },
+                {
                     id: "prefer-sidebars-config-satisfies",
                     label: "prefer-sidebars-config-satisfies",
                     type: "doc",
                 },
                 {
+                    id: "prefer-to-for-internal-link-components",
+                    label: "prefer-to-for-internal-link-components",
+                    type: "doc",
+                },
+                {
                     id: "prefer-to-for-internal-links",
                     label: "prefer-to-for-internal-links",
+                    type: "doc",
+                },
+                {
+                    id: "prefer-use-base-url-for-static-assets",
+                    label: "prefer-use-base-url-for-static-assets",
                     type: "doc",
                 },
                 {
@@ -110,6 +149,11 @@ const sidebars = {
                 {
                     id: "require-generated-index-link-type",
                     label: "require-generated-index-link-type",
+                    type: "doc",
+                },
+                {
+                    id: "require-pages-plugin-excludes",
+                    label: "require-pages-plugin-excludes",
                     type: "doc",
                 },
             ],

@@ -48,9 +48,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
                     "disallow page-scoped CSS module imports from Docusaurus component modules.",
+                frozen: false,
                 presets: [
                     "strict",
                     "all",
