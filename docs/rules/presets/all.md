@@ -34,6 +34,8 @@ Today it contains the current full stable rule catalog:
 - `require-config-link-content`
 - `require-config-link-destination`
 - `require-default-export-pages`
+- `require-plugin-pwa-setup`
+- `require-site-config-fields`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
 - `require-navbar-dropdown-items`

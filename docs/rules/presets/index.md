@@ -18,7 +18,7 @@ description: Preset reference for eslint-plugin-docusaurus-2.
 
 ## Current rule count
 
-The plugin currently ships **35 rules**.
+The plugin currently ships **37 rules**.
 
 - `no-conflicting-config-link-props`
 - `no-conflicting-config-link-content-props`
@@ -43,6 +43,8 @@ The plugin currently ships **35 rules**.
 - `require-config-link-content`
 - `require-config-link-destination`
 - `require-default-export-pages`
+- `require-plugin-pwa-setup`
+- `require-site-config-fields`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
 - `require-navbar-dropdown-items`
@@ -94,8 +96,10 @@ This matrix is the canonical place to show how the current Docusaurus rule catal
 | [`require-navbar-dropdown-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-items)                               |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 | [`require-navbar-dropdown-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-label)                               |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 | [`require-pages-plugin-excludes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-pages-plugin-excludes)                               |  —  |  —  |  —  |  ✅  |  ✅  |  ✅  |
+| [`require-plugin-pwa-setup`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-setup)                                         |  —  |  —  |  —  |  ✅  |  ✅  |  ✅  |
 | [`require-sidebar-category-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-items)                             |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 | [`require-sidebar-category-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-label)                             |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
 | [`require-sidebar-category-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-type)                               |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |
+| [`require-site-config-fields`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-config-fields)                                     |  —  |  —  |  —  |  ✅  |  ✅  |  ✅  |
 | [`require-theme-config-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-image)                                     |  —  |  —  |  —  |  ✅  |  ✅  |  ✅  |
 | [`validate-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-metadata)                             |  —  |  ✅  |  ✅  |  ✅  |  ✅  |  ✅  |

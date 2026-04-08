@@ -177,6 +177,16 @@ const sidebars = {
                     type: "doc",
                 },
                 {
+                    id: "require-plugin-pwa-setup",
+                    label: "require-plugin-pwa-setup",
+                    type: "doc",
+                },
+                {
+                    id: "require-site-config-fields",
+                    label: "require-site-config-fields",
+                    type: "doc",
+                },
+                {
                     id: "require-navbar-doc-item-doc-id",
                     label: "require-navbar-doc-item-doc-id",
                     type: "doc",

@@ -51,6 +51,8 @@ Today it ships:
 - `require-config-link-content`
 - `require-config-link-destination`
 - `require-default-export-pages`
+- `require-plugin-pwa-setup`
+- `require-site-config-fields`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
 - `require-navbar-dropdown-items`
@@ -161,9 +163,11 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`require-navbar-dropdown-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-items)                               |  —  | 🟡 🟠 🔴 🟣 🧪 |
 | [`require-navbar-dropdown-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-label)                               |  —  | 🟡 🟠 🔴 🟣 🧪 |
 | [`require-pages-plugin-excludes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-pages-plugin-excludes)                               |  🔧 | 🔴 🟣 🧪       |
+| [`require-plugin-pwa-setup`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-setup)                                         |  —  | 🔴 🟣 🧪       |
 | [`require-sidebar-category-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-items)                             |  —  | 🟡 🟠 🔴 🟣 🧪 |
 | [`require-sidebar-category-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-label)                             |  —  | 🟡 🟠 🔴 🟣 🧪 |
 | [`require-sidebar-category-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-type)                               |  🔧 | 🟡 🟠 🔴 🟣 🧪 |
+| [`require-site-config-fields`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-config-fields)                                     |  —  | 🔴 🟣 🧪       |
 | [`require-theme-config-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-image)                                     |  —  | 🔴 🟣 🧪       |
 | [`validate-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-metadata)                             |  —  | 🟡 🟠 🔴 🟣 🧪 |
 

@@ -49,6 +49,8 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `require-config-link-content`
 - `require-config-link-destination`
 - `require-default-export-pages`
+- `require-plugin-pwa-setup`
+- `require-site-config-fields`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
 - `require-navbar-dropdown-items`
@@ -94,6 +96,7 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus config destination-prop conflict hygiene
 - Docusaurus config link content-shape conflict hygiene
 - Docusaurus config link minimal-schema hygiene
+- Docusaurus explicit site-config field hygiene
 - Docusaurus config typing and validation hygiene
 - Docusaurus deprecated-config migration hygiene
 - Docusaurus external link config-key hygiene
@@ -102,6 +105,7 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus themeConfig metadata schema hygiene
 - Docusaurus theme config link hygiene
 - Docusaurus footer HTML pass-through schema hygiene
+- Docusaurus plugin-pwa setup hygiene
 - Docusaurus navbar dropdown schema hygiene
 - Docusaurus navbar special-item schema hygiene
 - Docusaurus Link component prop hygiene

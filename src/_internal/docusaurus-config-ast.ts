@@ -498,6 +498,46 @@ export const getStaticStringValueFromExpressionOrIdentifier = (
 };
 
 /**
+ * Resolve a static boolean value from a literal or identifier bound to a static
+ * boolean expression in the same program.
+ */
+export const getStaticBooleanValueFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): boolean | null | undefined => {
+    if (
+        expression.type === "Literal" &&
+        typeof expression.value === "boolean"
+    ) {
+        return expression.value;
+    }
+
+    if (expression.type !== "Identifier") {
+        return undefined;
+    }
+
+    const resolvedExpression = resolveExpressionForIdentifier(
+        expression.name,
+        programNode
+    );
+
+    if (resolvedExpression === null) {
+        return undefined;
+    }
+
+    if (resolvedExpression.type === "Literal") {
+        return typeof resolvedExpression.value === "boolean"
+            ? resolvedExpression.value
+            : null;
+    }
+
+    return resolvedExpression.type === "TemplateLiteral" &&
+        resolvedExpression.expressions.length === 0
+        ? null
+        : undefined;
+};
+
+/**
  * Determine whether an object expression looks like a Docusaurus sidebar
  * category item.
  */
@@ -623,4 +663,83 @@ export const findClassicPresetOptionsObjects = (
     }
 
     return presetOptionsObjects;
+};
+
+/** Plugin configuration entry resolved from the top-level `plugins` array. */
+export type DocusaurusPluginConfigurationEntry = Readonly<{
+    node: Readonly<TSESTree.ArrayExpression | TSESTree.Literal>;
+    optionsExpression?: Readonly<TSESTree.Expression>;
+    optionsObject: null | Readonly<TSESTree.ObjectExpression>;
+}>;
+
+/**
+ * Find all plugin configurations declared for one plugin specifier.
+ */
+export const findPluginConfigurationsByName = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    pluginName: string
+): readonly DocusaurusPluginConfigurationEntry[] => {
+    const pluginsArrayExpression = getArrayExpressionPropertyValueByName(
+        configObjectExpression,
+        "plugins"
+    );
+
+    if (pluginsArrayExpression === null) {
+        return [];
+    }
+
+    const pluginEntries: DocusaurusPluginConfigurationEntry[] = [];
+
+    for (const element of pluginsArrayExpression.elements) {
+        if (
+            element?.type === "Literal" &&
+            typeof element.value === "string" &&
+            element.value === pluginName
+        ) {
+            pluginEntries.push({
+                node: element,
+                optionsObject: null,
+            });
+
+            continue;
+        }
+
+        if (element?.type !== "ArrayExpression") {
+            continue;
+        }
+
+        const [pluginSpecifier, pluginOptions] = element.elements;
+
+        if (
+            pluginSpecifier?.type !== "Literal" ||
+            typeof pluginSpecifier.value !== "string" ||
+            pluginSpecifier.value !== pluginName
+        ) {
+            continue;
+        }
+
+        if (
+            pluginOptions === undefined ||
+            pluginOptions === null ||
+            pluginOptions.type === "SpreadElement"
+        ) {
+            pluginEntries.push({
+                node: element,
+                optionsObject: null,
+            });
+
+            continue;
+        }
+
+        pluginEntries.push({
+            node: element,
+            optionsExpression: pluginOptions,
+            optionsObject:
+                pluginOptions.type === "ObjectExpression"
+                    ? pluginOptions
+                    : null,
+        });
+    }
+
+    return pluginEntries;
 };

@@ -37,9 +37,11 @@ import requireNavbarDocSidebarItemSidebarIdRule from "../rules/require-navbar-do
 import requireNavbarDropdownItemsRule from "../rules/require-navbar-dropdown-items.js";
 import requireNavbarDropdownLabelRule from "../rules/require-navbar-dropdown-label.js";
 import requirePagesPluginExcludesRule from "../rules/require-pages-plugin-excludes.js";
+import requirePluginPwaSetupRule from "../rules/require-plugin-pwa-setup.js";
 import requireSidebarCategoryItemsRule from "../rules/require-sidebar-category-items.js";
 import requireSidebarCategoryLabelRule from "../rules/require-sidebar-category-label.js";
 import requireSidebarCategoryTypeRule from "../rules/require-sidebar-category-type.js";
+import requireSiteConfigFieldsRule from "../rules/require-site-config-fields.js";
 import requireThemeConfigImageRule from "../rules/require-theme-config-image.js";
 import validateThemeConfigMetadataRule from "../rules/validate-theme-config-metadata.js";
 
@@ -90,9 +92,11 @@ const docusaurusRuleRegistry = {
     "require-navbar-dropdown-items": requireNavbarDropdownItemsRule,
     "require-navbar-dropdown-label": requireNavbarDropdownLabelRule,
     "require-pages-plugin-excludes": requirePagesPluginExcludesRule,
+    "require-plugin-pwa-setup": requirePluginPwaSetupRule,
     "require-sidebar-category-items": requireSidebarCategoryItemsRule,
     "require-sidebar-category-label": requireSidebarCategoryLabelRule,
     "require-sidebar-category-type": requireSidebarCategoryTypeRule,
+    "require-site-config-fields": requireSiteConfigFieldsRule,
     "require-theme-config-image": requireThemeConfigImageRule,
     "validate-theme-config-metadata": validateThemeConfigMetadataRule,
 } as const satisfies Readonly<Record<string, RuleWithDocs>>;

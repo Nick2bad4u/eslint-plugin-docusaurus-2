@@ -53,6 +53,8 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `prefer-use-base-url-for-static-assets`
 - `require-config-link-content`
 - `require-config-link-destination`
+- `require-plugin-pwa-setup`
+- `require-site-config-fields`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
 - `require-navbar-dropdown-items`
@@ -71,6 +73,8 @@ The stricter presets also add:
 - `prefer-css-modules-in-site-src`
 - `no-page-css-module-imports-in-components`
 - `require-default-export-pages`
+- `require-plugin-pwa-setup`
+- `require-site-config-fields`
 - `require-theme-config-image`
 
 ## Choosing a preset
