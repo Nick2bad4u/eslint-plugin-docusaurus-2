@@ -1,8 +1,6 @@
 # eslint-plugin-docusaurus-2
 
-[![License.](https://flat.badgen.net/github/license/Nick2bad4u/eslint-plugin-docusaurus-2)](./LICENSE)
-[![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-docusaurus-2)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/stargazers)
-[![GitHub issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-docusaurus-2)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/issues)
+[![npm license.](https://flat.badgen.net/npm/license/eslint-plugin-docusaurus-2?color=purple)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/blob/main/LICENSE) [![npm total downloads.](https://flat.badgen.net/npm/dt/eslint-plugin-docusaurus-2?color=pink)](https://www.npmjs.com/package/eslint-plugin-docusaurus-2) [![latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-docusaurus-2?color=cyan)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-docusaurus-2?color=yellow)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-docusaurus-2?color=green)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-docusaurus-2?color=red)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/issues) [![codecov.](https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-docusaurus-2?color=blue)](https://codecov.io/gh/Nick2bad4u/eslint-plugin-docusaurus-2)
 
 `eslint-plugin-docusaurus-2` is an ESLint plugin for Docusaurus sites, docs repositories, and TypeDoc-integrated documentation workflows.
 
