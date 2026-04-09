@@ -41,6 +41,7 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `no-conflicting-navbar-doc-item-props`
 - `no-conflicting-navbar-doc-sidebar-item-props`
 - `no-duplicate-i18n-locales`
+- `no-duplicate-navbar-item-labels`
 - `no-duplicate-plugin-pwa-head-tags`
 - `no-ignored-site-validations`
 - `no-mixed-sidebar-link-kinds`
@@ -77,6 +78,7 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `require-navbar-dropdown-items`
 - `require-navbar-dropdown-label`
 - `require-navbar-html-item-value`
+- `validate-navbar-item-position`
 - `require-sidebar-category-items`
 - `require-sidebar-category-label`
 - `require-doc-sidebar-link-type`

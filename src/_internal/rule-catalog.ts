@@ -77,6 +77,8 @@ const orderedRuleNames = [
     "no-duplicate-plugin-pwa-head-tags",
     "require-trailing-slash-explicit",
     "prefer-i18n-default-locale-first",
+    "no-duplicate-navbar-item-labels",
+    "validate-navbar-item-position",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

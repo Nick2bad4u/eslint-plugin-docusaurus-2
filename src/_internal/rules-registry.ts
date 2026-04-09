@@ -14,6 +14,7 @@ import noConflictingNavbarDocItemPropsRule from "../rules/no-conflicting-navbar-
 import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-navbar-doc-sidebar-item-props.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
 import noDuplicateI18nLocalesRule from "../rules/no-duplicate-i18n-locales.js";
+import noDuplicateNavbarItemLabelsRule from "../rules/no-duplicate-navbar-item-labels.js";
 import noDuplicatePluginPwaHeadTagsRule from "../rules/no-duplicate-plugin-pwa-head-tags.js";
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
@@ -61,6 +62,7 @@ import requireSiteConfigFieldsRule from "../rules/require-site-config-fields.js"
 import requireSiteUrlOriginRule from "../rules/require-site-url-origin.js";
 import requireThemeConfigImageRule from "../rules/require-theme-config-image.js";
 import requireTrailingSlashExplicitRule from "../rules/require-trailing-slash-explicit.js";
+import validateNavbarItemPositionRule from "../rules/validate-navbar-item-position.js";
 import validateThemeConfigMetadataRule from "../rules/validate-theme-config-metadata.js";
 
 /** Runtime rule module shape used by registry/preset builders. */
@@ -81,6 +83,7 @@ const docusaurusRuleRegistry = {
     "no-deprecated-on-broken-markdown-links":
         noDeprecatedOnBrokenMarkdownLinksRule,
     "no-duplicate-i18n-locales": noDuplicateI18nLocalesRule,
+    "no-duplicate-navbar-item-labels": noDuplicateNavbarItemLabelsRule,
     "no-duplicate-plugin-pwa-head-tags": noDuplicatePluginPwaHeadTagsRule,
     "no-duplicate-sidebar-doc-ids": noDuplicateSidebarDocIdsRule,
     "no-ignored-site-validations": noIgnoredSiteValidationsRule,
@@ -138,6 +141,7 @@ const docusaurusRuleRegistry = {
     "require-site-url-origin": requireSiteUrlOriginRule,
     "require-theme-config-image": requireThemeConfigImageRule,
     "require-trailing-slash-explicit": requireTrailingSlashExplicitRule,
+    "validate-navbar-item-position": validateNavbarItemPositionRule,
     "validate-theme-config-metadata": validateThemeConfigMetadataRule,
 } as const satisfies Readonly<Record<string, RuleWithDocs>>;
 

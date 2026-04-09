@@ -13,6 +13,7 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 
 - [`no-conflicting-config-link-props`](../no-conflicting-config-link-props.md)
 - [`no-duplicate-i18n-locales`](../no-duplicate-i18n-locales.md)
+- [`no-duplicate-navbar-item-labels`](../no-duplicate-navbar-item-labels.md)
 - [`no-duplicate-plugin-pwa-head-tags`](../no-duplicate-plugin-pwa-head-tags.md)
 - [`no-duplicate-sidebar-doc-ids`](../no-duplicate-sidebar-doc-ids.md)
 - [`no-mixed-sidebar-link-kinds`](../no-mixed-sidebar-link-kinds.md)
@@ -35,6 +36,7 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 - [`require-site-url-origin`](../require-site-url-origin.md)
 - [`require-trailing-slash-explicit`](../require-trailing-slash-explicit.md)
 - [`require-theme-config-image`](../require-theme-config-image.md)
+- [`validate-navbar-item-position`](../validate-navbar-item-position.md)
 
 The recommended link-semantics rules also remain enabled here, so `strict` covers both config/sidebar correctness and component-level routing conventions.
 

@@ -47,6 +47,7 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`no-conflicting-navbar-doc-sidebar-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-sidebar-item-props) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`no-deprecated-on-broken-markdown-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-on-broken-markdown-links) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`no-duplicate-i18n-locales`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-i18n-locales) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
+| [`no-duplicate-navbar-item-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-labels) | — | 🔵 🔴 🟣 🧪 |
 | [`no-duplicate-plugin-pwa-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-plugin-pwa-head-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
 | [`no-duplicate-sidebar-doc-ids`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-sidebar-doc-ids) | 💡 | 🔴 🟣 🧪 |
 | [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
@@ -94,4 +95,5 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`require-site-url-origin`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-url-origin) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
 | [`require-theme-config-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-image) | — | 🔵 🔴 🟣 🧪 |
 | [`require-trailing-slash-explicit`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-trailing-slash-explicit) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
+| [`validate-navbar-item-position`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-navbar-item-position) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
 | [`validate-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-metadata) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |

@@ -79,13 +79,15 @@ const createReplaceTrailingSlashFix = (
           )
         : fixer.replaceText(trailingSlashExpression, String(value));
 
-const createSetTrailingSlashSuggestion = (options: {
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>;
-    messageId: "setTrailingSlashFalse" | "setTrailingSlashTrue";
-    trailingSlashExpression: null | Readonly<TSESTree.Expression>;
-    trailingSlashProperty: null | Readonly<TSESTree.Property>;
-    value: boolean;
-}): TrailingSlashSuggestion => ({
+const createSetTrailingSlashSuggestion = (
+    options: Readonly<{
+        configObjectExpression: Readonly<TSESTree.ObjectExpression>;
+        messageId: "setTrailingSlashFalse" | "setTrailingSlashTrue";
+        trailingSlashExpression: null | Readonly<TSESTree.Expression>;
+        trailingSlashProperty: null | Readonly<TSESTree.Property>;
+        value: boolean;
+    }>
+): TrailingSlashSuggestion => ({
     fix: (fixer) =>
         options.trailingSlashProperty === null ||
         options.trailingSlashExpression === null
@@ -278,7 +280,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             deprecated: false,
             docs: {
                 description:
-                    "require top-level `trailingSlash` to be explicitly configured as a boolean.",
+                    "require top-level `trailingSlash` to be explicitly configured with a boolean value.",
                 frozen: false,
                 presets: [
                     "config",
