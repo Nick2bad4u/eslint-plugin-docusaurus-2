@@ -79,6 +79,18 @@ const orderedRuleNames = [
     "prefer-i18n-default-locale-first",
     "no-duplicate-navbar-item-labels",
     "validate-navbar-item-position",
+    "no-duplicate-footer-link-item-labels",
+    "no-duplicate-theme-config-metadata-keys",
+    "no-duplicate-footer-column-titles",
+    "no-duplicate-head-tags",
+    "require-head-tag-tag-name",
+    "no-empty-head-tags",
+    "no-conflicting-theme-config-metadata-keys",
+    "no-duplicate-footer-link-item-destinations",
+    "no-duplicate-navbar-item-destinations",
+    "no-empty-footer-link-columns",
+    "prefer-head-tag-attributes-object",
+    "no-empty-theme-config-metadata",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

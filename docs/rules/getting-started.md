@@ -35,7 +35,14 @@ The currently shipped rules start with the broadly useful config and sidebar che
 
 - `no-conflicting-config-link-props`
 - `no-conflicting-config-link-content-props`
+- `no-conflicting-theme-config-metadata-keys`
 - `no-deprecated-on-broken-markdown-links`
+- `no-empty-head-tags`
+- `no-duplicate-footer-column-titles`
+- `no-duplicate-footer-link-item-destinations`
+- `no-duplicate-footer-link-item-labels`
+- `no-duplicate-head-tags`
+- `no-duplicate-navbar-item-destinations`
 - `no-duplicate-sidebar-doc-ids`
 - `no-conflicting-footer-html-item-props`
 - `no-conflicting-navbar-doc-item-props`
@@ -43,7 +50,10 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `no-duplicate-i18n-locales`
 - `no-duplicate-navbar-item-labels`
 - `no-duplicate-plugin-pwa-head-tags`
+- `no-duplicate-theme-config-metadata-keys`
+- `no-empty-footer-link-columns`
 - `no-ignored-site-validations`
+- `no-empty-theme-config-metadata`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
 - `no-svg-social-card-image`
@@ -52,6 +62,7 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `prefer-config-satisfies`
 - `prefer-href-for-external-link-components`
 - `prefer-href-for-external-links`
+- `prefer-head-tag-attributes-object`
 - `prefer-i18n-default-locale-first`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
@@ -64,6 +75,7 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `require-config-link-destination`
 - `require-footer-link-column-items`
 - `require-footer-link-column-title`
+- `require-head-tag-tag-name`
 - `require-plugin-pwa-debug`
 - `require-plugin-pwa-head-manifest`
 - `require-plugin-pwa-head-theme-color`

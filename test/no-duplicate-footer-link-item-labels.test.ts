@@ -1,0 +1,137 @@
+/**
+ * @packageDocumentation
+ * RuleTester coverage for `no-duplicate-footer-link-item-labels`.
+ */
+import { createRuleTester, getPluginRule } from "./_internal/ruleTester";
+
+const ruleTester = createRuleTester();
+
+ruleTester.run(
+    "no-duplicate-footer-link-item-labels",
+    getPluginRule("no-duplicate-footer-link-item-labels"),
+    {
+        invalid: [
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        footer: {",
+                    "            links: [",
+                    "                {",
+                    '                    title: "Docs",',
+                    "                    items: [",
+                    '                        { label: "Overview", to: "/docs" },',
+                    '                        { label: "Overview", to: "/rules" },',
+                    "                    ],",
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                errors: [{ messageId: "noDuplicateFooterLinkItemLabels" }],
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        footer: {",
+                    "            links: [",
+                    "                {",
+                    '                    title: "Docs",',
+                    "                    items: [",
+                    '                        { label: " overview ", to: "/docs" },',
+                    '                        { label: "Overview", to: "/rules" },',
+                    "                    ],",
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                errors: [{ messageId: "noDuplicateFooterLinkItemLabels" }],
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+        ],
+        valid: [
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        footer: {",
+                    "            links: [",
+                    "                {",
+                    '                    title: "Docs",',
+                    "                    items: [",
+                    '                        { label: "Overview", to: "/docs" },',
+                    '                        { label: "Rules", to: "/rules" },',
+                    "                    ],",
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+            {
+                code: [
+                    "const label = getLabel();",
+                    "",
+                    "export default {",
+                    "    themeConfig: {",
+                    "        footer: {",
+                    "            links: [",
+                    "                {",
+                    '                    title: "Docs",',
+                    "                    items: [",
+                    '                        { label: "Overview", to: "/docs" },',
+                    '                        { label, to: "/rules" },',
+                    "                    ],",
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        navbar: {",
+                    "            items: [",
+                    '                { label: "Overview", to: "/docs" },',
+                    '                { label: "Overview", to: "/rules" },',
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+            {
+                code: [
+                    "export default {",
+                    "    themeConfig: {",
+                    "        footer: {",
+                    "            links: [",
+                    "                {",
+                    '                    title: "Docs",',
+                    "                    items: [",
+                    '                        { label: "Overview", to: "/docs" },',
+                    '                        { label: "Overview", to: "/rules" },',
+                    "                    ],",
+                    "                },",
+                    "            ],",
+                    "        },",
+                    "    },",
+                    "};",
+                ].join("\n"),
+                filename: "src/config.ts",
+            },
+        ],
+    }
+);

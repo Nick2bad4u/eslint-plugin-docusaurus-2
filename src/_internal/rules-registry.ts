@@ -12,11 +12,21 @@ import noConflictingConfigLinkPropsRule from "../rules/no-conflicting-config-lin
 import noConflictingFooterHtmlItemPropsRule from "../rules/no-conflicting-footer-html-item-props.js";
 import noConflictingNavbarDocItemPropsRule from "../rules/no-conflicting-navbar-doc-item-props.js";
 import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-navbar-doc-sidebar-item-props.js";
+import noConflictingThemeConfigMetadataKeysRule from "../rules/no-conflicting-theme-config-metadata-keys.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
+import noDuplicateFooterColumnTitlesRule from "../rules/no-duplicate-footer-column-titles.js";
+import noDuplicateFooterLinkItemDestinationsRule from "../rules/no-duplicate-footer-link-item-destinations.js";
+import noDuplicateFooterLinkItemLabelsRule from "../rules/no-duplicate-footer-link-item-labels.js";
+import noDuplicateHeadTagsRule from "../rules/no-duplicate-head-tags.js";
 import noDuplicateI18nLocalesRule from "../rules/no-duplicate-i18n-locales.js";
+import noDuplicateNavbarItemDestinationsRule from "../rules/no-duplicate-navbar-item-destinations.js";
 import noDuplicateNavbarItemLabelsRule from "../rules/no-duplicate-navbar-item-labels.js";
 import noDuplicatePluginPwaHeadTagsRule from "../rules/no-duplicate-plugin-pwa-head-tags.js";
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
+import noDuplicateThemeConfigMetadataKeysRule from "../rules/no-duplicate-theme-config-metadata-keys.js";
+import noEmptyFooterLinkColumnsRule from "../rules/no-empty-footer-link-columns.js";
+import noEmptyHeadTagsRule from "../rules/no-empty-head-tags.js";
+import noEmptyThemeConfigMetadataRule from "../rules/no-empty-theme-config-metadata.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
 import noMixedSidebarLinkKindsRule from "../rules/no-mixed-sidebar-link-kinds.js";
 import noPageCssModuleImportsInComponentsRule from "../rules/no-page-css-module-imports-in-components.js";
@@ -26,6 +36,7 @@ import noUseBaseUrlForInternalLinkComponentsRule from "../rules/no-use-base-url-
 import noUselessCollapsedSidebarCategoriesRule from "../rules/no-useless-collapsed-sidebar-categories.js";
 import preferConfigSatisfiesRule from "../rules/prefer-config-satisfies.js";
 import preferCssModulesInSiteSrcRule from "../rules/prefer-css-modules-in-site-src.js";
+import preferHeadTagAttributesObjectRule from "../rules/prefer-head-tag-attributes-object.js";
 import preferHrefForExternalLinkComponentsRule from "../rules/prefer-href-for-external-link-components.js";
 import preferHrefForExternalLinksRule from "../rules/prefer-href-for-external-links.js";
 import preferI18nDefaultLocaleFirstRule from "../rules/prefer-i18n-default-locale-first.js";
@@ -42,6 +53,7 @@ import requireDocSidebarLinkTypeRule from "../rules/require-doc-sidebar-link-typ
 import requireFooterLinkColumnItemsRule from "../rules/require-footer-link-column-items.js";
 import requireFooterLinkColumnTitleRule from "../rules/require-footer-link-column-title.js";
 import requireGeneratedIndexLinkTypeRule from "../rules/require-generated-index-link-type.js";
+import requireHeadTagTagNameRule from "../rules/require-head-tag-tag-name.js";
 import requireI18nDefaultLocaleInLocalesRule from "../rules/require-i18n-default-locale-in-locales.js";
 import requireNavbarDocItemDocIdRule from "../rules/require-navbar-doc-item-doc-id.js";
 import requireNavbarDocSidebarItemSidebarIdRule from "../rules/require-navbar-doc-sidebar-item-sidebar-id.js";
@@ -80,12 +92,26 @@ const docusaurusRuleRegistry = {
     "no-conflicting-navbar-doc-item-props": noConflictingNavbarDocItemPropsRule,
     "no-conflicting-navbar-doc-sidebar-item-props":
         noConflictingNavbarDocSidebarItemPropsRule,
+    "no-conflicting-theme-config-metadata-keys":
+        noConflictingThemeConfigMetadataKeysRule,
     "no-deprecated-on-broken-markdown-links":
         noDeprecatedOnBrokenMarkdownLinksRule,
+    "no-duplicate-footer-column-titles": noDuplicateFooterColumnTitlesRule,
+    "no-duplicate-footer-link-item-destinations":
+        noDuplicateFooterLinkItemDestinationsRule,
+    "no-duplicate-footer-link-item-labels": noDuplicateFooterLinkItemLabelsRule,
+    "no-duplicate-head-tags": noDuplicateHeadTagsRule,
     "no-duplicate-i18n-locales": noDuplicateI18nLocalesRule,
+    "no-duplicate-navbar-item-destinations":
+        noDuplicateNavbarItemDestinationsRule,
     "no-duplicate-navbar-item-labels": noDuplicateNavbarItemLabelsRule,
     "no-duplicate-plugin-pwa-head-tags": noDuplicatePluginPwaHeadTagsRule,
     "no-duplicate-sidebar-doc-ids": noDuplicateSidebarDocIdsRule,
+    "no-duplicate-theme-config-metadata-keys":
+        noDuplicateThemeConfigMetadataKeysRule,
+    "no-empty-footer-link-columns": noEmptyFooterLinkColumnsRule,
+    "no-empty-head-tags": noEmptyHeadTagsRule,
+    "no-empty-theme-config-metadata": noEmptyThemeConfigMetadataRule,
     "no-ignored-site-validations": noIgnoredSiteValidationsRule,
     "no-mixed-sidebar-link-kinds": noMixedSidebarLinkKindsRule,
     "no-page-css-module-imports-in-components":
@@ -98,6 +124,7 @@ const docusaurusRuleRegistry = {
         noUselessCollapsedSidebarCategoriesRule,
     "prefer-config-satisfies": preferConfigSatisfiesRule,
     "prefer-css-modules-in-site-src": preferCssModulesInSiteSrcRule,
+    "prefer-head-tag-attributes-object": preferHeadTagAttributesObjectRule,
     "prefer-href-for-external-link-components":
         preferHrefForExternalLinkComponentsRule,
     "prefer-href-for-external-links": preferHrefForExternalLinksRule,
@@ -118,6 +145,7 @@ const docusaurusRuleRegistry = {
     "require-footer-link-column-items": requireFooterLinkColumnItemsRule,
     "require-footer-link-column-title": requireFooterLinkColumnTitleRule,
     "require-generated-index-link-type": requireGeneratedIndexLinkTypeRule,
+    "require-head-tag-tag-name": requireHeadTagTagNameRule,
     "require-i18n-default-locale-in-locales":
         requireI18nDefaultLocaleInLocalesRule,
     "require-navbar-doc-item-doc-id": requireNavbarDocItemDocIdRule,

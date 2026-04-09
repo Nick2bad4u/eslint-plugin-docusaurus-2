@@ -146,11 +146,21 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`no-conflicting-footer-html-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-footer-html-item-props) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`no-conflicting-navbar-doc-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-item-props) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`no-conflicting-navbar-doc-sidebar-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-sidebar-item-props) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-conflicting-theme-config-metadata-keys`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-metadata-keys) | 💡 | 🔵 🔴 🟣 🧪 |
 | [`no-deprecated-on-broken-markdown-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-on-broken-markdown-links) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-duplicate-footer-column-titles`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-column-titles) | — | 🔵 🔴 🟣 🧪 |
+| [`no-duplicate-footer-link-item-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-destinations) | 💡 | 🔵 🔴 🟣 🧪 |
+| [`no-duplicate-footer-link-item-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-labels) | — | 🔵 🔴 🟣 🧪 |
+| [`no-duplicate-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-head-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
 | [`no-duplicate-i18n-locales`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-i18n-locales) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
+| [`no-duplicate-navbar-item-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-destinations) | 💡 | 🔵 🔴 🟣 🧪 |
 | [`no-duplicate-navbar-item-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-labels) | — | 🔵 🔴 🟣 🧪 |
 | [`no-duplicate-plugin-pwa-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-plugin-pwa-head-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
 | [`no-duplicate-sidebar-doc-ids`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-sidebar-doc-ids) | 💡 | 🔴 🟣 🧪 |
+| [`no-duplicate-theme-config-metadata-keys`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-theme-config-metadata-keys) | 🔧 | 🔵 🔴 🟣 🧪 |
+| [`no-empty-footer-link-columns`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-footer-link-columns) | 🔧 | 🔵 🔴 🟣 🧪 |
+| [`no-empty-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-head-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
+| [`no-empty-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-theme-config-metadata) | 🔧 | 🔵 🔴 🟣 🧪 |
 | [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`no-mixed-sidebar-link-kinds`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-mixed-sidebar-link-kinds) | 💡 | 🔴 🟣 🧪 |
 | [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components) | — | 🔴 🟣 🧪 |
@@ -160,6 +170,7 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`no-useless-collapsed-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-useless-collapsed-sidebar-categories) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
 | [`prefer-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`prefer-css-modules-in-site-src`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src) | — | 🔴 🟣 🧪 |
+| [`prefer-head-tag-attributes-object`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-head-tag-attributes-object) | 🔧 | 🔵 🔴 🟣 🧪 |
 | [`prefer-href-for-external-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-link-components) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
 | [`prefer-href-for-external-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-links) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`prefer-i18n-default-locale-first`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-i18n-default-locale-first) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
@@ -176,6 +187,7 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`require-footer-link-column-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-items) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`require-footer-link-column-title`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-title) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`require-generated-index-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-generated-index-link-type) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
+| [`require-head-tag-tag-name`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-tag-name) | 💡 | 🔵 🔴 🟣 🧪 |
 | [`require-i18n-default-locale-in-locales`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-i18n-default-locale-in-locales) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
 | [`require-navbar-doc-item-doc-id`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-item-doc-id) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
 | [`require-navbar-doc-sidebar-item-sidebar-id`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-sidebar-item-sidebar-id) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |

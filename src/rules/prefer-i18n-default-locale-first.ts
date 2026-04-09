@@ -223,7 +223,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             deprecated: false,
             docs: {
                 description:
-                    "prefer `i18n.locales` to place `defaultLocale` first for clearer locale-priority intent.",
+                    "require `i18n.locales` to place `defaultLocale` first for clearer locale-priority intent when locale order is authored statically.",
                 frozen: false,
                 presets: [
                     "config",
