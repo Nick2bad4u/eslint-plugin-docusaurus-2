@@ -40,6 +40,8 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `no-conflicting-footer-html-item-props`
 - `no-conflicting-navbar-doc-item-props`
 - `no-conflicting-navbar-doc-sidebar-item-props`
+- `no-duplicate-i18n-locales`
+- `no-duplicate-plugin-pwa-head-tags`
 - `no-ignored-site-validations`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -49,18 +51,26 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `prefer-config-satisfies`
 - `prefer-href-for-external-link-components`
 - `prefer-href-for-external-links`
+- `prefer-i18n-default-locale-first`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
 - `prefer-use-base-url-for-static-assets`
+- `require-base-url-issue-banner-enabled`
+- `require-base-url-slashes`
+- `require-i18n-default-locale-in-locales`
 - `require-config-link-content`
 - `require-config-link-destination`
 - `require-footer-link-column-items`
 - `require-footer-link-column-title`
+- `require-plugin-pwa-debug`
 - `require-plugin-pwa-head-manifest`
 - `require-plugin-pwa-head-theme-color`
+- `require-plugin-pwa-offline-mode-activation-strategies`
 - `require-plugin-pwa-setup`
 - `require-site-config-fields`
+- `require-site-url-origin`
+- `require-trailing-slash-explicit`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
 - `require-navbar-docs-version-item-to`
@@ -83,6 +93,8 @@ The stricter presets also add:
 - `require-default-export-pages`
 - `require-plugin-pwa-setup`
 - `require-site-config-fields`
+- `require-site-url-origin`
+- `require-trailing-slash-explicit`
 - `require-theme-config-image`
 
 ## Choosing a preset

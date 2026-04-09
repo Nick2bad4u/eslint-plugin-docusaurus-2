@@ -481,8 +481,8 @@
     background:
         linear-gradient(
             165deg,
-            rgb(79 70 229 / 10%),
-            rgb(14 165 233 / 8%) 56%,
+            rgb(37 194 160 / 12%),
+            rgb(14 165 233 / 9%) 56%,
             transparent
         ),
         var(--ifm-background-surface-color);
@@ -499,10 +499,10 @@
 .liveStatsKicker {
     display: inline-flex;
     padding: 0.2rem 0.56rem;
-    border: 1px solid rgb(79 70 229 / 24%);
+    border: 1px solid rgb(15 118 110 / 28%);
     border-radius: 999rem;
     margin: 0;
-    background: rgb(79 70 229 / 10%);
+    background: rgb(20 184 166 / 14%);
     color: var(--ifm-color-primary);
     font-size: 0.75rem;
     font-weight: 700;
@@ -537,8 +537,8 @@
     background:
         linear-gradient(
             170deg,
-            rgb(79 70 229 / 7%),
-            rgb(14 165 233 / 6%) 48%,
+            rgb(37 194 160 / 9%),
+            rgb(14 165 233 / 8%) 48%,
             transparent
         ),
         var(--ifm-card-background-color);
@@ -559,7 +559,7 @@
 
     &:hover,
     &:focus {
-        border-color: rgb(99 102 241 / 35%);
+        border-color: rgb(15 118 110 / 34%);
         box-shadow: var(--ifm-global-shadow-md);
         transform: translateY(-2px);
     }
@@ -583,7 +583,7 @@
     justify-content: center;
     border-radius: 0.6rem;
     margin: 0;
-    background: rgb(79 70 229 / 14%);
+    background: rgb(20 184 166 / 16%);
     block-size: 1.9rem;
     font-family:
         "NerdFontSymbols Nerd Font Symbols", "Symbols Nerd Font Mono",

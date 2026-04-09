@@ -26,6 +26,10 @@ For example:
 - `favicon` makes the site asset contract explicit
 - `baseUrlIssueBanner`, `onBrokenAnchors`, `onBrokenLinks`, and `onDuplicateRoutes` make validation and failure behavior explicit
 
+### Example: `baseUrlIssueBanner` in action
+
+![Docusaurus base URL issue banner shown at the top of a site when configuration and URL expectations do not match.](../docusaurus/static/img/baseUrlIssueBanner.png)
+
 This rule is intentionally opinionated and is best suited to stricter repository conventions.
 
 ## ❌ Incorrect

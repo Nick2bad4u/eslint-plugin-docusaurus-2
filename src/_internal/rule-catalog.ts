@@ -67,6 +67,16 @@ const orderedRuleNames = [
     "require-plugin-pwa-head-theme-color",
     "no-conflicting-navbar-doc-item-props",
     "no-conflicting-navbar-doc-sidebar-item-props",
+    "require-plugin-pwa-debug",
+    "require-plugin-pwa-offline-mode-activation-strategies",
+    "require-base-url-issue-banner-enabled",
+    "require-base-url-slashes",
+    "require-site-url-origin",
+    "require-i18n-default-locale-in-locales",
+    "no-duplicate-i18n-locales",
+    "no-duplicate-plugin-pwa-head-tags",
+    "require-trailing-slash-explicit",
+    "prefer-i18n-default-locale-first",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

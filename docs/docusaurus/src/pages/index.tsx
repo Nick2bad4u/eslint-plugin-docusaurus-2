@@ -48,19 +48,16 @@ const heroBadges = [
 
 const heroStats = [
     {
-        description:
-            "Focused, Docusaurus-specific checks instead of generic noise.",
-        title: "37 stable rules",
+        description: "Docusaurus-specific checks without generic lint noise.",
+        title: "📏 Stable rule catalog",
     },
     {
-        description:
-            "From minimal through focused config enforcement to the broader site-wide tiers.",
-        title: "7 flat-config presets",
+        description: "From minimal baseline to stricter site-wide enforcement.",
+        title: "🧩 Flat-config presets",
     },
     {
-        description:
-            "Config, sidebar, theme, page, CSS, and TypeDoc-adjacent workflows.",
-        title: "Docs-repo coverage",
+        description: "Config, sidebars, theme, pages, CSS, and TypeDoc docs.",
+        title: "🗂️ Docs-repo coverage",
     },
 ] as const satisfies readonly HeroStat[];
 

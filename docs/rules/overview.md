@@ -33,6 +33,8 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `no-conflicting-footer-html-item-props`
 - `no-conflicting-navbar-doc-item-props`
 - `no-conflicting-navbar-doc-sidebar-item-props`
+- `no-duplicate-i18n-locales`
+- `no-duplicate-plugin-pwa-head-tags`
 - `no-ignored-site-validations`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -43,20 +45,28 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `prefer-css-modules-in-site-src`
 - `prefer-href-for-external-link-components`
 - `prefer-href-for-external-links`
+- `prefer-i18n-default-locale-first`
 - `no-page-css-module-imports-in-components`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
 - `prefer-use-base-url-for-static-assets`
+- `require-base-url-issue-banner-enabled`
+- `require-base-url-slashes`
+- `require-i18n-default-locale-in-locales`
 - `require-config-link-content`
 - `require-config-link-destination`
 - `require-default-export-pages`
 - `require-footer-link-column-items`
 - `require-footer-link-column-title`
+- `require-plugin-pwa-debug`
 - `require-plugin-pwa-head-manifest`
 - `require-plugin-pwa-head-theme-color`
+- `require-plugin-pwa-offline-mode-activation-strategies`
 - `require-plugin-pwa-setup`
 - `require-site-config-fields`
+- `require-site-url-origin`
+- `require-trailing-slash-explicit`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
 - `require-navbar-docs-version-item-to`
@@ -114,7 +124,7 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus theme config link hygiene
 - Docusaurus footer HTML pass-through schema hygiene
 - Docusaurus footer column schema hygiene
-- Docusaurus plugin-pwa head-tag hygiene
+- Docusaurus plugin-pwa debug/activation/head-tag hygiene
 - Docusaurus plugin-pwa setup hygiene
 - Docusaurus navbar dropdown schema hygiene
 - Docusaurus navbar special-item schema hygiene and conflict cleanup

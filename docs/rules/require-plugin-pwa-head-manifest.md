@@ -18,6 +18,10 @@ The Docusaurus PWA docs call out the manifest link tag as part of the minimal he
 
 When plugin-pwa is enabled but the manifest link is missing, the configuration no longer reflects the documented setup needed for installation and PWA compliance.
 
+### Preview: installability flow
+
+![Docusaurus PWA install flow that depends on manifest metadata being present.](../docusaurus/static/img/pwa_install.gif)
+
 ## ❌ Incorrect
 
 ```ts

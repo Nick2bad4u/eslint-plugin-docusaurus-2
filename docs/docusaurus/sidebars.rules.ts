@@ -5,7 +5,7 @@ import { ruleCatalogEntries } from "../../src/_internal/rule-catalog";
 const presetDocs = [
     {
         id: "presets/index",
-        label: "Preset index",
+        label: "🧩 Preset index",
         type: "doc",
     },
     {
@@ -54,7 +54,7 @@ const presetDocs = [
 
 const ruleDocs = ruleCatalogEntries.map((entry) => ({
     id: entry.ruleName,
-    label: `${String(entry.ruleNumber).padStart(3, "0")} ${entry.ruleName}`,
+    label: `${entry.ruleNumber} ${entry.ruleName}`,
     type: "doc" as const,
 })) satisfies SidebarsConfig["rules"];
 

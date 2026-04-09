@@ -12,18 +12,28 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 `strict` includes all of `recommended`, plus the stricter Docusaurus page-module and site-source CSS rules:
 
 - [`no-conflicting-config-link-props`](../no-conflicting-config-link-props.md)
+- [`no-duplicate-i18n-locales`](../no-duplicate-i18n-locales.md)
+- [`no-duplicate-plugin-pwa-head-tags`](../no-duplicate-plugin-pwa-head-tags.md)
 - [`no-duplicate-sidebar-doc-ids`](../no-duplicate-sidebar-doc-ids.md)
 - [`no-mixed-sidebar-link-kinds`](../no-mixed-sidebar-link-kinds.md)
 - [`no-redundant-social-card-metadata`](../no-redundant-social-card-metadata.md)
 - [`no-svg-social-card-image`](../no-svg-social-card-image.md)
 - [`no-use-base-url-for-internal-link-components`](../no-use-base-url-for-internal-link-components.md)
 - [`prefer-css-modules-in-site-src`](../prefer-css-modules-in-site-src.md)
+- [`prefer-i18n-default-locale-first`](../prefer-i18n-default-locale-first.md)
 - [`no-page-css-module-imports-in-components`](../no-page-css-module-imports-in-components.md)
 - [`prefer-use-base-url-for-static-assets`](../prefer-use-base-url-for-static-assets.md)
 - [`require-default-export-pages`](../require-default-export-pages.md)
+- [`require-base-url-issue-banner-enabled`](../require-base-url-issue-banner-enabled.md)
+- [`require-base-url-slashes`](../require-base-url-slashes.md)
+- [`require-i18n-default-locale-in-locales`](../require-i18n-default-locale-in-locales.md)
+- [`require-plugin-pwa-debug`](../require-plugin-pwa-debug.md)
+- [`require-plugin-pwa-offline-mode-activation-strategies`](../require-plugin-pwa-offline-mode-activation-strategies.md)
 - [`require-plugin-pwa-setup`](../require-plugin-pwa-setup.md)
 - [`require-pages-plugin-excludes`](../require-pages-plugin-excludes.md)
 - [`require-site-config-fields`](../require-site-config-fields.md)
+- [`require-site-url-origin`](../require-site-url-origin.md)
+- [`require-trailing-slash-explicit`](../require-trailing-slash-explicit.md)
 - [`require-theme-config-image`](../require-theme-config-image.md)
 
 The recommended link-semantics rules also remain enabled here, so `strict` covers both config/sidebar correctness and component-level routing conventions.

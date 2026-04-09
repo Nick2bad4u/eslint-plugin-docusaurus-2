@@ -538,6 +538,41 @@ export const getStaticBooleanValueFromExpressionOrIdentifier = (
 };
 
 /**
+ * Resolve an expression from a direct expression or an identifier bound in the
+ * same program.
+ */
+export const getExpressionFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.Expression> => {
+    if (expression.type !== "Identifier") {
+        return expression;
+    }
+
+    return resolveExpressionForIdentifier(expression.name, programNode);
+};
+
+/**
+ * Resolve an object expression from a direct expression or an identifier bound
+ * to an object expression in the same program.
+ */
+export const getObjectExpressionFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.ObjectExpression> => {
+    const resolvedExpression = getExpressionFromExpressionOrIdentifier(
+        expression,
+        programNode
+    );
+
+    if (resolvedExpression === null) {
+        return null;
+    }
+
+    return getObjectExpressionFromExpression(resolvedExpression);
+};
+
+/**
  * Resolve an array expression from a direct expression or from an identifier
  * bound to an array expression in the same program.
  */

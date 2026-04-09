@@ -18,6 +18,10 @@ PWA support is not just a dependency choice. It is a site capability that usuall
 
 Requiring an explicit setup entry makes the plugin configuration intentional and reviewable instead of silently relying on a bare plugin declaration.
 
+### Preview: update/reload behavior
+
+![Docusaurus PWA reload prompt shown after a service-worker update during development.](../docusaurus/static/img/pwa_reload.gif)
+
 ## ❌ Incorrect
 
 ```ts

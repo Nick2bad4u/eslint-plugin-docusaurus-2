@@ -13,6 +13,8 @@ import noConflictingFooterHtmlItemPropsRule from "../rules/no-conflicting-footer
 import noConflictingNavbarDocItemPropsRule from "../rules/no-conflicting-navbar-doc-item-props.js";
 import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-navbar-doc-sidebar-item-props.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
+import noDuplicateI18nLocalesRule from "../rules/no-duplicate-i18n-locales.js";
+import noDuplicatePluginPwaHeadTagsRule from "../rules/no-duplicate-plugin-pwa-head-tags.js";
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
 import noMixedSidebarLinkKindsRule from "../rules/no-mixed-sidebar-link-kinds.js";
@@ -25,10 +27,13 @@ import preferConfigSatisfiesRule from "../rules/prefer-config-satisfies.js";
 import preferCssModulesInSiteSrcRule from "../rules/prefer-css-modules-in-site-src.js";
 import preferHrefForExternalLinkComponentsRule from "../rules/prefer-href-for-external-link-components.js";
 import preferHrefForExternalLinksRule from "../rules/prefer-href-for-external-links.js";
+import preferI18nDefaultLocaleFirstRule from "../rules/prefer-i18n-default-locale-first.js";
 import preferSidebarsConfigSatisfiesRule from "../rules/prefer-sidebars-config-satisfies.js";
 import preferToForInternalLinkComponentsRule from "../rules/prefer-to-for-internal-link-components.js";
 import preferToForInternalLinksRule from "../rules/prefer-to-for-internal-links.js";
 import preferUseBaseUrlForStaticAssetsRule from "../rules/prefer-use-base-url-for-static-assets.js";
+import requireBaseUrlIssueBannerEnabledRule from "../rules/require-base-url-issue-banner-enabled.js";
+import requireBaseUrlSlashesRule from "../rules/require-base-url-slashes.js";
 import requireConfigLinkContentRule from "../rules/require-config-link-content.js";
 import requireConfigLinkDestinationRule from "../rules/require-config-link-destination.js";
 import requireDefaultExportPagesRule from "../rules/require-default-export-pages.js";
@@ -36,6 +41,7 @@ import requireDocSidebarLinkTypeRule from "../rules/require-doc-sidebar-link-typ
 import requireFooterLinkColumnItemsRule from "../rules/require-footer-link-column-items.js";
 import requireFooterLinkColumnTitleRule from "../rules/require-footer-link-column-title.js";
 import requireGeneratedIndexLinkTypeRule from "../rules/require-generated-index-link-type.js";
+import requireI18nDefaultLocaleInLocalesRule from "../rules/require-i18n-default-locale-in-locales.js";
 import requireNavbarDocItemDocIdRule from "../rules/require-navbar-doc-item-doc-id.js";
 import requireNavbarDocSidebarItemSidebarIdRule from "../rules/require-navbar-doc-sidebar-item-sidebar-id.js";
 import requireNavbarDocsVersionItemToRule from "../rules/require-navbar-docs-version-item-to.js";
@@ -43,14 +49,18 @@ import requireNavbarDropdownItemsRule from "../rules/require-navbar-dropdown-ite
 import requireNavbarDropdownLabelRule from "../rules/require-navbar-dropdown-label.js";
 import requireNavbarHtmlItemValueRule from "../rules/require-navbar-html-item-value.js";
 import requirePagesPluginExcludesRule from "../rules/require-pages-plugin-excludes.js";
+import requirePluginPwaDebugRule from "../rules/require-plugin-pwa-debug.js";
 import requirePluginPwaHeadManifestRule from "../rules/require-plugin-pwa-head-manifest.js";
 import requirePluginPwaHeadThemeColorRule from "../rules/require-plugin-pwa-head-theme-color.js";
+import requirePluginPwaOfflineModeActivationStrategiesRule from "../rules/require-plugin-pwa-offline-mode-activation-strategies.js";
 import requirePluginPwaSetupRule from "../rules/require-plugin-pwa-setup.js";
 import requireSidebarCategoryItemsRule from "../rules/require-sidebar-category-items.js";
 import requireSidebarCategoryLabelRule from "../rules/require-sidebar-category-label.js";
 import requireSidebarCategoryTypeRule from "../rules/require-sidebar-category-type.js";
 import requireSiteConfigFieldsRule from "../rules/require-site-config-fields.js";
+import requireSiteUrlOriginRule from "../rules/require-site-url-origin.js";
 import requireThemeConfigImageRule from "../rules/require-theme-config-image.js";
+import requireTrailingSlashExplicitRule from "../rules/require-trailing-slash-explicit.js";
 import validateThemeConfigMetadataRule from "../rules/validate-theme-config-metadata.js";
 
 /** Runtime rule module shape used by registry/preset builders. */
@@ -70,6 +80,8 @@ const docusaurusRuleRegistry = {
         noConflictingNavbarDocSidebarItemPropsRule,
     "no-deprecated-on-broken-markdown-links":
         noDeprecatedOnBrokenMarkdownLinksRule,
+    "no-duplicate-i18n-locales": noDuplicateI18nLocalesRule,
+    "no-duplicate-plugin-pwa-head-tags": noDuplicatePluginPwaHeadTagsRule,
     "no-duplicate-sidebar-doc-ids": noDuplicateSidebarDocIdsRule,
     "no-ignored-site-validations": noIgnoredSiteValidationsRule,
     "no-mixed-sidebar-link-kinds": noMixedSidebarLinkKindsRule,
@@ -86,12 +98,16 @@ const docusaurusRuleRegistry = {
     "prefer-href-for-external-link-components":
         preferHrefForExternalLinkComponentsRule,
     "prefer-href-for-external-links": preferHrefForExternalLinksRule,
+    "prefer-i18n-default-locale-first": preferI18nDefaultLocaleFirstRule,
     "prefer-sidebars-config-satisfies": preferSidebarsConfigSatisfiesRule,
     "prefer-to-for-internal-link-components":
         preferToForInternalLinkComponentsRule,
     "prefer-to-for-internal-links": preferToForInternalLinksRule,
     "prefer-use-base-url-for-static-assets":
         preferUseBaseUrlForStaticAssetsRule,
+    "require-base-url-issue-banner-enabled":
+        requireBaseUrlIssueBannerEnabledRule,
+    "require-base-url-slashes": requireBaseUrlSlashesRule,
     "require-config-link-content": requireConfigLinkContentRule,
     "require-config-link-destination": requireConfigLinkDestinationRule,
     "require-default-export-pages": requireDefaultExportPagesRule,
@@ -99,6 +115,8 @@ const docusaurusRuleRegistry = {
     "require-footer-link-column-items": requireFooterLinkColumnItemsRule,
     "require-footer-link-column-title": requireFooterLinkColumnTitleRule,
     "require-generated-index-link-type": requireGeneratedIndexLinkTypeRule,
+    "require-i18n-default-locale-in-locales":
+        requireI18nDefaultLocaleInLocalesRule,
     "require-navbar-doc-item-doc-id": requireNavbarDocItemDocIdRule,
     "require-navbar-doc-sidebar-item-sidebar-id":
         requireNavbarDocSidebarItemSidebarIdRule,
@@ -107,14 +125,19 @@ const docusaurusRuleRegistry = {
     "require-navbar-dropdown-label": requireNavbarDropdownLabelRule,
     "require-navbar-html-item-value": requireNavbarHtmlItemValueRule,
     "require-pages-plugin-excludes": requirePagesPluginExcludesRule,
+    "require-plugin-pwa-debug": requirePluginPwaDebugRule,
     "require-plugin-pwa-head-manifest": requirePluginPwaHeadManifestRule,
     "require-plugin-pwa-head-theme-color": requirePluginPwaHeadThemeColorRule,
+    "require-plugin-pwa-offline-mode-activation-strategies":
+        requirePluginPwaOfflineModeActivationStrategiesRule,
     "require-plugin-pwa-setup": requirePluginPwaSetupRule,
     "require-sidebar-category-items": requireSidebarCategoryItemsRule,
     "require-sidebar-category-label": requireSidebarCategoryLabelRule,
     "require-sidebar-category-type": requireSidebarCategoryTypeRule,
     "require-site-config-fields": requireSiteConfigFieldsRule,
+    "require-site-url-origin": requireSiteUrlOriginRule,
     "require-theme-config-image": requireThemeConfigImageRule,
+    "require-trailing-slash-explicit": requireTrailingSlashExplicitRule,
     "validate-theme-config-metadata": validateThemeConfigMetadataRule,
 } as const satisfies Readonly<Record<string, RuleWithDocs>>;
 

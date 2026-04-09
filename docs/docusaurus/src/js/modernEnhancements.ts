@@ -79,6 +79,7 @@ function isRuntimeSidebarLink(link: HTMLAnchorElement): boolean {
  */
 function isNumberedRuleSidebarLink(link: HTMLAnchorElement): boolean {
     return (
+        link.closest(".sb-cat-rules") !== null ||
         link.closest(".sb-cat-rules-runtime-helpers") !== null ||
         link.closest(".sb-cat-rules-type-utilities") !== null
     );
@@ -113,7 +114,7 @@ function getRuntimeSidebarKindPrefix(
 function getRuleNumberPrefix(
     label: string
 ): null | Readonly<{ numberToken: string; remainder: string }> {
-    const match = /^(\d{2,3})\s+(.+)$/.exec(label);
+    const match = /^(\d{1,3})\s+(.+)$/.exec(label);
 
     if (match === null) {
         return null;
