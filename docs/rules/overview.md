@@ -31,6 +31,8 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `no-deprecated-on-broken-markdown-links`
 - `no-duplicate-sidebar-doc-ids`
 - `no-conflicting-footer-html-item-props`
+- `no-conflicting-navbar-doc-item-props`
+- `no-conflicting-navbar-doc-sidebar-item-props`
 - `no-ignored-site-validations`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -49,12 +51,18 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `require-config-link-content`
 - `require-config-link-destination`
 - `require-default-export-pages`
+- `require-footer-link-column-items`
+- `require-footer-link-column-title`
+- `require-plugin-pwa-head-manifest`
+- `require-plugin-pwa-head-theme-color`
 - `require-plugin-pwa-setup`
 - `require-site-config-fields`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
+- `require-navbar-docs-version-item-to`
 - `require-navbar-dropdown-items`
 - `require-navbar-dropdown-label`
+- `require-navbar-html-item-value`
 - `require-sidebar-category-items`
 - `require-sidebar-category-label`
 - `require-doc-sidebar-link-type`
@@ -105,9 +113,11 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus themeConfig metadata schema hygiene
 - Docusaurus theme config link hygiene
 - Docusaurus footer HTML pass-through schema hygiene
+- Docusaurus footer column schema hygiene
+- Docusaurus plugin-pwa head-tag hygiene
 - Docusaurus plugin-pwa setup hygiene
 - Docusaurus navbar dropdown schema hygiene
-- Docusaurus navbar special-item schema hygiene
+- Docusaurus navbar special-item schema hygiene and conflict cleanup
 - Docusaurus Link component prop hygiene
 - Docusaurus `useBaseUrl` link-wrapper hygiene
 - Docusaurus mixed sidebar link-kind hygiene

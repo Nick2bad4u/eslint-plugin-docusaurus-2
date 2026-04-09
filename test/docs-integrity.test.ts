@@ -13,6 +13,7 @@ const presetDocsDirectoryPath = path.join(rulesDocsDirectoryPath, "presets");
 const expectedTopLevelDocs = ["getting-started.md", "overview.md"] as const;
 const expectedPresetDocs = [
     "all.md",
+    "config.md",
     "experimental.md",
     "index.md",
     "minimal.md",

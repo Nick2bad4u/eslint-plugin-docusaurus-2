@@ -57,6 +57,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "disallow Docusaurus theme-config link items from declaring both `label` and `html`.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

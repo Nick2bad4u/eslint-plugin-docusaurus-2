@@ -83,6 +83,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require an `items` array for Docusaurus navbar dropdown items.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

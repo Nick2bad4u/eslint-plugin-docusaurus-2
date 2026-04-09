@@ -88,6 +88,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require Docusaurus theme-config link items to provide visible content via `label` or `html`.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

@@ -133,6 +133,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "disallow manual `og:image` and `twitter:image` metadata entries when `themeConfig.image` is already configured.",
                 frozen: false,
                 presets: [
+                    "config",
                     "strict",
                     "all",
                     "experimental",

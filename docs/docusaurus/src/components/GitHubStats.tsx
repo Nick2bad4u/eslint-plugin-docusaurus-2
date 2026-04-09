@@ -14,19 +14,39 @@ type LiveBadge = {
 
 const liveBadges = [
     {
-        alt: "GitHub license.",
+        alt: "npm license",
         href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/blob/main/LICENSE",
-        src: "https://flat.badgen.net/github/license/Nick2bad4u/eslint-plugin-docusaurus-2?color=purple",
+        src: "https://flat.badgen.net/npm/license/eslint-plugin-docusaurus-2?color=purple",
     },
     {
-        alt: "GitHub stars.",
+        alt: "npm total downloads",
+        href: "https://www.npmjs.com/package/eslint-plugin-docusaurus-2",
+        src: "https://flat.badgen.net/npm/dt/eslint-plugin-docusaurus-2?color=pink",
+    },
+    {
+        alt: "latest GitHub release",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/releases",
+        src: "https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-docusaurus-2?color=cyan",
+    },
+    {
+        alt: "GitHub stars",
         href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/stargazers",
         src: "https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-docusaurus-2?color=yellow",
     },
     {
-        alt: "GitHub open issues.",
+        alt: "GitHub forks",
+        href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/forks",
+        src: "https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-docusaurus-2?color=green",
+    },
+    {
+        alt: "GitHub open issues",
         href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/issues",
         src: "https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-docusaurus-2?color=red",
+    },
+    {
+        alt: "Codecov",
+        href: "https://app.codecov.io/gh/Nick2bad4u/eslint-plugin-docusaurus-2",
+        src: "https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-docusaurus-2?color=blue",
     },
 ] as const satisfies readonly LiveBadge[];
 

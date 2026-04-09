@@ -38,6 +38,8 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `no-deprecated-on-broken-markdown-links`
 - `no-duplicate-sidebar-doc-ids`
 - `no-conflicting-footer-html-item-props`
+- `no-conflicting-navbar-doc-item-props`
+- `no-conflicting-navbar-doc-sidebar-item-props`
 - `no-ignored-site-validations`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -53,12 +55,18 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `prefer-use-base-url-for-static-assets`
 - `require-config-link-content`
 - `require-config-link-destination`
+- `require-footer-link-column-items`
+- `require-footer-link-column-title`
+- `require-plugin-pwa-head-manifest`
+- `require-plugin-pwa-head-theme-color`
 - `require-plugin-pwa-setup`
 - `require-site-config-fields`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
+- `require-navbar-docs-version-item-to`
 - `require-navbar-dropdown-items`
 - `require-navbar-dropdown-label`
+- `require-navbar-html-item-value`
 - `require-sidebar-category-items`
 - `require-sidebar-category-label`
 - `require-doc-sidebar-link-type`
@@ -80,6 +88,7 @@ The stricter presets also add:
 ## Choosing a preset
 
 - Start with `recommended` if you want the default future upgrade path and the stable config/sidebar rules.
+- Start with `config` if you want only Docusaurus config, themeConfig, navbar/footer, and plugin-setup enforcement.
 - Start with `minimal` if you want the smallest baseline.
 - Move to `recommended-type-checked` once you are ready for type-aware rules.
 - Use `strict`, `all`, or `experimental` when you also want the stricter Docusaurus page-module and site-source CSS checks.

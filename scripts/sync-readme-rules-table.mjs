@@ -23,6 +23,7 @@ import { fileURLToPath } from "node:url";
 
 /**
  * @typedef {"all"
+ *     | "config"
  *     | "experimental"
  *     | "minimal"
  *     | "recommended"
@@ -35,6 +36,7 @@ const readmePath = resolve(process.cwd(), "README.md");
 /** @type {readonly PresetName[]} */
 const presetConfigNamesByReadmeOrder = [
     "minimal",
+    "config",
     "recommended",
     "recommended-type-checked",
     "strict",
@@ -48,6 +50,7 @@ const PRESET_DOCS_URL_BASE =
 /** @type {Readonly<Record<PresetName, Readonly<{ icon: string }>>>} */
 const presetConfigMetadataByName = {
     all: { icon: "🟣" },
+    config: { icon: "🔵" },
     experimental: { icon: "🧪" },
     minimal: { icon: "🟢" },
     recommended: { icon: "🟡" },
@@ -70,6 +73,7 @@ const loadBuiltPlugin = async () => {
 /** @type {Readonly<Record<PresetName, string>>} */
 const presetDocsSlugByName = {
     all: "all",
+    config: "config",
     experimental: "experimental",
     minimal: "minimal",
     recommended: "recommended",
@@ -80,6 +84,7 @@ const presetDocsSlugByName = {
 /** @type {Readonly<Record<PresetName, string>>} */
 const presetConfigReferenceByName = {
     all: "docusaurus2.configs.all",
+    config: "docusaurus2.configs.config",
     experimental: "docusaurus2.configs.experimental",
     minimal: "docusaurus2.configs.minimal",
     recommended: "docusaurus2.configs.recommended",

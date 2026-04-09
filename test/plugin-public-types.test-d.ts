@@ -25,6 +25,7 @@ declare const ruleId: Docusaurus2RuleId;
 declare const ruleName: Docusaurus2RuleName;
 
 assertType(pluginContract.configs.recommended);
+assertType(pluginContract.configs.config);
 assertType(pluginContract.configs.all);
 assertType(pluginContract.configs.experimental);
 assertType(pluginContract.meta.name);

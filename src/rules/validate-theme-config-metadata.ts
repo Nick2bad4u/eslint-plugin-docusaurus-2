@@ -147,6 +147,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require valid minimal object shape for `themeConfig.metadata` entries.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

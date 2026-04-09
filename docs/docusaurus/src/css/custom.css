@@ -48,75 +48,147 @@
 }
 
 :root {
-    --ifm-color-primary: #4f46e5;
-    --ifm-color-primary-dark: #4338ca;
-    --ifm-color-primary-darker: #3730a3;
-    --ifm-color-primary-darkest: #312e81;
-    --ifm-color-primary-light: #6366f1;
-    --ifm-color-primary-lighter: #818cf8;
-    --ifm-color-primary-lightest: #a5b4fc;
+    --ifm-color-primary: #25c2a0;
+    --ifm-color-primary-dark: #21af90;
+    --ifm-color-primary-darker: #1fa588;
+    --ifm-color-primary-darkest: #1a8870;
+    --ifm-color-primary-light: #29d5b0;
+    --ifm-color-primary-lighter: #32d8b4;
+    --ifm-color-primary-lightest: #4fddbf;
     --ifm-code-font-size: 95%;
     --ifm-font-family-base:
         "Inter var", "Inter", "Segoe UI", "NerdFontSymbols Nerd Font Symbols",
         system-ui, -apple-system, sans-serif;
-    --sb-accent-overview: #22c55e;
-    --sb-accent-started: #0ea5e9;
-    --sb-accent-developer: #8b5cf6;
-    --sb-accent-developer-ops: #ec4899;
-    --sb-accent-rules: #f97316;
-    --sb-accent-presets: #eab308;
-    --sb-accent-guides: #06b6d4;
-    --sb-accent-api-overview: #6366f1;
+    --sb-accent-overview: #25c2a0;
+    --sb-accent-started: #14b8a6;
+    --sb-accent-developer: #06b6d4;
+    --sb-accent-developer-ops: #0ea5e9;
+    --sb-accent-rules: #16a34a;
+    --sb-accent-presets: #0891b2;
+    --sb-accent-guides: #22c55e;
+    --sb-accent-api-overview: #0ea5e9;
     --sb-accent-api-types: #14b8a6;
-    --sb-accent-api-runtime: #f43f5e;
-    --sb-accent-dev-charts: #38bdf8;
+    --sb-accent-api-runtime: #22c55e;
+    --sb-accent-dev-charts: #06b6d4;
     --sb-accent-dev-links: #10b981;
-    --sb-accent-adr: #f59e0b;
-    --sb-accent-rules-ts: #22c55e;
-    --sb-accent-rules-type-utilities: #a855f7;
+    --sb-accent-adr: #0f766e;
+    --sb-accent-rules-ts: #25c2a0;
+    --sb-accent-rules-type-utilities: #0ea5e9;
     --sb-prefix-rule-number: #52525b;
-    --sb-preset-minimal: #22c55e;
-    --sb-preset-recommended: #facc15;
-    --sb-preset-recommended-type-checked: #fb923c;
-    --sb-preset-strict: #f43f5e;
-    --sb-preset-all: #a855f7;
-    --sb-preset-experimental: #38bdf8;
-    --sb-preset-type-utilities: #60a5fa;
-    --sb-preset-type-guards: #fb923c;
+    --sb-preset-minimal: #25c2a0;
+    --sb-preset-config: #0ea5e9;
+    --sb-preset-recommended: #14b8a6;
+    --sb-preset-recommended-type-checked: #22c55e;
+    --sb-preset-strict: #0f766e;
+    --sb-preset-all: #0369a1;
+    --sb-preset-experimental: #0891b2;
+    --sb-preset-type-utilities: #0ea5e9;
+    --sb-preset-type-guards: #22c55e;
 }
 
 [data-theme="dark"] {
-    --ifm-color-primary: #818cf8;
-    --ifm-color-primary-dark: #6366f1;
-    --ifm-color-primary-darker: #4f46e5;
-    --ifm-color-primary-darkest: #4338ca;
-    --ifm-color-primary-light: #a5b4fc;
-    --ifm-color-primary-lighter: #c7d2fe;
-    --ifm-color-primary-lightest: #e0e7ff;
+    --ifm-color-primary: #2dd4bf;
+    --ifm-color-primary-dark: #25c2a0;
+    --ifm-color-primary-darker: #21af90;
+    --ifm-color-primary-darkest: #1a8870;
+    --ifm-color-primary-light: #5eead4;
+    --ifm-color-primary-lighter: #7feeda;
+    --ifm-color-primary-lightest: #a8f5e8;
     --sb-accent-overview: #4ade80;
-    --sb-accent-started: #38bdf8;
-    --sb-accent-developer: #c084fc;
-    --sb-accent-developer-ops: #f472b6;
-    --sb-accent-rules: #fb923c;
-    --sb-accent-presets: #facc15;
-    --sb-accent-guides: #67e8f9;
-    --sb-accent-api-overview: #a5b4fc;
-    --sb-accent-api-types: #2dd4bf;
-    --sb-accent-api-runtime: #fb7185;
-    --sb-accent-dev-charts: #7dd3fc;
-    --sb-accent-dev-links: #34d399;
-    --sb-accent-adr: #fbbf24;
-    --sb-accent-rules-ts: #4ade80;
-    --sb-accent-rules-type-utilities: #c084fc;
+    --sb-accent-started: #5eead4;
+    --sb-accent-developer: #67e8f9;
+    --sb-accent-developer-ops: #38bdf8;
+    --sb-accent-rules: #4ade80;
+    --sb-accent-presets: #67e8f9;
+    --sb-accent-guides: #86efac;
+    --sb-accent-api-overview: #38bdf8;
+    --sb-accent-api-types: #5eead4;
+    --sb-accent-api-runtime: #4ade80;
+    --sb-accent-dev-charts: #67e8f9;
+    --sb-accent-dev-links: #6ee7b7;
+    --sb-accent-adr: #2dd4bf;
+    --sb-accent-rules-ts: #5eead4;
+    --sb-accent-rules-type-utilities: #67e8f9;
     --sb-prefix-rule-number: #a1a1aa;
     --sb-preset-minimal: #4ade80;
-    --sb-preset-recommended: #fde047;
-    --sb-preset-recommended-type-checked: #fdba74;
-    --sb-preset-strict: #fb7185;
-    --sb-preset-all: #c084fc;
-    --sb-preset-experimental: #7dd3fc;
-    --sb-preset-type-utilities: #93c5fd;
-    --sb-preset-type-guards: #fdba74;
+    --sb-preset-config: #38bdf8;
+    --sb-preset-recommended: #2dd4bf;
+    --sb-preset-recommended-type-checked: #5eead4;
+    --sb-preset-strict: #0ea5e9;
+    --sb-preset-all: #67e8f9;
+    --sb-preset-experimental: #93c5fd;
+    --sb-preset-type-utilities: #7dd3fc;
+    --sb-preset-type-guards: #86efac;
+}
+
+body {
+    background:
+        radial-gradient(
+            circle at 12% 0%,
+            rgb(45 212 191 / 10%),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 100% 12%,
+            rgb(37 194 160 / 12%),
+            transparent 34%
+        ),
+        linear-gradient(180deg, #f7fcfb 0%, #eefcf9 100%);
+
+    [data-theme="dark"] & {
+        background:
+            radial-gradient(
+                circle at 12% 0%,
+                rgb(45 212 191 / 14%),
+                transparent 28%
+            ),
+            radial-gradient(
+                circle at 100% 12%,
+                rgb(20 184 166 / 12%),
+                transparent 32%
+            ),
+            linear-gradient(180deg, #071513 0%, #0b1f1d 100%);
+    }
+}
+
+.main-wrapper {
+    position: relative;
+}
+
+.navbar {
+    border-block-end: 1px solid rgb(37 194 160 / 16%);
+    backdrop-filter: blur(14px);
+    background: rgb(247 252 251 / 88%);
+    box-shadow: 0 14px 26px -24px rgb(15 23 42 / 38%);
+
+    [data-theme="dark"] & {
+        border-block-end-color: rgb(45 212 191 / 18%);
+        background: rgb(3 16 15 / 84%);
+        box-shadow: 0 16px 28px -24px rgb(2 6 23 / 72%);
+    }
+}
+
+.footer {
+    border-block-start: 1px solid rgb(37 194 160 / 16%);
+    background:
+        linear-gradient(180deg, rgb(37 194 160 / 10%), transparent 36%),
+        rgb(247 252 251 / 96%);
+
+    [data-theme="dark"] & {
+        border-block-start-color: rgb(45 212 191 / 18%);
+        background:
+            linear-gradient(180deg, rgb(45 212 191 / 10%), transparent 34%),
+            rgb(3 16 15 / 96%);
+    }
+}
+
+.footer__title {
+    font-weight: 800;
+    letter-spacing: 0.01em;
+}
+
+.footer__link-item {
+    transition: color 140ms ease;
 }
 
 .navbar .dropdown__menu .navbar-dropdown-divider {
@@ -867,6 +939,11 @@
 .sb-cat-presets .sb-preset-minimal > .menu__link,
 .sb-cat-presets .menu__link.sb-preset-minimal {
     border-inline-start-color: var(--sb-preset-minimal);
+}
+
+.sb-cat-presets .sb-preset-config > .menu__link,
+.sb-cat-presets .menu__link.sb-preset-config {
+    border-inline-start-color: var(--sb-preset-config);
 }
 
 .sb-cat-presets .sb-preset-recommended > .menu__link,

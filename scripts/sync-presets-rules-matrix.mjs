@@ -15,12 +15,15 @@ import { fileURLToPath } from "node:url";
  *             presets?: readonly string[] | string;
  *             url?: string;
  *         };
+ *         fixable?: string;
+ *         hasSuggestions?: boolean;
  *     };
  * }>} PresetsRuleModule
  */
 
 /**
  * @typedef {"all"
+ *     | "config"
  *     | "experimental"
  *     | "minimal"
  *     | "recommended"
@@ -39,6 +42,7 @@ const presetsIndexPath = resolve(
 /** @type {readonly PresetName[]} */
 const presetConfigNamesByReadmeOrder = [
     "minimal",
+    "config",
     "recommended",
     "recommended-type-checked",
     "strict",
@@ -50,6 +54,7 @@ const presetOrder = [...presetConfigNamesByReadmeOrder];
 /** @type {Readonly<Record<PresetName, Readonly<{ icon: string }>>>} */
 const presetConfigMetadataByName = {
     all: { icon: "🟣" },
+    config: { icon: "🔵" },
     experimental: { icon: "🧪" },
     minimal: { icon: "🟢" },
     recommended: { icon: "🟡" },
@@ -109,14 +114,67 @@ const normalizeMarkdownLineEndings = (markdown, lineEnding) =>
 
 /** @returns {string} */
 const createTableHeader = () => {
-    const iconHeaders = presetOrder.map(
-        (presetName) => presetConfigMetadataByName[presetName].icon
-    );
+    return ["| Rule | Fix | Preset key |", "| --- | :-: | --- |"].join("\n");
+};
 
-    return [
-        `| Rule | ${iconHeaders.join(" | ")} |`,
-        `| --- | ${iconHeaders.map(() => ":-:").join(" | ")} |`,
-    ].join("\n");
+const PRESET_DOCS_URL_BASE =
+    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets";
+
+/** @type {Readonly<Record<PresetName, string>>} */
+const presetDocsSlugByName = {
+    all: "all",
+    config: "config",
+    experimental: "experimental",
+    minimal: "minimal",
+    recommended: "recommended",
+    "recommended-type-checked": "recommended-type-checked",
+    strict: "strict",
+};
+
+/** @type {Readonly<Record<PresetName, string>>} */
+const presetConfigReferenceByName = {
+    all: "docusaurus2.configs.all",
+    config: "docusaurus2.configs.config",
+    experimental: "docusaurus2.configs.experimental",
+    minimal: "docusaurus2.configs.minimal",
+    recommended: "docusaurus2.configs.recommended",
+    "recommended-type-checked":
+        'docusaurus2.configs["recommended-type-checked"]',
+    strict: "docusaurus2.configs.strict",
+};
+
+/** @param {PresetName} presetName */
+const createPresetDocsUrl = (presetName) =>
+    `${PRESET_DOCS_URL_BASE}/${presetDocsSlugByName[presetName]}`;
+
+/** @returns {readonly string[]} */
+const createPresetLegendLines = () =>
+    presetOrder.map((presetName) => {
+        const docsUrl = createPresetDocsUrl(presetName);
+        const presetIcon = presetConfigMetadataByName[presetName].icon;
+        const configReference = presetConfigReferenceByName[presetName];
+
+        return `  - [${presetIcon}](${docsUrl}) — [\`${configReference}\`](${docsUrl})`;
+    });
+
+/** @param {PresetsRuleModule} ruleModule */
+const getRuleFixIndicator = (ruleModule) => {
+    const fixable = ruleModule.meta?.fixable === "code";
+    const hasSuggestions = ruleModule.meta?.hasSuggestions === true;
+
+    if (fixable && hasSuggestions) {
+        return "🔧 💡";
+    }
+
+    if (fixable) {
+        return "🔧";
+    }
+
+    if (hasSuggestions) {
+        return "💡";
+    }
+
+    return "—";
 };
 
 /**
@@ -139,14 +197,20 @@ const createRuleRows = (rules) => {
             typeof docsUrl === "string" && docsUrl.length > 0
                 ? `[\`${ruleName}\`](${docsUrl})`
                 : `\`${ruleName}\``;
-        const enabledPresetNames = new Set(
-            normalizePresetNames(ruleModule.meta?.docs?.presets)
+        const presetNames = normalizePresetNames(
+            ruleModule.meta?.docs?.presets
         );
-        const cells = presetOrder.map((presetName) =>
-            enabledPresetNames.has(presetName) ? "✅" : "—"
-        );
+        const presetIcons =
+            presetNames.length === 0
+                ? "—"
+                : presetNames
+                      .map(
+                          (presetName) =>
+                              presetConfigMetadataByName[presetName].icon
+                      )
+                      .join(" ");
 
-        return `| ${label} | ${cells.join(" | ")} |`;
+        return `| ${label} | ${getRuleFixIndicator(ruleModule)} | ${presetIcons} |`;
     });
 };
 
@@ -159,7 +223,16 @@ export const generatePresetsRulesMatrixSectionFromRules = (rules) =>
     [
         matrixSectionHeading,
         "",
-        "This matrix is the canonical place to show how the current Docusaurus rule catalog maps onto each preset tier.",
+        "The current rule catalog focuses on Docusaurus config, validation, sidebar, and site-source CSS correctness.",
+        "",
+        "The public preset surface is stable, and the rule catalog is intentionally focused while higher-value Docusaurus rule gaps are explored.",
+        "",
+        "- `Fix` legend:",
+        "  - `🔧` = autofixable",
+        "  - `💡` = suggestions available",
+        "  - `—` = report only",
+        "- `Preset key` legend:",
+        ...createPresetLegendLines(),
         "",
         createTableHeader(),
         ...createRuleRows(rules),

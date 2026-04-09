@@ -538,6 +538,32 @@ export const getStaticBooleanValueFromExpressionOrIdentifier = (
 };
 
 /**
+ * Resolve an array expression from a direct expression or from an identifier
+ * bound to an array expression in the same program.
+ */
+export const getArrayExpressionFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.ArrayExpression> => {
+    if (expression.type === "ArrayExpression") {
+        return expression;
+    }
+
+    if (expression.type !== "Identifier") {
+        return null;
+    }
+
+    const resolvedExpression = resolveExpressionForIdentifier(
+        expression.name,
+        programNode
+    );
+
+    return resolvedExpression?.type === "ArrayExpression"
+        ? resolvedExpression
+        : null;
+};
+
+/**
  * Determine whether an object expression looks like a Docusaurus sidebar
  * category item.
  */
@@ -743,3 +769,17 @@ export const findPluginConfigurationsByName = (
 
     return pluginEntries;
 };
+
+/**
+ * Find all object-literal plugin options declared for one plugin specifier.
+ */
+export const findPluginOptionsObjectsByName = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    pluginName: string
+): readonly Readonly<TSESTree.ObjectExpression>[] =>
+    findPluginConfigurationsByName(configObjectExpression, pluginName)
+        .map((entry) => entry.optionsObject)
+        .filter(
+            (optionsObject): optionsObject is TSESTree.ObjectExpression =>
+                optionsObject !== null
+        );

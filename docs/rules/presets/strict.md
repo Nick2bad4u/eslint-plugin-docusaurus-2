@@ -11,24 +11,26 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 
 `strict` includes all of `recommended`, plus the stricter Docusaurus page-module and site-source CSS rules:
 
-- `no-conflicting-config-link-props`
-- `no-duplicate-sidebar-doc-ids`
-- `no-mixed-sidebar-link-kinds`
-- `no-redundant-social-card-metadata`
-- `no-svg-social-card-image`
-- `no-use-base-url-for-internal-link-components`
-- `prefer-css-modules-in-site-src`
-- `no-page-css-module-imports-in-components`
-- `prefer-use-base-url-for-static-assets`
-- `require-default-export-pages`
-- `require-plugin-pwa-setup`
-- `require-pages-plugin-excludes`
-- `require-site-config-fields`
-- `require-theme-config-image`
+- [`no-conflicting-config-link-props`](../no-conflicting-config-link-props.md)
+- [`no-duplicate-sidebar-doc-ids`](../no-duplicate-sidebar-doc-ids.md)
+- [`no-mixed-sidebar-link-kinds`](../no-mixed-sidebar-link-kinds.md)
+- [`no-redundant-social-card-metadata`](../no-redundant-social-card-metadata.md)
+- [`no-svg-social-card-image`](../no-svg-social-card-image.md)
+- [`no-use-base-url-for-internal-link-components`](../no-use-base-url-for-internal-link-components.md)
+- [`prefer-css-modules-in-site-src`](../prefer-css-modules-in-site-src.md)
+- [`no-page-css-module-imports-in-components`](../no-page-css-module-imports-in-components.md)
+- [`prefer-use-base-url-for-static-assets`](../prefer-use-base-url-for-static-assets.md)
+- [`require-default-export-pages`](../require-default-export-pages.md)
+- [`require-plugin-pwa-setup`](../require-plugin-pwa-setup.md)
+- [`require-pages-plugin-excludes`](../require-pages-plugin-excludes.md)
+- [`require-site-config-fields`](../require-site-config-fields.md)
+- [`require-theme-config-image`](../require-theme-config-image.md)
 
 The recommended link-semantics rules also remain enabled here, so `strict` covers both config/sidebar correctness and component-level routing conventions.
 
 It also keeps the typed parser baseline for future stricter Docusaurus checks.
+
+If you only want Docusaurus config/theme/plugin enforcement without the broader page-module and CSS architecture rules, use [`config`](./config.md) instead.
 
 ## Flat config example
 

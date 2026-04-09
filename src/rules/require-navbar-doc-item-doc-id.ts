@@ -95,6 +95,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     'require `docId` for Docusaurus navbar items with `type: "doc"`.',
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

@@ -8,6 +8,7 @@ import { objectHasOwn } from "./runtime-utils.js";
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
 export const presetConfigNames = [
     "all",
+    "config",
     "experimental",
     "minimal",
     "recommended",
@@ -35,14 +36,22 @@ export const presetConfigMetadataByName: Readonly<
         description: "Every stable rule once the rule catalog grows.",
         icon: "🟣",
         presetName: "docusaurus-2:all",
-        readmeOrder: 5,
+        readmeOrder: 6,
         requiresTypeChecking: true,
+    },
+    config: {
+        description:
+            "Focused preset for Docusaurus config, themeConfig, navbar/footer, and plugin-setup rules.",
+        icon: "🔵",
+        presetName: "docusaurus-2:config",
+        readmeOrder: 2,
+        requiresTypeChecking: false,
     },
     experimental: {
         description: "Stable rules plus future experimental additions.",
         icon: "🧪",
         presetName: "docusaurus-2:experimental",
-        readmeOrder: 6,
+        readmeOrder: 7,
         requiresTypeChecking: true,
     },
     minimal: {
@@ -56,7 +65,7 @@ export const presetConfigMetadataByName: Readonly<
         description: "Balanced default preset for most Docusaurus codebases.",
         icon: "🟡",
         presetName: "docusaurus-2:recommended",
-        readmeOrder: 2,
+        readmeOrder: 3,
         requiresTypeChecking: false,
     },
     "recommended-type-checked": {
@@ -64,7 +73,7 @@ export const presetConfigMetadataByName: Readonly<
             "Recommended plus rules that rely on TypeScript type information.",
         icon: "🟠",
         presetName: "docusaurus-2:recommended-type-checked",
-        readmeOrder: 3,
+        readmeOrder: 4,
         requiresTypeChecking: true,
     },
     strict: {
@@ -72,7 +81,7 @@ export const presetConfigMetadataByName: Readonly<
             "Recommended plus stricter consistency rules for mature sites.",
         icon: "🔴",
         presetName: "docusaurus-2:strict",
-        readmeOrder: 4,
+        readmeOrder: 5,
         requiresTypeChecking: true,
     },
 };
@@ -80,6 +89,7 @@ export const presetConfigMetadataByName: Readonly<
 /** Stable README legend/rendering order for preset icons. */
 export const presetConfigNamesByReadmeOrder: readonly PresetConfigName[] = [
     "minimal",
+    "config",
     "recommended",
     "recommended-type-checked",
     "strict",

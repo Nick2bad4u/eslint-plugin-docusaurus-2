@@ -25,7 +25,7 @@ const siteUrl = `${siteOrigin}${baseUrl}`;
 const siteDescription =
     "ESLint plugin for Docusaurus sites, sidebars, pages, and TypeDoc-integrated documentation workflows.";
 /** Social preview image used for Open Graph and Twitter cards. */
-const socialCardImagePath = "img/logo.png";
+const socialCardImagePath = "img/docusaurus-social-card.png";
 /** Absolute social preview image URL. */
 const socialCardImageUrl = new URL(socialCardImagePath, siteUrl).toString();
 /** Client module path for runtime DOM enhancement bootstrap script. */
@@ -34,11 +34,11 @@ const modernEnhancementsClientModule = fileURLToPath(
 );
 
 /** PWA theme-color meta value for Chromium-based browsers. */
-const pwaThemeColor = "#2E2A33";
+const pwaThemeColor = "#25c2a0";
 /** Windows tile color for pinned-site metadata. */
-const pwaTileColor = "#2E2A33";
+const pwaTileColor = "#25c2a0";
 /** Safari pinned-tab mask icon color. */
-const pwaMaskIconColor = "#71B041";
+const pwaMaskIconColor = "#25c2a0";
 /** Footer copyright HTML used by the site theme config. */
 const footerCopyright =
     `© ${new Date().getFullYear()} ` +
@@ -100,13 +100,7 @@ const suppressKnownWebpackWarningsPlugin: PluginModule = () => {
     return {
         configureWebpack() {
             return {
-                ignoreWarnings: [
-                    {
-                        message:
-                            /Critical dependency: require function is used in a way in which dependencies cannot be statically extracted/u,
-                        module: /vscode-languageserver-types[\\/]lib[\\/]umd[\\/]main\.js/u,
-                    },
-                ],
+                ignoreWarnings: [],
                 resolve: {
                     alias: {
                         "vscode-css-languageservice$":
@@ -150,7 +144,7 @@ const config = {
     baseUrl,
     baseUrlIssueBanner: true,
     deploymentBranch: "gh-pages",
-    favicon: "img/logo.svg",
+    favicon: "img/favicon.ico",
     // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
     future: futureConfig,
     clientModules: [modernEnhancementsClientModule],
@@ -244,18 +238,18 @@ const config = {
                         tagName: "meta",
                     },
                     {
-                        href: `${baseUrl}img/logo_192x192.png`,
+                        href: `${baseUrl}img/icons/icon-192x192.png`,
                         rel: "apple-touch-icon",
                         tagName: "link",
                     },
                     {
                         color: pwaMaskIconColor,
-                        href: `${baseUrl}img/logo.svg`,
+                        href: `${baseUrl}img/docusaurus.svg`,
                         rel: "mask-icon",
                         tagName: "link",
                     },
                     {
-                        content: `${baseUrl}img/logo_192x192.png`,
+                        content: `${baseUrl}img/icons/icon-192x192.png`,
                         name: "msapplication-TileImage",
                         tagName: "meta",
                     },
@@ -288,7 +282,6 @@ const config = {
                     blogDescription:
                         "Updates, architecture notes, and practical guidance for eslint-plugin-docusaurus-2 maintainers and users.",
                     blogSidebarCount: "ALL",
-                    blogSidebarTitle: "All posts",
                     blogTitle: "eslint-plugin-docusaurus-2 Blog",
                     editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
                     feedOptions: {
@@ -479,9 +472,9 @@ const config = {
             logo: {
                 alt: "eslint-plugin-docusaurus-2 logo",
                 href: `https://github.com/${organizationName}/${projectName}`,
-                src: "img/logo.svg",
-                width: 60,
-                height: 60,
+                src: "img/docusaurus-72x72.png",
+                width: 72,
+                height: 72,
             },
             style: "dark",
         },
@@ -550,6 +543,10 @@ const config = {
                         {
                             label: "🟢 Minimal",
                             to: "/docs/rules/presets/minimal",
+                        },
+                        {
+                            label: "🔵 Config",
+                            to: "/docs/rules/presets/config",
                         },
                         {
                             label: "🟡 Recommended",
@@ -625,10 +622,10 @@ const config = {
             ],
             logo: {
                 alt: "eslint-plugin-docusaurus-2 logo",
-                height: 48,
+                height: 32,
                 href: baseUrl,
-                src: "img/logo.svg",
-                width: 48,
+                src: "img/docusaurus.svg",
+                width: 32,
             },
             title: "eslint-plugin-docusaurus-2",
         },

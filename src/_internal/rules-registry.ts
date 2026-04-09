@@ -10,6 +10,8 @@ import type { UnknownArray } from "./types.js";
 import noConflictingConfigLinkContentPropsRule from "../rules/no-conflicting-config-link-content-props.js";
 import noConflictingConfigLinkPropsRule from "../rules/no-conflicting-config-link-props.js";
 import noConflictingFooterHtmlItemPropsRule from "../rules/no-conflicting-footer-html-item-props.js";
+import noConflictingNavbarDocItemPropsRule from "../rules/no-conflicting-navbar-doc-item-props.js";
+import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-navbar-doc-sidebar-item-props.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
@@ -31,12 +33,18 @@ import requireConfigLinkContentRule from "../rules/require-config-link-content.j
 import requireConfigLinkDestinationRule from "../rules/require-config-link-destination.js";
 import requireDefaultExportPagesRule from "../rules/require-default-export-pages.js";
 import requireDocSidebarLinkTypeRule from "../rules/require-doc-sidebar-link-type.js";
+import requireFooterLinkColumnItemsRule from "../rules/require-footer-link-column-items.js";
+import requireFooterLinkColumnTitleRule from "../rules/require-footer-link-column-title.js";
 import requireGeneratedIndexLinkTypeRule from "../rules/require-generated-index-link-type.js";
 import requireNavbarDocItemDocIdRule from "../rules/require-navbar-doc-item-doc-id.js";
 import requireNavbarDocSidebarItemSidebarIdRule from "../rules/require-navbar-doc-sidebar-item-sidebar-id.js";
+import requireNavbarDocsVersionItemToRule from "../rules/require-navbar-docs-version-item-to.js";
 import requireNavbarDropdownItemsRule from "../rules/require-navbar-dropdown-items.js";
 import requireNavbarDropdownLabelRule from "../rules/require-navbar-dropdown-label.js";
+import requireNavbarHtmlItemValueRule from "../rules/require-navbar-html-item-value.js";
 import requirePagesPluginExcludesRule from "../rules/require-pages-plugin-excludes.js";
+import requirePluginPwaHeadManifestRule from "../rules/require-plugin-pwa-head-manifest.js";
+import requirePluginPwaHeadThemeColorRule from "../rules/require-plugin-pwa-head-theme-color.js";
 import requirePluginPwaSetupRule from "../rules/require-plugin-pwa-setup.js";
 import requireSidebarCategoryItemsRule from "../rules/require-sidebar-category-items.js";
 import requireSidebarCategoryLabelRule from "../rules/require-sidebar-category-label.js";
@@ -57,6 +65,9 @@ const docusaurusRuleRegistry = {
     "no-conflicting-config-link-props": noConflictingConfigLinkPropsRule,
     "no-conflicting-footer-html-item-props":
         noConflictingFooterHtmlItemPropsRule,
+    "no-conflicting-navbar-doc-item-props": noConflictingNavbarDocItemPropsRule,
+    "no-conflicting-navbar-doc-sidebar-item-props":
+        noConflictingNavbarDocSidebarItemPropsRule,
     "no-deprecated-on-broken-markdown-links":
         noDeprecatedOnBrokenMarkdownLinksRule,
     "no-duplicate-sidebar-doc-ids": noDuplicateSidebarDocIdsRule,
@@ -85,13 +96,19 @@ const docusaurusRuleRegistry = {
     "require-config-link-destination": requireConfigLinkDestinationRule,
     "require-default-export-pages": requireDefaultExportPagesRule,
     "require-doc-sidebar-link-type": requireDocSidebarLinkTypeRule,
+    "require-footer-link-column-items": requireFooterLinkColumnItemsRule,
+    "require-footer-link-column-title": requireFooterLinkColumnTitleRule,
     "require-generated-index-link-type": requireGeneratedIndexLinkTypeRule,
     "require-navbar-doc-item-doc-id": requireNavbarDocItemDocIdRule,
     "require-navbar-doc-sidebar-item-sidebar-id":
         requireNavbarDocSidebarItemSidebarIdRule,
+    "require-navbar-docs-version-item-to": requireNavbarDocsVersionItemToRule,
     "require-navbar-dropdown-items": requireNavbarDropdownItemsRule,
     "require-navbar-dropdown-label": requireNavbarDropdownLabelRule,
+    "require-navbar-html-item-value": requireNavbarHtmlItemValueRule,
     "require-pages-plugin-excludes": requirePagesPluginExcludesRule,
+    "require-plugin-pwa-head-manifest": requirePluginPwaHeadManifestRule,
+    "require-plugin-pwa-head-theme-color": requirePluginPwaHeadThemeColorRule,
     "require-plugin-pwa-setup": requirePluginPwaSetupRule,
     "require-sidebar-category-items": requireSidebarCategoryItemsRule,
     "require-sidebar-category-label": requireSidebarCategoryLabelRule,

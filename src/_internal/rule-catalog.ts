@@ -59,6 +59,14 @@ const orderedRuleNames = [
     "require-navbar-doc-sidebar-item-sidebar-id",
     "require-plugin-pwa-setup",
     "require-site-config-fields",
+    "require-footer-link-column-items",
+    "require-footer-link-column-title",
+    "require-navbar-docs-version-item-to",
+    "require-navbar-html-item-value",
+    "require-plugin-pwa-head-manifest",
+    "require-plugin-pwa-head-theme-color",
+    "no-conflicting-navbar-doc-item-props",
+    "no-conflicting-navbar-doc-sidebar-item-props",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

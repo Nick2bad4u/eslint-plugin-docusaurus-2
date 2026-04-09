@@ -118,6 +118,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "disallow Docusaurus config link items from declaring both `to` and `href` at the same time.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

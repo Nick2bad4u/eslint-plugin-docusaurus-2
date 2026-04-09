@@ -126,6 +126,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "disallow `ignore` severities for Docusaurus site validation settings.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

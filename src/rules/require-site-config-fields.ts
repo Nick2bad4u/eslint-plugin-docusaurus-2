@@ -229,6 +229,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                 "require explicit top-level Docusaurus site config fields for deployment, asset loading, and site validation behavior.",
             frozen: false,
             presets: [
+                "config",
                 "strict",
                 "all",
                 "experimental",

@@ -104,6 +104,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require Docusaurus theme-config link items to provide a destination through `to`, `href`, or footer `html`.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

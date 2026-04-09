@@ -7,6 +7,8 @@ import type { TSESTree } from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
+    getArrayExpressionPropertyValueByName,
+    getObjectExpressionPropertyValueByName,
     getObjectPropertyName,
     getStaticStringValue,
 } from "./docusaurus-config-ast.js";
@@ -76,4 +78,60 @@ export const getDefaultDocusaurusThemeConfigLinkContext = (
     }
 
     return themeConfigLinkContext;
+};
+
+/**
+ * Find top-level footer link column objects declared under
+ * `themeConfig.footer.links`.
+ */
+export const findDocusaurusFooterLinkColumnObjects = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+): readonly Readonly<TSESTree.ObjectExpression>[] => {
+    const themeConfigObject = getObjectExpressionPropertyValueByName(
+        configObjectExpression,
+        "themeConfig"
+    );
+
+    if (themeConfigObject === null) {
+        return [];
+    }
+
+    const footerObject = getObjectExpressionPropertyValueByName(
+        themeConfigObject,
+        "footer"
+    );
+
+    if (footerObject === null) {
+        return [];
+    }
+
+    const footerLinksArrayExpression = getArrayExpressionPropertyValueByName(
+        footerObject,
+        "links"
+    );
+
+    if (footerLinksArrayExpression === null) {
+        return [];
+    }
+
+    const footerLinkColumns: TSESTree.ObjectExpression[] = [];
+
+    for (const footerLinkElement of footerLinksArrayExpression.elements) {
+        if (footerLinkElement?.type !== "ObjectExpression") {
+            continue;
+        }
+
+        const hasItemsProperty =
+            findObjectPropertyByName(footerLinkElement, "items") !== null;
+        const hasTitleProperty =
+            findObjectPropertyByName(footerLinkElement, "title") !== null;
+
+        if (!hasItemsProperty && !hasTitleProperty) {
+            continue;
+        }
+
+        footerLinkColumns.push(footerLinkElement);
+    }
+
+    return footerLinkColumns;
 };

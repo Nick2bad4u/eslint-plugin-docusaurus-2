@@ -198,6 +198,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 description:
                     "require explicit `pages.exclude` patterns when Docusaurus classic preset pages config customizes `include`.",
                 presets: [
+                    "config",
                     "strict",
                     "all",
                     "experimental",

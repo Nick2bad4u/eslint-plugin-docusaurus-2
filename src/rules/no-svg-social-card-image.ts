@@ -92,6 +92,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "disallow SVG values for Docusaurus social-card image config fields.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

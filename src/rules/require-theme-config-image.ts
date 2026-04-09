@@ -103,6 +103,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require `themeConfig.image` so Docusaurus has a default social-card image.",
                 frozen: false,
                 presets: [
+                    "config",
                     "strict",
                     "all",
                     "experimental",

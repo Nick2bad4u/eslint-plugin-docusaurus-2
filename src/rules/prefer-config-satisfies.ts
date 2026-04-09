@@ -114,6 +114,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require `satisfies Config` over direct `Config` annotations in TypeScript Docusaurus config files.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

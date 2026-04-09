@@ -93,6 +93,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require a non-empty `label` for Docusaurus navbar dropdown items.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

@@ -143,6 +143,7 @@ const derivePresetRuleNamesByConfig = (): Readonly<
 
     return {
         all: dedupeRuleNames(presetRuleNamesByConfig.all),
+        config: dedupeRuleNames(presetRuleNamesByConfig.config),
         experimental: dedupeRuleNames(presetRuleNamesByConfig.experimental),
         minimal: dedupeRuleNames(presetRuleNamesByConfig.minimal),
         recommended: dedupeRuleNames(presetRuleNamesByConfig.recommended),

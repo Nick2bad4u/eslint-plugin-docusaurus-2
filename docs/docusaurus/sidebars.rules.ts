@@ -1,5 +1,63 @@
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
+import { ruleCatalogEntries } from "../../src/_internal/rule-catalog";
+
+const presetDocs = [
+    {
+        id: "presets/index",
+        label: "Preset index",
+        type: "doc",
+    },
+    {
+        className: "sb-preset-minimal",
+        id: "presets/minimal",
+        label: "🟢 Minimal",
+        type: "doc",
+    },
+    {
+        className: "sb-preset-config",
+        id: "presets/config",
+        label: "🔵 Config",
+        type: "doc",
+    },
+    {
+        className: "sb-preset-recommended",
+        id: "presets/recommended",
+        label: "🟡 Recommended",
+        type: "doc",
+    },
+    {
+        className: "sb-preset-recommended-type-checked",
+        id: "presets/recommended-type-checked",
+        label: "🟠 Recommended (type-checked)",
+        type: "doc",
+    },
+    {
+        className: "sb-preset-strict",
+        id: "presets/strict",
+        label: "🔴 Strict",
+        type: "doc",
+    },
+    {
+        className: "sb-preset-all",
+        id: "presets/all",
+        label: "🟣 All",
+        type: "doc",
+    },
+    {
+        className: "sb-preset-experimental",
+        id: "presets/experimental",
+        label: "🧪 Experimental",
+        type: "doc",
+    },
+] satisfies SidebarsConfig["rules"];
+
+const ruleDocs = ruleCatalogEntries.map((entry) => ({
+    id: entry.ruleName,
+    label: `${String(entry.ruleNumber).padStart(3, "0")} ${entry.ruleName}`,
+    type: "doc" as const,
+})) satisfies SidebarsConfig["rules"];
+
 const sidebars = {
     rules: [
         {
@@ -17,236 +75,14 @@ const sidebars = {
         {
             className: "sb-cat-presets",
             collapsible: true,
-            items: [
-                {
-                    id: "presets/index",
-                    label: "Preset index",
-                    type: "doc",
-                },
-                {
-                    id: "presets/minimal",
-                    label: "🟢 Minimal",
-                    type: "doc",
-                },
-                {
-                    id: "presets/recommended",
-                    label: "🟡 Recommended",
-                    type: "doc",
-                },
-                {
-                    id: "presets/recommended-type-checked",
-                    label: "🟠 Recommended (type-checked)",
-                    type: "doc",
-                },
-                {
-                    id: "presets/strict",
-                    label: "🔴 Strict",
-                    type: "doc",
-                },
-                {
-                    id: "presets/all",
-                    label: "🟣 All",
-                    type: "doc",
-                },
-                {
-                    id: "presets/experimental",
-                    label: "🧪 Experimental",
-                    type: "doc",
-                },
-            ],
+            items: presetDocs,
             label: "Presets",
             type: "category",
         },
         {
             className: "sb-cat-rules",
             collapsible: true,
-            items: [
-                {
-                    id: "no-conflicting-config-link-props",
-                    label: "no-conflicting-config-link-props",
-                    type: "doc",
-                },
-                {
-                    id: "no-conflicting-config-link-content-props",
-                    label: "no-conflicting-config-link-content-props",
-                    type: "doc",
-                },
-                {
-                    id: "no-deprecated-on-broken-markdown-links",
-                    label: "no-deprecated-on-broken-markdown-links",
-                    type: "doc",
-                },
-                {
-                    id: "no-conflicting-footer-html-item-props",
-                    label: "no-conflicting-footer-html-item-props",
-                    type: "doc",
-                },
-                {
-                    id: "no-duplicate-sidebar-doc-ids",
-                    label: "no-duplicate-sidebar-doc-ids",
-                    type: "doc",
-                },
-                {
-                    id: "no-ignored-site-validations",
-                    label: "no-ignored-site-validations",
-                    type: "doc",
-                },
-                {
-                    id: "no-mixed-sidebar-link-kinds",
-                    label: "no-mixed-sidebar-link-kinds",
-                    type: "doc",
-                },
-                {
-                    id: "no-page-css-module-imports-in-components",
-                    label: "no-page-css-module-imports-in-components",
-                    type: "doc",
-                },
-                {
-                    id: "no-redundant-social-card-metadata",
-                    label: "no-redundant-social-card-metadata",
-                    type: "doc",
-                },
-                {
-                    id: "no-svg-social-card-image",
-                    label: "no-svg-social-card-image",
-                    type: "doc",
-                },
-                {
-                    id: "no-useless-collapsed-sidebar-categories",
-                    label: "no-useless-collapsed-sidebar-categories",
-                    type: "doc",
-                },
-                {
-                    id: "no-use-base-url-for-internal-link-components",
-                    label: "no-use-base-url-for-internal-link-components",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-config-satisfies",
-                    label: "prefer-config-satisfies",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-css-modules-in-site-src",
-                    label: "prefer-css-modules-in-site-src",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-href-for-external-link-components",
-                    label: "prefer-href-for-external-link-components",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-href-for-external-links",
-                    label: "prefer-href-for-external-links",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-sidebars-config-satisfies",
-                    label: "prefer-sidebars-config-satisfies",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-to-for-internal-link-components",
-                    label: "prefer-to-for-internal-link-components",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-to-for-internal-links",
-                    label: "prefer-to-for-internal-links",
-                    type: "doc",
-                },
-                {
-                    id: "prefer-use-base-url-for-static-assets",
-                    label: "prefer-use-base-url-for-static-assets",
-                    type: "doc",
-                },
-                {
-                    id: "require-config-link-content",
-                    label: "require-config-link-content",
-                    type: "doc",
-                },
-                {
-                    id: "require-config-link-destination",
-                    label: "require-config-link-destination",
-                    type: "doc",
-                },
-                {
-                    id: "require-default-export-pages",
-                    label: "require-default-export-pages",
-                    type: "doc",
-                },
-                {
-                    id: "require-plugin-pwa-setup",
-                    label: "require-plugin-pwa-setup",
-                    type: "doc",
-                },
-                {
-                    id: "require-site-config-fields",
-                    label: "require-site-config-fields",
-                    type: "doc",
-                },
-                {
-                    id: "require-navbar-doc-item-doc-id",
-                    label: "require-navbar-doc-item-doc-id",
-                    type: "doc",
-                },
-                {
-                    id: "require-navbar-doc-sidebar-item-sidebar-id",
-                    label: "require-navbar-doc-sidebar-item-sidebar-id",
-                    type: "doc",
-                },
-                {
-                    id: "require-doc-sidebar-link-type",
-                    label: "require-doc-sidebar-link-type",
-                    type: "doc",
-                },
-                {
-                    id: "require-generated-index-link-type",
-                    label: "require-generated-index-link-type",
-                    type: "doc",
-                },
-                {
-                    id: "require-pages-plugin-excludes",
-                    label: "require-pages-plugin-excludes",
-                    type: "doc",
-                },
-                {
-                    id: "require-navbar-dropdown-items",
-                    label: "require-navbar-dropdown-items",
-                    type: "doc",
-                },
-                {
-                    id: "require-navbar-dropdown-label",
-                    label: "require-navbar-dropdown-label",
-                    type: "doc",
-                },
-                {
-                    id: "require-sidebar-category-items",
-                    label: "require-sidebar-category-items",
-                    type: "doc",
-                },
-                {
-                    id: "require-sidebar-category-label",
-                    label: "require-sidebar-category-label",
-                    type: "doc",
-                },
-                {
-                    id: "require-sidebar-category-type",
-                    label: "require-sidebar-category-type",
-                    type: "doc",
-                },
-                {
-                    id: "require-theme-config-image",
-                    label: "require-theme-config-image",
-                    type: "doc",
-                },
-                {
-                    id: "validate-theme-config-metadata",
-                    label: "validate-theme-config-metadata",
-                    type: "doc",
-                },
-            ],
+            items: ruleDocs,
             label: "Rules",
             type: "category",
         },

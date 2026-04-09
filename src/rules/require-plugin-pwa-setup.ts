@@ -73,6 +73,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require `@docusaurus/plugin-pwa` to be configured in `plugins` with an explicit setup entry.",
                 frozen: false,
                 presets: [
+                    "config",
                     "strict",
                     "all",
                     "experimental",

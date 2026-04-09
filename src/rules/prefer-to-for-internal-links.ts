@@ -106,6 +106,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "require `to` instead of `href` for internal Docusaurus config links.",
                 frozen: false,
                 presets: [
+                    "config",
                     "recommended",
                     "recommended-type-checked",
                     "strict",

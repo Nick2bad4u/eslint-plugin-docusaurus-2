@@ -28,10 +28,16 @@ Today it contains the same stable rule catalog as `recommended`:
 - `prefer-to-for-internal-links`
 - `require-config-link-content`
 - `require-config-link-destination`
+- `require-footer-link-column-items`
+- `require-footer-link-column-title`
+- `require-plugin-pwa-head-manifest`
+- `require-plugin-pwa-head-theme-color`
 - `require-navbar-doc-item-doc-id`
 - `require-navbar-doc-sidebar-item-sidebar-id`
+- `require-navbar-docs-version-item-to`
 - `require-navbar-dropdown-items`
 - `require-navbar-dropdown-label`
+- `require-navbar-html-item-value`
 - `require-sidebar-category-items`
 - `require-sidebar-category-label`
 - `require-doc-sidebar-link-type`
