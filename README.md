@@ -4,75 +4,27 @@
 
 `eslint-plugin-docusaurus-2` is an ESLint plugin for Docusaurus sites, docs repositories, and TypeDoc-integrated documentation workflows.
 
-The goal is simple: ship a **rock-solid preset surface**, then add **high-quality Docusaurus-specific rules** instead of reusing unrelated rules from a template plugin.
+It ships focused Docusaurus-specific rules and Flat Config presets for teams that want stricter guarantees around:
 
-## What this package is for
+- `docusaurus.config.*`
+- theme config (`navbar`, `footer`, `metadata`, `colorMode`, announcement bars)
+- sidebars and docs navigation
+- pages, routing, and asset usage
+- plugin-pwa and docs-site integration details
 
-This repository is being built around Docusaurus-specific concerns such as:
+## Table of contents
 
-- site configuration and sidebar consistency
-- docs-content and generated-content boundaries
-- TypeDoc integration hygiene
-- patterns around `@docusaurus/*` packages
-- maintainable Flat Config presets for documentation-heavy repositories
-
-## Current status
-
-The package has already been re-scaffolded away from the previous template plugin.
-
-Today it ships:
-
-- the public plugin namespace: `"docusaurus-2"`
-- documented Flat Config presets
-- TypeScript parser setup inside each preset
-- typed preset support via `projectService: true`
-- `no-conflicting-config-link-props`
-- `no-conflicting-config-link-content-props`
-- `no-deprecated-on-broken-markdown-links`
-- `no-duplicate-sidebar-doc-ids`
-- `no-conflicting-footer-html-item-props`
-- `no-conflicting-navbar-doc-item-props`
-- `no-conflicting-navbar-doc-sidebar-item-props`
-- `no-ignored-site-validations`
-- `no-mixed-sidebar-link-kinds`
-- `no-page-css-module-imports-in-components`
-- `no-redundant-social-card-metadata`
-- `no-svg-social-card-image`
-- `no-use-base-url-for-internal-link-components`
-- `no-useless-collapsed-sidebar-categories`
-- `prefer-config-satisfies`
-- `prefer-css-modules-in-site-src`
-- `prefer-href-for-external-link-components`
-- `prefer-href-for-external-links`
-- `prefer-sidebars-config-satisfies`
-- `prefer-to-for-internal-link-components`
-- `prefer-to-for-internal-links`
-- `prefer-use-base-url-for-static-assets`
-- `require-config-link-content`
-- `require-config-link-destination`
-- `require-default-export-pages`
-- `require-footer-link-column-items`
-- `require-footer-link-column-title`
-- `require-plugin-pwa-head-manifest`
-- `require-plugin-pwa-head-theme-color`
-- `require-plugin-pwa-setup`
-- `require-site-config-fields`
-- `require-navbar-doc-item-doc-id`
-- `require-navbar-doc-sidebar-item-sidebar-id`
-- `require-navbar-docs-version-item-to`
-- `require-navbar-dropdown-items`
-- `require-navbar-dropdown-label`
-- `require-navbar-html-item-value`
-- `require-sidebar-category-items`
-- `require-sidebar-category-label`
-- `require-doc-sidebar-link-type`
-- `require-generated-index-link-type`
-- `require-pages-plugin-excludes`
-- `require-sidebar-category-type`
-- `require-theme-config-image`
-- `validate-theme-config-metadata`
-
-The rule catalog is intentionally focused while the higher-value Docusaurus rule space is explored.
+1. [Installation](#installation)
+2. [Compatibility](#compatibility)
+3. [Quick start](#quick-start)
+4. [Presets](#presets)
+5. [Parser setup behavior](#parser-setup-behavior)
+6. [Plugin settings](#plugin-settings)
+7. [Rules](#rules)
+8. [Documentation](#documentation)
+9. [Roadmap direction](#roadmap-direction)
+10. [Contributing](#contributing)
+11. [License](#license)
 
 ## Installation
 
@@ -80,11 +32,14 @@ The rule catalog is intentionally focused while the higher-value Docusaurus rule
 npm install --save-dev eslint-plugin-docusaurus-2 typescript
 ```
 
+`eslint-plugin-docusaurus-2` is published for broad public use. Install it into a workspace that already owns its ESLint and TypeScript toolchain.
+
 ## Compatibility
 
 - **ESLint:** `9.x` and `10.x`
 - **Config system:** Flat Config only
-- **Node.js:** repository baseline `>=22`
+- **Node.js:** `>=22`
+- **TypeScript:** `>=5.9`
 
 ## Quick start
 
@@ -94,7 +49,16 @@ import docusaurus2 from "eslint-plugin-docusaurus-2";
 export default [docusaurus2.configs.recommended];
 ```
 
+That is enough for the plugin to provide:
+
+- the `docusaurus-2` plugin namespace
+- parser wiring through `@typescript-eslint/parser`
+- a stable Flat Config preset surface
+- a generated rules matrix that stays aligned with shipped rule metadata
+
 ## Presets
+
+This plugin currently exports seven public presets:
 
 | Preset                                                                                                   | Type-aware | Purpose                                       |
 | -------------------------------------------------------------------------------------------------------- | ---------- | --------------------------------------------- |
@@ -106,7 +70,7 @@ export default [docusaurus2.configs.recommended];
 | [🟣 `docusaurus2.configs.all`](./docs/rules/presets/all.md)                                              | Yes        | Every stable rule once the catalog grows.     |
 | [🧪 `docusaurus2.configs.experimental`](./docs/rules/presets/experimental.md)                            | Yes        | Future experimental rule candidates.          |
 
-## What the presets configure today
+## Parser setup behavior
 
 Every preset already includes:
 
@@ -116,7 +80,33 @@ Every preset already includes:
 - `sourceType: "module"`
 - plugin registration under `"docusaurus-2"`
 
-The typed presets also enable `projectService: true` automatically.
+Typed presets additionally enable `projectService: true` automatically.
+
+### Which rules currently require type-checking?
+
+At the moment: **none**.
+
+`recommended-type-checked`, `strict`, `all`, and `experimental` still provide value today because they establish the typed parser contract for future rules without requiring a preset change later.
+
+## Plugin settings
+
+```ts
+import docusaurus2 from "eslint-plugin-docusaurus-2";
+
+export default [
+  {
+    ...docusaurus2.configs.recommended,
+    settings: {
+      "docusaurus-2": {
+        // Suppress plugin autofixes globally while preserving reports.
+        // disableAllAutofixes: true,
+      },
+    },
+  },
+];
+```
+
+When `settings["docusaurus-2"].disableAllAutofixes` is `true`, rules still report diagnostics and suggestions, but direct autofixes are suppressed.
 
 For stronger TypeDoc-specific linting around API doc authoring and TypeDoc conventions, pair this plugin with [`eslint-plugin-typedoc`](https://www.npmjs.com/package/eslint-plugin-typedoc).
 
@@ -139,85 +129,95 @@ The public preset surface is stable, and the rule catalog is intentionally focus
   - [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) — [`docusaurus2.configs.all`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all)
   - [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) — [`docusaurus2.configs.experimental`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental)
 
-| Rule | Fix | Preset key |
-| --- | :-: | --- |
-| [`no-conflicting-config-link-content-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-content-props) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-conflicting-config-link-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-props) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-conflicting-footer-html-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-footer-html-item-props) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-conflicting-navbar-doc-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-item-props) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-conflicting-navbar-doc-sidebar-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-sidebar-item-props) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-conflicting-theme-config-metadata-keys`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-metadata-keys) | 💡 | 🔵 🔴 🟣 🧪 |
-| [`no-deprecated-on-broken-markdown-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-on-broken-markdown-links) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-duplicate-footer-column-titles`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-column-titles) | — | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-footer-link-item-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-destinations) | 💡 | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-footer-link-item-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-labels) | — | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-head-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-i18n-locales`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-i18n-locales) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-navbar-item-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-destinations) | 💡 | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-navbar-item-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-labels) | — | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-plugin-pwa-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-plugin-pwa-head-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-duplicate-sidebar-doc-ids`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-sidebar-doc-ids) | 💡 | 🔴 🟣 🧪 |
-| [`no-duplicate-theme-config-metadata-keys`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-theme-config-metadata-keys) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-empty-footer-link-columns`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-footer-link-columns) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-empty-footer-link-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-footer-link-items) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-empty-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-head-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-empty-navbar-dropdown-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-navbar-dropdown-items) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-empty-navbar-item-objects`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-navbar-item-objects) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-empty-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-sidebar-categories) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`no-empty-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-theme-config-metadata) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-mixed-sidebar-link-kinds`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-mixed-sidebar-link-kinds) | 💡 | 🔴 🟣 🧪 |
-| [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components) | — | 🔴 🟣 🧪 |
-| [`no-redundant-social-card-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-redundant-social-card-metadata) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`no-svg-social-card-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-svg-social-card-image) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`no-use-base-url-for-internal-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-use-base-url-for-internal-link-components) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`no-useless-collapsed-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-useless-collapsed-sidebar-categories) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`prefer-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`prefer-css-modules-in-site-src`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src) | — | 🔴 🟣 🧪 |
-| [`prefer-head-tag-attributes-object`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-head-tag-attributes-object) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`prefer-href-for-external-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-link-components) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`prefer-href-for-external-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-links) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`prefer-i18n-default-locale-first`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-i18n-default-locale-first) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
-| [`prefer-sidebars-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-sidebars-config-satisfies) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`prefer-theme-config-metadata-name-for-twitter-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-theme-config-metadata-name-for-twitter-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`prefer-theme-config-metadata-property-for-og-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-theme-config-metadata-property-for-og-tags) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`prefer-to-for-internal-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-link-components) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`prefer-to-for-internal-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-links) | 🔧 | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`prefer-use-base-url-for-static-assets`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-use-base-url-for-static-assets) | 💡 | 🔴 🟣 🧪 |
-| [`require-base-url-issue-banner-enabled`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-base-url-issue-banner-enabled) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`require-base-url-slashes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-base-url-slashes) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`require-config-link-content`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-config-link-content) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-config-link-destination`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-config-link-destination) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-default-export-pages`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-default-export-pages) | — | 🔴 🟣 🧪 |
-| [`require-doc-sidebar-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-doc-sidebar-link-type) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`require-footer-link-column-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-items) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-footer-link-column-title`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-title) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-generated-index-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-generated-index-link-type) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`require-head-tag-attributes-when-no-inner-html`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-attributes-when-no-inner-html) | — | 🔵 🔴 🟣 🧪 |
-| [`require-head-tag-content-or-attributes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-content-or-attributes) | — | 🔵 🔴 🟣 🧪 |
-| [`require-head-tag-tag-name`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-tag-name) | 💡 | 🔵 🔴 🟣 🧪 |
-| [`require-i18n-default-locale-in-locales`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-i18n-default-locale-in-locales) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
-| [`require-navbar-doc-item-doc-id`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-item-doc-id) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-navbar-doc-sidebar-item-sidebar-id`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-sidebar-item-sidebar-id) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-navbar-docs-version-item-to`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-docs-version-item-to) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-navbar-dropdown-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-items) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-navbar-dropdown-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-label) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-navbar-html-item-value`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-html-item-value) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-pages-plugin-excludes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-pages-plugin-excludes) | 🔧 | 🔵 🔴 🟣 🧪 |
-| [`require-plugin-pwa-debug`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-debug) | — | 🔵 🔴 🟣 🧪 |
-| [`require-plugin-pwa-head-manifest`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-head-manifest) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-plugin-pwa-head-theme-color`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-head-theme-color) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
-| [`require-plugin-pwa-offline-mode-activation-strategies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-offline-mode-activation-strategies) | — | 🔵 🔴 🟣 🧪 |
-| [`require-plugin-pwa-setup`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-setup) | — | 🔵 🔴 🟣 🧪 |
-| [`require-sidebar-category-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-items) | — | 🟡 🟠 🔴 🟣 🧪 |
-| [`require-sidebar-category-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-label) | — | 🟡 🟠 🔴 🟣 🧪 |
-| [`require-sidebar-category-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-type) | 🔧 | 🟡 🟠 🔴 🟣 🧪 |
-| [`require-site-config-fields`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-config-fields) | — | 🔵 🔴 🟣 🧪 |
-| [`require-site-url-origin`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-url-origin) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
-| [`require-theme-config-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-image) | — | 🔵 🔴 🟣 🧪 |
-| [`require-trailing-slash-explicit`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-trailing-slash-explicit) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
-| [`validate-navbar-item-position`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-navbar-item-position) | 🔧 💡 | 🔵 🔴 🟣 🧪 |
-| [`validate-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-metadata) | — | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| Rule                                                                                                                                                                                |  Fix  | Preset key        |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :---: | ----------------- |
+| [`no-conflicting-config-link-content-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-content-props)                           |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-conflicting-config-link-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-props)                                           |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-conflicting-footer-html-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-footer-html-item-props)                                 |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-conflicting-navbar-doc-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-item-props)                                   |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-conflicting-navbar-doc-sidebar-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-sidebar-item-props)                   |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-conflicting-theme-config-color-mode-flags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-color-mode-flags)                   |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-conflicting-theme-config-metadata-keys`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-metadata-keys)                         |   💡  | 🔵 🔴 🟣 🧪       |
+| [`no-deprecated-on-broken-markdown-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-on-broken-markdown-links)                               |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-duplicate-footer-column-titles`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-column-titles)                                         |   —   | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-footer-link-item-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-destinations)                       |   💡  | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-footer-link-item-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-labels)                                   |   —   | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-head-tags)                                                               |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-i18n-locales`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-i18n-locales)                                                         | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-navbar-item-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-destinations)                                 |   💡  | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-navbar-item-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-labels)                                             |   —   | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-plugin-pwa-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-plugin-pwa-head-tags)                                         |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-duplicate-sidebar-doc-ids`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-sidebar-doc-ids)                                                   |   💡  | 🔴 🟣 🧪          |
+| [`no-duplicate-theme-config-metadata-keys`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-theme-config-metadata-keys)                             |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-empty-config-link-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-config-link-destinations)                                         |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-empty-config-link-labels`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-config-link-labels)                                                     |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-empty-footer-link-columns`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-footer-link-columns)                                                   |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-empty-footer-link-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-footer-link-items)                                                       |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-empty-head-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-head-tags)                                                                       |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-empty-navbar-dropdown-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-navbar-dropdown-items)                                               |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-empty-navbar-item-objects`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-navbar-item-objects)                                                   |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-empty-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-sidebar-categories)                                                     |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`no-empty-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-theme-config-metadata)                                               |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations)                                                     |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-mixed-sidebar-link-kinds`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-mixed-sidebar-link-kinds)                                                     |   💡  | 🔴 🟣 🧪          |
+| [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components)                           |   —   | 🔴 🟣 🧪          |
+| [`no-redundant-social-card-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-redundant-social-card-metadata)                                         |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`no-svg-social-card-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-svg-social-card-image)                                                           |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`no-use-base-url-for-internal-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-use-base-url-for-internal-link-components)                   |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`no-useless-collapsed-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-useless-collapsed-sidebar-categories)                             |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`prefer-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies)                                                             |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`prefer-css-modules-in-site-src`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src)                                               |   —   | 🔴 🟣 🧪          |
+| [`prefer-head-tag-attributes-object`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-head-tag-attributes-object)                                         |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`prefer-href-for-external-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-link-components)                           |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`prefer-href-for-external-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-links)                                               |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`prefer-i18n-default-locale-first`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-i18n-default-locale-first)                                           | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`prefer-sidebars-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-sidebars-config-satisfies)                                           |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`prefer-theme-config-metadata-name-for-twitter-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-theme-config-metadata-name-for-twitter-tags)       |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`prefer-theme-config-metadata-property-for-og-tags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-theme-config-metadata-property-for-og-tags)         |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`prefer-to-for-internal-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-link-components)                               |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`prefer-to-for-internal-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-links)                                                   |   🔧  | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`prefer-use-base-url-for-static-assets`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-use-base-url-for-static-assets)                                 |   💡  | 🔴 🟣 🧪          |
+| [`require-base-url-issue-banner-enabled`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-base-url-issue-banner-enabled)                                 |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`require-base-url-slashes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-base-url-slashes)                                                           |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`require-config-link-content`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-config-link-content)                                                     |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-config-link-destination`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-config-link-destination)                                             |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-default-export-pages`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-default-export-pages)                                                   |   —   | 🔴 🟣 🧪          |
+| [`require-doc-sidebar-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-doc-sidebar-link-type)                                                 |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`require-footer-link-column-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-items)                                           |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-footer-link-column-title`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-title)                                           |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-generated-index-link-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-generated-index-link-type)                                         |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`require-head-tag-attributes-when-no-inner-html`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-attributes-when-no-inner-html)               |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-head-tag-content-or-attributes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-content-or-attributes)                               |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-head-tag-tag-name`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-tag-name)                                                         |   💡  | 🔵 🔴 🟣 🧪       |
+| [`require-i18n-default-locale-in-locales`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-i18n-default-locale-in-locales)                               | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`require-navbar-doc-item-doc-id`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-item-doc-id)                                               |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-navbar-doc-sidebar-item-sidebar-id`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-sidebar-item-sidebar-id)                       |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-navbar-docs-version-item-to`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-docs-version-item-to)                                     |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-navbar-dropdown-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-items)                                                 |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-navbar-dropdown-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-label)                                                 |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-navbar-html-item-value`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-html-item-value)                                               |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-pages-plugin-excludes`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-pages-plugin-excludes)                                                 |   🔧  | 🔵 🔴 🟣 🧪       |
+| [`require-plugin-pwa-debug`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-debug)                                                           |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-plugin-pwa-head-manifest`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-head-manifest)                                           |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-plugin-pwa-head-theme-color`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-head-theme-color)                                     |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`require-plugin-pwa-offline-mode-activation-strategies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-offline-mode-activation-strategies) |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-plugin-pwa-setup`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-setup)                                                           |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-sidebar-category-items`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-items)                                               |   —   | 🟡 🟠 🔴 🟣 🧪    |
+| [`require-sidebar-category-label`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-label)                                               |   —   | 🟡 🟠 🔴 🟣 🧪    |
+| [`require-sidebar-category-type`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-type)                                                 |   🔧  | 🟡 🟠 🔴 🟣 🧪    |
+| [`require-site-config-fields`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-config-fields)                                                       |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-site-url-origin`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-url-origin)                                                             | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`require-theme-config-announcement-bar-id`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-announcement-bar-id)                           |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-theme-config-color-mode-object`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-color-mode-object)                               |   💡  | 🔵 🔴 🟣 🧪       |
+| [`require-theme-config-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-image)                                                       |   —   | 🔵 🔴 🟣 🧪       |
+| [`require-trailing-slash-explicit`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-trailing-slash-explicit)                                             | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`validate-navbar-item-position`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-navbar-item-position)                                                 | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`validate-theme-config-announcement-bar-is-closeable`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-announcement-bar-is-closeable)     | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`validate-theme-config-color-mode-default-mode`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-color-mode-default-mode)                 | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`validate-theme-config-color-mode-switch-flags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-color-mode-switch-flags)                 | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`validate-theme-config-footer-style`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-footer-style)                                       | 🔧 💡 | 🔵 🔴 🟣 🧪       |
+| [`validate-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-metadata)                                               |   —   | 🔵 🟡 🟠 🔴 🟣 🧪 |
+| [`validate-theme-config-navbar-style`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-navbar-style)                                       | 🔧 💡 | 🔵 🔴 🟣 🧪       |
 
 ## Documentation
 

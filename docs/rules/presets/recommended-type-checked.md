@@ -5,45 +5,17 @@ description: Typed preset for eslint-plugin-docusaurus-2.
 
 # recommended-type-checked
 
-`recommended-type-checked` is the typed counterpart to `recommended`.
+`recommended-type-checked` is the typed counterpart to [`recommended`](../presets/recommended.md).
 
 ## What it configures today
 
 In addition to the base parser setup, this preset enables `projectService: true` automatically.
 
-Today it contains the same stable rule catalog as `recommended`:
+Today it contains the same stable user-facing rule rollout as `recommended`,
+but with typed parser services enabled up front.
 
-- `no-conflicting-config-link-props`
-- `no-conflicting-config-link-content-props`
-- `no-deprecated-on-broken-markdown-links`
-- `no-conflicting-footer-html-item-props`
-- `no-ignored-site-validations`
-- `no-useless-collapsed-sidebar-categories`
-- `no-use-base-url-for-internal-link-components`
-- `prefer-config-satisfies`
-- `prefer-href-for-external-link-components`
-- `prefer-href-for-external-links`
-- `prefer-sidebars-config-satisfies`
-- `prefer-to-for-internal-link-components`
-- `prefer-to-for-internal-links`
-- `require-config-link-content`
-- `require-config-link-destination`
-- `require-footer-link-column-items`
-- `require-footer-link-column-title`
-- `require-plugin-pwa-head-manifest`
-- `require-plugin-pwa-head-theme-color`
-- `require-navbar-doc-item-doc-id`
-- `require-navbar-doc-sidebar-item-sidebar-id`
-- `require-navbar-docs-version-item-to`
-- `require-navbar-dropdown-items`
-- `require-navbar-dropdown-label`
-- `require-navbar-html-item-value`
-- `require-sidebar-category-items`
-- `require-sidebar-category-label`
-- `require-doc-sidebar-link-type`
-- `require-generated-index-link-type`
-- `require-sidebar-category-type`
-- `validate-theme-config-metadata`
+Use the generated [preset matrix](./index.md#rule-matrix) as the source of
+truth for the exact current rule membership.
 
 The difference is not current rule behavior. The difference is that this preset already enables the typed parser setup that future type-aware Docusaurus rules will need.
 

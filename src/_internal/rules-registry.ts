@@ -12,6 +12,7 @@ import noConflictingConfigLinkPropsRule from "../rules/no-conflicting-config-lin
 import noConflictingFooterHtmlItemPropsRule from "../rules/no-conflicting-footer-html-item-props.js";
 import noConflictingNavbarDocItemPropsRule from "../rules/no-conflicting-navbar-doc-item-props.js";
 import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-navbar-doc-sidebar-item-props.js";
+import noConflictingThemeConfigColorModeFlagsRule from "../rules/no-conflicting-theme-config-color-mode-flags.js";
 import noConflictingThemeConfigMetadataKeysRule from "../rules/no-conflicting-theme-config-metadata-keys.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
 import noDuplicateFooterColumnTitlesRule from "../rules/no-duplicate-footer-column-titles.js";
@@ -24,11 +25,13 @@ import noDuplicateNavbarItemLabelsRule from "../rules/no-duplicate-navbar-item-l
 import noDuplicatePluginPwaHeadTagsRule from "../rules/no-duplicate-plugin-pwa-head-tags.js";
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
 import noDuplicateThemeConfigMetadataKeysRule from "../rules/no-duplicate-theme-config-metadata-keys.js";
+import noEmptyConfigLinkDestinationsRule from "../rules/no-empty-config-link-destinations.js";
+import noEmptyConfigLinkLabelsRule from "../rules/no-empty-config-link-labels.js";
 import noEmptyFooterLinkColumnsRule from "../rules/no-empty-footer-link-columns.js";
 import noEmptyFooterLinkItemsRule from "../rules/no-empty-footer-link-items.js";
 import noEmptyHeadTagsRule from "../rules/no-empty-head-tags.js";
-import noEmptyNavbarItemObjectsRule from "../rules/no-empty-navbar-item-objects.js";
 import noEmptyNavbarDropdownItemsRule from "../rules/no-empty-navbar-dropdown-items.js";
+import noEmptyNavbarItemObjectsRule from "../rules/no-empty-navbar-item-objects.js";
 import noEmptySidebarCategoriesRule from "../rules/no-empty-sidebar-categories.js";
 import noEmptyThemeConfigMetadataRule from "../rules/no-empty-theme-config-metadata.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
@@ -80,10 +83,17 @@ import requireSidebarCategoryLabelRule from "../rules/require-sidebar-category-l
 import requireSidebarCategoryTypeRule from "../rules/require-sidebar-category-type.js";
 import requireSiteConfigFieldsRule from "../rules/require-site-config-fields.js";
 import requireSiteUrlOriginRule from "../rules/require-site-url-origin.js";
+import requireThemeConfigAnnouncementBarIdRule from "../rules/require-theme-config-announcement-bar-id.js";
+import requireThemeConfigColorModeObjectRule from "../rules/require-theme-config-color-mode-object.js";
 import requireThemeConfigImageRule from "../rules/require-theme-config-image.js";
 import requireTrailingSlashExplicitRule from "../rules/require-trailing-slash-explicit.js";
 import validateNavbarItemPositionRule from "../rules/validate-navbar-item-position.js";
+import validateThemeConfigAnnouncementBarIsCloseableRule from "../rules/validate-theme-config-announcement-bar-is-closeable.js";
+import validateThemeConfigColorModeDefaultModeRule from "../rules/validate-theme-config-color-mode-default-mode.js";
+import validateThemeConfigColorModeSwitchFlagsRule from "../rules/validate-theme-config-color-mode-switch-flags.js";
+import validateThemeConfigFooterStyleRule from "../rules/validate-theme-config-footer-style.js";
 import validateThemeConfigMetadataRule from "../rules/validate-theme-config-metadata.js";
+import validateThemeConfigNavbarStyleRule from "../rules/validate-theme-config-navbar-style.js";
 
 /** Runtime rule module shape used by registry/preset builders. */
 export type RuleWithDocs = TSESLint.RuleModule<string, UnknownArray>;
@@ -100,6 +110,8 @@ const docusaurusRuleRegistry = {
     "no-conflicting-navbar-doc-item-props": noConflictingNavbarDocItemPropsRule,
     "no-conflicting-navbar-doc-sidebar-item-props":
         noConflictingNavbarDocSidebarItemPropsRule,
+    "no-conflicting-theme-config-color-mode-flags":
+        noConflictingThemeConfigColorModeFlagsRule,
     "no-conflicting-theme-config-metadata-keys":
         noConflictingThemeConfigMetadataKeysRule,
     "no-deprecated-on-broken-markdown-links":
@@ -117,11 +129,13 @@ const docusaurusRuleRegistry = {
     "no-duplicate-sidebar-doc-ids": noDuplicateSidebarDocIdsRule,
     "no-duplicate-theme-config-metadata-keys":
         noDuplicateThemeConfigMetadataKeysRule,
+    "no-empty-config-link-destinations": noEmptyConfigLinkDestinationsRule,
+    "no-empty-config-link-labels": noEmptyConfigLinkLabelsRule,
     "no-empty-footer-link-columns": noEmptyFooterLinkColumnsRule,
     "no-empty-footer-link-items": noEmptyFooterLinkItemsRule,
     "no-empty-head-tags": noEmptyHeadTagsRule,
-    "no-empty-navbar-item-objects": noEmptyNavbarItemObjectsRule,
     "no-empty-navbar-dropdown-items": noEmptyNavbarDropdownItemsRule,
+    "no-empty-navbar-item-objects": noEmptyNavbarItemObjectsRule,
     "no-empty-sidebar-categories": noEmptySidebarCategoriesRule,
     "no-empty-theme-config-metadata": noEmptyThemeConfigMetadataRule,
     "no-ignored-site-validations": noIgnoredSiteValidationsRule,
@@ -187,10 +201,22 @@ const docusaurusRuleRegistry = {
     "require-sidebar-category-type": requireSidebarCategoryTypeRule,
     "require-site-config-fields": requireSiteConfigFieldsRule,
     "require-site-url-origin": requireSiteUrlOriginRule,
+    "require-theme-config-announcement-bar-id":
+        requireThemeConfigAnnouncementBarIdRule,
+    "require-theme-config-color-mode-object":
+        requireThemeConfigColorModeObjectRule,
     "require-theme-config-image": requireThemeConfigImageRule,
     "require-trailing-slash-explicit": requireTrailingSlashExplicitRule,
     "validate-navbar-item-position": validateNavbarItemPositionRule,
+    "validate-theme-config-announcement-bar-is-closeable":
+        validateThemeConfigAnnouncementBarIsCloseableRule,
+    "validate-theme-config-color-mode-default-mode":
+        validateThemeConfigColorModeDefaultModeRule,
+    "validate-theme-config-color-mode-switch-flags":
+        validateThemeConfigColorModeSwitchFlagsRule,
+    "validate-theme-config-footer-style": validateThemeConfigFooterStyleRule,
     "validate-theme-config-metadata": validateThemeConfigMetadataRule,
+    "validate-theme-config-navbar-style": validateThemeConfigNavbarStyleRule,
 } as const satisfies Readonly<Record<string, RuleWithDocs>>;
 
 /** Exported typed view consumed by the plugin entrypoint. */

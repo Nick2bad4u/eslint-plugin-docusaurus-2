@@ -12,6 +12,8 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 `strict` includes all of `recommended`, plus the stricter Docusaurus page-module and site-source CSS rules:
 
 - [`no-conflicting-config-link-props`](../no-conflicting-config-link-props.md)
+- [`no-empty-config-link-destinations`](../no-empty-config-link-destinations.md)
+- [`no-empty-config-link-labels`](../no-empty-config-link-labels.md)
 - [`no-conflicting-theme-config-metadata-keys`](../no-conflicting-theme-config-metadata-keys.md)
 - [`no-empty-head-tags`](../no-empty-head-tags.md)
 - [`no-duplicate-footer-column-titles`](../no-duplicate-footer-column-titles.md)
@@ -43,6 +45,12 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 - [`require-default-export-pages`](../require-default-export-pages.md)
 - [`require-head-tag-attributes-when-no-inner-html`](../require-head-tag-attributes-when-no-inner-html.md)
 - [`require-head-tag-tag-name`](../require-head-tag-tag-name.md)
+- [`require-theme-config-color-mode-object`](../require-theme-config-color-mode-object.md)
+- [`validate-theme-config-color-mode-default-mode`](../validate-theme-config-color-mode-default-mode.md)
+- [`validate-theme-config-color-mode-switch-flags`](../validate-theme-config-color-mode-switch-flags.md)
+- [`no-conflicting-theme-config-color-mode-flags`](../no-conflicting-theme-config-color-mode-flags.md)
+- [`require-theme-config-announcement-bar-id`](../require-theme-config-announcement-bar-id.md)
+- [`validate-theme-config-announcement-bar-is-closeable`](../validate-theme-config-announcement-bar-is-closeable.md)
 - [`require-base-url-issue-banner-enabled`](../require-base-url-issue-banner-enabled.md)
 - [`require-base-url-slashes`](../require-base-url-slashes.md)
 - [`require-i18n-default-locale-in-locales`](../require-i18n-default-locale-in-locales.md)

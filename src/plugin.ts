@@ -23,6 +23,7 @@ import { docusaurusRules } from "./_internal/rules-registry.js";
 
 /** ESLint severity used by generated preset rule maps. */
 const ERROR_SEVERITY = "error" as const;
+const pluginNamespace = "docusaurus-2" as const;
 
 /** Default file globs targeted by plugin presets when `files` is omitted. */
 const DEFAULT_PLUGIN_FILE_GLOBS = [
@@ -226,7 +227,7 @@ function withDocusaurusPlugin(
         languageOptions,
         plugins: {
             ...config.plugins,
-            "docusaurus-2": plugin,
+            [pluginNamespace]: plugin,
         },
     };
 }
@@ -279,7 +280,7 @@ const docusaurus2Plugin: Omit<ESLint.Plugin, "configs" | "rules"> & {
     configs: Record<Docusaurus2ConfigName, Docusaurus2PresetConfig>;
     meta: {
         name: string;
-        namespace: string;
+        namespace: typeof pluginNamespace;
         version: string;
     };
     processors: NonNullable<ESLint.Plugin["processors"]>;
@@ -288,7 +289,7 @@ const docusaurus2Plugin: Omit<ESLint.Plugin, "configs" | "rules"> & {
     configs: docusaurus2Configs,
     meta: {
         name: "eslint-plugin-docusaurus-2",
-        namespace: "docusaurus-2",
+        namespace: pluginNamespace,
         version: getPackageVersion(packageJson),
     },
     processors: {},
