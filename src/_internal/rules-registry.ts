@@ -25,7 +25,11 @@ import noDuplicatePluginPwaHeadTagsRule from "../rules/no-duplicate-plugin-pwa-h
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
 import noDuplicateThemeConfigMetadataKeysRule from "../rules/no-duplicate-theme-config-metadata-keys.js";
 import noEmptyFooterLinkColumnsRule from "../rules/no-empty-footer-link-columns.js";
+import noEmptyFooterLinkItemsRule from "../rules/no-empty-footer-link-items.js";
 import noEmptyHeadTagsRule from "../rules/no-empty-head-tags.js";
+import noEmptyNavbarItemObjectsRule from "../rules/no-empty-navbar-item-objects.js";
+import noEmptyNavbarDropdownItemsRule from "../rules/no-empty-navbar-dropdown-items.js";
+import noEmptySidebarCategoriesRule from "../rules/no-empty-sidebar-categories.js";
 import noEmptyThemeConfigMetadataRule from "../rules/no-empty-theme-config-metadata.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
 import noMixedSidebarLinkKindsRule from "../rules/no-mixed-sidebar-link-kinds.js";
@@ -41,6 +45,8 @@ import preferHrefForExternalLinkComponentsRule from "../rules/prefer-href-for-ex
 import preferHrefForExternalLinksRule from "../rules/prefer-href-for-external-links.js";
 import preferI18nDefaultLocaleFirstRule from "../rules/prefer-i18n-default-locale-first.js";
 import preferSidebarsConfigSatisfiesRule from "../rules/prefer-sidebars-config-satisfies.js";
+import preferThemeConfigMetadataNameForTwitterTagsRule from "../rules/prefer-theme-config-metadata-name-for-twitter-tags.js";
+import preferThemeConfigMetadataPropertyForOgTagsRule from "../rules/prefer-theme-config-metadata-property-for-og-tags.js";
 import preferToForInternalLinkComponentsRule from "../rules/prefer-to-for-internal-link-components.js";
 import preferToForInternalLinksRule from "../rules/prefer-to-for-internal-links.js";
 import preferUseBaseUrlForStaticAssetsRule from "../rules/prefer-use-base-url-for-static-assets.js";
@@ -53,6 +59,8 @@ import requireDocSidebarLinkTypeRule from "../rules/require-doc-sidebar-link-typ
 import requireFooterLinkColumnItemsRule from "../rules/require-footer-link-column-items.js";
 import requireFooterLinkColumnTitleRule from "../rules/require-footer-link-column-title.js";
 import requireGeneratedIndexLinkTypeRule from "../rules/require-generated-index-link-type.js";
+import requireHeadTagAttributesWhenNoInnerHtmlRule from "../rules/require-head-tag-attributes-when-no-inner-html.js";
+import requireHeadTagContentOrAttributesRule from "../rules/require-head-tag-content-or-attributes.js";
 import requireHeadTagTagNameRule from "../rules/require-head-tag-tag-name.js";
 import requireI18nDefaultLocaleInLocalesRule from "../rules/require-i18n-default-locale-in-locales.js";
 import requireNavbarDocItemDocIdRule from "../rules/require-navbar-doc-item-doc-id.js";
@@ -110,7 +118,11 @@ const docusaurusRuleRegistry = {
     "no-duplicate-theme-config-metadata-keys":
         noDuplicateThemeConfigMetadataKeysRule,
     "no-empty-footer-link-columns": noEmptyFooterLinkColumnsRule,
+    "no-empty-footer-link-items": noEmptyFooterLinkItemsRule,
     "no-empty-head-tags": noEmptyHeadTagsRule,
+    "no-empty-navbar-item-objects": noEmptyNavbarItemObjectsRule,
+    "no-empty-navbar-dropdown-items": noEmptyNavbarDropdownItemsRule,
+    "no-empty-sidebar-categories": noEmptySidebarCategoriesRule,
     "no-empty-theme-config-metadata": noEmptyThemeConfigMetadataRule,
     "no-ignored-site-validations": noIgnoredSiteValidationsRule,
     "no-mixed-sidebar-link-kinds": noMixedSidebarLinkKindsRule,
@@ -130,6 +142,10 @@ const docusaurusRuleRegistry = {
     "prefer-href-for-external-links": preferHrefForExternalLinksRule,
     "prefer-i18n-default-locale-first": preferI18nDefaultLocaleFirstRule,
     "prefer-sidebars-config-satisfies": preferSidebarsConfigSatisfiesRule,
+    "prefer-theme-config-metadata-name-for-twitter-tags":
+        preferThemeConfigMetadataNameForTwitterTagsRule,
+    "prefer-theme-config-metadata-property-for-og-tags":
+        preferThemeConfigMetadataPropertyForOgTagsRule,
     "prefer-to-for-internal-link-components":
         preferToForInternalLinkComponentsRule,
     "prefer-to-for-internal-links": preferToForInternalLinksRule,
@@ -145,6 +161,10 @@ const docusaurusRuleRegistry = {
     "require-footer-link-column-items": requireFooterLinkColumnItemsRule,
     "require-footer-link-column-title": requireFooterLinkColumnTitleRule,
     "require-generated-index-link-type": requireGeneratedIndexLinkTypeRule,
+    "require-head-tag-attributes-when-no-inner-html":
+        requireHeadTagAttributesWhenNoInnerHtmlRule,
+    "require-head-tag-content-or-attributes":
+        requireHeadTagContentOrAttributesRule,
     "require-head-tag-tag-name": requireHeadTagTagNameRule,
     "require-i18n-default-locale-in-locales":
         requireI18nDefaultLocaleInLocalesRule,

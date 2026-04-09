@@ -46,6 +46,9 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `no-duplicate-theme-config-metadata-keys`
 - `no-empty-footer-link-columns`
 - `no-ignored-site-validations`
+- `no-empty-navbar-dropdown-items`
+- `no-empty-navbar-item-objects`
+- `no-empty-sidebar-categories`
 - `no-empty-theme-config-metadata`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -58,6 +61,8 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `prefer-href-for-external-links`
 - `prefer-head-tag-attributes-object`
 - `prefer-i18n-default-locale-first`
+- `prefer-theme-config-metadata-name-for-twitter-tags`
+- `prefer-theme-config-metadata-property-for-og-tags`
 - `no-page-css-module-imports-in-components`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
@@ -71,6 +76,7 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - `require-default-export-pages`
 - `require-footer-link-column-items`
 - `require-footer-link-column-title`
+- `require-head-tag-attributes-when-no-inner-html`
 - `require-head-tag-tag-name`
 - `require-plugin-pwa-debug`
 - `require-plugin-pwa-head-manifest`

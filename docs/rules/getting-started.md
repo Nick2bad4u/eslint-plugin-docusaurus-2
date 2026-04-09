@@ -53,6 +53,9 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `no-duplicate-theme-config-metadata-keys`
 - `no-empty-footer-link-columns`
 - `no-ignored-site-validations`
+- `no-empty-navbar-dropdown-items`
+- `no-empty-navbar-item-objects`
+- `no-empty-sidebar-categories`
 - `no-empty-theme-config-metadata`
 - `no-mixed-sidebar-link-kinds`
 - `no-redundant-social-card-metadata`
@@ -64,6 +67,8 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `prefer-href-for-external-links`
 - `prefer-head-tag-attributes-object`
 - `prefer-i18n-default-locale-first`
+- `prefer-theme-config-metadata-name-for-twitter-tags`
+- `prefer-theme-config-metadata-property-for-og-tags`
 - `prefer-sidebars-config-satisfies`
 - `prefer-to-for-internal-link-components`
 - `prefer-to-for-internal-links`
@@ -75,6 +80,7 @@ The currently shipped rules start with the broadly useful config and sidebar che
 - `require-config-link-destination`
 - `require-footer-link-column-items`
 - `require-footer-link-column-title`
+- `require-head-tag-attributes-when-no-inner-html`
 - `require-head-tag-tag-name`
 - `require-plugin-pwa-debug`
 - `require-plugin-pwa-head-manifest`

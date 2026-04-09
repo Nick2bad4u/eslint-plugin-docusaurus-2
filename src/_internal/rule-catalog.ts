@@ -91,6 +91,14 @@ const orderedRuleNames = [
     "no-empty-footer-link-columns",
     "prefer-head-tag-attributes-object",
     "no-empty-theme-config-metadata",
+    "prefer-theme-config-metadata-property-for-og-tags",
+    "prefer-theme-config-metadata-name-for-twitter-tags",
+    "no-empty-navbar-dropdown-items",
+    "no-empty-sidebar-categories",
+    "no-empty-footer-link-items",
+    "require-head-tag-content-or-attributes",
+    "no-empty-navbar-item-objects",
+    "require-head-tag-attributes-when-no-inner-html",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>
