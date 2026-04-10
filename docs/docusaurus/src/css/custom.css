@@ -167,16 +167,28 @@ body {
 }
 
 .navbar {
-    border-block-end: 1px solid rgb(37 194 160 / 16%);
-    backdrop-filter: blur(14px);
-    background: rgb(247 252 251 / 88%);
-    box-shadow: 0 14px 26px -24px rgb(15 23 42 / 38%);
+    background: transparent;
+    border-block-end: none;
+    box-shadow: none;
+    isolation: isolate;
 
-    [data-theme="dark"] & {
-        border-block-end-color: rgb(45 212 191 / 18%);
-        background: rgb(3 16 15 / 84%);
-        box-shadow: 0 16px 28px -24px rgb(2 6 23 / 72%);
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        border-block-end: 1px solid rgb(37 194 160 / 16%);
+        backdrop-filter: blur(14px);
+        background: rgb(247 252 251 / 88%);
+        box-shadow: 0 14px 26px -24px rgb(15 23 42 / 38%);
+        pointer-events: none;
     }
+}
+
+[data-theme="dark"] .navbar::before {
+    border-block-end-color: rgb(45 212 191 / 18%);
+    background: rgb(3 16 15 / 84%);
+    box-shadow: 0 16px 28px -24px rgb(2 6 23 / 72%);
 }
 
 [data-theme="light"] .navbar--dark {
@@ -266,6 +278,13 @@ body {
     border-block-start: 1px solid var(--ifm-toc-border-color);
     margin-block-start: 0.34rem;
     padding-block-start: 0.48rem;
+}
+
+@media (width >= 997px) {
+    .navbar .dropdown > .navbar__link,
+    .navbar .navbar__item {
+        white-space: nowrap;
+    }
 }
 
 .theme-doc-sidebar-item-link-level-1 {

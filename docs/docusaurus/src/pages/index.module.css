@@ -76,6 +76,28 @@
     }
 }
 
+@keyframes hero-speed-mark-dash {
+    0% {
+        transform: translateX(0) rotate(0deg) scale(1);
+    }
+
+    24% {
+        transform: translateX(0.42rem) rotate(-10deg) scale(1.06);
+    }
+
+    48% {
+        transform: translateX(-0.24rem) rotate(8deg) scale(0.98);
+    }
+
+    72% {
+        transform: translateX(0.18rem) rotate(-5deg) scale(1.03);
+    }
+
+    100% {
+        transform: translateX(0) rotate(0deg) scale(1);
+    }
+}
+
 .heroContent {
     position: relative;
 }
@@ -392,6 +414,20 @@
     block-size: auto;
     filter: drop-shadow(0 6px 14px rgb(15 23 42 / 35%));
     inline-size: clamp(2.8rem, 6vi, 4.2rem);
+    transform-origin: center;
+    transition: filter 180ms ease;
+
+    @media (prefers-reduced-motion: no-preference) {
+        .heroPanel:hover &,
+        .heroPanel:focus-within & {
+            animation: hero-speed-mark-dash 820ms cubic-bezier(0.2, 0.9, 0.2, 1) both;
+        }
+    }
+
+    .heroPanel:hover &,
+    .heroPanel:focus-within & {
+        filter: drop-shadow(0 10px 18px rgb(15 23 42 / 44%)) brightness(1.08);
+    }
 }
 
 .heroPanelCaption {

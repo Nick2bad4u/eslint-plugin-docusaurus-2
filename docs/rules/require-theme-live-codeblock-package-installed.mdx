@@ -1,3 +1,5 @@
+import RuleLiveDemo from "../docusaurus/src/components/RuleLiveDemo";
+
 # require-theme-live-codeblock-package-installed
 
 Require `@docusaurus/theme-live-codeblock` to be declared in the nearest package manifest when it is configured in Docusaurus config.
@@ -41,6 +43,33 @@ With a matching `package.json` dependency declaration.
 This rule is report-only.
 
 It does not edit `package.json` for you.
+
+### Live playground preview
+
+<RuleLiveDemo code={`function LiveCodeBlockPackageDemo() {
+    const [enabled, setEnabled] = useState(true);
+
+    return (
+        <div
+            style={{
+                border: "1px solid rgb(37 194 160 / 45%)",
+                borderRadius: 12,
+                padding: 16,
+            }}
+        >
+            <button type="button" onClick={() => setEnabled((value) => !value)}>
+                Toggle package installed
+            </button>
+            <p style={{ margin: "0.85rem 0 0" }}>
+                {enabled
+                    ? "The theme package is present, so live playground UI can render."
+                    : "Without the package, the config can point at a theme that the workspace does not actually own."}
+            </p>
+        </div>
+    );
+}
+
+render(<LiveCodeBlockPackageDemo />);`} />
 
 ## ESLint flat config example
 

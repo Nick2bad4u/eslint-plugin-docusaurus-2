@@ -25,6 +25,16 @@ The Docusaurus Mermaid docs require the theme and the markdown flag together.
 
 Adding only the theme leaves Mermaid markdown features half-enabled and makes the config harder to reason about.
 
+### Mermaid relationship diagram
+
+```mermaid
+flowchart TB
+    Theme["@docusaurus/theme-mermaid configured"]
+    Flag["markdown.mermaid = true"]
+    Theme --> Outcome["Mermaid feature fully enabled"]
+    Flag --> Outcome
+```
+
 ## ❌ Incorrect
 
 ```ts

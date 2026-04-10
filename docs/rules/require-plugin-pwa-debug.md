@@ -23,6 +23,10 @@ PWA debug behavior is often needed during rollout and troubleshooting. Making de
 
 Using an env-gated expression keeps the toggle controllable per environment without editing source.
 
+### Preview: debug-oriented reload flow
+
+![Docusaurus PWA reload prompt shown after a service-worker update during development.](../docusaurus/static/img/pwa_reload.gif)
+
 ## ❌ Incorrect
 
 ```ts

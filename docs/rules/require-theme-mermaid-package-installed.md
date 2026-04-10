@@ -18,6 +18,16 @@ When a Docusaurus site explicitly configures `@docusaurus/theme-mermaid`, the wo
 
 That keeps workspace-level dependency ownership explicit and avoids config that only works because of unrelated hoisting or transitive installs.
 
+### Mermaid relationship diagram
+
+```mermaid
+flowchart LR
+    Theme["themes: ['@docusaurus/theme-mermaid']"] --> Renderer["Mermaid renderer available"]
+    Package["package.json declares theme-mermaid"] --> Ownership["Workspace owns the dependency"]
+    Renderer --> Result["Diagrams can render"]
+    Ownership --> Result
+```
+
 ## ❌ Incorrect
 
 ```ts

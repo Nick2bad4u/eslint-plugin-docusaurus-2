@@ -27,6 +27,8 @@ const legacyBrandingTokens = [
     "\u0074\u0073\u002D\u0065\u0078\u0074\u0072\u0061\u0073",
 ] as const;
 
+const supportedRuleDocExtensions = [".md", ".mdx"] as const;
+
 const sortStrings = (values: readonly string[]): string[] => {
     const sortedValues = [...values];
 
@@ -35,20 +37,48 @@ const sortStrings = (values: readonly string[]): string[] => {
     return sortedValues;
 };
 
+const hasSupportedRuleDocExtension = (fileName: string): boolean =>
+    supportedRuleDocExtensions.some((extension) =>
+        fileName.endsWith(extension)
+    );
+
+const stripSupportedRuleDocExtension = (fileName: string): string => {
+    const matchingExtension = supportedRuleDocExtensions.find((extension) =>
+        fileName.endsWith(extension)
+    );
+
+    return matchingExtension === undefined
+        ? fileName
+        : fileName.slice(0, -matchingExtension.length);
+};
+
+const resolveRuleDocPath = (ruleName: string): string => {
+    for (const extension of supportedRuleDocExtensions) {
+        const candidatePath = path.join(
+            rulesDocsDirectoryPath,
+            `${ruleName}${extension}`
+        );
+
+        if (fs.existsSync(candidatePath)) {
+            return candidatePath;
+        }
+    }
+
+    throw new Error(`Missing docs/rules page for rule '${ruleName}'.`);
+};
+
 describe("docs/rules integrity", () => {
     it("contains the expected scaffold docs and no leftover rule pages", () => {
         expect.hasAssertions();
 
         const expectedRuleDocs = sortStrings(
-            Object.keys(docusaurus2Plugin.rules).map(
-                (ruleName) => `${ruleName}.md`
-            )
+            Object.keys(docusaurus2Plugin.rules)
         );
 
         const topLevelEntries = sortStrings(
             fs
                 .readdirSync(rulesDocsDirectoryPath)
-                .filter((entry) => entry.endsWith(".md"))
+                .filter(hasSupportedRuleDocExtension)
         );
         const presetEntries = sortStrings(
             fs
@@ -56,9 +86,21 @@ describe("docs/rules integrity", () => {
                 .filter((entry) => entry.endsWith(".md"))
         );
 
-        expect(topLevelEntries).toStrictEqual(
-            sortStrings([...expectedTopLevelDocs, ...expectedRuleDocs])
+        const topLevelScaffoldEntries = topLevelEntries.filter((entry) =>
+            expectedTopLevelDocs.includes(
+                entry as (typeof expectedTopLevelDocs)[number]
+            )
         );
+        const topLevelRuleDocNames = sortStrings(
+            topLevelEntries
+                .filter((entry) => !topLevelScaffoldEntries.includes(entry))
+                .map(stripSupportedRuleDocExtension)
+        );
+
+        expect(topLevelScaffoldEntries).toStrictEqual(
+            sortStrings([...expectedTopLevelDocs])
+        );
+        expect(topLevelRuleDocNames).toStrictEqual(expectedRuleDocs);
         expect(presetEntries).toStrictEqual([...expectedPresetDocs]);
     });
 
@@ -70,7 +112,7 @@ describe("docs/rules integrity", () => {
                 path.join(rulesDocsDirectoryPath, fileName)
             ),
             ...Object.keys(docusaurus2Plugin.rules).map((ruleName) =>
-                path.join(rulesDocsDirectoryPath, `${ruleName}.md`)
+                resolveRuleDocPath(ruleName)
             ),
             ...expectedPresetDocs.map((fileName) =>
                 path.join(presetDocsDirectoryPath, fileName)

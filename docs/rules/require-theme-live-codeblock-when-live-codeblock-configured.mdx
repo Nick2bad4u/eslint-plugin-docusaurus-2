@@ -1,3 +1,5 @@
+import RuleLiveDemo from "../docusaurus/src/components/RuleLiveDemo";
+
 # require-theme-live-codeblock-when-live-codeblock-configured
 
 Require `@docusaurus/theme-live-codeblock` when `themeConfig.liveCodeBlock` is configured.
@@ -52,6 +54,36 @@ export default {
 ## Behavior and migration notes
 
 This rule provides a suggestion when it can safely add the theme module to a literal `plugins` array or create a new top-level `plugins` property.
+
+### Live playground preview
+
+<RuleLiveDemo code={`function LiveCodeBlockConfigDemo() {
+    const [position, setPosition] = useState("bottom");
+
+    return (
+        <div
+            style={{
+                border: "1px solid rgb(37 194 160 / 45%)",
+                borderRadius: 12,
+                padding: 16,
+            }}
+        >
+            <button
+                type="button"
+                onClick={() =>
+                    setPosition((value) => (value === "bottom" ? "top" : "bottom"))
+                }
+            >
+                Playground position: {position}
+            </button>
+            <p style={{ margin: "0.85rem 0 0" }}>
+                The live-codeblock theme is what makes a setting like playgroundPosition meaningful to the docs UI.
+            </p>
+        </div>
+    );
+}
+
+render(<LiveCodeBlockConfigDemo />);`} />
 
 ## Additional examples
 

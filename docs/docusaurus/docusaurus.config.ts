@@ -121,7 +121,7 @@ const suppressKnownWebpackWarningsPlugin: PluginModule = () => {
 const futureConfig = {
     ...(enableExperimentalFaster
         ? {
-              experimental_faster: {
+              faster: {
                   mdxCrossCompilerCache: true,
                   rspackBundler: true,
                   rspackPersistentCache: true,
@@ -135,12 +135,20 @@ const futureConfig = {
         // (CssMinimizer parsing errors -> large chunks of CSS dropped), which
         // makes many Infima (--ifm-*) variables undefined across the site.
         // Re-enable only after verifying the build output CSS is valid.
+        siteStorageNamespacing: true,
+        fasterByDefault: true,
+        removeLegacyPostBuildHeadAttribute: true,
+        mdx1CompatDisabledByDefault: true,
         useCssCascadeLayers: false,
     },
 } satisfies Config["future"];
 
 /** Full Docusaurus site configuration exported to the build/runtime. */
 const config = {
+    storage: {
+        type: "localStorage",
+        namespace: true,
+    },
     baseUrl,
     baseUrlIssueBanner: true,
     deploymentBranch: "gh-pages",
@@ -379,6 +387,9 @@ const config = {
             disableSwitch: false,
             respectPrefersColorScheme: true,
         },
+        liveCodeBlock: {
+            playgroundPosition: "bottom",
+        },
         metadata: [
             {
                 content:
@@ -606,10 +617,6 @@ const config = {
                             to: "/docs/developer/api/globals",
                         },
                         {
-                            label: "• Docs Site Contract",
-                            to: "/docs/developer/docusaurus-site-contract",
-                        },
-                        {
                             label: "• Pages SEO & IndexNow",
                             to: "/docs/developer/deploy-pages-seo-and-indexnow",
                         },
@@ -652,6 +659,7 @@ const config = {
         },
     } satisfies Preset.ThemeConfig,
     themes: [
+        "@docusaurus/theme-live-codeblock",
         "@docusaurus/theme-mermaid",
         [
             "@easyops-cn/docusaurus-search-local",

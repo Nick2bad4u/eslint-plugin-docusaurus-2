@@ -1,3 +1,5 @@
+import RuleLiveDemo from "../docusaurus/src/components/RuleLiveDemo";
+
 # local-search-will-not-work-in-dev
 
 Disallow assuming configured local-search providers will produce a reliable search experience during `docusaurus start`.
@@ -46,12 +48,43 @@ This rule is intentionally report-only and informational.
 
 It does not remove the plugin or rewrite the config.
 
+### Live runtime expectation demo
+
+<RuleLiveDemo code={`function LocalSearchRuntimeHint() {
+    const [mode, setMode] = useState("start");
+    const isStaticMode = mode === "serve";
+
+    return (
+        <div
+            style={{
+                border: "1px solid rgb(37 194 160 / 45%)",
+                borderRadius: 12,
+                padding: 16,
+            }}
+        >
+            <button
+                type="button"
+                onClick={() => setMode(isStaticMode ? "start" : "serve")}
+            >
+                Toggle runtime ({mode})
+            </button>
+            <p style={{ margin: "0.85rem 0 0" }}>
+                {isStaticMode
+                    ? "The statically built site is being served, so a local-search index can be available."
+                    : "The dev server is running, so local-search indexing may not reflect the real built search experience yet."}
+            </p>
+        </div>
+    );
+}
+
+render(<LocalSearchRuntimeHint />);`} />
+
 ## ESLint flat config example
 
 ```ts
 import docusaurus2 from "eslint-plugin-docusaurus-2";
 
-export default [docusaurus2.configs.config];
+export default [docusaurus2.configs.experimental];
 ```
 
 ## When not to use it

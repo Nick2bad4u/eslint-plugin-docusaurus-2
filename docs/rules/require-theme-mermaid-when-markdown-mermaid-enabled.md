@@ -27,6 +27,16 @@ The Docusaurus Mermaid docs require both pieces together:
 
 Enabling only the markdown flag leaves the site config in a misleading half-configured state.
 
+### Mermaid relationship diagram
+
+```mermaid
+flowchart LR
+    Markdown["markdown.mermaid = true"] --> Parse["Mermaid fences are parsed"]
+    Theme["@docusaurus/theme-mermaid"] --> Render["Mermaid component is available"]
+    Parse --> Diagram["Diagram renders correctly"]
+    Render --> Diagram
+```
+
 ## ❌ Incorrect
 
 ```ts
