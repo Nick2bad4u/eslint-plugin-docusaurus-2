@@ -19,7 +19,6 @@ import {
     deriveRuleAdditionalConfigMembershipByRuleName,
     deriveRuleDocsMetadataByName,
     deriveRulePresetMembershipByRuleName,
-    deriveTypeCheckedRuleNameSet,
 } from "./_internal/rule-docs-metadata.js";
 import { docusaurusRules } from "./_internal/rules-registry.js";
 import textContentParser from "./_internal/text-content-parser.js";
@@ -114,9 +113,6 @@ const ruleAdditionalConfigMembership =
 const rulePresetMembership = deriveRulePresetMembershipByRuleName(
     ruleDocsMetadataByRuleName
 );
-const typeCheckedRuleNames = deriveTypeCheckedRuleNameSet(
-    ruleDocsMetadataByRuleName
-);
 const docusaurusRuleEntries = Object.entries(runtimeRules);
 
 const createEmptyPresetRuleMap = (): Record<
@@ -205,17 +201,6 @@ const deriveAdditionalConfigRuleNamesByConfig = (): Readonly<
     });
 };
 
-/** Recommended preset rule list for zero-type-info usage. */
-const recommendedRuleNames: string[] = [];
-
-for (const ruleName of presetRuleNamesByConfig.recommended) {
-    if (typeCheckedRuleNames.has(ruleName)) {
-        continue;
-    }
-
-    recommendedRuleNames.push(ruleName);
-}
-
 /** Effective per-preset rule lists after applying derived policy overlays. */
 const effectivePresetRuleNamesByConfig: Readonly<
     Record<Docusaurus2PresetConfigName, readonly string[]>
@@ -225,25 +210,16 @@ const effectivePresetRuleNamesByConfig: Readonly<
         ...presetRuleNamesByConfig.all,
         ...presetRuleNamesByConfig.experimental,
     ]),
-    recommended: recommendedRuleNames,
 };
 
 /** Apply parser and plugin metadata required by all plugin presets. */
 function withDocusaurusPlugin(
     config: Readonly<Docusaurus2PresetConfig>,
-    plugin: Readonly<ESLint.Plugin>,
-    options: Readonly<{ requiresTypeChecking: boolean }>
+    plugin: Readonly<ESLint.Plugin>
 ): Docusaurus2PresetConfig {
     const existingLanguageOptions = config.languageOptions ?? {};
     const existingParserOptions = existingLanguageOptions["parserOptions"];
     const parserOptions = normalizeParserOptions(existingParserOptions);
-
-    if (
-        options.requiresTypeChecking &&
-        !Object.hasOwn(parserOptions, "projectService")
-    ) {
-        Reflect.set(parserOptions, "projectService", true);
-    }
 
     const languageOptions: FlatLanguageOptions = {
         ...existingLanguageOptions,
@@ -289,10 +265,7 @@ const createTextContentConfig = (
             name: options.name,
             rules: errorRulesFor(options.ruleNames),
         },
-        pluginForConfigs,
-        {
-            requiresTypeChecking: false,
-        }
+        pluginForConfigs
     );
 
 /** Flat config presets distributed by eslint-plugin-docusaurus-2. */
@@ -315,10 +288,7 @@ const createConfigsDefinition = (): Record<
                     effectivePresetRuleNamesByConfig[configName]
                 ),
             },
-            pluginForConfigs,
-            {
-                requiresTypeChecking: configMetadata.requiresTypeChecking,
-            }
+            pluginForConfigs
         );
     }
 

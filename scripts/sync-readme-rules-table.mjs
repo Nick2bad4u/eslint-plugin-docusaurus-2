@@ -50,7 +50,7 @@ const presetOrder = [...presetConfigNamesByReadmeOrder];
 const PRESET_DOCS_URL_BASE =
     "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets";
 const CONFIG_SURFACES_DOCS_URL =
-    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces";
+    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/guides/config-surfaces";
 
 /** @type {Readonly<Record<PresetName, Readonly<{ icon: string }>>>} */
 const presetConfigMetadataByName = {

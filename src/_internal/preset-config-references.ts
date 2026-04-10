@@ -36,7 +36,6 @@ export type PresetConfigMetadata = Readonly<{
     icon: string;
     presetName: `docusaurus-2:${PresetConfigName}`;
     readmeOrder: number;
-    requiresTypeChecking: boolean;
 }>;
 
 /** Canonical flat-config preset key type exposed through `plugin.configs`. */
@@ -69,7 +68,6 @@ export const presetConfigMetadataByName: Readonly<
         icon: "🟣",
         presetName: "docusaurus-2:all",
         readmeOrder: 6,
-        requiresTypeChecking: true,
     },
     config: {
         description:
@@ -77,28 +75,24 @@ export const presetConfigMetadataByName: Readonly<
         icon: "🔵",
         presetName: "docusaurus-2:config",
         readmeOrder: 2,
-        requiresTypeChecking: false,
     },
     experimental: {
         description: "Stable rules plus future experimental additions.",
         icon: "🧪",
         presetName: "docusaurus-2:experimental",
         readmeOrder: 6,
-        requiresTypeChecking: true,
     },
     minimal: {
         description: "Smallest future-ready baseline for Docusaurus projects.",
         icon: "🟢",
         presetName: "docusaurus-2:minimal",
         readmeOrder: 1,
-        requiresTypeChecking: false,
     },
     recommended: {
         description: "Balanced default preset for most Docusaurus codebases.",
         icon: "🟡",
         presetName: "docusaurus-2:recommended",
         readmeOrder: 3,
-        requiresTypeChecking: false,
     },
     strict: {
         description:
@@ -106,7 +100,6 @@ export const presetConfigMetadataByName: Readonly<
         icon: "🔴",
         presetName: "docusaurus-2:strict",
         readmeOrder: 4,
-        requiresTypeChecking: true,
     },
 };
 

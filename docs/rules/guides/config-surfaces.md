@@ -32,6 +32,8 @@ Current examples include:
 
 Use this narrower config when you only want the Docusaurus 3.10 strict-MDX migration rules for `.mdx` files.
 
+The earlier 3.8 and 3.9 release-upgrade rules are config-level rules, so they stay in the normal preset ladder instead of this MDX-only config.
+
 ## Direct rule opt-ins
 
 Some rules are intentionally outside both the preset ladder and the content-config layer.

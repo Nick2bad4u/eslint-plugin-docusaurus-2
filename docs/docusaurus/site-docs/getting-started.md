@@ -24,7 +24,6 @@ export default [docusaurus2.configs.recommended];
 
 - `recommended` enables the stable Docusaurus config and sidebar rules.
 - `strict`, `all`, and `experimental` also add the stricter page-module and site-source CSS architecture rules.
-- `strict`, `all`, and `experimental` enable `projectService: true` automatically.
 - `minimal` keeps the runtime/preset contract without enabling bundled rules.
 
 ## Current file coverage

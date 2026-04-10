@@ -4,10 +4,7 @@
  */
 import { describe, expect, it } from "vitest";
 
-import {
-    presetConfigMetadataByName,
-    presetConfigNames,
-} from "../src/_internal/preset-config-references";
+import { presetConfigNames } from "../src/_internal/preset-config-references";
 import docusaurus2Plugin from "../src/plugin";
 
 const additionalConfigNames = ["content", "strict-mdx-upgrade"] as const;
@@ -155,26 +152,6 @@ describe("docusaurus-2 plugin configs", () => {
         expect(minimalConfig.languageOptions?.["parserOptions"]).not.toBe(
             strictConfig.languageOptions?.["parserOptions"]
         );
-    });
-
-    it("enables projectService only for the typed presets", () => {
-        expect.hasAssertions();
-
-        for (const configName of presetConfigNames) {
-            const config = docusaurus2Plugin.configs[configName];
-            const parserOptions = config.languageOptions?.["parserOptions"] as
-                | Readonly<Record<string, unknown>>
-                | undefined;
-            const hasProjectService =
-                typeof parserOptions === "object" &&
-                parserOptions !== null &&
-                Object.hasOwn(parserOptions, "projectService") &&
-                parserOptions["projectService"] === true;
-
-            expect(hasProjectService).toBe(
-                presetConfigMetadataByName[configName].requiresTypeChecking
-            );
-        }
     });
 
     it("keeps minimal empty while the broader presets include the current rule catalog", () => {
