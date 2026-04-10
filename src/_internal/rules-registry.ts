@@ -47,6 +47,7 @@ import noPageCssModuleImportsInComponentsRule from "../rules/no-page-css-module-
 import noRedundantSocialCardMetadataRule from "../rules/no-redundant-social-card-metadata.js";
 import noSearchLinkWithoutSearchProviderRule from "../rules/no-search-link-without-search-provider.js";
 import noSearchPagePathConflictRule from "../rules/no-search-page-path-conflict.js";
+import noUnknownI18nLocaleConfigsRule from "../rules/no-unknown-i18n-locale-configs.js";
 import noSvgSocialCardImageRule from "../rules/no-svg-social-card-image.js";
 import noUseBaseUrlForInternalLinkComponentsRule from "../rules/no-use-base-url-for-internal-link-components.js";
 import noUselessCollapsedSidebarCategoriesRule from "../rules/no-useless-collapsed-sidebar-categories.js";
@@ -69,6 +70,7 @@ import requireConfigLinkContentRule from "../rules/require-config-link-content.j
 import requireConfigLinkDestinationRule from "../rules/require-config-link-destination.js";
 import requireDefaultExportPagesRule from "../rules/require-default-export-pages.js";
 import requireDocSidebarLinkTypeRule from "../rules/require-doc-sidebar-link-type.js";
+import requireDocsearchAskAiAssistantIdRule from "../rules/require-docsearch-ask-ai-assistant-id.js";
 import requireDocusaurusFasterPackageInstalledRule from "../rules/require-docusaurus-faster-package-installed.js";
 import requireFooterLinkColumnItemsRule from "../rules/require-footer-link-column-items.js";
 import requireFooterLinkColumnTitleRule from "../rules/require-footer-link-column-title.js";
@@ -181,6 +183,7 @@ const docusaurusRuleRegistry = {
     "no-search-link-without-search-provider":
         noSearchLinkWithoutSearchProviderRule,
     "no-search-page-path-conflict": noSearchPagePathConflictRule,
+    "no-unknown-i18n-locale-configs": noUnknownI18nLocaleConfigsRule,
     "no-svg-social-card-image": noSvgSocialCardImageRule,
     "no-use-base-url-for-internal-link-components":
         noUseBaseUrlForInternalLinkComponentsRule,
@@ -211,6 +214,8 @@ const docusaurusRuleRegistry = {
     "require-config-link-destination": requireConfigLinkDestinationRule,
     "require-default-export-pages": requireDefaultExportPagesRule,
     "require-doc-sidebar-link-type": requireDocSidebarLinkTypeRule,
+    "require-docsearch-ask-ai-assistant-id":
+        requireDocsearchAskAiAssistantIdRule,
     "require-docusaurus-faster-package-installed":
         requireDocusaurusFasterPackageInstalledRule,
     "require-footer-link-column-items": requireFooterLinkColumnItemsRule,

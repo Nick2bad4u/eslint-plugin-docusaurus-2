@@ -128,12 +128,14 @@ const orderedRuleNames = [
     "local-search-will-not-work-in-dev",
     "no-search-link-without-search-provider",
     "no-search-page-path-conflict",
+    "no-unknown-i18n-locale-configs",
     "no-deprecated-future-experimental-storage",
     "no-deprecated-future-experimental-faster",
     "require-docusaurus-faster-package-installed",
     "require-rspack-bundler-for-faster-persistent-cache",
     "require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads",
     "require-sidebar-item-key-for-duplicate-labels",
+    "require-docsearch-ask-ai-assistant-id",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

@@ -31,6 +31,7 @@ description: Config-focused preset for eslint-plugin-docusaurus-2.
 - [`no-duplicate-head-tags`](../no-duplicate-head-tags.md)
 - [`no-duplicate-navbar-item-destinations`](../no-duplicate-navbar-item-destinations.md)
 - [`no-duplicate-i18n-locales`](../no-duplicate-i18n-locales.md)
+- [`no-unknown-i18n-locale-configs`](../no-unknown-i18n-locale-configs.md)
 - [`no-duplicate-navbar-item-labels`](../no-duplicate-navbar-item-labels.md)
 - [`no-duplicate-plugin-pwa-head-tags`](../no-duplicate-plugin-pwa-head-tags.md)
 - [`no-duplicate-theme-classic-custom-css`](../no-duplicate-theme-classic-custom-css.md)
@@ -91,6 +92,7 @@ description: Config-focused preset for eslint-plugin-docusaurus-2.
 - [`require-theme-mermaid-package-installed`](../require-theme-mermaid-package-installed.md)
 - [`require-theme-search-algolia-package-installed`](../require-theme-search-algolia-package-installed.md)
 - [`require-search-provider-package-installed`](../require-search-provider-package-installed.md)
+- [`require-docsearch-ask-ai-assistant-id`](../require-docsearch-ask-ai-assistant-id.md)
 - [`require-rspack-bundler-for-faster-persistent-cache`](../require-rspack-bundler-for-faster-persistent-cache.md)
 - [`require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads`](../require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads.md)
 
