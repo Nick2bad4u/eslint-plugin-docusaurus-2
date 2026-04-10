@@ -32,6 +32,8 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - [`no-empty-config-link-labels`](./no-empty-config-link-labels.md)
 - [`no-conflicting-theme-config-metadata-keys`](./no-conflicting-theme-config-metadata-keys.md)
 - [`no-conflicting-search-providers`](./no-conflicting-search-providers.md)
+- [`no-search-link-without-search-provider`](./no-search-link-without-search-provider.md)
+- [`no-search-page-path-conflict`](./no-search-page-path-conflict.md)
 - [`no-deprecated-google-analytics`](./no-deprecated-google-analytics.md)
 - [`no-deprecated-on-broken-markdown-links`](./no-deprecated-on-broken-markdown-links.md)
 - [`no-empty-head-tags`](./no-empty-head-tags.md)
@@ -103,6 +105,7 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - [`require-plugin-pwa-offline-mode-activation-strategies`](./require-plugin-pwa-offline-mode-activation-strategies.md)
 - [`require-plugin-pwa-setup`](./require-plugin-pwa-setup.md)
 - [`require-search-provider-package-installed`](./require-search-provider-package-installed.md)
+- [`local-search-will-not-work-in-dev`](./local-search-will-not-work-in-dev.md)
 - [`require-site-config-fields`](./require-site-config-fields.md)
 - [`require-site-url-origin`](./require-site-url-origin.md)
 - [`require-trailing-slash-explicit`](./require-trailing-slash-explicit.md)
@@ -158,6 +161,7 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus config typing and validation hygiene
 - Docusaurus deprecated-config migration hygiene
 - Docusaurus search-provider configuration hygiene
+- Docusaurus search navigation and search-page route hygiene
 - Docusaurus deprecated analytics migration hygiene
 - Docusaurus Mermaid and live-codeblock configuration hygiene
 - Docusaurus classic-theme stylesheet-path hygiene

@@ -7,6 +7,7 @@ import type { TSESLint } from "@typescript-eslint/utils";
 
 import type { UnknownArray } from "./types.js";
 
+import localSearchWillNotWorkInDevRule from "../rules/local-search-will-not-work-in-dev.js";
 import noConflictingConfigLinkContentPropsRule from "../rules/no-conflicting-config-link-content-props.js";
 import noConflictingConfigLinkPropsRule from "../rules/no-conflicting-config-link-props.js";
 import noConflictingFooterHtmlItemPropsRule from "../rules/no-conflicting-footer-html-item-props.js";
@@ -42,6 +43,8 @@ import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.j
 import noMixedSidebarLinkKindsRule from "../rules/no-mixed-sidebar-link-kinds.js";
 import noPageCssModuleImportsInComponentsRule from "../rules/no-page-css-module-imports-in-components.js";
 import noRedundantSocialCardMetadataRule from "../rules/no-redundant-social-card-metadata.js";
+import noSearchLinkWithoutSearchProviderRule from "../rules/no-search-link-without-search-provider.js";
+import noSearchPagePathConflictRule from "../rules/no-search-page-path-conflict.js";
 import noSvgSocialCardImageRule from "../rules/no-svg-social-card-image.js";
 import noUseBaseUrlForInternalLinkComponentsRule from "../rules/no-use-base-url-for-internal-link-components.js";
 import noUselessCollapsedSidebarCategoriesRule from "../rules/no-useless-collapsed-sidebar-categories.js";
@@ -118,6 +121,7 @@ export type RuleWithDocs = TSESLint.RuleModule<string, UnknownArray>;
  * Runtime map of all rule modules keyed by unqualified rule name.
  */
 const docusaurusRuleRegistry = {
+    "local-search-will-not-work-in-dev": localSearchWillNotWorkInDevRule,
     "no-conflicting-config-link-content-props":
         noConflictingConfigLinkContentPropsRule,
     "no-conflicting-config-link-props": noConflictingConfigLinkPropsRule,
@@ -164,6 +168,9 @@ const docusaurusRuleRegistry = {
     "no-page-css-module-imports-in-components":
         noPageCssModuleImportsInComponentsRule,
     "no-redundant-social-card-metadata": noRedundantSocialCardMetadataRule,
+    "no-search-link-without-search-provider":
+        noSearchLinkWithoutSearchProviderRule,
+    "no-search-page-path-conflict": noSearchPagePathConflictRule,
     "no-svg-social-card-image": noSvgSocialCardImageRule,
     "no-use-base-url-for-internal-link-components":
         noUseBaseUrlForInternalLinkComponentsRule,

@@ -38,6 +38,7 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 
 | Rule | Fix | Preset key |
 | --- | :-: | --- |
+| [`local-search-will-not-work-in-dev`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/local-search-will-not-work-in-dev) | — | [🔵](./config.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-conflicting-config-link-content-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-content-props) | — | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-conflicting-config-link-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-props) | 🔧 | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-conflicting-footer-html-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-footer-html-item-props) | — | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
@@ -73,6 +74,8 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`no-mixed-sidebar-link-kinds`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-mixed-sidebar-link-kinds) | 💡 | [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components) | — | [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-redundant-social-card-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-redundant-social-card-metadata) | 🔧 | [🔵](./config.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
+| [`no-search-link-without-search-provider`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-search-link-without-search-provider) | — | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
+| [`no-search-page-path-conflict`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-search-page-path-conflict) | — | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-svg-social-card-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-svg-social-card-image) | — | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-use-base-url-for-internal-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-use-base-url-for-internal-link-components) | 🔧 | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-useless-collapsed-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-useless-collapsed-sidebar-categories) | 🔧 | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |

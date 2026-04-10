@@ -163,6 +163,7 @@ body {
 
 .main-wrapper {
     position: relative;
+    background-color: var(--ifm-background-color);
 }
 
 .navbar {

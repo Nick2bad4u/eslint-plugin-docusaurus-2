@@ -125,6 +125,9 @@ const orderedRuleNames = [
     "require-search-provider-package-installed",
     "require-theme-classic-package-installed",
     "require-theme-search-algolia-package-installed",
+    "local-search-will-not-work-in-dev",
+    "no-search-link-without-search-provider",
+    "no-search-page-path-conflict",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

@@ -54,7 +54,9 @@ const readResolvedPackageManifest = (
     packageJsonPath: string
 ): null | ResolvedPackageManifest => {
     try {
-        const packageJsonText = fs.readFileSync(packageJsonPath);
+        const packageJsonText = fs
+            .readFileSync(packageJsonPath)
+            .toString("utf8");
         const parsedPackageJson = JSON.parse(packageJsonText) as unknown;
 
         if (!isRecord(parsedPackageJson)) {
