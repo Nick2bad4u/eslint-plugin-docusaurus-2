@@ -22,13 +22,15 @@ It ships focused Docusaurus-specific rules and Flat Config presets for teams tha
 2. [Compatibility](#compatibility)
 3. [Quick start](#quick-start)
 4. [Presets](#presets)
-5. [Parser setup behavior](#parser-setup-behavior)
-6. [Plugin settings](#plugin-settings)
-7. [Rules](#rules)
-8. [Documentation](#documentation)
-9. [Roadmap direction](#roadmap-direction)
-10. [Contributing](#contributing)
-11. [License](#license)
+5. [Additional opt-in content configs](#additional-opt-in-content-configs)
+6. [Parser setup behavior](#parser-setup-behavior)
+7. [Plugin settings](#plugin-settings)
+8. [Rules](#rules)
+9. [Documentation](#documentation)
+10. [Roadmap direction](#roadmap-direction)
+11. [Contributing](#contributing)
+12. [License](#license)
+13. [Contributors ✨](#contributors-)
 
 ## Installation
 
@@ -73,6 +75,36 @@ This plugin currently exports six public presets:
 | [🟣 `docusaurus2.configs.all`](./docs/rules/presets/all.md)                   | Yes        | Every stable rule once the catalog grows.     |
 | [🧪 `docusaurus2.configs.experimental`](./docs/rules/presets/experimental.md) | Yes        | Future experimental rule candidates.          |
 
+It also exports two opt-in content configs that are intentionally kept outside the preset ladder:
+
+| Config                                      | Scope          | Purpose                                                              |
+| ------------------------------------------- | -------------- | -------------------------------------------------------------------- |
+| `docusaurus2.configs.content`               | `*.md`/`*.mdx` | Enable text/content-aware docs rules without touching JS/TS presets. |
+| `docusaurus2.configs["strict-mdx-upgrade"]` | `*.mdx`        | Enable the Docusaurus 3.10 strict-MDX migration rules only.          |
+
+## Additional opt-in content configs
+
+These are **not** part of the six preset tiers above.
+
+Use them when you want docs-content linting in addition to the normal JS/TS config presets.
+
+```ts
+import docusaurus2 from "eslint-plugin-docusaurus-2";
+
+export default [
+  docusaurus2.configs.recommended,
+  docusaurus2.configs.content,
+];
+```
+
+If you only want the Docusaurus 3.10 strict-MDX migration rules, use the narrower config instead:
+
+```ts
+import docusaurus2 from "eslint-plugin-docusaurus-2";
+
+export default [docusaurus2.configs["strict-mdx-upgrade"]];
+```
+
 ## Parser setup behavior
 
 Every preset already includes:
@@ -84,6 +116,11 @@ Every preset already includes:
 - plugin registration under `"docusaurus-2"`
 
 `strict`, `all`, and `experimental` additionally enable `projectService: true` automatically.
+
+The opt-in content configs use the plugin's text-content parser instead of `@typescript-eslint/parser`:
+
+- `docusaurus2.configs.content`
+- `docusaurus2.configs["strict-mdx-upgrade"]`
 
 ### Which rules currently require type-checking?
 
@@ -123,6 +160,7 @@ The public preset surface is stable, and the rule catalog is intentionally focus
   - `🔧` = autofixable
   - `💡` = suggestions available
   - `—` = report only
+- Rules shown with no preset membership are rendered in the opt-in rules table below.
 - `Preset key` legend:
   - [🟢](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/minimal) — [`docusaurus2.configs.minimal`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/minimal)
   - [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) — [`docusaurus2.configs.config`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config)
@@ -133,7 +171,6 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 
 | Rule | Fix | Preset key |
 | --- | :-: | --- |
-| [`local-search-will-not-work-in-dev`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/local-search-will-not-work-in-dev) | — | — |
 | [`no-conflicting-config-link-content-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-content-props) | — | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-conflicting-config-link-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-props) | 🔧 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-conflicting-footer-html-item-props`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-footer-html-item-props) | — | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
@@ -142,12 +179,9 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`no-conflicting-search-providers`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-search-providers) | — | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-conflicting-theme-config-color-mode-flags`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-color-mode-flags) | 🔧 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-conflicting-theme-config-metadata-keys`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-metadata-keys) | 💡 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
-| [`no-deprecated-admonition-title-syntax`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-admonition-title-syntax) | 🔧 | — |
 | [`no-deprecated-future-experimental-faster`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-future-experimental-faster) | 🔧 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-deprecated-future-experimental-storage`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-future-experimental-storage) | 🔧 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-deprecated-google-analytics`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-google-analytics) | 💡 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
-| [`no-deprecated-heading-id-syntax`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-heading-id-syntax) | 🔧 | — |
-| [`no-deprecated-html-comments-in-mdx`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-html-comments-in-mdx) | 🔧 | — |
 | [`no-deprecated-on-broken-markdown-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-on-broken-markdown-links) | 🔧 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-duplicate-footer-column-titles`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-column-titles) | — | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`no-duplicate-footer-link-item-destinations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-destinations) | 💡 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
@@ -251,6 +285,18 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`validate-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-metadata) | — | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🟡](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/recommended) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 | [`validate-theme-config-navbar-style`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-navbar-style) | 🔧 💡 | [🔵](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/config) [🔴](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/strict) [🟣](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/all) [🧪](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets/experimental) |
 
+### Opt-in rules
+
+These rules are intentionally outside the six preset tiers. Some are available through opt-in content configs; others are direct rule opt-ins only.
+
+| Rule | Fix | Config surface |
+| --- | :-: | --- |
+| [`local-search-will-not-work-in-dev`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/local-search-will-not-work-in-dev) | — | direct rule opt-in only |
+| [`no-deprecated-admonition-title-syntax`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-admonition-title-syntax) | 🔧 | [📝 `docusaurus2.configs.content`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces) [🧭 `docusaurus2.configs["strict-mdx-upgrade"]`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces) |
+| [`no-deprecated-heading-id-syntax`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-heading-id-syntax) | 🔧 | [📝 `docusaurus2.configs.content`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces) [🧭 `docusaurus2.configs["strict-mdx-upgrade"]`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces) |
+| [`no-deprecated-html-comments-in-mdx`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-html-comments-in-mdx) | 🔧 | [📝 `docusaurus2.configs.content`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces) [🧭 `docusaurus2.configs["strict-mdx-upgrade"]`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces) |
+| [`require-mermaid-elk-package-installed`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-mermaid-elk-package-installed) | — | [📝 `docusaurus2.configs.content`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces) |
+
 ## Documentation
 
 - Rules overview: [`docs/rules/overview.md`](./docs/rules/overview.md)
@@ -276,15 +322,21 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md).
 [MIT](./LICENSE)
 
 ## Contributors ✨
+
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors.](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+
 <!-- prettier-ignore-start -->
+
 <!-- markdownlint-disable -->
+
 <table>
   <tbody>
     <tr>
@@ -301,6 +353,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 </table>
 
 <!-- markdownlint-restore -->
+
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->

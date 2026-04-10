@@ -10,7 +10,7 @@ import {
 } from "../src/_internal/preset-config-references";
 import docusaurus2Plugin from "../src/plugin";
 
-const additionalConfigNames = ["strict-mdx-upgrade"] as const;
+const additionalConfigNames = ["content", "strict-mdx-upgrade"] as const;
 
 type RuleDocsWithPresets = Readonly<{
     presets?: readonly string[] | string;
@@ -116,6 +116,26 @@ describe("docusaurus-2 plugin configs", () => {
             "docusaurus-2/no-deprecated-admonition-title-syntax",
             "docusaurus-2/no-deprecated-heading-id-syntax",
             "docusaurus-2/no-deprecated-html-comments-in-mdx",
+        ]);
+    });
+
+    it("exposes a dedicated content config for text-aware docs rules", () => {
+        expect.hasAssertions();
+
+        const config = docusaurus2Plugin.configs.content;
+
+        expect(config.files).toStrictEqual(["**/*.{md,mdx}"]);
+        expect(config.plugins).toHaveProperty("docusaurus-2");
+        expect(config.languageOptions?.["parser"]).toBeDefined();
+        expect(
+            Object.keys(config.rules).toSorted((left, right) =>
+                left.localeCompare(right)
+            )
+        ).toStrictEqual([
+            "docusaurus-2/no-deprecated-admonition-title-syntax",
+            "docusaurus-2/no-deprecated-heading-id-syntax",
+            "docusaurus-2/no-deprecated-html-comments-in-mdx",
+            "docusaurus-2/require-mermaid-elk-package-installed",
         ]);
     });
 

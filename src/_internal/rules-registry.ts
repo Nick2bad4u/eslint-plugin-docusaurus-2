@@ -83,6 +83,7 @@ import requireHeadTagContentOrAttributesRule from "../rules/require-head-tag-con
 import requireHeadTagTagNameRule from "../rules/require-head-tag-tag-name.js";
 import requireI18nDefaultLocaleInLocalesRule from "../rules/require-i18n-default-locale-in-locales.js";
 import requireMarkdownMermaidWhenThemeMermaidEnabledRule from "../rules/require-markdown-mermaid-when-theme-mermaid-enabled.js";
+import requireMermaidElkPackageInstalledRule from "../rules/require-mermaid-elk-package-installed.js";
 import requireNavbarDocItemDocIdRule from "../rules/require-navbar-doc-item-doc-id.js";
 import requireNavbarDocSidebarItemSidebarIdRule from "../rules/require-navbar-doc-sidebar-item-sidebar-id.js";
 import requireNavbarDocsVersionItemToRule from "../rules/require-navbar-docs-version-item-to.js";
@@ -237,6 +238,8 @@ const docusaurusRuleRegistry = {
         requireI18nDefaultLocaleInLocalesRule,
     "require-markdown-mermaid-when-theme-mermaid-enabled":
         requireMarkdownMermaidWhenThemeMermaidEnabledRule,
+    "require-mermaid-elk-package-installed":
+        requireMermaidElkPackageInstalledRule,
     "require-navbar-doc-item-doc-id": requireNavbarDocItemDocIdRule,
     "require-navbar-doc-sidebar-item-sidebar-id":
         requireNavbarDocSidebarItemSidebarIdRule,

@@ -67,6 +67,11 @@ const sidebars = {
             type: "doc",
         },
         {
+            id: "guides/config-surfaces",
+            label: "🧱 Config Surfaces",
+            type: "doc",
+        },
+        {
             className: "sb-cat-presets",
             collapsible: true,
             items: presetDocs,

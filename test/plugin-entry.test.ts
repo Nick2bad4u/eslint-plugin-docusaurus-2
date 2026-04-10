@@ -18,10 +18,11 @@ const expectedPluginVersion = packageJson.version;
 
 const expectedConfigRegistryShape = expect.objectContaining(
     Object.fromEntries(
-        [...presetConfigNames, "strict-mdx-upgrade"].map((configName) => [
-            configName,
-            expect.any(Object),
-        ])
+        [
+            ...presetConfigNames,
+            "content",
+            "strict-mdx-upgrade",
+        ].map((configName) => [configName, expect.any(Object)])
     )
 );
 

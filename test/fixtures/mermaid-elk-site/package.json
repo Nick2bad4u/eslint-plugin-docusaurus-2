@@ -1,0 +1,41 @@
+{
+    "$schema": "https://www.schemastore.org/package.json",
+    "name": "mermaid-elk-site-fixture",
+    "version": "0.0.0",
+    "private": true,
+    "description": "Fixture package manifest used by tests for Mermaid ELK dependency detection.",
+    "keywords": [
+        "fixture",
+        "mermaid",
+        "test"
+    ],
+    "homepage": "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
+    "bugs": {
+        "url": "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2.git"
+    },
+    "license": "MIT",
+    "author": "Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com> (https://github.com/Nick2bad4u)",
+    "contributors": [
+        {
+            "name": "Nick2bad4u",
+            "email": "20943337+Nick2bad4u@users.noreply.github.com",
+            "url": "https://github.com/Nick2bad4u"
+        }
+    ],
+    "type": "module",
+    "scripts": {
+        "test": "echo fixture"
+    },
+    "dependencies": {
+        "@mermaid-js/layout-elk": "^0.1.9"
+    },
+    "devDependencies": {},
+    "packageManager": "npm@11.6.2",
+    "engines": {
+        "node": ">=20"
+    }
+}

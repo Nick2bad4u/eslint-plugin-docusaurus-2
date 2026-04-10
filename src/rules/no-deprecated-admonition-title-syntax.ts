@@ -137,6 +137,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         meta: {
             deprecated: false,
             docs: {
+                configs: ["content", "strict-mdx-upgrade"],
                 description:
                     "disallow deprecated `:::type Title` admonition titles in MDX files and prefer bracket syntax for Docusaurus 3.10 strict MDX migration.",
                 frozen: false,

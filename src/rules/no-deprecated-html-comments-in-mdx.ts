@@ -87,6 +87,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         meta: {
             deprecated: false,
             docs: {
+                configs: ["content", "strict-mdx-upgrade"],
                 description:
                     "disallow deprecated HTML comments in MDX files and prefer JSX comments for Docusaurus 3.10 strict MDX migration.",
                 frozen: false,

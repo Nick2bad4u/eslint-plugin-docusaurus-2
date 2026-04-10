@@ -134,6 +134,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         meta: {
             deprecated: false,
             docs: {
+                configs: ["content", "strict-mdx-upgrade"],
                 description:
                     "disallow deprecated `{#id}` heading syntax in MDX files and prefer the Docusaurus 3.10 MDX comment form.",
                 frozen: false,

@@ -20,117 +20,19 @@ This repository is being built to enforce Docusaurus-specific best practices suc
 
 The runtime, docs site, tests, and preset infrastructure have been re-identified for [`eslint-plugin-docusaurus-2`](https://www.npmjs.com/package/eslint-plugin-docusaurus-2).
 
-The plugin now ships Docusaurus-specific rules across config validation, deprecated-config migration, search/analytics migration, popular theme-surface validation, config typing, sidebar hygiene, page-module routing, and site-source CSS architecture:
+The plugin now ships a stable namespace, a preset ladder, opt-in content configs, and a focused rule catalog that currently covers:
 
-- a stable plugin namespace: `"docusaurus-2"`
-- a documented flat-config preset surface
-- TypeScript parser wiring inside each preset
-- `projectService: true` for the typed presets
-- [`no-conflicting-config-link-props`](./no-conflicting-config-link-props.md)
-- [`no-conflicting-config-link-content-props`](./no-conflicting-config-link-content-props.md)
-- [`no-empty-config-link-destinations`](./no-empty-config-link-destinations.md)
-- [`no-empty-config-link-labels`](./no-empty-config-link-labels.md)
-- [`no-conflicting-theme-config-metadata-keys`](./no-conflicting-theme-config-metadata-keys.md)
-- [`no-conflicting-search-providers`](./no-conflicting-search-providers.md)
-- [`no-search-link-without-search-provider`](./no-search-link-without-search-provider.md)
-- [`no-search-page-path-conflict`](./no-search-page-path-conflict.md)
-- [`no-deprecated-google-analytics`](./no-deprecated-google-analytics.md)
-- [`no-deprecated-future-experimental-faster`](./no-deprecated-future-experimental-faster.md)
-- [`no-deprecated-future-experimental-storage`](./no-deprecated-future-experimental-storage.md)
-- [`no-deprecated-on-broken-markdown-links`](./no-deprecated-on-broken-markdown-links.md)
-- [`no-empty-head-tags`](./no-empty-head-tags.md)
-- [`no-duplicate-footer-column-titles`](./no-duplicate-footer-column-titles.md)
-- [`no-duplicate-footer-link-item-destinations`](./no-duplicate-footer-link-item-destinations.md)
-- [`no-duplicate-footer-link-item-labels`](./no-duplicate-footer-link-item-labels.md)
-- [`no-duplicate-head-tags`](./no-duplicate-head-tags.md)
-- [`no-duplicate-navbar-item-destinations`](./no-duplicate-navbar-item-destinations.md)
-- [`no-duplicate-sidebar-doc-ids`](./no-duplicate-sidebar-doc-ids.md)
-- [`no-conflicting-footer-html-item-props`](./no-conflicting-footer-html-item-props.md)
-- [`no-conflicting-navbar-doc-item-props`](./no-conflicting-navbar-doc-item-props.md)
-- [`no-conflicting-navbar-doc-sidebar-item-props`](./no-conflicting-navbar-doc-sidebar-item-props.md)
-- [`no-duplicate-i18n-locales`](./no-duplicate-i18n-locales.md)
-- [`no-unknown-i18n-locale-configs`](./no-unknown-i18n-locale-configs.md)
-- [`no-duplicate-navbar-item-labels`](./no-duplicate-navbar-item-labels.md)
-- [`no-duplicate-plugin-pwa-head-tags`](./no-duplicate-plugin-pwa-head-tags.md)
-- [`no-duplicate-theme-classic-custom-css`](./no-duplicate-theme-classic-custom-css.md)
-- [`no-duplicate-theme-config-metadata-keys`](./no-duplicate-theme-config-metadata-keys.md)
-- [`no-empty-footer-link-columns`](./no-empty-footer-link-columns.md)
-- [`no-ignored-site-validations`](./no-ignored-site-validations.md)
-- [`no-empty-navbar-dropdown-items`](./no-empty-navbar-dropdown-items.md)
-- [`no-empty-navbar-item-objects`](./no-empty-navbar-item-objects.md)
-- [`no-empty-sidebar-categories`](./no-empty-sidebar-categories.md)
-- [`no-empty-theme-classic-custom-css`](./no-empty-theme-classic-custom-css.md)
-- [`no-empty-theme-config-metadata`](./no-empty-theme-config-metadata.md)
-- [`no-mixed-sidebar-link-kinds`](./no-mixed-sidebar-link-kinds.md)
-- [`no-redundant-social-card-metadata`](./no-redundant-social-card-metadata.md)
-- [`no-svg-social-card-image`](./no-svg-social-card-image.md)
-- [`no-use-base-url-for-internal-link-components`](./no-use-base-url-for-internal-link-components.md)
-- [`no-useless-collapsed-sidebar-categories`](./no-useless-collapsed-sidebar-categories.md)
-- [`prefer-config-satisfies`](./prefer-config-satisfies.md)
-- [`prefer-css-modules-in-site-src`](./prefer-css-modules-in-site-src.md)
-- [`prefer-href-for-external-link-components`](./prefer-href-for-external-link-components.md)
-- [`prefer-href-for-external-links`](./prefer-href-for-external-links.md)
-- [`prefer-head-tag-attributes-object`](./prefer-head-tag-attributes-object.md)
-- [`prefer-i18n-default-locale-first`](./prefer-i18n-default-locale-first.md)
-- [`prefer-theme-config-docsearch`](./prefer-theme-config-docsearch.md)
-- [`prefer-theme-config-metadata-name-for-twitter-tags`](./prefer-theme-config-metadata-name-for-twitter-tags.md)
-- [`prefer-theme-config-metadata-property-for-og-tags`](./prefer-theme-config-metadata-property-for-og-tags.md)
-- [`no-page-css-module-imports-in-components`](./no-page-css-module-imports-in-components.md)
-- [`prefer-sidebars-config-satisfies`](./prefer-sidebars-config-satisfies.md)
-- [`prefer-to-for-internal-link-components`](./prefer-to-for-internal-link-components.md)
-- [`prefer-to-for-internal-links`](./prefer-to-for-internal-links.md)
-- [`prefer-use-base-url-for-static-assets`](./prefer-use-base-url-for-static-assets.md)
-- [`require-base-url-issue-banner-enabled`](./require-base-url-issue-banner-enabled.md)
-- [`require-base-url-slashes`](./require-base-url-slashes.md)
-- [`require-i18n-default-locale-in-locales`](./require-i18n-default-locale-in-locales.md)
-- [`require-config-link-content`](./require-config-link-content.md)
-- [`require-config-link-destination`](./require-config-link-destination.md)
-- [`require-default-export-pages`](./require-default-export-pages.md)
-- [`require-footer-link-column-items`](./require-footer-link-column-items.md)
-- [`require-footer-link-column-title`](./require-footer-link-column-title.md)
-- [`require-head-tag-attributes-when-no-inner-html`](./require-head-tag-attributes-when-no-inner-html.md)
-- [`require-head-tag-tag-name`](./require-head-tag-tag-name.md)
-- [`require-theme-config-color-mode-object`](./require-theme-config-color-mode-object.md)
-- [`require-theme-config-docsearch-config`](./require-theme-config-docsearch-config.md)
-- [`require-theme-live-codeblock-when-live-codeblock-configured`](./require-theme-live-codeblock-when-live-codeblock-configured.mdx)
-- [`require-theme-live-codeblock-package-installed`](./require-theme-live-codeblock-package-installed.mdx)
-- [`require-theme-mermaid-when-markdown-mermaid-enabled`](./require-theme-mermaid-when-markdown-mermaid-enabled.md)
-- [`require-theme-mermaid-package-installed`](./require-theme-mermaid-package-installed.md)
-- [`require-theme-search-algolia-package-installed`](./require-theme-search-algolia-package-installed.md)
-- [`no-conflicting-theme-config-color-mode-flags`](./no-conflicting-theme-config-color-mode-flags.md)
-- [`require-theme-config-announcement-bar-id`](./require-theme-config-announcement-bar-id.md)
-- [`require-theme-classic-custom-css-files-exist`](./require-theme-classic-custom-css-files-exist.md)
-- [`require-theme-classic-package-installed`](./require-theme-classic-package-installed.md)
-- [`require-docusaurus-faster-package-installed`](./require-docusaurus-faster-package-installed.md)
-- [`validate-theme-config-announcement-bar-is-closeable`](./validate-theme-config-announcement-bar-is-closeable.md)
-- [`require-plugin-pwa-debug`](./require-plugin-pwa-debug.md)
-- [`require-plugin-pwa-head-manifest`](./require-plugin-pwa-head-manifest.md)
-- [`require-plugin-pwa-head-theme-color`](./require-plugin-pwa-head-theme-color.md)
-- [`require-plugin-pwa-offline-mode-activation-strategies`](./require-plugin-pwa-offline-mode-activation-strategies.md)
-- [`require-plugin-pwa-setup`](./require-plugin-pwa-setup.md)
-- [`require-search-provider-package-installed`](./require-search-provider-package-installed.md)
-- [`require-docsearch-ask-ai-assistant-id`](./require-docsearch-ask-ai-assistant-id.md)
-- [`require-rspack-bundler-for-faster-persistent-cache`](./require-rspack-bundler-for-faster-persistent-cache.md)
-- [`require-site-config-fields`](./require-site-config-fields.md)
-- [`require-site-url-origin`](./require-site-url-origin.md)
-- [`require-trailing-slash-explicit`](./require-trailing-slash-explicit.md)
-- [`require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads`](./require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads.md)
-- [`require-navbar-doc-item-doc-id`](./require-navbar-doc-item-doc-id.md)
-- [`require-navbar-doc-sidebar-item-sidebar-id`](./require-navbar-doc-sidebar-item-sidebar-id.md)
-- [`require-navbar-docs-version-item-to`](./require-navbar-docs-version-item-to.md)
-- [`require-navbar-dropdown-items`](./require-navbar-dropdown-items.md)
-- [`require-navbar-dropdown-label`](./require-navbar-dropdown-label.md)
-- [`require-navbar-html-item-value`](./require-navbar-html-item-value.md)
-- [`require-markdown-mermaid-when-theme-mermaid-enabled`](./require-markdown-mermaid-when-theme-mermaid-enabled.md)
-- [`validate-navbar-item-position`](./validate-navbar-item-position.md)
-- [`require-sidebar-category-items`](./require-sidebar-category-items.md)
-- [`require-sidebar-category-label`](./require-sidebar-category-label.md)
-- [`require-doc-sidebar-link-type`](./require-doc-sidebar-link-type.md)
-- [`require-generated-index-link-type`](./require-generated-index-link-type.md)
-- [`require-pages-plugin-excludes`](./require-pages-plugin-excludes.md)
-- [`require-sidebar-category-type`](./require-sidebar-category-type.md)
-- [`require-theme-config-image`](./require-theme-config-image.md)
-- [`validate-theme-config-metadata`](./validate-theme-config-metadata.md)
+- config and `themeConfig` validation
+- search, analytics, and package-ownership checks
+- sidebar, i18n, and navigation integrity
+- PWA, faster, and release-upgrade migration rules
+- page-module and site-architecture rules in the broader tiers
+- Markdown / MDX migration and content-aware rules through opt-in content configs
+
+Use these source-of-truth docs instead of a hand-maintained full rule inventory here:
+
+- [Preset matrix](./presets/index.md)
+- [Config Surfaces](./guides/config-surfaces.md)
 
 The rule catalog is still intentionally focused while the higher-value Docusaurus rule space is explored.
 
@@ -157,6 +59,13 @@ export default [docusaurus2.configs.recommended];
 | [🔴 `docusaurus2.configs.strict`](./presets/strict.md)             | Stricter adoption path for mature sites.                  |
 | [🟣 `docusaurus2.configs.all`](./presets/all.md)                   | Every stable rule once the rule catalog grows.            |
 | [🧪 `docusaurus2.configs.experimental`](./presets/experimental.md) | Future experimental rules and rollout candidates.         |
+
+The plugin also exports opt-in content configs outside the preset ladder:
+
+| Config                                      | Purpose                                                     |
+| ------------------------------------------- | ----------------------------------------------------------- |
+| `docusaurus2.configs.content`               | Enable content-aware docs rules for `*.md` and `*.mdx`.     |
+| `docusaurus2.configs["strict-mdx-upgrade"]` | Enable only the Docusaurus 3.10 strict-MDX migration rules. |
 
 ## Current rule areas
 
@@ -196,6 +105,7 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus page-module routing and default export hygiene
 - Docusaurus pages-plugin include/exclude hygiene
 - Docusaurus site-source CSS architecture hygiene
+- Docusaurus Markdown and MDX migration/content hygiene
 
 ## Current rollout shape
 

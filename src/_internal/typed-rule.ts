@@ -10,7 +10,10 @@ import {
     type TSESTree,
 } from "@typescript-eslint/utils";
 
-import type { PresetConfigName } from "./preset-config-references.js";
+import type {
+    AdditionalConfigName,
+    PresetConfigName,
+} from "./preset-config-references.js";
 import type { UnknownArray } from "./types.js";
 
 import { registerProgramSettingsForContext } from "./plugin-settings.js";
@@ -52,6 +55,7 @@ type PluginRuleCreator = ReturnType<
  * in individual rule modules.
  */
 type PluginRuleDocs = {
+    configs?: AdditionalConfigName | readonly AdditionalConfigName[];
     presets?: PresetConfigName | readonly PresetConfigName[];
     recommended?: boolean;
     requiresTypeChecking?: boolean;

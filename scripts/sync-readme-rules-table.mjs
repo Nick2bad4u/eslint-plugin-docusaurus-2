@@ -12,6 +12,7 @@ import { fileURLToPath } from "node:url";
  * @typedef {Readonly<{
  *     meta?: {
  *         docs?: {
+ *             configs?: readonly string[] | string;
  *             presets?: readonly string[] | string;
  *             url?: string;
  *         };
@@ -30,6 +31,10 @@ import { fileURLToPath } from "node:url";
  *     | "strict"} PresetName
  */
 
+/**
+ * @typedef {"content" | "strict-mdx-upgrade"} AdditionalConfigName
+ */
+
 const rulesSectionHeading = "## Rules";
 const readmePath = resolve(process.cwd(), "README.md");
 /** @type {readonly PresetName[]} */
@@ -44,6 +49,8 @@ const presetConfigNamesByReadmeOrder = [
 const presetOrder = [...presetConfigNamesByReadmeOrder];
 const PRESET_DOCS_URL_BASE =
     "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets";
+const CONFIG_SURFACES_DOCS_URL =
+    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/config-surfaces";
 
 /** @type {Readonly<Record<PresetName, Readonly<{ icon: string }>>>} */
 const presetConfigMetadataByName = {
@@ -87,6 +94,25 @@ const presetConfigReferenceByName = {
     strict: "docusaurus2.configs.strict",
 };
 
+/**
+ * @type {Readonly<
+ *     Record<
+ *         AdditionalConfigName,
+ *         Readonly<{ icon: string; reference: string }>
+ *     >
+ * >}
+ */
+const additionalConfigMetadataByName = {
+    content: {
+        icon: "📝",
+        reference: "docusaurus2.configs.content",
+    },
+    "strict-mdx-upgrade": {
+        icon: "🧭",
+        reference: 'docusaurus2.configs["strict-mdx-upgrade"]',
+    },
+};
+
 /** @param {string} markdown */
 const detectLineEnding = (markdown) =>
     markdown.includes("\r\n") ? "\r\n" : "\n";
@@ -119,6 +145,44 @@ const createPresetLegendLines = () =>
 
         return `  - [${presetIcon}](${docsUrl}) — [\`${configReference}\`](${docsUrl})`;
     });
+
+/** @param {string} value */
+const isAdditionalConfigName = (value) =>
+    Object.hasOwn(additionalConfigMetadataByName, value);
+
+/**
+ * @param {readonly string[] | string | undefined} configs
+ *
+ * @returns {readonly AdditionalConfigName[]}
+ */
+const normalizeAdditionalConfigNames = (configs) => {
+    const values = Array.isArray(configs) ? configs : [configs];
+    /** @type {AdditionalConfigName[]} */
+    const normalizedConfigNames = [];
+    const seenConfigNames = new Set();
+
+    for (const value of values) {
+        if (typeof value !== "string" || !isAdditionalConfigName(value)) {
+            continue;
+        }
+
+        if (seenConfigNames.has(value)) {
+            continue;
+        }
+
+        seenConfigNames.add(value);
+        normalizedConfigNames.push(/** @type {AdditionalConfigName} */ (value));
+    }
+
+    return normalizedConfigNames;
+};
+
+/** @param {AdditionalConfigName} configName */
+const createAdditionalConfigSurfaceLabel = (configName) => {
+    const metadata = additionalConfigMetadataByName[configName];
+
+    return `[${metadata.icon} \`${metadata.reference}\`](${CONFIG_SURFACES_DOCS_URL})`;
+};
 
 /** @param {ReadmeRuleModule} ruleModule */
 const getRuleFixIndicator = (ruleModule) => {
@@ -196,6 +260,44 @@ const createRuleRows = (rules) => {
                 : presetNames.map(createPresetIconLink).join(" ");
 
         return `${docsLink} | ${getRuleFixIndicator(ruleModule)} | ${presetIcons} |`;
+    });
+};
+
+/**
+ * @param {Readonly<Record<string, ReadmeRuleModule>>} rules
+ *
+ * @returns {readonly string[]}
+ */
+const createOptInRuleRows = (rules) => {
+    const sortedRuleEntries = Object.entries(rules)
+        .filter(([, ruleModule]) => {
+            const presetNames = normalizePresetNames(
+                ruleModule.meta?.docs?.presets
+            );
+
+            return presetNames.length === 0;
+        })
+        .toSorted(([left], [right]) => left.localeCompare(right));
+
+    if (sortedRuleEntries.length === 0) {
+        return ["| — | — | — |"];
+    }
+
+    return sortedRuleEntries.map(([ruleName, ruleModule]) => {
+        const docsUrl = ruleModule.meta?.docs?.url;
+        const docsLink =
+            typeof docsUrl === "string" && docsUrl.length > 0
+                ? `| [\`${ruleName}\`](${docsUrl})`
+                : `| \`${ruleName}\``;
+        const configNames = normalizeAdditionalConfigNames(
+            ruleModule.meta?.docs?.configs
+        );
+        const configSurface =
+            configNames.length === 0
+                ? "direct rule opt-in only"
+                : configNames.map(createAdditionalConfigSurfaceLabel).join(" ");
+
+        return `${docsLink} | ${getRuleFixIndicator(ruleModule)} | ${configSurface} |`;
     });
 };
 
@@ -289,12 +391,21 @@ export const generateReadmeRulesSectionFromRules = (rules) => {
         "  - `🔧` = autofixable",
         "  - `💡` = suggestions available",
         "  - `—` = report only",
+        "- Rules shown with no preset membership are rendered in the opt-in rules table below.",
         "- `Preset key` legend:",
         ...createPresetLegendLines(),
         "",
         "| Rule | Fix | Preset key |",
         "| --- | :-: | --- |",
-        ...ruleRows,
+        ...ruleRows.filter((row) => !row.endsWith("| — |")),
+        "",
+        "### Opt-in rules",
+        "",
+        "These rules are intentionally outside the six preset tiers. Some are available through opt-in content configs; others are direct rule opt-ins only.",
+        "",
+        "| Rule | Fix | Config surface |",
+        "| --- | :-: | --- |",
+        ...createOptInRuleRows(rules),
         "",
     ].join("\n");
 };

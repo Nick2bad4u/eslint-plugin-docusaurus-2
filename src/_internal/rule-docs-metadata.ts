@@ -4,10 +4,16 @@
  */
 import type { TSESLint } from "@typescript-eslint/utils";
 
-import type { PresetConfigName } from "./preset-config-references.js";
+import type {
+    AdditionalConfigName,
+    PresetConfigName,
+} from "./preset-config-references.js";
 import type { UnknownArray, UnknownRecord } from "./types.js";
 
-import { isPresetConfigName } from "./preset-config-references.js";
+import {
+    isAdditionalConfigName,
+    isPresetConfigName,
+} from "./preset-config-references.js";
 import { createRuleDocsUrl } from "./rule-docs-url.js";
 import {
     arrayIncludes,
@@ -18,6 +24,7 @@ import {
 
 /** Normalized docs metadata derived for each rule. */
 export type RuleDocsMetadata = Readonly<{
+    additionalConfigNames: readonly AdditionalConfigName[];
     description: string;
     presetNames: readonly PresetConfigName[];
     recommended: boolean;
@@ -34,6 +41,7 @@ export type RuleDocsMetadataByName<RuleName extends string = string> = Readonly<
 
 /** Canonical docs contract required on every plugin rule. */
 type PluginRuleDocsContract = Readonly<{
+    configs: AdditionalConfigName | readonly AdditionalConfigName[];
     description: string;
     presets: PresetConfigName | readonly PresetConfigName[];
     recommended: boolean;
@@ -112,6 +120,30 @@ const normalizePresetNames = (
     return normalizedPresetNames;
 };
 
+const normalizeAdditionalConfigNames = (
+    ruleName: string,
+    configs: PluginRuleDocsContract["configs"]
+): readonly AdditionalConfigName[] => {
+    const candidates = typeof configs === "string" ? [configs] : [...configs];
+    const normalizedConfigNames: AdditionalConfigName[] = [];
+
+    for (const candidate of candidates) {
+        if (!isAdditionalConfigName(candidate)) {
+            throw new TypeError(
+                `Rule '${ruleName}' has invalid docs.configs value '${String(candidate)}'.`
+            );
+        }
+
+        if (arrayIncludes(normalizedConfigNames, candidate)) {
+            continue;
+        }
+
+        normalizedConfigNames.push(candidate);
+    }
+
+    return normalizedConfigNames;
+};
+
 /** Validate and narrow dynamic `meta.docs` values to the plugin docs contract. */
 const getRuleDocsContract = (
     ruleName: string,
@@ -122,6 +154,7 @@ const getRuleDocsContract = (
     }
 
     const description = docs["description"];
+    const configs = docs["configs"];
     const recommended = docs["recommended"];
     const requiresTypeChecking = docs["requiresTypeChecking"];
     const ruleId = docs["ruleId"];
@@ -180,6 +213,30 @@ const getRuleDocsContract = (
         );
     }
 
+    const normalizedConfigNames = (() => {
+        if (configs === undefined) {
+            return [] as const;
+        }
+
+        if (typeof configs === "string") {
+            if (!isAdditionalConfigName(configs)) {
+                throw new TypeError(
+                    `Rule '${ruleName}' has invalid docs.configs value '${configs}'.`
+                );
+            }
+
+            return [configs] as const;
+        }
+
+        if (!Array.isArray(configs)) {
+            throw new TypeError(
+                `Rule '${ruleName}' must declare docs.configs as a config key or array.`
+            );
+        }
+
+        return normalizeAdditionalConfigNames(ruleName, configs);
+    })();
+
     if (typeof presets === "string") {
         if (!isPresetConfigName(presets)) {
             throw new TypeError(
@@ -188,6 +245,7 @@ const getRuleDocsContract = (
         }
 
         return {
+            configs: normalizedConfigNames,
             description,
             presets,
             recommended,
@@ -217,6 +275,7 @@ const getRuleDocsContract = (
     }
 
     return {
+        configs: normalizedConfigNames,
         description,
         presets: normalizedPresetNames,
         recommended,
@@ -239,8 +298,13 @@ export const deriveRuleDocsMetadataByName = <RuleName extends string>(
             ruleName,
             ruleDocsContract.presets
         );
+        const additionalConfigNames = normalizeAdditionalConfigNames(
+            ruleName,
+            ruleDocsContract.configs
+        );
 
         metadataByRuleName[ruleName] = {
+            additionalConfigNames,
             description: ruleDocsContract.description,
             presetNames,
             recommended: ruleDocsContract.recommended,
@@ -252,6 +316,24 @@ export const deriveRuleDocsMetadataByName = <RuleName extends string>(
     }
 
     return metadataByRuleName;
+};
+
+/** Derive rule-to-config membership from normalized docs metadata. */
+export const deriveRuleAdditionalConfigMembershipByRuleName = <
+    RuleName extends string,
+>(
+    ruleDocsMetadataByName: RuleDocsMetadataByName<RuleName>
+): Readonly<Record<RuleName, readonly AdditionalConfigName[]>> => {
+    const membershipByRuleName = {} as Record<
+        RuleName,
+        readonly AdditionalConfigName[]
+    >;
+
+    for (const [ruleName, metadata] of objectEntries(ruleDocsMetadataByName)) {
+        membershipByRuleName[ruleName] = metadata.additionalConfigNames;
+    }
+
+    return membershipByRuleName;
 };
 
 /** Derive rule-to-preset membership from normalized docs metadata. */

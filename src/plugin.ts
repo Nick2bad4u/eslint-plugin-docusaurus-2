@@ -7,6 +7,7 @@ import type { ESLint, Linter } from "eslint";
 
 import typeScriptParser from "@typescript-eslint/parser";
 
+import type { additionalConfigNames } from "./_internal/preset-config-references.js";
 import type { UnknownArray } from "./_internal/types.js";
 
 import packageJson from "../package.json" with { type: "json" };
@@ -15,6 +16,7 @@ import {
     presetConfigNames,
 } from "./_internal/preset-config-references.js";
 import {
+    deriveRuleAdditionalConfigMembershipByRuleName,
     deriveRuleDocsMetadataByName,
     deriveRulePresetMembershipByRuleName,
     deriveTypeCheckedRuleNameSet,
@@ -37,7 +39,7 @@ export type Docusaurus2PresetConfig = Linter.Config & {
 };
 
 /** Additional non-preset config keys exposed through `plugin.configs`. */
-type Docusaurus2AdditionalConfigName = "strict-mdx-upgrade";
+type Docusaurus2AdditionalConfigName = (typeof additionalConfigNames)[number];
 
 /** Canonical flat-config keys exposed through `plugin.configs`. */
 type Docusaurus2ConfigName =
@@ -107,6 +109,8 @@ const docusaurusEslintRules: NonNullable<ESLint.Plugin["rules"]> &
     typeof docusaurusRules;
 
 const ruleDocsMetadataByRuleName = deriveRuleDocsMetadataByName(runtimeRules);
+const ruleAdditionalConfigMembership =
+    deriveRuleAdditionalConfigMembershipByRuleName(ruleDocsMetadataByRuleName);
 const rulePresetMembership = deriveRulePresetMembershipByRuleName(
     ruleDocsMetadataByRuleName
 );
@@ -172,6 +176,35 @@ function errorRulesFor(ruleNames: readonly string[]): RulesConfig {
 
 const presetRuleNamesByConfig = derivePresetRuleNamesByConfig();
 
+const deriveAdditionalConfigRuleNamesByConfig = (): Readonly<
+    Record<Docusaurus2AdditionalConfigName, readonly string[]>
+> => {
+    const ruleNamesByConfig: Record<Docusaurus2AdditionalConfigName, string[]> =
+        {
+            content: [],
+            "strict-mdx-upgrade": [],
+        };
+
+    for (const [ruleName] of docusaurusRuleEntries) {
+        const configNames = ruleAdditionalConfigMembership[ruleName];
+
+        if (configNames === undefined || configNames.length === 0) {
+            continue;
+        }
+
+        for (const configName of configNames) {
+            ruleNamesByConfig[configName].push(ruleName);
+        }
+    }
+
+    return Object.freeze({
+        content: dedupeRuleNames(ruleNamesByConfig.content),
+        "strict-mdx-upgrade": dedupeRuleNames(
+            ruleNamesByConfig["strict-mdx-upgrade"]
+        ),
+    });
+};
+
 /** Recommended preset rule list for zero-type-info usage. */
 const recommendedRuleNames: string[] = [];
 
@@ -234,11 +267,33 @@ const pluginForConfigs: ESLint.Plugin = {
     rules: docusaurusEslintRules,
 };
 
-const strictMdxUpgradeRuleNames = [
-    "no-deprecated-html-comments-in-mdx",
-    "no-deprecated-heading-id-syntax",
-    "no-deprecated-admonition-title-syntax",
-] as const;
+const additionalConfigRuleNamesByConfig =
+    deriveAdditionalConfigRuleNamesByConfig();
+
+const createTextContentConfig = (
+    options: Readonly<{
+        files: readonly string[];
+        name: `docusaurus-2:${Docusaurus2AdditionalConfigName}`;
+        ruleNames: readonly string[];
+    }>
+): Docusaurus2PresetConfig =>
+    withDocusaurusPlugin(
+        {
+            files: [...options.files],
+            languageOptions: {
+                parser: textContentParser,
+                parserOptions: {
+                    ...defaultParserOptions,
+                },
+            },
+            name: options.name,
+            rules: errorRulesFor(options.ruleNames),
+        },
+        pluginForConfigs,
+        {
+            requiresTypeChecking: false,
+        }
+    );
 
 /** Flat config presets distributed by eslint-plugin-docusaurus-2. */
 const createConfigsDefinition = (): Record<
@@ -267,24 +322,17 @@ const createConfigsDefinition = (): Record<
         );
     }
 
-    configs["strict-mdx-upgrade"] = withDocusaurusPlugin(
-        {
-            files: ["**/*.mdx"],
-            languageOptions: {
-                parser: textContentParser,
-                parserOptions: {
-                    ecmaVersion: "latest",
-                    sourceType: "module",
-                },
-            },
-            name: "docusaurus-2:strict-mdx-upgrade",
-            rules: errorRulesFor(strictMdxUpgradeRuleNames),
-        },
-        pluginForConfigs,
-        {
-            requiresTypeChecking: false,
-        }
-    );
+    configs["strict-mdx-upgrade"] = createTextContentConfig({
+        files: ["**/*.mdx"],
+        name: "docusaurus-2:strict-mdx-upgrade",
+        ruleNames: additionalConfigRuleNamesByConfig["strict-mdx-upgrade"],
+    });
+
+    configs.content = createTextContentConfig({
+        files: ["**/*.{md,mdx}"],
+        name: "docusaurus-2:content",
+        ruleNames: additionalConfigRuleNamesByConfig.content,
+    });
 
     return configs;
 };

@@ -18,6 +18,16 @@ export type TextContentRange = Readonly<{
     start: number;
 }>;
 
+/** Parsed fenced code block extracted from Markdown/MDX text. */
+export type TextFencedCodeBlock = Readonly<{
+    content: string;
+    contentEnd: number;
+    contentStart: number;
+    end: number;
+    infoString: string;
+    start: number;
+}>;
+
 /** Locator utilities that map absolute string offsets back to ESLint locations. */
 export type TextSourceLocator = Readonly<{
     createLoc: (start: number, end: number) => TSESTree.SourceLocation;
@@ -197,22 +207,48 @@ const getFenceMarker = (
         : null;
 };
 
+const getFenceInfoString = (line: string, fenceLength: number): string => {
+    let cursor = 0;
+    let indentationWidth = 0;
+
+    while (cursor < line.length) {
+        const currentCharacter = line[cursor];
+
+        if (currentCharacter !== " " && currentCharacter !== "\t") {
+            break;
+        }
+
+        indentationWidth += 1;
+
+        if (indentationWidth > 3) {
+            return "";
+        }
+
+        cursor += 1;
+    }
+
+    return line.slice(cursor + fenceLength).trim();
+};
+
 /**
- * Collect fenced code block ranges so text rules can ignore code examples.
+ * Collect fenced code blocks with their language/info string and raw content.
  *
  * @param text - Full Markdown/MDX source text.
  *
- * @returns Inclusive-exclusive ranges for every fenced code block.
+ * @returns Parsed fenced code block metadata.
  */
-export const collectFencedCodeBlockRanges = (
+export const collectFencedCodeBlocks = (
     text: string
-): readonly TextContentRange[] => {
-    const ranges: TextContentRange[] = [];
+): readonly TextFencedCodeBlock[] => {
+    const blocks: TextFencedCodeBlock[] = [];
     let activeFence: null | Readonly<{
         character: "`" | "~";
+        contentStart: number;
+        infoString: string;
         length: number;
         start: number;
     }> = null;
+
     for (const line of getTextContentLines(text)) {
         const fenceMarker = getFenceMarker(line.text);
 
@@ -223,6 +259,8 @@ export const collectFencedCodeBlockRanges = (
         if (activeFence === null) {
             activeFence = {
                 character: fenceMarker.character,
+                contentStart: line.end,
+                infoString: getFenceInfoString(line.text, fenceMarker.length),
                 length: fenceMarker.length,
                 start: line.start,
             };
@@ -233,8 +271,12 @@ export const collectFencedCodeBlockRanges = (
             fenceMarker.character === activeFence.character &&
             fenceMarker.length >= activeFence.length
         ) {
-            ranges.push({
+            blocks.push({
+                content: text.slice(activeFence.contentStart, line.start),
+                contentEnd: line.start,
+                contentStart: activeFence.contentStart,
                 end: line.end,
+                infoString: activeFence.infoString,
                 start: activeFence.start,
             });
             activeFence = null;
@@ -242,14 +284,33 @@ export const collectFencedCodeBlockRanges = (
     }
 
     if (activeFence !== null) {
-        ranges.push({
+        blocks.push({
+            content: text.slice(activeFence.contentStart),
+            contentEnd: text.length,
+            contentStart: activeFence.contentStart,
             end: text.length,
+            infoString: activeFence.infoString,
             start: activeFence.start,
         });
     }
 
-    return ranges;
+    return blocks;
 };
+
+/**
+ * Collect fenced code block ranges so text rules can ignore code examples.
+ *
+ * @param text - Full Markdown/MDX source text.
+ *
+ * @returns Inclusive-exclusive ranges for every fenced code block.
+ */
+export const collectFencedCodeBlockRanges = (
+    text: string
+): readonly TextContentRange[] =>
+    collectFencedCodeBlocks(text).map(({ end, start }) => ({
+        end,
+        start,
+    }));
 
 /**
  * Determine whether a candidate text range overlaps any ignored range.
