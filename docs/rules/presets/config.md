@@ -21,6 +21,8 @@ description: Config-focused preset for eslint-plugin-docusaurus-2.
 - [`no-search-page-path-conflict`](../no-search-page-path-conflict.md)
 - [`no-conflicting-footer-html-item-props`](../no-conflicting-footer-html-item-props.md)
 - [`no-deprecated-google-analytics`](../no-deprecated-google-analytics.md)
+- [`no-deprecated-future-experimental-faster`](../no-deprecated-future-experimental-faster.md)
+- [`no-deprecated-future-experimental-storage`](../no-deprecated-future-experimental-storage.md)
 - [`no-deprecated-on-broken-markdown-links`](../no-deprecated-on-broken-markdown-links.md)
 - [`no-empty-head-tags`](../no-empty-head-tags.md)
 - [`no-duplicate-footer-column-titles`](../no-duplicate-footer-column-titles.md)
@@ -63,6 +65,7 @@ description: Config-focused preset for eslint-plugin-docusaurus-2.
 - [`require-theme-config-announcement-bar-id`](../require-theme-config-announcement-bar-id.md)
 - [`require-theme-classic-custom-css-files-exist`](../require-theme-classic-custom-css-files-exist.md)
 - [`require-theme-classic-package-installed`](../require-theme-classic-package-installed.md)
+- [`require-docusaurus-faster-package-installed`](../require-docusaurus-faster-package-installed.md)
 - [`validate-theme-config-announcement-bar-is-closeable`](../validate-theme-config-announcement-bar-is-closeable.md)
 - [`require-base-url-issue-banner-enabled`](../require-base-url-issue-banner-enabled.md)
 - [`require-base-url-slashes`](../require-base-url-slashes.md)
@@ -71,7 +74,6 @@ description: Config-focused preset for eslint-plugin-docusaurus-2.
 - [`require-plugin-pwa-head-manifest`](../require-plugin-pwa-head-manifest.md)
 - [`require-plugin-pwa-head-theme-color`](../require-plugin-pwa-head-theme-color.md)
 - [`require-plugin-pwa-offline-mode-activation-strategies`](../require-plugin-pwa-offline-mode-activation-strategies.md)
-- [`local-search-will-not-work-in-dev`](../local-search-will-not-work-in-dev.mdx)
 - [`require-navbar-doc-item-doc-id`](../require-navbar-doc-item-doc-id.md)
 - [`require-navbar-doc-sidebar-item-sidebar-id`](../require-navbar-doc-sidebar-item-sidebar-id.md)
 - [`require-navbar-docs-version-item-to`](../require-navbar-docs-version-item-to.md)
@@ -89,6 +91,8 @@ description: Config-focused preset for eslint-plugin-docusaurus-2.
 - [`require-theme-mermaid-package-installed`](../require-theme-mermaid-package-installed.md)
 - [`require-theme-search-algolia-package-installed`](../require-theme-search-algolia-package-installed.md)
 - [`require-search-provider-package-installed`](../require-search-provider-package-installed.md)
+- [`require-rspack-bundler-for-faster-persistent-cache`](../require-rspack-bundler-for-faster-persistent-cache.md)
+- [`require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads`](../require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads.md)
 
 ## Flat config example
 

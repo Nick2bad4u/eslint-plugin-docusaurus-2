@@ -76,6 +76,7 @@ const resolveRequireSpecifierPath = (
     }
 };
 
+/** Resolve a statically configured path or `require.resolve()` target. */
 export const getStaticConfiguredPathResolution = (
     expression: Readonly<TSESTree.Expression>,
     programNode: Readonly<TSESTree.Program>,
@@ -137,6 +138,7 @@ export const getStaticConfiguredPathResolution = (
           };
 };
 
+/** Check whether a resolved filesystem path currently exists. */
 export const doesResolvedPathExist = (resolvedPath: string): boolean => {
     const normalizedPath = path.normalize(resolvedPath);
     const cachedExists = existenceCache.get(normalizedPath);

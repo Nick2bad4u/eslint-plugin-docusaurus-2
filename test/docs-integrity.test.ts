@@ -78,7 +78,7 @@ describe("docs/rules integrity", () => {
         const topLevelEntries = sortStrings(
             fs
                 .readdirSync(rulesDocsDirectoryPath)
-                .filter(hasSupportedRuleDocExtension)
+                .filter((entry) => hasSupportedRuleDocExtension(entry))
         );
         const presetEntries = sortStrings(
             fs
@@ -94,7 +94,7 @@ describe("docs/rules integrity", () => {
         const topLevelRuleDocNames = sortStrings(
             topLevelEntries
                 .filter((entry) => !topLevelScaffoldEntries.includes(entry))
-                .map(stripSupportedRuleDocExtension)
+                .map((entry) => stripSupportedRuleDocExtension(entry))
         );
 
         expect(topLevelScaffoldEntries).toStrictEqual(

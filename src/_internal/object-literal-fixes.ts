@@ -5,6 +5,7 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
  * Shared fixer helpers for inserting properties into object literals.
  */
 
+/** Create a single fix that inserts a property into an object literal. */
 export const createInsertObjectPropertyFix = (
     options: Readonly<{
         fixer: Readonly<TSESLint.RuleFixer>;

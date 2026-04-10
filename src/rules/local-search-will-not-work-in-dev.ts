@@ -59,7 +59,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 description:
                     "disallow assuming configured local-search providers will produce a reliable search experience during `docusaurus start`.",
                 frozen: false,
-                presets: ["experimental"],
+                presets: [],
                 recommended: false,
                 requiresTypeChecking: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/local-search-will-not-work-in-dev",

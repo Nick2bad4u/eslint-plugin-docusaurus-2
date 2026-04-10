@@ -12,7 +12,6 @@ import { createRuleDocsUrl } from "./rule-docs-url.js";
 import {
     arrayIncludes,
     isDefined,
-    isEmpty,
     isInteger,
     objectEntries,
 } from "./runtime-utils.js";
@@ -108,12 +107,6 @@ const normalizePresetNames = (
         }
 
         normalizedPresetNames.push(candidate);
-    }
-
-    if (isEmpty(normalizedPresetNames)) {
-        throw new TypeError(
-            `Rule '${ruleName}' must declare at least one docs.presets entry.`
-        );
     }
 
     return normalizedPresetNames;

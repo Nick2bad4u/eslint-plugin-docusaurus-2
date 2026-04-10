@@ -8,10 +8,13 @@ import type { DocusaurusPluginConfigurationEntry } from "./docusaurus-config-ast
 
 import { getArrayExpressionPropertyValueByName } from "./docusaurus-config-ast.js";
 
+/** Top-level Docusaurus module array property names. */
 export type DocusaurusTopLevelModuleArrayPropertyName = "plugins" | "themes";
+/** Module entry shape shared by top-level `plugins` and `themes` arrays. */
 export type DocusaurusTopLevelModuleConfigurationEntry =
     DocusaurusPluginConfigurationEntry;
 
+/** Find all module configurations declared under one top-level array. */
 export const findTopLevelModuleConfigurationsByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
     propertyName: DocusaurusTopLevelModuleArrayPropertyName,
@@ -82,6 +85,7 @@ export const findTopLevelModuleConfigurationsByName = (
     return moduleEntries;
 };
 
+/** Find module configurations across both `plugins` and `themes`. */
 export const findAnyTopLevelModuleConfigurationsByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
     moduleName: string
@@ -98,6 +102,7 @@ export const findAnyTopLevelModuleConfigurationsByName = (
     ),
 ];
 
+/** Check whether a module is configured in either top-level module array. */
 export const hasAnyTopLevelModuleConfigurationByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
     moduleName: string
@@ -107,6 +112,7 @@ export const hasAnyTopLevelModuleConfigurationByName = (
         moduleName
     ).length > 0;
 
+/** Get the literal module specifier node for a top-level module entry. */
 export const getTopLevelModuleConfigurationSpecifierNode = (
     entry: Readonly<DocusaurusTopLevelModuleConfigurationEntry>
 ): null | Readonly<TSESTree.Literal> => {

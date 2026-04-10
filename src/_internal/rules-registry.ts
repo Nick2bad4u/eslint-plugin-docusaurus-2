@@ -16,6 +16,8 @@ import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-
 import noConflictingSearchProvidersRule from "../rules/no-conflicting-search-providers.js";
 import noConflictingThemeConfigColorModeFlagsRule from "../rules/no-conflicting-theme-config-color-mode-flags.js";
 import noConflictingThemeConfigMetadataKeysRule from "../rules/no-conflicting-theme-config-metadata-keys.js";
+import noDeprecatedFutureExperimentalFasterRule from "../rules/no-deprecated-future-experimental-faster.js";
+import noDeprecatedFutureExperimentalStorageRule from "../rules/no-deprecated-future-experimental-storage.js";
 import noDeprecatedGoogleAnalyticsRule from "../rules/no-deprecated-google-analytics.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
 import noDuplicateFooterColumnTitlesRule from "../rules/no-duplicate-footer-column-titles.js";
@@ -67,6 +69,7 @@ import requireConfigLinkContentRule from "../rules/require-config-link-content.j
 import requireConfigLinkDestinationRule from "../rules/require-config-link-destination.js";
 import requireDefaultExportPagesRule from "../rules/require-default-export-pages.js";
 import requireDocSidebarLinkTypeRule from "../rules/require-doc-sidebar-link-type.js";
+import requireDocusaurusFasterPackageInstalledRule from "../rules/require-docusaurus-faster-package-installed.js";
 import requireFooterLinkColumnItemsRule from "../rules/require-footer-link-column-items.js";
 import requireFooterLinkColumnTitleRule from "../rules/require-footer-link-column-title.js";
 import requireGeneratedIndexLinkTypeRule from "../rules/require-generated-index-link-type.js";
@@ -87,9 +90,11 @@ import requirePluginPwaHeadManifestRule from "../rules/require-plugin-pwa-head-m
 import requirePluginPwaHeadThemeColorRule from "../rules/require-plugin-pwa-head-theme-color.js";
 import requirePluginPwaOfflineModeActivationStrategiesRule from "../rules/require-plugin-pwa-offline-mode-activation-strategies.js";
 import requirePluginPwaSetupRule from "../rules/require-plugin-pwa-setup.js";
+import requireRspackBundlerForFasterPersistentCacheRule from "../rules/require-rspack-bundler-for-faster-persistent-cache.js";
 import requireSearchProviderPackageInstalledRule from "../rules/require-search-provider-package-installed.js";
 import requireSidebarCategoryItemsRule from "../rules/require-sidebar-category-items.js";
 import requireSidebarCategoryLabelRule from "../rules/require-sidebar-category-label.js";
+import requireSidebarItemKeyForDuplicateLabelsRule from "../rules/require-sidebar-item-key-for-duplicate-labels.js";
 import requireSidebarCategoryTypeRule from "../rules/require-sidebar-category-type.js";
 import requireSiteConfigFieldsRule from "../rules/require-site-config-fields.js";
 import requireSiteUrlOriginRule from "../rules/require-site-url-origin.js";
@@ -105,6 +110,7 @@ import requireThemeMermaidPackageInstalledRule from "../rules/require-theme-merm
 import requireThemeMermaidWhenMarkdownMermaidEnabledRule from "../rules/require-theme-mermaid-when-markdown-mermaid-enabled.js";
 import requireThemeSearchAlgoliaPackageInstalledRule from "../rules/require-theme-search-algolia-package-installed.js";
 import requireTrailingSlashExplicitRule from "../rules/require-trailing-slash-explicit.js";
+import requireV4RemoveLegacyPostBuildHeadAttributeForSsgWorkerThreadsRule from "../rules/require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads.js";
 import validateLiveCodeblockPlaygroundPositionRule from "../rules/validate-live-codeblock-playground-position.js";
 import validateNavbarItemPositionRule from "../rules/validate-navbar-item-position.js";
 import validateThemeConfigAnnouncementBarIsCloseableRule from "../rules/validate-theme-config-announcement-bar-is-closeable.js";
@@ -135,6 +141,10 @@ const docusaurusRuleRegistry = {
         noConflictingThemeConfigColorModeFlagsRule,
     "no-conflicting-theme-config-metadata-keys":
         noConflictingThemeConfigMetadataKeysRule,
+    "no-deprecated-future-experimental-faster":
+        noDeprecatedFutureExperimentalFasterRule,
+    "no-deprecated-future-experimental-storage":
+        noDeprecatedFutureExperimentalStorageRule,
     "no-deprecated-google-analytics": noDeprecatedGoogleAnalyticsRule,
     "no-deprecated-on-broken-markdown-links":
         noDeprecatedOnBrokenMarkdownLinksRule,
@@ -201,6 +211,8 @@ const docusaurusRuleRegistry = {
     "require-config-link-destination": requireConfigLinkDestinationRule,
     "require-default-export-pages": requireDefaultExportPagesRule,
     "require-doc-sidebar-link-type": requireDocSidebarLinkTypeRule,
+    "require-docusaurus-faster-package-installed":
+        requireDocusaurusFasterPackageInstalledRule,
     "require-footer-link-column-items": requireFooterLinkColumnItemsRule,
     "require-footer-link-column-title": requireFooterLinkColumnTitleRule,
     "require-generated-index-link-type": requireGeneratedIndexLinkTypeRule,
@@ -227,10 +239,14 @@ const docusaurusRuleRegistry = {
     "require-plugin-pwa-offline-mode-activation-strategies":
         requirePluginPwaOfflineModeActivationStrategiesRule,
     "require-plugin-pwa-setup": requirePluginPwaSetupRule,
+    "require-rspack-bundler-for-faster-persistent-cache":
+        requireRspackBundlerForFasterPersistentCacheRule,
     "require-search-provider-package-installed":
         requireSearchProviderPackageInstalledRule,
     "require-sidebar-category-items": requireSidebarCategoryItemsRule,
     "require-sidebar-category-label": requireSidebarCategoryLabelRule,
+    "require-sidebar-item-key-for-duplicate-labels":
+        requireSidebarItemKeyForDuplicateLabelsRule,
     "require-sidebar-category-type": requireSidebarCategoryTypeRule,
     "require-site-config-fields": requireSiteConfigFieldsRule,
     "require-site-url-origin": requireSiteUrlOriginRule,
@@ -256,6 +272,8 @@ const docusaurusRuleRegistry = {
     "require-theme-search-algolia-package-installed":
         requireThemeSearchAlgoliaPackageInstalledRule,
     "require-trailing-slash-explicit": requireTrailingSlashExplicitRule,
+    "require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads":
+        requireV4RemoveLegacyPostBuildHeadAttributeForSsgWorkerThreadsRule,
     "validate-live-codeblock-playground-position":
         validateLiveCodeblockPlaygroundPositionRule,
     "validate-navbar-item-position": validateNavbarItemPositionRule,

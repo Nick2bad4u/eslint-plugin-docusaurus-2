@@ -35,6 +35,8 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - [`no-search-link-without-search-provider`](./no-search-link-without-search-provider.md)
 - [`no-search-page-path-conflict`](./no-search-page-path-conflict.md)
 - [`no-deprecated-google-analytics`](./no-deprecated-google-analytics.md)
+- [`no-deprecated-future-experimental-faster`](./no-deprecated-future-experimental-faster.md)
+- [`no-deprecated-future-experimental-storage`](./no-deprecated-future-experimental-storage.md)
 - [`no-deprecated-on-broken-markdown-links`](./no-deprecated-on-broken-markdown-links.md)
 - [`no-empty-head-tags`](./no-empty-head-tags.md)
 - [`no-duplicate-footer-column-titles`](./no-duplicate-footer-column-titles.md)
@@ -98,6 +100,7 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - [`require-theme-config-announcement-bar-id`](./require-theme-config-announcement-bar-id.md)
 - [`require-theme-classic-custom-css-files-exist`](./require-theme-classic-custom-css-files-exist.md)
 - [`require-theme-classic-package-installed`](./require-theme-classic-package-installed.md)
+- [`require-docusaurus-faster-package-installed`](./require-docusaurus-faster-package-installed.md)
 - [`validate-theme-config-announcement-bar-is-closeable`](./validate-theme-config-announcement-bar-is-closeable.md)
 - [`require-plugin-pwa-debug`](./require-plugin-pwa-debug.md)
 - [`require-plugin-pwa-head-manifest`](./require-plugin-pwa-head-manifest.md)
@@ -105,10 +108,11 @@ The plugin now ships Docusaurus-specific rules across config validation, depreca
 - [`require-plugin-pwa-offline-mode-activation-strategies`](./require-plugin-pwa-offline-mode-activation-strategies.md)
 - [`require-plugin-pwa-setup`](./require-plugin-pwa-setup.md)
 - [`require-search-provider-package-installed`](./require-search-provider-package-installed.md)
-- [`local-search-will-not-work-in-dev`](./local-search-will-not-work-in-dev.mdx)
+- [`require-rspack-bundler-for-faster-persistent-cache`](./require-rspack-bundler-for-faster-persistent-cache.md)
 - [`require-site-config-fields`](./require-site-config-fields.md)
 - [`require-site-url-origin`](./require-site-url-origin.md)
 - [`require-trailing-slash-explicit`](./require-trailing-slash-explicit.md)
+- [`require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads`](./require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads.md)
 - [`require-navbar-doc-item-doc-id`](./require-navbar-doc-item-doc-id.md)
 - [`require-navbar-doc-sidebar-item-sidebar-id`](./require-navbar-doc-sidebar-item-sidebar-id.md)
 - [`require-navbar-docs-version-item-to`](./require-navbar-docs-version-item-to.md)
@@ -163,6 +167,7 @@ export default [docusaurus2.configs.recommended];
 - Docusaurus search-provider configuration hygiene
 - Docusaurus search navigation and search-page route hygiene
 - Docusaurus deprecated analytics migration hygiene
+- Docusaurus faster/storage release-upgrade hygiene
 - Docusaurus Mermaid and live-codeblock configuration hygiene
 - Docusaurus classic-theme stylesheet-path hygiene
 - Docusaurus configured-package ownership hygiene

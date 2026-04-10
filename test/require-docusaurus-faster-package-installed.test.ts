@@ -1,26 +1,26 @@
 /**
  * @packageDocumentation
- * RuleTester coverage for `require-theme-live-codeblock-package-installed`.
+ * RuleTester coverage for `require-docusaurus-faster-package-installed`.
  */
 import { createRuleTester, getPluginRule } from "./_internal/ruleTester";
 
 const ruleTester = createRuleTester();
 
 ruleTester.run(
-    "require-theme-live-codeblock-package-installed",
-    getPluginRule("require-theme-live-codeblock-package-installed"),
+    "require-docusaurus-faster-package-installed",
+    getPluginRule("require-docusaurus-faster-package-installed"),
     {
         invalid: [
             {
                 code: [
                     "export default {",
-                    '    plugins: ["@docusaurus/theme-live-codeblock"],',
+                    "    future: {",
+                    "        faster: true,",
+                    "    },",
                     "};",
                 ].join("\n"),
                 errors: [
-                    {
-                        messageId: "requireThemeLiveCodeblockPackageInstalled",
-                    },
+                    { messageId: "requireDocusaurusFasterPackageInstalled" },
                 ],
                 filename: "temp/docusaurus.config.ts",
             },
@@ -29,10 +29,12 @@ ruleTester.run(
             {
                 code: [
                     "export default {",
-                    '    plugins: ["@docusaurus/theme-live-codeblock"],',
+                    "    future: {",
+                    "        faster: true,",
+                    "    },",
                     "};",
                 ].join("\n"),
-                filename: "src/config.ts",
+                filename: "docs/docusaurus/docusaurus.config.ts",
             },
         ],
     }

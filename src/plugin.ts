@@ -132,9 +132,7 @@ const derivePresetRuleNamesByConfig = (): Readonly<
         const configNames = rulePresetMembership[ruleName];
 
         if (configNames === undefined || configNames.length === 0) {
-            throw new TypeError(
-                `Rule '${ruleName}' is missing preset membership metadata.`
-            );
+            continue;
         }
 
         for (const configName of configNames) {
