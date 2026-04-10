@@ -2,7 +2,7 @@
 title: Pages SEO & IndexNow
 ---
 
-import DocusaurusKeytarImage from "@site/static/img/docusaurus_keytar.svg";
+import DocusaurusKeytarImage from "@site/static/img/docusaurus\_keytar.svg";
 
 # Pages SEO & IndexNow
 

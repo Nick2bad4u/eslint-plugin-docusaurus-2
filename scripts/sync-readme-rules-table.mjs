@@ -102,6 +102,14 @@ const normalizeMarkdownLineEndings = (markdown, lineEnding) =>
 const createPresetDocsUrl = (presetName) =>
     `${PRESET_DOCS_URL_BASE}/${presetDocsSlugByName[presetName]}`;
 
+/** @param {PresetName} presetName */
+const createPresetIconLink = (presetName) => {
+    const docsUrl = createPresetDocsUrl(presetName);
+    const presetIcon = presetConfigMetadataByName[presetName].icon;
+
+    return `[${presetIcon}](${docsUrl})`;
+};
+
 /** @returns {readonly string[]} */
 const createPresetLegendLines = () =>
     presetOrder.map((presetName) => {
@@ -185,12 +193,7 @@ const createRuleRows = (rules) => {
         const presetIcons =
             presetNames.length === 0
                 ? "—"
-                : presetNames
-                      .map(
-                          (presetName) =>
-                              presetConfigMetadataByName[presetName].icon
-                      )
-                      .join(" ");
+                : presetNames.map(createPresetIconLink).join(" ");
 
         return `${docsLink} | ${getRuleFixIndicator(ruleModule)} | ${presetIcons} |`;
     });

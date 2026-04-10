@@ -128,13 +128,13 @@ export default [docusaurus2.configs.recommended];
 
 ## Presets
 
-| Preset                                                                                        | Purpose                                                          |
-| --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
-| [🟢 `docusaurus2.configs.minimal`](./presets/minimal.md)                                      | Smallest baseline for future Docusaurus-specific linting.        |
-| [🟡 `docusaurus2.configs.recommended`](./presets/recommended.md)                              | Default preset for most documentation repositories.              |
-| [🔴 `docusaurus2.configs.strict`](./presets/strict.md)                                        | Stricter adoption path for mature sites.                         |
-| [🟣 `docusaurus2.configs.all`](./presets/all.md)                                              | Every stable rule once the rule catalog grows.                   |
-| [🧪 `docusaurus2.configs.experimental`](./presets/experimental.md)                            | Future experimental rules and rollout candidates.                |
+| Preset                                                             | Purpose                                                   |
+| ------------------------------------------------------------------ | --------------------------------------------------------- |
+| [🟢 `docusaurus2.configs.minimal`](./presets/minimal.md)           | Smallest baseline for future Docusaurus-specific linting. |
+| [🟡 `docusaurus2.configs.recommended`](./presets/recommended.md)   | Default preset for most documentation repositories.       |
+| [🔴 `docusaurus2.configs.strict`](./presets/strict.md)             | Stricter adoption path for mature sites.                  |
+| [🟣 `docusaurus2.configs.all`](./presets/all.md)                   | Every stable rule once the rule catalog grows.            |
+| [🧪 `docusaurus2.configs.experimental`](./presets/experimental.md) | Future experimental rules and rollout candidates.         |
 
 ## Current rule areas
 

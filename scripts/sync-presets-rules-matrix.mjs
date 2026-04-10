@@ -114,9 +114,6 @@ const createTableHeader = () => {
     return ["| Rule | Fix | Preset key |", "| --- | :-: | --- |"].join("\n");
 };
 
-const PRESET_DOCS_URL_BASE =
-    "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/presets";
-
 /** @type {Readonly<Record<PresetName, string>>} */
 const presetDocsSlugByName = {
     all: "all",
@@ -139,7 +136,15 @@ const presetConfigReferenceByName = {
 
 /** @param {PresetName} presetName */
 const createPresetDocsUrl = (presetName) =>
-    `${PRESET_DOCS_URL_BASE}/${presetDocsSlugByName[presetName]}`;
+    `./${presetDocsSlugByName[presetName]}.md`;
+
+/** @param {PresetName} presetName */
+const createPresetIconLink = (presetName) => {
+    const docsUrl = createPresetDocsUrl(presetName);
+    const presetIcon = presetConfigMetadataByName[presetName].icon;
+
+    return `[${presetIcon}](${docsUrl})`;
+};
 
 /** @returns {readonly string[]} */
 const createPresetLegendLines = () =>
@@ -197,12 +202,7 @@ const createRuleRows = (rules) => {
         const presetIcons =
             presetNames.length === 0
                 ? "—"
-                : presetNames
-                      .map(
-                          (presetName) =>
-                              presetConfigMetadataByName[presetName].icon
-                      )
-                      .join(" ");
+                : presetNames.map(createPresetIconLink).join(" ");
 
         return `| ${label} | ${getRuleFixIndicator(ruleModule)} | ${presetIcons} |`;
     });
