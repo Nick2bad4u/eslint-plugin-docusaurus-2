@@ -28,6 +28,7 @@ assertType(pluginContract.configs.recommended);
 assertType(pluginContract.configs.config);
 assertType(pluginContract.configs.all);
 assertType(pluginContract.configs.experimental);
+assertType(pluginContract.configs["strict-mdx-upgrade"]);
 assertType<string>(pluginContract.meta.name);
 assertType<string>(pluginContract.meta.version);
 assertType<"docusaurus-2">(pluginContract.meta.namespace);

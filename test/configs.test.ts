@@ -10,6 +10,8 @@ import {
 } from "../src/_internal/preset-config-references";
 import docusaurus2Plugin from "../src/plugin";
 
+const additionalConfigNames = ["strict-mdx-upgrade"] as const;
+
 type RuleDocsWithPresets = Readonly<{
     presets?: readonly string[] | string;
 }>;
@@ -69,15 +71,21 @@ describe("docusaurus-2 plugin configs", () => {
         expect.hasAssertions();
 
         const keys = Object.keys(docusaurus2Plugin.configs);
+        const expectedConfigKeys = [
+            ...presetConfigNames,
+            ...additionalConfigNames,
+        ];
 
-        expect(keys).toHaveLength(presetConfigNames.length);
-        expect(new Set(keys)).toStrictEqual(new Set(presetConfigNames));
+        expect(keys).toHaveLength(expectedConfigKeys.length);
+        expect(new Set(keys)).toStrictEqual(new Set(expectedConfigKeys));
     });
 
     it("registers plugin and TypeScript parser defaults in every preset", () => {
         expect.hasAssertions();
 
-        for (const config of Object.values(docusaurus2Plugin.configs)) {
+        for (const configName of presetConfigNames) {
+            const config = docusaurus2Plugin.configs[configName];
+
             expect(config.files).toStrictEqual([
                 "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}",
             ]);
@@ -90,6 +98,25 @@ describe("docusaurus-2 plugin configs", () => {
                 })
             );
         }
+    });
+
+    it("exposes a dedicated strict MDX upgrade config", () => {
+        expect.hasAssertions();
+
+        const config = docusaurus2Plugin.configs["strict-mdx-upgrade"];
+
+        expect(config.files).toStrictEqual(["**/*.mdx"]);
+        expect(config.plugins).toHaveProperty("docusaurus-2");
+        expect(config.languageOptions?.["parser"]).toBeDefined();
+        expect(
+            Object.keys(config.rules).toSorted((left, right) =>
+                left.localeCompare(right)
+            )
+        ).toStrictEqual([
+            "docusaurus-2/no-deprecated-admonition-title-syntax",
+            "docusaurus-2/no-deprecated-heading-id-syntax",
+            "docusaurus-2/no-deprecated-html-comments-in-mdx",
+        ]);
     });
 
     it("keeps languageOptions isolated across presets", () => {

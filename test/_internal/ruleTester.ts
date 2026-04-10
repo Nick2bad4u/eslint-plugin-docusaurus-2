@@ -11,6 +11,7 @@ import { afterAll, describe, it } from "vitest";
 
 import type { UnknownArray, UnknownRecord } from "../../src/_internal/types";
 
+import textContentParser from "../../src/_internal/text-content-parser";
 import docusaurus2Plugin from "../../src/plugin";
 
 /**
@@ -208,6 +209,24 @@ export const createRuleTester = (): RuleTester =>
         new RuleTester({
             languageOptions: {
                 parser: tsParser,
+                parserOptions: {
+                    ecmaVersion: "latest",
+                    sourceType: "module",
+                },
+            },
+        })
+    );
+
+/**
+ * Create a RuleTester instance configured for raw Markdown/MDX text rules.
+ *
+ * @returns Configured RuleTester instance using the plugin's text parser.
+ */
+export const createTextRuleTester = (): RuleTester =>
+    applySharedRuleTesterRunBehavior(
+        new RuleTester({
+            languageOptions: {
+                parser: textContentParser,
                 parserOptions: {
                     ecmaVersion: "latest",
                     sourceType: "module",

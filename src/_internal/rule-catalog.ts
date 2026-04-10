@@ -136,6 +136,9 @@ const orderedRuleNames = [
     "require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads",
     "require-sidebar-item-key-for-duplicate-labels",
     "require-docsearch-ask-ai-assistant-id",
+    "no-deprecated-html-comments-in-mdx",
+    "no-deprecated-heading-id-syntax",
+    "no-deprecated-admonition-title-syntax",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

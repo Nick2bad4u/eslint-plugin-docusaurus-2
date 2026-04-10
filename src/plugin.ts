@@ -20,6 +20,7 @@ import {
     deriveTypeCheckedRuleNameSet,
 } from "./_internal/rule-docs-metadata.js";
 import { docusaurusRules } from "./_internal/rules-registry.js";
+import textContentParser from "./_internal/text-content-parser.js";
 
 /** ESLint severity used by generated preset rule maps. */
 const ERROR_SEVERITY = "error" as const;
@@ -35,8 +36,16 @@ export type Docusaurus2PresetConfig = Linter.Config & {
     rules: NonNullable<Linter.Config["rules"]>;
 };
 
+/** Additional non-preset config keys exposed through `plugin.configs`. */
+type Docusaurus2AdditionalConfigName = "strict-mdx-upgrade";
+
+/** Canonical flat-config keys exposed through `plugin.configs`. */
+type Docusaurus2ConfigName =
+    | Docusaurus2AdditionalConfigName
+    | Docusaurus2PresetConfigName;
+
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
-type Docusaurus2ConfigName = (typeof presetConfigNames)[number];
+type Docusaurus2PresetConfigName = (typeof presetConfigNames)[number];
 
 /** Internal alias for flat config objects handled by preset builders. */
 type FlatConfig = Linter.Config;
@@ -107,10 +116,10 @@ const typeCheckedRuleNames = deriveTypeCheckedRuleNameSet(
 const docusaurusRuleEntries = Object.entries(runtimeRules);
 
 const createEmptyPresetRuleMap = (): Record<
-    Docusaurus2ConfigName,
+    Docusaurus2PresetConfigName,
     string[]
 > => {
-    const presetRuleMap = {} as Record<Docusaurus2ConfigName, string[]>;
+    const presetRuleMap = {} as Record<Docusaurus2PresetConfigName, string[]>;
 
     for (const configName of presetConfigNames) {
         presetRuleMap[configName] = [];
@@ -124,7 +133,7 @@ const dedupeRuleNames = (ruleNames: readonly string[]): string[] => [
 ];
 
 const derivePresetRuleNamesByConfig = (): Readonly<
-    Record<Docusaurus2ConfigName, readonly string[]>
+    Record<Docusaurus2PresetConfigName, readonly string[]>
 > => {
     const presetRuleNamesByConfig = createEmptyPresetRuleMap();
 
@@ -176,7 +185,7 @@ for (const ruleName of presetRuleNamesByConfig.recommended) {
 
 /** Effective per-preset rule lists after applying derived policy overlays. */
 const effectivePresetRuleNamesByConfig: Readonly<
-    Record<Docusaurus2ConfigName, readonly string[]>
+    Record<Docusaurus2PresetConfigName, readonly string[]>
 > = {
     ...presetRuleNamesByConfig,
     experimental: dedupeRuleNames([
@@ -225,6 +234,12 @@ const pluginForConfigs: ESLint.Plugin = {
     rules: docusaurusEslintRules,
 };
 
+const strictMdxUpgradeRuleNames = [
+    "no-deprecated-html-comments-in-mdx",
+    "no-deprecated-heading-id-syntax",
+    "no-deprecated-admonition-title-syntax",
+] as const;
+
 /** Flat config presets distributed by eslint-plugin-docusaurus-2. */
 const createConfigsDefinition = (): Record<
     Docusaurus2ConfigName,
@@ -251,6 +266,25 @@ const createConfigsDefinition = (): Record<
             }
         );
     }
+
+    configs["strict-mdx-upgrade"] = withDocusaurusPlugin(
+        {
+            files: ["**/*.mdx"],
+            languageOptions: {
+                parser: textContentParser,
+                parserOptions: {
+                    ecmaVersion: "latest",
+                    sourceType: "module",
+                },
+            },
+            name: "docusaurus-2:strict-mdx-upgrade",
+            rules: errorRulesFor(strictMdxUpgradeRuleNames),
+        },
+        pluginForConfigs,
+        {
+            requiresTypeChecking: false,
+        }
+    );
 
     return configs;
 };

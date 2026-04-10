@@ -41,8 +41,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         docsearchProperty ?? algoliaProperty;
 
                     if (
-                        searchConfigProperty === null ||
-                        searchConfigProperty.value.type !== "ObjectExpression"
+                        searchConfigProperty?.value.type !== "ObjectExpression"
                     ) {
                         return;
                     }

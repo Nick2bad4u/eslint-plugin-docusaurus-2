@@ -16,9 +16,12 @@ import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-
 import noConflictingSearchProvidersRule from "../rules/no-conflicting-search-providers.js";
 import noConflictingThemeConfigColorModeFlagsRule from "../rules/no-conflicting-theme-config-color-mode-flags.js";
 import noConflictingThemeConfigMetadataKeysRule from "../rules/no-conflicting-theme-config-metadata-keys.js";
+import noDeprecatedAdmonitionTitleSyntaxRule from "../rules/no-deprecated-admonition-title-syntax.js";
 import noDeprecatedFutureExperimentalFasterRule from "../rules/no-deprecated-future-experimental-faster.js";
 import noDeprecatedFutureExperimentalStorageRule from "../rules/no-deprecated-future-experimental-storage.js";
 import noDeprecatedGoogleAnalyticsRule from "../rules/no-deprecated-google-analytics.js";
+import noDeprecatedHeadingIdSyntaxRule from "../rules/no-deprecated-heading-id-syntax.js";
+import noDeprecatedHtmlCommentsInMdxRule from "../rules/no-deprecated-html-comments-in-mdx.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
 import noDuplicateFooterColumnTitlesRule from "../rules/no-duplicate-footer-column-titles.js";
 import noDuplicateFooterLinkItemDestinationsRule from "../rules/no-duplicate-footer-link-item-destinations.js";
@@ -47,8 +50,8 @@ import noPageCssModuleImportsInComponentsRule from "../rules/no-page-css-module-
 import noRedundantSocialCardMetadataRule from "../rules/no-redundant-social-card-metadata.js";
 import noSearchLinkWithoutSearchProviderRule from "../rules/no-search-link-without-search-provider.js";
 import noSearchPagePathConflictRule from "../rules/no-search-page-path-conflict.js";
-import noUnknownI18nLocaleConfigsRule from "../rules/no-unknown-i18n-locale-configs.js";
 import noSvgSocialCardImageRule from "../rules/no-svg-social-card-image.js";
+import noUnknownI18nLocaleConfigsRule from "../rules/no-unknown-i18n-locale-configs.js";
 import noUseBaseUrlForInternalLinkComponentsRule from "../rules/no-use-base-url-for-internal-link-components.js";
 import noUselessCollapsedSidebarCategoriesRule from "../rules/no-useless-collapsed-sidebar-categories.js";
 import preferConfigSatisfiesRule from "../rules/prefer-config-satisfies.js";
@@ -96,8 +99,8 @@ import requireRspackBundlerForFasterPersistentCacheRule from "../rules/require-r
 import requireSearchProviderPackageInstalledRule from "../rules/require-search-provider-package-installed.js";
 import requireSidebarCategoryItemsRule from "../rules/require-sidebar-category-items.js";
 import requireSidebarCategoryLabelRule from "../rules/require-sidebar-category-label.js";
-import requireSidebarItemKeyForDuplicateLabelsRule from "../rules/require-sidebar-item-key-for-duplicate-labels.js";
 import requireSidebarCategoryTypeRule from "../rules/require-sidebar-category-type.js";
+import requireSidebarItemKeyForDuplicateLabelsRule from "../rules/require-sidebar-item-key-for-duplicate-labels.js";
 import requireSiteConfigFieldsRule from "../rules/require-site-config-fields.js";
 import requireSiteUrlOriginRule from "../rules/require-site-url-origin.js";
 import requireThemeClassicCustomCssFilesExistRule from "../rules/require-theme-classic-custom-css-files-exist.js";
@@ -143,11 +146,15 @@ const docusaurusRuleRegistry = {
         noConflictingThemeConfigColorModeFlagsRule,
     "no-conflicting-theme-config-metadata-keys":
         noConflictingThemeConfigMetadataKeysRule,
+    "no-deprecated-admonition-title-syntax":
+        noDeprecatedAdmonitionTitleSyntaxRule,
     "no-deprecated-future-experimental-faster":
         noDeprecatedFutureExperimentalFasterRule,
     "no-deprecated-future-experimental-storage":
         noDeprecatedFutureExperimentalStorageRule,
     "no-deprecated-google-analytics": noDeprecatedGoogleAnalyticsRule,
+    "no-deprecated-heading-id-syntax": noDeprecatedHeadingIdSyntaxRule,
+    "no-deprecated-html-comments-in-mdx": noDeprecatedHtmlCommentsInMdxRule,
     "no-deprecated-on-broken-markdown-links":
         noDeprecatedOnBrokenMarkdownLinksRule,
     "no-duplicate-footer-column-titles": noDuplicateFooterColumnTitlesRule,
@@ -183,8 +190,8 @@ const docusaurusRuleRegistry = {
     "no-search-link-without-search-provider":
         noSearchLinkWithoutSearchProviderRule,
     "no-search-page-path-conflict": noSearchPagePathConflictRule,
-    "no-unknown-i18n-locale-configs": noUnknownI18nLocaleConfigsRule,
     "no-svg-social-card-image": noSvgSocialCardImageRule,
+    "no-unknown-i18n-locale-configs": noUnknownI18nLocaleConfigsRule,
     "no-use-base-url-for-internal-link-components":
         noUseBaseUrlForInternalLinkComponentsRule,
     "no-useless-collapsed-sidebar-categories":
@@ -250,9 +257,9 @@ const docusaurusRuleRegistry = {
         requireSearchProviderPackageInstalledRule,
     "require-sidebar-category-items": requireSidebarCategoryItemsRule,
     "require-sidebar-category-label": requireSidebarCategoryLabelRule,
+    "require-sidebar-category-type": requireSidebarCategoryTypeRule,
     "require-sidebar-item-key-for-duplicate-labels":
         requireSidebarItemKeyForDuplicateLabelsRule,
-    "require-sidebar-category-type": requireSidebarCategoryTypeRule,
     "require-site-config-fields": requireSiteConfigFieldsRule,
     "require-site-url-origin": requireSiteUrlOriginRule,
     "require-theme-classic-custom-css-files-exist":

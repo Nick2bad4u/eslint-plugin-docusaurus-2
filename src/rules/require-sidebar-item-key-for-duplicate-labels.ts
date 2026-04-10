@@ -17,15 +17,15 @@ const defaultOptions = [] as const;
 
 type MessageIds = "requireSidebarItemKeyForDuplicateLabels";
 
+type NodeWithOptionalParent = Readonly<TSESTree.Node> & {
+    parent?: Readonly<TSESTree.Node>;
+};
+
 type SidebarLabeledItem = Readonly<{
     label: string;
     labelExpression: Readonly<TSESTree.Expression>;
     objectExpression: Readonly<TSESTree.ObjectExpression>;
 }>;
-
-type NodeWithOptionalParent = Readonly<TSESTree.Node> & {
-    parent?: Readonly<TSESTree.Node>;
-};
 
 const getParentNode = (
     node: Readonly<TSESTree.Node>
