@@ -17,7 +17,6 @@ const expectedPresetDocs = [
     "experimental.md",
     "index.md",
     "minimal.md",
-    "recommended-type-checked.md",
     "recommended.md",
     "strict.md",
 ] as const;

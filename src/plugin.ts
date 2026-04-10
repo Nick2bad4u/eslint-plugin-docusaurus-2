@@ -148,9 +148,6 @@ const derivePresetRuleNamesByConfig = (): Readonly<
         experimental: dedupeRuleNames(presetRuleNamesByConfig.experimental),
         minimal: dedupeRuleNames(presetRuleNamesByConfig.minimal),
         recommended: dedupeRuleNames(presetRuleNamesByConfig.recommended),
-        "recommended-type-checked": dedupeRuleNames(
-            presetRuleNamesByConfig["recommended-type-checked"]
-        ),
         strict: dedupeRuleNames(presetRuleNamesByConfig.strict),
     };
 };
@@ -179,12 +176,6 @@ for (const ruleName of presetRuleNamesByConfig.recommended) {
     recommendedRuleNames.push(ruleName);
 }
 
-/** Type-aware recommended preset rule list. */
-const recommendedTypeCheckedRuleNames = dedupeRuleNames([
-    ...recommendedRuleNames,
-    ...presetRuleNamesByConfig["recommended-type-checked"],
-]);
-
 /** Effective per-preset rule lists after applying derived policy overlays. */
 const effectivePresetRuleNamesByConfig: Readonly<
     Record<Docusaurus2ConfigName, readonly string[]>
@@ -195,7 +186,6 @@ const effectivePresetRuleNamesByConfig: Readonly<
         ...presetRuleNamesByConfig.experimental,
     ]),
     recommended: recommendedRuleNames,
-    "recommended-type-checked": recommendedTypeCheckedRuleNames,
 };
 
 /** Apply parser and plugin metadata required by all plugin presets. */

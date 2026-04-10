@@ -12,7 +12,6 @@ export const presetConfigNames = [
     "experimental",
     "minimal",
     "recommended",
-    "recommended-type-checked",
     "strict",
 ] as const;
 
@@ -51,7 +50,7 @@ export const presetConfigMetadataByName: Readonly<
         description: "Stable rules plus future experimental additions.",
         icon: "🧪",
         presetName: "docusaurus-2:experimental",
-        readmeOrder: 7,
+        readmeOrder: 6,
         requiresTypeChecking: true,
     },
     minimal: {
@@ -68,20 +67,12 @@ export const presetConfigMetadataByName: Readonly<
         readmeOrder: 3,
         requiresTypeChecking: false,
     },
-    "recommended-type-checked": {
-        description:
-            "Recommended plus rules that rely on TypeScript type information.",
-        icon: "🟠",
-        presetName: "docusaurus-2:recommended-type-checked",
-        readmeOrder: 4,
-        requiresTypeChecking: true,
-    },
     strict: {
         description:
             "Recommended plus stricter consistency rules for mature sites.",
         icon: "🔴",
         presetName: "docusaurus-2:strict",
-        readmeOrder: 5,
+        readmeOrder: 4,
         requiresTypeChecking: true,
     },
 };
@@ -91,7 +82,6 @@ export const presetConfigNamesByReadmeOrder: readonly PresetConfigName[] = [
     "minimal",
     "config",
     "recommended",
-    "recommended-type-checked",
     "strict",
     "all",
     "experimental",

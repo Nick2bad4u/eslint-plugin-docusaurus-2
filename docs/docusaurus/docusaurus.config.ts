@@ -553,10 +553,6 @@ const config = {
                             to: "/docs/rules/presets/recommended",
                         },
                         {
-                            label: "🟠 Recommended (type-checked)",
-                            to: "/docs/rules/presets/recommended-type-checked",
-                        },
-                        {
                             label: "🔴 Strict",
                             to: "/docs/rules/presets/strict",
                         },

@@ -66,7 +66,7 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 
 The recommended link-semantics rules also remain enabled here, so `strict` covers both config/sidebar correctness and component-level routing conventions.
 
-It also keeps the typed parser baseline for future stricter Docusaurus checks.
+It also enables `projectService: true` automatically so future type-aware stricter checks can land without changing presets later.
 
 If you only want Docusaurus config/theme/plugin enforcement without the broader page-module and CSS architecture rules, use [`config`](./config.md) instead.
 

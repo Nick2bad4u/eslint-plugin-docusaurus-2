@@ -131,7 +131,6 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 presets: [
                     "config",
                     "recommended",
-                    "recommended-type-checked",
                     "strict",
                     "all",
                     "experimental",

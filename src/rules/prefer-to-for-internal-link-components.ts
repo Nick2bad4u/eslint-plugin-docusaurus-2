@@ -79,7 +79,6 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 frozen: false,
                 presets: [
                     "recommended",
-                    "recommended-type-checked",
                     "strict",
                     "all",
                     "experimental",

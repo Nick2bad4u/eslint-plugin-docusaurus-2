@@ -20,23 +20,11 @@ import docusaurus2 from "eslint-plugin-docusaurus-2";
 export default [docusaurus2.configs.recommended];
 ```
 
-## Typed presets
-
-If you want the future type-aware tier from day one, use:
-
-```ts
-import docusaurus2 from "eslint-plugin-docusaurus-2";
-
-export default [docusaurus2.configs["recommended-type-checked"]];
-```
-
-That preset enables `projectService: true` automatically.
-
 ## Current preset split
 
 - `recommended` enables the stable Docusaurus config and sidebar rules.
-- `recommended-type-checked` enables the same rules plus typed parser setup for future type-aware rules.
 - `strict`, `all`, and `experimental` also add the stricter page-module and site-source CSS architecture rules.
+- `strict`, `all`, and `experimental` enable `projectService: true` automatically.
 - `minimal` keeps the runtime/preset contract without enabling bundled rules.
 
 ## Current file coverage

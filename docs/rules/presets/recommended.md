@@ -13,7 +13,7 @@ It includes the same parser and plugin registration behavior as `minimal`, plus
 the stable default rollout of broadly applicable Docusaurus config, navbar,
 footer, sidebar, and theme-metadata rules.
 
-Use the generated [preset matrix](./index.md#rule-matrix) as the source of
+Use the generated [preset matrix](./index.md) as the source of
 truth for the exact current rule membership.
 
 These rules cover the most common Docusaurus config mistakes without imposing the stricter site-source CSS architecture checks from the broader presets.
@@ -30,4 +30,4 @@ export default [docusaurus2.configs.recommended];
 
 ## When to use it
 
-Use `recommended` if you want the normal adoption path and do not need type-aware rules yet.
+Use `recommended` if you want the default public rollout without the broader page-module and site-source CSS checks from the stricter presets.

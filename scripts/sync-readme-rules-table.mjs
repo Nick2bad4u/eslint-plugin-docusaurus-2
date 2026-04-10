@@ -27,7 +27,6 @@ import { fileURLToPath } from "node:url";
  *     | "experimental"
  *     | "minimal"
  *     | "recommended"
- *     | "recommended-type-checked"
  *     | "strict"} PresetName
  */
 
@@ -38,7 +37,6 @@ const presetConfigNamesByReadmeOrder = [
     "minimal",
     "config",
     "recommended",
-    "recommended-type-checked",
     "strict",
     "all",
     "experimental",
@@ -54,7 +52,6 @@ const presetConfigMetadataByName = {
     experimental: { icon: "🧪" },
     minimal: { icon: "🟢" },
     recommended: { icon: "🟡" },
-    "recommended-type-checked": { icon: "🟠" },
     strict: { icon: "🔴" },
 };
 
@@ -77,7 +74,6 @@ const presetDocsSlugByName = {
     experimental: "experimental",
     minimal: "minimal",
     recommended: "recommended",
-    "recommended-type-checked": "recommended-type-checked",
     strict: "strict",
 };
 
@@ -88,8 +84,6 @@ const presetConfigReferenceByName = {
     experimental: "docusaurus2.configs.experimental",
     minimal: "docusaurus2.configs.minimal",
     recommended: "docusaurus2.configs.recommended",
-    "recommended-type-checked":
-        'docusaurus2.configs["recommended-type-checked"]',
     strict: "docusaurus2.configs.strict",
 };
 

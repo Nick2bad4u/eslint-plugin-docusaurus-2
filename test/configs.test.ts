@@ -140,8 +140,6 @@ describe("docusaurus-2 plugin configs", () => {
         const expectedRecommendedRuleIds =
             getExpectedRuleIdsForPreset("recommended");
         const expectedConfigRuleIds = getExpectedRuleIdsForPreset("config");
-        const expectedRecommendedTypeCheckedRuleIds =
-            getExpectedRuleIdsForPreset("recommended-type-checked");
         const expectedStrictRuleIds = getExpectedRuleIdsForPreset("strict");
         const expectedAllRuleIds = getExpectedRuleIdsForPreset("all");
         const expectedExperimentalRuleIds =
@@ -157,11 +155,6 @@ describe("docusaurus-2 plugin configs", () => {
                 (left, right) => left.localeCompare(right)
             )
         ).toStrictEqual(expectedRecommendedRuleIds);
-        expect(
-            Object.keys(
-                docusaurus2Plugin.configs["recommended-type-checked"].rules
-            ).toSorted((left, right) => left.localeCompare(right))
-        ).toStrictEqual(expectedRecommendedTypeCheckedRuleIds);
         expect(
             Object.keys(docusaurus2Plugin.configs.strict.rules).toSorted(
                 (left, right) => left.localeCompare(right)

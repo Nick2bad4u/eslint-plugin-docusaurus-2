@@ -3,9 +3,14 @@ title: Maintainer Overview
 slug: /developer
 ---
 
+import ArchitectureImage from "@site/static/img/architecture.png";
+import SlashUpAndRunningImage from "@site/static/img/slash-up-and-running.png";
+
 # Maintainer Overview
 
 The Docusaurus workspace exists to document the plugin, host generated API pages, and keep rule/preset guidance easy to navigate.
+
+<img alt="Docusaurus slash character getting up and running" className="doc-showcase-image doc-showcase-image--compact" src={SlashUpAndRunningImage} />
 
 ## Current maintainer priorities
 
@@ -24,3 +29,7 @@ The Docusaurus workspace exists to document the plugin, host generated API pages
 When the rule catalog changes, update the authored docs first, then rerun the sync scripts for the README rules section and preset matrix.
 
 For stronger TypeDoc-specific linting beyond the Docusaurus integration concerns this plugin covers, pair the docs site with `eslint-plugin-typedoc`.
+
+## Architecture snapshot
+
+<img alt="High-level Docusaurus architecture diagram showing plugins, themes, bundling, and runtime outputs" className="doc-showcase-image" src={ArchitectureImage} />

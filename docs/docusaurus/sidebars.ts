@@ -45,7 +45,7 @@ const sidebars = {
                     ],
                     label: "API Reference",
                     link: {
-                        id: "developer/api/index",
+                        id: "developer/api/globals",
                         type: "doc",
                     },
                     type: "category",

@@ -29,7 +29,7 @@ Every preset already gives you a stable plugin contract:
 - `sourceType: "module"`
 - plugin registration under `"docusaurus-2"`
 
-The typed presets also enable `projectService: true` automatically.
+`strict`, `all`, and `experimental` also enable `projectService: true` automatically.
 
 The currently shipped rules start with the broadly useful config and sidebar checks, then add stricter page-module and site-source CSS architecture checks in the broader presets:
 
@@ -130,7 +130,6 @@ The stricter presets also add:
 - Start with [`recommended`](./presets/recommended.md) if you want the default future upgrade path and the stable config/sidebar rules.
 - Start with [`config`](./presets/config.md) if you want only Docusaurus config, themeConfig, navbar/footer, and plugin-setup enforcement.
 - Start with [`minimal`](./presets/minimal.md) if you want the smallest baseline.
-- Move to [`recommended-type-checked`](./presets/recommended-type-checked.md) once you are ready for type-aware rules.
 - Use [`strict`](./presets/strict.md), [`all`](./presets/all.md), or [`experimental`](./presets/experimental.md) when you also want the stricter Docusaurus page-module and site-source CSS checks.
 
 ## Manual scoped setup
@@ -149,7 +148,7 @@ export default [
             parserOptions: {
                 ecmaVersion: "latest",
                 sourceType: "module",
-                // Enable when you opt into a typed preset.
+                // Enable when you want typed parser services in your own setup.
                 // projectService: true,
             },
         },

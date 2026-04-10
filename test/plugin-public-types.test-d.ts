@@ -10,7 +10,7 @@ import type {
 
 import { assertType } from "vitest";
 
-const validConfigName = "recommended-type-checked";
+const validConfigName = "strict";
 const validRuleId = "docusaurus-2/no-redundant-social-card-metadata";
 const validRuleName = "no-mixed-sidebar-link-kinds";
 

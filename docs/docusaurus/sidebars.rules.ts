@@ -27,12 +27,6 @@ const presetDocs = [
         type: "doc",
     },
     {
-        className: "sb-preset-recommended-type-checked",
-        id: "presets/recommended-type-checked",
-        label: "🟠 Recommended (type-checked)",
-        type: "doc",
-    },
-    {
         className: "sb-preset-strict",
         id: "presets/strict",
         label: "🔴 Strict",

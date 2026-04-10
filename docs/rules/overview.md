@@ -132,7 +132,6 @@ export default [docusaurus2.configs.recommended];
 | --------------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | [🟢 `docusaurus2.configs.minimal`](./presets/minimal.md)                                      | Smallest baseline for future Docusaurus-specific linting.        |
 | [🟡 `docusaurus2.configs.recommended`](./presets/recommended.md)                              | Default preset for most documentation repositories.              |
-| [🟠 `docusaurus2.configs["recommended-type-checked"]`](./presets/recommended-type-checked.md) | Recommended plus typed parser setup for future type-aware rules. |
 | [🔴 `docusaurus2.configs.strict`](./presets/strict.md)                                        | Stricter adoption path for mature sites.                         |
 | [🟣 `docusaurus2.configs.all`](./presets/all.md)                                              | Every stable rule once the rule catalog grows.                   |
 | [🧪 `docusaurus2.configs.experimental`](./presets/experimental.md)                            | Future experimental rules and rollout candidates.                |
@@ -171,7 +170,7 @@ export default [docusaurus2.configs.recommended];
 
 ## Current rollout shape
 
-- [`recommended`](./presets/recommended.md) and [`recommended-type-checked`](./presets/recommended-type-checked.md) carry the broadly applicable config and sidebar rules.
+- [`recommended`](./presets/recommended.md) carries the broadly applicable config and sidebar rules.
 - [`strict`](./presets/strict.md), [`all`](./presets/all.md), and [`experimental`](./presets/experimental.md) add the stricter page-module and site-source CSS architecture rules.
 - [`minimal`](./presets/minimal.md) stays intentionally empty so repositories can adopt the runtime and preset surface before enabling any bundled rules.
 
