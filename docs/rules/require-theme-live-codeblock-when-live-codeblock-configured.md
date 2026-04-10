@@ -1,0 +1,103 @@
+# require-theme-live-codeblock-when-live-codeblock-configured
+
+Require `@docusaurus/theme-live-codeblock` when `themeConfig.liveCodeBlock` is configured.
+
+## Targeted pattern scope
+
+This rule focuses on `docusaurus.config.*` files.
+
+It reports config that declares:
+
+- `themeConfig.liveCodeBlock`
+
+without also configuring:
+
+- `@docusaurus/theme-live-codeblock`
+
+## What this rule reports
+
+This rule reports live-codeblock theme config that is present without the matching live-codeblock theme module.
+
+## Why this rule exists
+
+The Docusaurus live-codeblock docs pair the theme module with `themeConfig.liveCodeBlock` options.
+
+Keeping the theme config without the module makes the site config look enabled while the underlying theme integration is still missing.
+
+## ❌ Incorrect
+
+```ts
+export default {
+    themeConfig: {
+        liveCodeBlock: {
+            playgroundPosition: "bottom",
+        },
+    },
+};
+```
+
+## ✅ Correct
+
+```ts
+export default {
+    plugins: ["@docusaurus/theme-live-codeblock"],
+    themeConfig: {
+        liveCodeBlock: {
+            playgroundPosition: "bottom",
+        },
+    },
+};
+```
+
+## Behavior and migration notes
+
+This rule provides a suggestion when it can safely add the theme module to a literal `plugins` array or create a new top-level `plugins` property.
+
+## Additional examples
+
+### ❌ Incorrect — config present with unrelated plugin entries only
+
+```ts
+export default {
+    plugins: ["@easyops-cn/docusaurus-search-local"],
+    themeConfig: {
+        liveCodeBlock: {
+            playgroundPosition: "top",
+        },
+    },
+};
+```
+
+### ✅ Correct — live-codeblock theme module added
+
+```ts
+export default {
+    plugins: [
+        "@easyops-cn/docusaurus-search-local",
+        "@docusaurus/theme-live-codeblock",
+    ],
+    themeConfig: {
+        liveCodeBlock: {
+            playgroundPosition: "top",
+        },
+    },
+};
+```
+
+## ESLint flat config example
+
+```ts
+import docusaurus2 from "eslint-plugin-docusaurus-2";
+
+export default [docusaurus2.configs.recommended];
+```
+
+## When not to use it
+
+Do not use this rule if you intentionally keep live-codeblock config in place before enabling the theme module and do not want linting to report that partial setup.
+
+> **Rule catalog ID:** R094
+
+## Further reading
+
+- [Docusaurus theme docs: `@docusaurus/theme-live-codeblock`](https://docusaurus.io/docs/3.8.1/api/themes/@docusaurus/theme-live-codeblock)

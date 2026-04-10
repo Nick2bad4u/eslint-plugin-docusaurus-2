@@ -109,6 +109,22 @@ const orderedRuleNames = [
     "no-empty-config-link-destinations",
     "require-theme-config-announcement-bar-id",
     "validate-theme-config-announcement-bar-is-closeable",
+    "no-deprecated-google-analytics",
+    "prefer-theme-config-docsearch",
+    "require-theme-config-docsearch-config",
+    "no-conflicting-search-providers",
+    "require-theme-mermaid-when-markdown-mermaid-enabled",
+    "require-markdown-mermaid-when-theme-mermaid-enabled",
+    "require-theme-live-codeblock-when-live-codeblock-configured",
+    "validate-live-codeblock-playground-position",
+    "no-empty-theme-classic-custom-css",
+    "no-duplicate-theme-classic-custom-css",
+    "require-theme-classic-custom-css-files-exist",
+    "require-theme-mermaid-package-installed",
+    "require-theme-live-codeblock-package-installed",
+    "require-search-provider-package-installed",
+    "require-theme-classic-package-installed",
+    "require-theme-search-algolia-package-installed",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

@@ -603,7 +603,7 @@ const config = {
                         },
                         {
                             label: "• API Reference",
-                            to: "/docs/developer/api",
+                            to: "/docs/developer/api/globals",
                         },
                         {
                             label: "• Docs Site Contract",

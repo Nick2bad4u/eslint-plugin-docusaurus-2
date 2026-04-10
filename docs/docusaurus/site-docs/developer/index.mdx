@@ -3,14 +3,17 @@ title: Maintainer Overview
 slug: /developer
 ---
 
-import ArchitectureImage from "@site/static/img/architecture.png";
-import SlashUpAndRunningImage from "@site/static/img/slash-up-and-running.png";
+import DocShowcaseImage from "../../src/components/DocShowcaseImage";
 
 # Maintainer Overview
 
 The Docusaurus workspace exists to document the plugin, host generated API pages, and keep rule/preset guidance easy to navigate.
 
-<img alt="Docusaurus slash character getting up and running" className="doc-showcase-image doc-showcase-image--compact" src={SlashUpAndRunningImage} />
+<DocShowcaseImage
+	alt="Docusaurus slash character getting up and running"
+	assetPath="/img/slash-up-and-running.png"
+	compact
+/>
 
 ## Current maintainer priorities
 
@@ -32,4 +35,7 @@ For stronger TypeDoc-specific linting beyond the Docusaurus integration concerns
 
 ## Architecture snapshot
 
-<img alt="High-level Docusaurus architecture diagram showing plugins, themes, bundling, and runtime outputs" className="doc-showcase-image" src={ArchitectureImage} />
+<DocShowcaseImage
+	alt="High-level Docusaurus architecture diagram showing plugins, themes, bundling, and runtime outputs"
+	assetPath="/img/architecture.png"
+/>

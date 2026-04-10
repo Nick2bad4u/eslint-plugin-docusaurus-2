@@ -12,8 +12,10 @@ import noConflictingConfigLinkPropsRule from "../rules/no-conflicting-config-lin
 import noConflictingFooterHtmlItemPropsRule from "../rules/no-conflicting-footer-html-item-props.js";
 import noConflictingNavbarDocItemPropsRule from "../rules/no-conflicting-navbar-doc-item-props.js";
 import noConflictingNavbarDocSidebarItemPropsRule from "../rules/no-conflicting-navbar-doc-sidebar-item-props.js";
+import noConflictingSearchProvidersRule from "../rules/no-conflicting-search-providers.js";
 import noConflictingThemeConfigColorModeFlagsRule from "../rules/no-conflicting-theme-config-color-mode-flags.js";
 import noConflictingThemeConfigMetadataKeysRule from "../rules/no-conflicting-theme-config-metadata-keys.js";
+import noDeprecatedGoogleAnalyticsRule from "../rules/no-deprecated-google-analytics.js";
 import noDeprecatedOnBrokenMarkdownLinksRule from "../rules/no-deprecated-on-broken-markdown-links.js";
 import noDuplicateFooterColumnTitlesRule from "../rules/no-duplicate-footer-column-titles.js";
 import noDuplicateFooterLinkItemDestinationsRule from "../rules/no-duplicate-footer-link-item-destinations.js";
@@ -24,6 +26,7 @@ import noDuplicateNavbarItemDestinationsRule from "../rules/no-duplicate-navbar-
 import noDuplicateNavbarItemLabelsRule from "../rules/no-duplicate-navbar-item-labels.js";
 import noDuplicatePluginPwaHeadTagsRule from "../rules/no-duplicate-plugin-pwa-head-tags.js";
 import noDuplicateSidebarDocIdsRule from "../rules/no-duplicate-sidebar-doc-ids.js";
+import noDuplicateThemeClassicCustomCssRule from "../rules/no-duplicate-theme-classic-custom-css.js";
 import noDuplicateThemeConfigMetadataKeysRule from "../rules/no-duplicate-theme-config-metadata-keys.js";
 import noEmptyConfigLinkDestinationsRule from "../rules/no-empty-config-link-destinations.js";
 import noEmptyConfigLinkLabelsRule from "../rules/no-empty-config-link-labels.js";
@@ -33,6 +36,7 @@ import noEmptyHeadTagsRule from "../rules/no-empty-head-tags.js";
 import noEmptyNavbarDropdownItemsRule from "../rules/no-empty-navbar-dropdown-items.js";
 import noEmptyNavbarItemObjectsRule from "../rules/no-empty-navbar-item-objects.js";
 import noEmptySidebarCategoriesRule from "../rules/no-empty-sidebar-categories.js";
+import noEmptyThemeClassicCustomCssRule from "../rules/no-empty-theme-classic-custom-css.js";
 import noEmptyThemeConfigMetadataRule from "../rules/no-empty-theme-config-metadata.js";
 import noIgnoredSiteValidationsRule from "../rules/no-ignored-site-validations.js";
 import noMixedSidebarLinkKindsRule from "../rules/no-mixed-sidebar-link-kinds.js";
@@ -48,6 +52,7 @@ import preferHrefForExternalLinkComponentsRule from "../rules/prefer-href-for-ex
 import preferHrefForExternalLinksRule from "../rules/prefer-href-for-external-links.js";
 import preferI18nDefaultLocaleFirstRule from "../rules/prefer-i18n-default-locale-first.js";
 import preferSidebarsConfigSatisfiesRule from "../rules/prefer-sidebars-config-satisfies.js";
+import preferThemeConfigDocsearchRule from "../rules/prefer-theme-config-docsearch.js";
 import preferThemeConfigMetadataNameForTwitterTagsRule from "../rules/prefer-theme-config-metadata-name-for-twitter-tags.js";
 import preferThemeConfigMetadataPropertyForOgTagsRule from "../rules/prefer-theme-config-metadata-property-for-og-tags.js";
 import preferToForInternalLinkComponentsRule from "../rules/prefer-to-for-internal-link-components.js";
@@ -66,6 +71,7 @@ import requireHeadTagAttributesWhenNoInnerHtmlRule from "../rules/require-head-t
 import requireHeadTagContentOrAttributesRule from "../rules/require-head-tag-content-or-attributes.js";
 import requireHeadTagTagNameRule from "../rules/require-head-tag-tag-name.js";
 import requireI18nDefaultLocaleInLocalesRule from "../rules/require-i18n-default-locale-in-locales.js";
+import requireMarkdownMermaidWhenThemeMermaidEnabledRule from "../rules/require-markdown-mermaid-when-theme-mermaid-enabled.js";
 import requireNavbarDocItemDocIdRule from "../rules/require-navbar-doc-item-doc-id.js";
 import requireNavbarDocSidebarItemSidebarIdRule from "../rules/require-navbar-doc-sidebar-item-sidebar-id.js";
 import requireNavbarDocsVersionItemToRule from "../rules/require-navbar-docs-version-item-to.js";
@@ -78,15 +84,25 @@ import requirePluginPwaHeadManifestRule from "../rules/require-plugin-pwa-head-m
 import requirePluginPwaHeadThemeColorRule from "../rules/require-plugin-pwa-head-theme-color.js";
 import requirePluginPwaOfflineModeActivationStrategiesRule from "../rules/require-plugin-pwa-offline-mode-activation-strategies.js";
 import requirePluginPwaSetupRule from "../rules/require-plugin-pwa-setup.js";
+import requireSearchProviderPackageInstalledRule from "../rules/require-search-provider-package-installed.js";
 import requireSidebarCategoryItemsRule from "../rules/require-sidebar-category-items.js";
 import requireSidebarCategoryLabelRule from "../rules/require-sidebar-category-label.js";
 import requireSidebarCategoryTypeRule from "../rules/require-sidebar-category-type.js";
 import requireSiteConfigFieldsRule from "../rules/require-site-config-fields.js";
 import requireSiteUrlOriginRule from "../rules/require-site-url-origin.js";
+import requireThemeClassicCustomCssFilesExistRule from "../rules/require-theme-classic-custom-css-files-exist.js";
+import requireThemeClassicPackageInstalledRule from "../rules/require-theme-classic-package-installed.js";
 import requireThemeConfigAnnouncementBarIdRule from "../rules/require-theme-config-announcement-bar-id.js";
 import requireThemeConfigColorModeObjectRule from "../rules/require-theme-config-color-mode-object.js";
+import requireThemeConfigDocsearchConfigRule from "../rules/require-theme-config-docsearch-config.js";
 import requireThemeConfigImageRule from "../rules/require-theme-config-image.js";
+import requireThemeLiveCodeblockPackageInstalledRule from "../rules/require-theme-live-codeblock-package-installed.js";
+import requireThemeLiveCodeblockWhenLiveCodeblockConfiguredRule from "../rules/require-theme-live-codeblock-when-live-codeblock-configured.js";
+import requireThemeMermaidPackageInstalledRule from "../rules/require-theme-mermaid-package-installed.js";
+import requireThemeMermaidWhenMarkdownMermaidEnabledRule from "../rules/require-theme-mermaid-when-markdown-mermaid-enabled.js";
+import requireThemeSearchAlgoliaPackageInstalledRule from "../rules/require-theme-search-algolia-package-installed.js";
 import requireTrailingSlashExplicitRule from "../rules/require-trailing-slash-explicit.js";
+import validateLiveCodeblockPlaygroundPositionRule from "../rules/validate-live-codeblock-playground-position.js";
 import validateNavbarItemPositionRule from "../rules/validate-navbar-item-position.js";
 import validateThemeConfigAnnouncementBarIsCloseableRule from "../rules/validate-theme-config-announcement-bar-is-closeable.js";
 import validateThemeConfigColorModeDefaultModeRule from "../rules/validate-theme-config-color-mode-default-mode.js";
@@ -110,10 +126,12 @@ const docusaurusRuleRegistry = {
     "no-conflicting-navbar-doc-item-props": noConflictingNavbarDocItemPropsRule,
     "no-conflicting-navbar-doc-sidebar-item-props":
         noConflictingNavbarDocSidebarItemPropsRule,
+    "no-conflicting-search-providers": noConflictingSearchProvidersRule,
     "no-conflicting-theme-config-color-mode-flags":
         noConflictingThemeConfigColorModeFlagsRule,
     "no-conflicting-theme-config-metadata-keys":
         noConflictingThemeConfigMetadataKeysRule,
+    "no-deprecated-google-analytics": noDeprecatedGoogleAnalyticsRule,
     "no-deprecated-on-broken-markdown-links":
         noDeprecatedOnBrokenMarkdownLinksRule,
     "no-duplicate-footer-column-titles": noDuplicateFooterColumnTitlesRule,
@@ -127,6 +145,8 @@ const docusaurusRuleRegistry = {
     "no-duplicate-navbar-item-labels": noDuplicateNavbarItemLabelsRule,
     "no-duplicate-plugin-pwa-head-tags": noDuplicatePluginPwaHeadTagsRule,
     "no-duplicate-sidebar-doc-ids": noDuplicateSidebarDocIdsRule,
+    "no-duplicate-theme-classic-custom-css":
+        noDuplicateThemeClassicCustomCssRule,
     "no-duplicate-theme-config-metadata-keys":
         noDuplicateThemeConfigMetadataKeysRule,
     "no-empty-config-link-destinations": noEmptyConfigLinkDestinationsRule,
@@ -137,6 +157,7 @@ const docusaurusRuleRegistry = {
     "no-empty-navbar-dropdown-items": noEmptyNavbarDropdownItemsRule,
     "no-empty-navbar-item-objects": noEmptyNavbarItemObjectsRule,
     "no-empty-sidebar-categories": noEmptySidebarCategoriesRule,
+    "no-empty-theme-classic-custom-css": noEmptyThemeClassicCustomCssRule,
     "no-empty-theme-config-metadata": noEmptyThemeConfigMetadataRule,
     "no-ignored-site-validations": noIgnoredSiteValidationsRule,
     "no-mixed-sidebar-link-kinds": noMixedSidebarLinkKindsRule,
@@ -156,6 +177,7 @@ const docusaurusRuleRegistry = {
     "prefer-href-for-external-links": preferHrefForExternalLinksRule,
     "prefer-i18n-default-locale-first": preferI18nDefaultLocaleFirstRule,
     "prefer-sidebars-config-satisfies": preferSidebarsConfigSatisfiesRule,
+    "prefer-theme-config-docsearch": preferThemeConfigDocsearchRule,
     "prefer-theme-config-metadata-name-for-twitter-tags":
         preferThemeConfigMetadataNameForTwitterTagsRule,
     "prefer-theme-config-metadata-property-for-og-tags":
@@ -182,6 +204,8 @@ const docusaurusRuleRegistry = {
     "require-head-tag-tag-name": requireHeadTagTagNameRule,
     "require-i18n-default-locale-in-locales":
         requireI18nDefaultLocaleInLocalesRule,
+    "require-markdown-mermaid-when-theme-mermaid-enabled":
+        requireMarkdownMermaidWhenThemeMermaidEnabledRule,
     "require-navbar-doc-item-doc-id": requireNavbarDocItemDocIdRule,
     "require-navbar-doc-sidebar-item-sidebar-id":
         requireNavbarDocSidebarItemSidebarIdRule,
@@ -196,17 +220,37 @@ const docusaurusRuleRegistry = {
     "require-plugin-pwa-offline-mode-activation-strategies":
         requirePluginPwaOfflineModeActivationStrategiesRule,
     "require-plugin-pwa-setup": requirePluginPwaSetupRule,
+    "require-search-provider-package-installed":
+        requireSearchProviderPackageInstalledRule,
     "require-sidebar-category-items": requireSidebarCategoryItemsRule,
     "require-sidebar-category-label": requireSidebarCategoryLabelRule,
     "require-sidebar-category-type": requireSidebarCategoryTypeRule,
     "require-site-config-fields": requireSiteConfigFieldsRule,
     "require-site-url-origin": requireSiteUrlOriginRule,
+    "require-theme-classic-custom-css-files-exist":
+        requireThemeClassicCustomCssFilesExistRule,
+    "require-theme-classic-package-installed":
+        requireThemeClassicPackageInstalledRule,
     "require-theme-config-announcement-bar-id":
         requireThemeConfigAnnouncementBarIdRule,
     "require-theme-config-color-mode-object":
         requireThemeConfigColorModeObjectRule,
+    "require-theme-config-docsearch-config":
+        requireThemeConfigDocsearchConfigRule,
     "require-theme-config-image": requireThemeConfigImageRule,
+    "require-theme-live-codeblock-package-installed":
+        requireThemeLiveCodeblockPackageInstalledRule,
+    "require-theme-live-codeblock-when-live-codeblock-configured":
+        requireThemeLiveCodeblockWhenLiveCodeblockConfiguredRule,
+    "require-theme-mermaid-package-installed":
+        requireThemeMermaidPackageInstalledRule,
+    "require-theme-mermaid-when-markdown-mermaid-enabled":
+        requireThemeMermaidWhenMarkdownMermaidEnabledRule,
+    "require-theme-search-algolia-package-installed":
+        requireThemeSearchAlgoliaPackageInstalledRule,
     "require-trailing-slash-explicit": requireTrailingSlashExplicitRule,
+    "validate-live-codeblock-playground-position":
+        validateLiveCodeblockPlaygroundPositionRule,
     "validate-navbar-item-position": validateNavbarItemPositionRule,
     "validate-theme-config-announcement-bar-is-closeable":
         validateThemeConfigAnnouncementBarIsCloseableRule,
