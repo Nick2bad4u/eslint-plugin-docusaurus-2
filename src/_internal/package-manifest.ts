@@ -20,8 +20,6 @@ type PackageManifestRecord = Readonly<{
     peerDependencies?: PackageDependencyMap;
 }>;
 
-const packageManifestCache = new Map<string, null | ResolvedPackageManifest>();
-
 const isRecord = (value: unknown): value is Record<string, unknown> =>
     typeof value === "object" && value !== null;
 
@@ -98,22 +96,10 @@ const findNearestPackageJsonPath = (filePath: string): null | string => {
 export const getNearestPackageManifest = (
     filePath: string
 ): null | ResolvedPackageManifest => {
-    const cacheKey = path.resolve(filePath);
-    const cachedManifest = packageManifestCache.get(cacheKey);
-
-    if (cachedManifest !== undefined) {
-        return cachedManifest;
-    }
-
     const packageJsonPath = findNearestPackageJsonPath(filePath);
-    const manifest =
-        packageJsonPath === null
-            ? null
-            : readResolvedPackageManifest(packageJsonPath);
-
-    packageManifestCache.set(cacheKey, manifest);
-
-    return manifest;
+    return packageJsonPath === null
+        ? null
+        : readResolvedPackageManifest(packageJsonPath);
 };
 
 /** Check whether a package is declared in the nearest package manifest. */
