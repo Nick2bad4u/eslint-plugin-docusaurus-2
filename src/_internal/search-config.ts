@@ -96,7 +96,8 @@ export type ThemeConfigSearchProperties = Readonly<{
 
 const findNamedPluginConfigurationsByNames = <PluginName extends string>(
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
-    pluginNames: readonly PluginName[]
+    pluginNames: readonly PluginName[],
+    programNode?: Readonly<TSESTree.Program>
 ): readonly NamedPluginConfigurationEntry<PluginName>[] => {
     const pluginConfigurations: NamedPluginConfigurationEntry<PluginName>[] =
         [];
@@ -106,7 +107,8 @@ const findNamedPluginConfigurationsByNames = <PluginName extends string>(
             for (const entry of findTopLevelModuleConfigurationsByName(
                 configObjectExpression,
                 propertyName,
-                pluginName
+                pluginName,
+                programNode
             )) {
                 pluginConfigurations.push({
                     entry,
@@ -121,11 +123,13 @@ const findNamedPluginConfigurationsByNames = <PluginName extends string>(
 
 /** Resolve the `themeConfig.algolia` and `themeConfig.docsearch` properties. */
 export const getThemeConfigSearchProperties = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): ThemeConfigSearchProperties => {
     const themeConfigObject = getObjectExpressionPropertyValueByName(
         configObjectExpression,
-        "themeConfig"
+        "themeConfig",
+        programNode
     );
 
     return {
@@ -149,10 +153,11 @@ export const getThemeConfigSearchProperties = (
 
 /** Resolve the effective search config property, preferring `docsearch`. */
 export const getEffectiveSearchThemeConfigProperty = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): EffectiveSearchThemeConfigProperty | null => {
     const { algoliaProperty, docsearchProperty } =
-        getThemeConfigSearchProperties(configObjectExpression);
+        getThemeConfigSearchProperties(configObjectExpression, programNode);
 
     if (docsearchProperty !== null) {
         return {
@@ -171,11 +176,13 @@ export const getEffectiveSearchThemeConfigProperty = (
 
 /** Find configured local-search provider entries across `plugins` and `themes`. */
 export const findLocalSearchPluginConfigurations = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly NamedPluginConfigurationEntry<LocalSearchPluginModuleName>[] =>
     findNamedPluginConfigurationsByNames(
         configObjectExpression,
-        localSearchPluginModuleNames
+        localSearchPluginModuleNames,
+        programNode
     );
 
 /** Get the literal module-specifier node for a configured search-related entry. */
@@ -206,11 +213,12 @@ export const isDefaultSearchPageRouteValue = (value: string): boolean =>
 
 /** Determine whether search config is meaningfully configured in this file. */
 export const getConfiguredSearchProviderKinds = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): ReadonlySet<ConfiguredSearchProviderKind> => {
     const providerKinds = new Set<ConfiguredSearchProviderKind>();
     const { algoliaProperty, docsearchProperty } =
-        getThemeConfigSearchProperties(configObjectExpression);
+        getThemeConfigSearchProperties(configObjectExpression, programNode);
 
     if (algoliaProperty !== null) {
         providerKinds.add("algolia-theme-config");
@@ -221,7 +229,8 @@ export const getConfiguredSearchProviderKinds = (
     }
 
     if (
-        findLocalSearchPluginConfigurations(configObjectExpression).length > 0
+        findLocalSearchPluginConfigurations(configObjectExpression, programNode)
+            .length > 0
     ) {
         providerKinds.add("local-search-plugin");
     }
@@ -238,7 +247,8 @@ export const getConfiguredSearchPagePath = (
     programNode: Readonly<TSESTree.Program>
 ): null | string => {
     const effectiveSearchConfigProperty = getEffectiveSearchThemeConfigProperty(
-        configObjectExpression
+        configObjectExpression,
+        programNode
     );
     const searchConfigProperty = effectiveSearchConfigProperty?.property;
 
@@ -276,10 +286,12 @@ export const getConfiguredSearchPagePath = (
 
 /** Determine whether search page support is explicitly disabled with `false`. */
 export const isSearchPageExplicitlyDisabled = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): boolean => {
     const effectiveSearchConfigProperty = getEffectiveSearchThemeConfigProperty(
-        configObjectExpression
+        configObjectExpression,
+        programNode
     );
     const searchConfigProperty = effectiveSearchConfigProperty?.property;
 
@@ -307,7 +319,8 @@ export const getSearchPagePathConflictCandidates = (
     const conflictCandidates: SearchPagePathConflictCandidate[] = [];
 
     for (const presetOptionsObject of findClassicPresetOptionsObjects(
-        configObjectExpression
+        configObjectExpression,
+        programNode
     )) {
         const docsOptionsObject = getObjectExpressionPropertyValueByName(
             presetOptionsObject,
@@ -395,7 +408,8 @@ export const getSearchPagePathConflictCandidates = (
 
         for (const pluginOptionsObject of findPluginOptionsObjectsByName(
             configObjectExpression,
-            pluginModuleName
+            pluginModuleName,
+            programNode
         )) {
             pluginIndex += 1;
             const routeBasePathExpression = getObjectPropertyValueByName(

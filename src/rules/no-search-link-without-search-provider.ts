@@ -79,7 +79,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             ? new Set<string>()
                             : new Set(
                                   getConfiguredSearchProviderKinds(
-                                      configObjectExpression
+                                      configObjectExpression,
+                                      programNode
                                   )
                               );
                 },

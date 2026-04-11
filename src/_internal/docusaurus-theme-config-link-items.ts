@@ -85,11 +85,13 @@ export const getDefaultDocusaurusThemeConfigLinkContext = (
  * `themeConfig.footer.links`.
  */
 export const findDocusaurusFooterLinkColumnObjects = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly Readonly<TSESTree.ObjectExpression>[] => {
     const themeConfigObject = getObjectExpressionPropertyValueByName(
         configObjectExpression,
-        "themeConfig"
+        "themeConfig",
+        programNode
     );
 
     if (themeConfigObject === null) {
@@ -98,7 +100,8 @@ export const findDocusaurusFooterLinkColumnObjects = (
 
     const footerObject = getObjectExpressionPropertyValueByName(
         themeConfigObject,
-        "footer"
+        "footer",
+        programNode
     );
 
     if (footerObject === null) {
@@ -107,7 +110,8 @@ export const findDocusaurusFooterLinkColumnObjects = (
 
     const footerLinksArrayExpression = getArrayExpressionPropertyValueByName(
         footerObject,
-        "links"
+        "links",
+        programNode
     );
 
     if (footerLinksArrayExpression === null) {

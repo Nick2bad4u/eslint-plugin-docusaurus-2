@@ -43,7 +43,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     for (const themeOptionsObject of findThemeClassicOptionsObjects(
-                        configObjectExpression
+                        configObjectExpression,
+                        programNode
                     )) {
                         const customCssExpression =
                             getObjectPropertyValueByName(

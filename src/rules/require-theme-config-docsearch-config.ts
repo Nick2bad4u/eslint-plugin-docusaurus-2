@@ -78,7 +78,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const { algoliaProperty, docsearchProperty } =
-                        getThemeConfigSearchProperties(configObjectExpression);
+                        getThemeConfigSearchProperties(
+                            configObjectExpression,
+                            programNode
+                        );
 
                     if (
                         algoliaProperty !== null &&

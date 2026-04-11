@@ -80,6 +80,53 @@ ruleTester.run(
                 ],
                 filename: "docs/docusaurus/docusaurus.config.ts",
             },
+            {
+                code: [
+                    'import type { Config } from "@docusaurus/types";',
+                    "const themeConfig = {",
+                    "    liveCodeBlock: {",
+                    '        playgroundPosition: "bottom",',
+                    "    },",
+                    "};",
+                    "",
+                    "const config = {",
+                    "    themeConfig,",
+                    "} satisfies Config;",
+                    "",
+                    "export default config;",
+                ].join("\n"),
+                errors: [
+                    {
+                        messageId:
+                            "requireThemeLiveCodeblockWhenLiveCodeblockConfigured",
+                        suggestions: [
+                            {
+                                messageId: "addThemeLiveCodeblockToPlugins",
+                                output: [
+                                    'import type { Config } from "@docusaurus/types";',
+                                    "const themeConfig = {",
+                                    "    liveCodeBlock: {",
+                                    '        playgroundPosition: "bottom",',
+                                    "    },",
+                                    "};",
+                                    "",
+                                    "const config = {",
+                                    "    themeConfig,",
+                                    "} satisfies Config;",
+                                    "",
+                                    "export default config;",
+                                ]
+                                    .join("\n")
+                                    .replace(
+                                        "} satisfies Config;",
+                                        '    plugins: ["@docusaurus/theme-live-codeblock"]\n} satisfies Config;'
+                                    ),
+                            },
+                        ],
+                    },
+                ],
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
         ],
         valid: [
             {
@@ -105,6 +152,24 @@ ruleTester.run(
                     "        },",
                     "    },",
                     "};",
+                ].join("\n"),
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+            {
+                code: [
+                    'import type { Config } from "@docusaurus/types";',
+                    "const themeConfig = {",
+                    "    liveCodeBlock: {",
+                    '        playgroundPosition: "bottom",',
+                    "    },",
+                    "};",
+                    "",
+                    "const config = {",
+                    '    plugins: ["@docusaurus/theme-live-codeblock"],',
+                    "    themeConfig,",
+                    "} satisfies Config;",
+                    "",
+                    "export default config;",
                 ].join("\n"),
                 filename: "docs/docusaurus/docusaurus.config.ts",
             },

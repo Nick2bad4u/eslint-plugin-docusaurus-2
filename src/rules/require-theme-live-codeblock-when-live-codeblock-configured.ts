@@ -144,7 +144,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         ) === null ||
                         hasAnyTopLevelModuleConfigurationByName(
                             configObjectExpression,
-                            themeLiveCodeblockModuleName
+                            themeLiveCodeblockModuleName,
+                            programNode
                         )
                     ) {
                         return;
@@ -153,7 +154,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const pluginsArrayExpression =
                         getArrayExpressionPropertyValueByName(
                             configObjectExpression,
-                            "plugins"
+                            "plugins",
+                            programNode
                         );
                     const addThemeLiveCodeblockSuggestion =
                         createAddThemeLiveCodeblockSuggestion({

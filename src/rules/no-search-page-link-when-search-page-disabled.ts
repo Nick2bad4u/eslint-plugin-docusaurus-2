@@ -77,7 +77,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     isSearchPageDisabled =
                         configObjectExpression !== null &&
-                        isSearchPageExplicitlyDisabled(configObjectExpression);
+                        isSearchPageExplicitlyDisabled(
+                            configObjectExpression,
+                            programNode
+                        );
                 },
             };
         },

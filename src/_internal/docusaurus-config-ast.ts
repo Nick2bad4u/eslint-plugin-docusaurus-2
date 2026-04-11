@@ -733,11 +733,13 @@ export const getDefaultExportedObjectExpression = (
  * Find all classic-preset option objects declared in a Docusaurus config.
  */
 export const findClassicPresetOptionsObjects = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly Readonly<TSESTree.ObjectExpression>[] => {
     const presetsArrayExpression = getArrayExpressionPropertyValueByName(
         configObjectExpression,
-        "presets"
+        "presets",
+        programNode
     );
 
     if (presetsArrayExpression === null) {
@@ -757,12 +759,28 @@ export const findClassicPresetOptionsObjects = (
             presetSpecifier?.type !== "Literal" ||
             typeof presetSpecifier.value !== "string" ||
             !docusaurusClassicPresetModuleNames.has(presetSpecifier.value) ||
-            presetOptions?.type !== "ObjectExpression"
+            presetOptions === undefined ||
+            presetOptions === null ||
+            presetOptions.type === "SpreadElement"
         ) {
             continue;
         }
 
-        presetOptionsObjects.push(presetOptions);
+        const presetOptionsObject =
+            programNode === undefined
+                ? presetOptions.type === "ObjectExpression"
+                    ? presetOptions
+                    : null
+                : getObjectExpressionFromExpressionOrIdentifier(
+                      presetOptions,
+                      programNode
+                  );
+
+        if (presetOptionsObject === null) {
+            continue;
+        }
+
+        presetOptionsObjects.push(presetOptionsObject);
     }
 
     return presetOptionsObjects;
@@ -780,11 +798,13 @@ export type DocusaurusPluginConfigurationEntry = Readonly<{
  */
 export const findPluginConfigurationsByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
-    pluginName: string
+    pluginName: string,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly DocusaurusPluginConfigurationEntry[] => {
     const pluginsArrayExpression = getArrayExpressionPropertyValueByName(
         configObjectExpression,
-        "plugins"
+        "plugins",
+        programNode
     );
 
     if (pluginsArrayExpression === null) {
@@ -852,9 +872,14 @@ export const findPluginConfigurationsByName = (
  */
 export const findPluginOptionsObjectsByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
-    pluginName: string
+    pluginName: string,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly Readonly<TSESTree.ObjectExpression>[] =>
-    findPluginConfigurationsByName(configObjectExpression, pluginName)
+    findPluginConfigurationsByName(
+        configObjectExpression,
+        pluginName,
+        programNode
+    )
         .map((entry) => entry.optionsObject)
         .filter(
             (optionsObject): optionsObject is TSESTree.ObjectExpression =>

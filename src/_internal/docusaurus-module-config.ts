@@ -6,7 +6,10 @@ import type { TSESTree } from "@typescript-eslint/utils";
  */
 import type { DocusaurusPluginConfigurationEntry } from "./docusaurus-config-ast.js";
 
-import { getArrayExpressionPropertyValueByName } from "./docusaurus-config-ast.js";
+import {
+    getArrayExpressionPropertyValueByName,
+    getObjectExpressionFromExpressionOrIdentifier,
+} from "./docusaurus-config-ast.js";
 
 /** Top-level Docusaurus module array property names. */
 export type DocusaurusTopLevelModuleArrayPropertyName = "plugins" | "themes";
@@ -18,11 +21,13 @@ export type DocusaurusTopLevelModuleConfigurationEntry =
 export const findTopLevelModuleConfigurationsByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
     propertyName: DocusaurusTopLevelModuleArrayPropertyName,
-    moduleName: string
+    moduleName: string,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly DocusaurusTopLevelModuleConfigurationEntry[] => {
     const modulesArrayExpression = getArrayExpressionPropertyValueByName(
         configObjectExpression,
-        propertyName
+        propertyName,
+        programNode
     );
 
     if (modulesArrayExpression === null) {
@@ -76,9 +81,14 @@ export const findTopLevelModuleConfigurationsByName = (
             node: element,
             optionsExpression: moduleOptions,
             optionsObject:
-                moduleOptions.type === "ObjectExpression"
-                    ? moduleOptions
-                    : null,
+                programNode === undefined
+                    ? moduleOptions.type === "ObjectExpression"
+                        ? moduleOptions
+                        : null
+                    : getObjectExpressionFromExpressionOrIdentifier(
+                          moduleOptions,
+                          programNode
+                      ),
         });
     }
 
@@ -88,28 +98,33 @@ export const findTopLevelModuleConfigurationsByName = (
 /** Find module configurations across both `plugins` and `themes`. */
 export const findAnyTopLevelModuleConfigurationsByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
-    moduleName: string
+    moduleName: string,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly DocusaurusTopLevelModuleConfigurationEntry[] => [
     ...findTopLevelModuleConfigurationsByName(
         configObjectExpression,
         "plugins",
-        moduleName
+        moduleName,
+        programNode
     ),
     ...findTopLevelModuleConfigurationsByName(
         configObjectExpression,
         "themes",
-        moduleName
+        moduleName,
+        programNode
     ),
 ];
 
 /** Check whether a module is configured in either top-level module array. */
 export const hasAnyTopLevelModuleConfigurationByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
-    moduleName: string
+    moduleName: string,
+    programNode?: Readonly<TSESTree.Program>
 ): boolean =>
     findAnyTopLevelModuleConfigurationsByName(
         configObjectExpression,
-        moduleName
+        moduleName,
+        programNode
     ).length > 0;
 
 /** Get the literal module specifier node for a top-level module entry. */

@@ -49,6 +49,25 @@ ruleTester.run(
                 ],
                 filename: "docs/docusaurus/docusaurus.config.ts",
             },
+            {
+                code: [
+                    'import type { Config } from "@docusaurus/types";',
+                    'const theme = { customCss: "./src/css/missing.css" };',
+                    "",
+                    "const config = {",
+                    '    presets: [["@docusaurus/preset-classic", { theme }]],',
+                    "} satisfies Config;",
+                    "",
+                    "export default config;",
+                ].join("\n"),
+                errors: [
+                    {
+                        data: { configuredPath: "`./src/css/missing.css`" },
+                        messageId: "requireThemeClassicCustomCssFilesExist",
+                    },
+                ],
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
         ],
         valid: [
             {
@@ -61,6 +80,19 @@ ruleTester.run(
                     "        },",
                     "    ]],",
                     "};",
+                ].join("\n"),
+                filename: "docs/docusaurus/docusaurus.config.ts",
+            },
+            {
+                code: [
+                    'import type { Config } from "@docusaurus/types";',
+                    'const theme = { customCss: "./src/css/custom.css" };',
+                    "",
+                    "const config = {",
+                    '    presets: [["@docusaurus/preset-classic", { theme }]],',
+                    "} satisfies Config;",
+                    "",
+                    "export default config;",
                 ].join("\n"),
                 filename: "docs/docusaurus/docusaurus.config.ts",
             },

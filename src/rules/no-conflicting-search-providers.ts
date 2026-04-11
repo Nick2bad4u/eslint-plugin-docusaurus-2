@@ -38,7 +38,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const effectiveSearchConfigProperty =
                         getEffectiveSearchThemeConfigProperty(
-                            configObjectExpression
+                            configObjectExpression,
+                            programNode
                         );
                     const searchConfigKey =
                         effectiveSearchConfigProperty?.keyLabel ?? null;
@@ -48,7 +49,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     for (const localSearchPluginConfiguration of findLocalSearchPluginConfigurations(
-                        configObjectExpression
+                        configObjectExpression,
+                        programNode
                     )) {
                         const pluginSpecifierNode =
                             getPluginConfigurationSpecifierNode(

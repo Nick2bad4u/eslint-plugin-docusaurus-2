@@ -49,7 +49,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const searchConfigNode = (() => {
                         const effectiveSearchConfigProperty =
                             getEffectiveSearchThemeConfigProperty(
-                                configObjectExpression
+                                configObjectExpression,
+                                programNode
                             );
                         const searchConfigProperty =
                             effectiveSearchConfigProperty?.property;

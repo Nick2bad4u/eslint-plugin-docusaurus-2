@@ -24,16 +24,19 @@ export const themeSearchAlgoliaModuleName =
  * config.
  */
 export const findThemeClassicOptionsObjects = (
-    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode?: Readonly<TSESTree.Program>
 ): readonly Readonly<TSESTree.ObjectExpression>[] => {
     const themeOptionsObjects: TSESTree.ObjectExpression[] = [];
 
     for (const presetOptionsObject of findClassicPresetOptionsObjects(
-        configObjectExpression
+        configObjectExpression,
+        programNode
     )) {
         const presetThemeOptionsObject = getObjectExpressionPropertyValueByName(
             presetOptionsObject,
-            "theme"
+            "theme",
+            programNode
         );
 
         if (presetThemeOptionsObject !== null) {
@@ -44,7 +47,8 @@ export const findThemeClassicOptionsObjects = (
     for (const themeConfiguration of findTopLevelModuleConfigurationsByName(
         configObjectExpression,
         "themes",
-        themeClassicModuleName
+        themeClassicModuleName,
+        programNode
     )) {
         if (themeConfiguration.optionsObject !== null) {
             themeOptionsObjects.push(themeConfiguration.optionsObject);
