@@ -49,6 +49,7 @@ import noMixedSidebarLinkKindsRule from "../rules/no-mixed-sidebar-link-kinds.js
 import noPageCssModuleImportsInComponentsRule from "../rules/no-page-css-module-imports-in-components.js";
 import noRedundantSocialCardMetadataRule from "../rules/no-redundant-social-card-metadata.js";
 import noSearchLinkWithoutSearchProviderRule from "../rules/no-search-link-without-search-provider.js";
+import noSearchPageLinkWhenSearchPageDisabledRule from "../rules/no-search-page-link-when-search-page-disabled.js";
 import noSearchPagePathConflictRule from "../rules/no-search-page-path-conflict.js";
 import noSvgSocialCardImageRule from "../rules/no-svg-social-card-image.js";
 import noUnknownI18nLocaleConfigsRule from "../rules/no-unknown-i18n-locale-configs.js";
@@ -74,6 +75,7 @@ import requireConfigLinkDestinationRule from "../rules/require-config-link-desti
 import requireDefaultExportPagesRule from "../rules/require-default-export-pages.js";
 import requireDocSidebarLinkTypeRule from "../rules/require-doc-sidebar-link-type.js";
 import requireDocsearchAskAiAssistantIdRule from "../rules/require-docsearch-ask-ai-assistant-id.js";
+import requireDocsearchThemeWhenConfiguredRule from "../rules/require-docsearch-theme-when-configured.js";
 import requireDocusaurusFasterPackageInstalledRule from "../rules/require-docusaurus-faster-package-installed.js";
 import requireFooterLinkColumnItemsRule from "../rules/require-footer-link-column-items.js";
 import requireFooterLinkColumnTitleRule from "../rules/require-footer-link-column-title.js";
@@ -190,6 +192,8 @@ const docusaurusRuleRegistry = {
     "no-redundant-social-card-metadata": noRedundantSocialCardMetadataRule,
     "no-search-link-without-search-provider":
         noSearchLinkWithoutSearchProviderRule,
+    "no-search-page-link-when-search-page-disabled":
+        noSearchPageLinkWhenSearchPageDisabledRule,
     "no-search-page-path-conflict": noSearchPagePathConflictRule,
     "no-svg-social-card-image": noSvgSocialCardImageRule,
     "no-unknown-i18n-locale-configs": noUnknownI18nLocaleConfigsRule,
@@ -224,6 +228,8 @@ const docusaurusRuleRegistry = {
     "require-doc-sidebar-link-type": requireDocSidebarLinkTypeRule,
     "require-docsearch-ask-ai-assistant-id":
         requireDocsearchAskAiAssistantIdRule,
+    "require-docsearch-theme-when-configured":
+        requireDocsearchThemeWhenConfiguredRule,
     "require-docusaurus-faster-package-installed":
         requireDocusaurusFasterPackageInstalledRule,
     "require-footer-link-column-items": requireFooterLinkColumnItemsRule,

@@ -7,7 +7,7 @@ import type { ESLint, Linter } from "eslint";
 
 import typeScriptParser from "@typescript-eslint/parser";
 
-import type { additionalConfigNames } from "./_internal/preset-config-references.js";
+import type { AdditionalConfigName } from "./_internal/preset-config-references.js";
 import type { UnknownArray } from "./_internal/types.js";
 
 import packageJson from "../package.json" with { type: "json" };
@@ -38,7 +38,7 @@ export type Docusaurus2PresetConfig = Linter.Config & {
 };
 
 /** Additional non-preset config keys exposed through `plugin.configs`. */
-type Docusaurus2AdditionalConfigName = (typeof additionalConfigNames)[number];
+type Docusaurus2AdditionalConfigName = AdditionalConfigName;
 
 /** Canonical flat-config keys exposed through `plugin.configs`. */
 type Docusaurus2ConfigName =
@@ -189,14 +189,20 @@ const deriveAdditionalConfigRuleNamesByConfig = (): Readonly<
         }
 
         for (const configName of configNames) {
-            ruleNamesByConfig[configName].push(ruleName);
+            const existingRuleNames = ruleNamesByConfig[configName];
+
+            if (existingRuleNames === undefined) {
+                continue;
+            }
+
+            existingRuleNames.push(ruleName);
         }
     }
 
     return Object.freeze({
-        content: dedupeRuleNames(ruleNamesByConfig.content),
+        content: dedupeRuleNames(ruleNamesByConfig.content ?? []),
         "strict-mdx-upgrade": dedupeRuleNames(
-            ruleNamesByConfig["strict-mdx-upgrade"]
+            ruleNamesByConfig["strict-mdx-upgrade"] ?? []
         ),
     });
 };
@@ -301,7 +307,7 @@ const createConfigsDefinition = (): Record<
     configs.content = createTextContentConfig({
         files: ["**/*.{md,mdx}"],
         name: "docusaurus-2:content",
-        ruleNames: additionalConfigRuleNamesByConfig.content,
+        ruleNames: additionalConfigRuleNamesByConfig.content ?? [],
     });
 
     return configs;

@@ -1,7 +1,8 @@
 /**
  * @packageDocumentation
- * ESLint rule implementation for `no-search-link-without-search-provider`.
+ * ESLint rule implementation for `no-search-page-link-when-search-page-disabled`.
  */
+
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import {
@@ -12,16 +13,16 @@ import {
 } from "../_internal/docusaurus-config-ast.js";
 import { getDefaultDocusaurusThemeConfigLinkContext } from "../_internal/docusaurus-theme-config-link-items.js";
 import {
-    getConfiguredSearchProviderKinds,
     isDefaultSearchPageRouteValue,
+    isSearchPageExplicitlyDisabled,
 } from "../_internal/search-config.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 
-type MessageIds = "noSearchLinkWithoutSearchProvider";
+type MessageIds = "noSearchPageLinkWhenSearchPageDisabled";
 
-/** Rule module for `no-search-link-without-search-provider`. */
+/** Rule module for `no-search-page-link-when-search-page-disabled`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
         create(context) {
@@ -29,11 +30,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 return {};
             }
 
-            let searchProviderKinds = new Set<string>();
+            let isSearchPageDisabled = false;
 
             return {
                 ObjectExpression(node: Readonly<TSESTree.ObjectExpression>) {
-                    if (searchProviderKinds.size > 0) {
+                    if (!isSearchPageDisabled) {
                         return;
                     }
 
@@ -66,7 +67,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     context.report({
-                        messageId: "noSearchLinkWithoutSearchProvider",
+                        messageId: "noSearchPageLinkWhenSearchPageDisabled",
                         node: destinationExpression,
                     });
                 },
@@ -74,14 +75,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const configObjectExpression =
                         getDefaultExportedObjectExpression(programNode);
 
-                    searchProviderKinds =
-                        configObjectExpression === null
-                            ? new Set<string>()
-                            : new Set(
-                                  getConfiguredSearchProviderKinds(
-                                      configObjectExpression
-                                  )
-                              );
+                    isSearchPageDisabled =
+                        configObjectExpression !== null &&
+                        isSearchPageExplicitlyDisabled(configObjectExpression);
                 },
             };
         },
@@ -89,8 +85,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
         meta: {
             deprecated: false,
             docs: {
+                configs: [],
                 description:
-                    "disallow linking theme-config navbar or footer items to the default search page when no known search provider is configured.",
+                    "disallow theme-config navbar or footer links to `/search` when search page support is explicitly disabled.",
                 frozen: false,
                 presets: [
                     "config",
@@ -100,17 +97,16 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "experimental",
                 ],
                 recommended: true,
-                requiresTypeChecking: false,
-                url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-search-link-without-search-provider",
+                url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-search-page-link-when-search-page-disabled",
             },
             messages: {
-                noSearchLinkWithoutSearchProvider:
-                    "Do not link to `/search` from theme-config navbar or footer items unless a known search provider is configured for the site.",
+                noSearchPageLinkWhenSearchPageDisabled:
+                    "Do not link to `/search` from theme-config navbar or footer items when `searchPagePath` is explicitly disabled with `false`.",
             },
             schema: [],
             type: "problem",
         },
-        name: "no-search-link-without-search-provider",
+        name: "no-search-page-link-when-search-page-disabled",
     });
 
 export default rule;

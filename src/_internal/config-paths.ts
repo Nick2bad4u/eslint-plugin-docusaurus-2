@@ -14,6 +14,7 @@ import {
     getStaticStringValue,
 } from "./docusaurus-config-ast.js";
 
+/** Resolved static path information extracted from config-authored input. */
 export type StaticConfiguredPathResolution = Readonly<{
     configuredPath: string;
     resolutionKind: ResolutionKind;

@@ -28,7 +28,6 @@ export type RuleDocsMetadata = Readonly<{
     description: string;
     presetNames: readonly PresetConfigName[];
     recommended: boolean;
-    requiresTypeChecking: boolean;
     ruleId: string;
     ruleNumber: number;
     url: string;
@@ -45,7 +44,7 @@ type PluginRuleDocsContract = Readonly<{
     description: string;
     presets: PresetConfigName | readonly PresetConfigName[];
     recommended: boolean;
-    requiresTypeChecking: boolean;
+    requiresTypeChecking?: boolean;
     ruleId: string;
     ruleNumber: number;
     url: string;
@@ -187,7 +186,10 @@ const getRuleDocsContract = (
         );
     }
 
-    if (typeof requiresTypeChecking !== "boolean") {
+    if (
+        requiresTypeChecking !== undefined &&
+        typeof requiresTypeChecking !== "boolean"
+    ) {
         throw new TypeError(
             `Rule '${ruleName}' must declare boolean docs.requiresTypeChecking.`
         );
@@ -249,7 +251,9 @@ const getRuleDocsContract = (
             description,
             presets,
             recommended,
-            requiresTypeChecking,
+            ...(requiresTypeChecking === undefined
+                ? {}
+                : { requiresTypeChecking }),
             ruleId,
             ruleNumber,
             url,
@@ -279,7 +283,7 @@ const getRuleDocsContract = (
         description,
         presets: normalizedPresetNames,
         recommended,
-        requiresTypeChecking,
+        ...(requiresTypeChecking === undefined ? {} : { requiresTypeChecking }),
         ruleId,
         ruleNumber,
         url,
@@ -308,7 +312,6 @@ export const deriveRuleDocsMetadataByName = <RuleName extends string>(
             description: ruleDocsContract.description,
             presetNames,
             recommended: ruleDocsContract.recommended,
-            requiresTypeChecking: ruleDocsContract.requiresTypeChecking,
             ruleId: ruleDocsContract.ruleId,
             ruleNumber: ruleDocsContract.ruleNumber,
             url: ruleDocsContract.url,
@@ -350,21 +353,4 @@ export const deriveRulePresetMembershipByRuleName = <RuleName extends string>(
     }
 
     return membershipByRuleName;
-};
-
-/** Collect the subset of rules that require full TypeScript type information. */
-export const deriveTypeCheckedRuleNameSet = <RuleName extends string>(
-    ruleDocsMetadataByName: RuleDocsMetadataByName<RuleName>
-): ReadonlySet<RuleName> => {
-    const ruleNames = new Set<RuleName>();
-
-    for (const [ruleName, metadata] of objectEntries(ruleDocsMetadataByName)) {
-        if (!metadata.requiresTypeChecking) {
-            continue;
-        }
-
-        ruleNames.add(ruleName);
-    }
-
-    return ruleNames;
 };

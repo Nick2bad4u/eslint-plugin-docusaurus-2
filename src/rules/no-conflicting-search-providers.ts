@@ -9,11 +9,9 @@ import {
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
 import {
-    algoliaThemeConfigPropertyName,
-    docsearchThemeConfigPropertyName,
     findLocalSearchPluginConfigurations,
+    getEffectiveSearchThemeConfigProperty,
     getPluginConfigurationSpecifierNode,
-    getThemeConfigSearchProperties,
 } from "../_internal/search-config.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
@@ -38,14 +36,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    const { algoliaProperty, docsearchProperty } =
-                        getThemeConfigSearchProperties(configObjectExpression);
+                    const effectiveSearchConfigProperty =
+                        getEffectiveSearchThemeConfigProperty(
+                            configObjectExpression
+                        );
                     const searchConfigKey =
-                        docsearchProperty === null
-                            ? algoliaProperty === null
-                                ? null
-                                : `themeConfig.${algoliaThemeConfigPropertyName}`
-                            : `themeConfig.${docsearchThemeConfigPropertyName}`;
+                        effectiveSearchConfigProperty?.keyLabel ?? null;
 
                     if (searchConfigKey === null) {
                         return;

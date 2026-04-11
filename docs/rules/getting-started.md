@@ -47,6 +47,9 @@ The plugin also exposes two non-preset content configs:
 
 Those use the plugin's text-content parser so content migration and docs-content rules stay opt-in instead of being mixed into the normal JS/TS preset ladder.
 
+`strict-mdx-upgrade` is intentionally scoped to the **Docusaurus 3.10 MDX syntax migration** rules only.
+The earlier 3.8 and 3.9 release-upgrade rules stay in the normal config-level preset ladder.
+
 `strict-mdx-upgrade` is intentionally scoped to the **3.10 MDX syntax migration** rules only.
 The 3.8 and 3.9 upgrade rules remain normal config-level rules in the regular preset ladder.
 

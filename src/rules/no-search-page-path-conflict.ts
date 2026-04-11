@@ -11,8 +11,8 @@ import {
 } from "../_internal/docusaurus-config-ast.js";
 import {
     getConfiguredSearchPagePath,
+    getEffectiveSearchThemeConfigProperty,
     getSearchPagePathConflictCandidates,
-    getThemeConfigSearchProperties,
 } from "../_internal/search-config.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
@@ -47,12 +47,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const searchConfigNode = (() => {
-                        const { algoliaProperty, docsearchProperty } =
-                            getThemeConfigSearchProperties(
+                        const effectiveSearchConfigProperty =
+                            getEffectiveSearchThemeConfigProperty(
                                 configObjectExpression
                             );
                         const searchConfigProperty =
-                            docsearchProperty ?? algoliaProperty;
+                            effectiveSearchConfigProperty?.property;
 
                         if (
                             searchConfigProperty?.value.type !==

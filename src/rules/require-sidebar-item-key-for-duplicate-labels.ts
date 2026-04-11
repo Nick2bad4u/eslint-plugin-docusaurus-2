@@ -122,94 +122,101 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    const visitNode = (node: Readonly<TSESTree.Node>): void => {
-                        if (node.type === "ArrayExpression") {
-                            visitArrayExpression(node);
+                    const sidebarRootObjectExpression = rootObjectExpression;
 
-                            return;
-                        }
-
-                        if (node.type !== "ObjectExpression") {
-                            return;
-                        }
-
-                        for (const property of node.properties) {
+                    const visitors = {
+                        visitArrayExpression(
+                            arrayExpression: Readonly<TSESTree.ArrayExpression>
+                        ): void {
                             if (
-                                property.type === "Property" &&
-                                property.value.type === "ArrayExpression"
+                                isSidebarItemsArrayExpression(
+                                    arrayExpression,
+                                    sidebarRootObjectExpression
+                                )
                             ) {
-                                visitArrayExpression(property.value);
-                            }
-                        }
-                    };
+                                const labeledItems = getSidebarLabeledItems(
+                                    arrayExpression,
+                                    programNode
+                                );
+                                const duplicateGroups = new Map<
+                                    string,
+                                    SidebarLabeledItem[]
+                                >();
 
-                    const visitArrayExpression = (
-                        arrayExpression: Readonly<TSESTree.ArrayExpression>
-                    ): void => {
-                        if (
-                            isSidebarItemsArrayExpression(
-                                arrayExpression,
-                                rootObjectExpression
-                            )
-                        ) {
-                            const labeledItems = getSidebarLabeledItems(
-                                arrayExpression,
-                                programNode
-                            );
-                            const duplicateGroups = new Map<
-                                string,
-                                SidebarLabeledItem[]
-                            >();
+                                for (const item of labeledItems) {
+                                    const normalizedLabel =
+                                        normalizeLabelForComparison(item.label);
+                                    const group =
+                                        duplicateGroups.get(normalizedLabel) ??
+                                        [];
 
-                            for (const item of labeledItems) {
-                                const normalizedLabel =
-                                    normalizeLabelForComparison(item.label);
-                                const group =
-                                    duplicateGroups.get(normalizedLabel) ?? [];
-
-                                group.push(item);
-                                duplicateGroups.set(normalizedLabel, group);
-                            }
-
-                            for (const duplicateItems of duplicateGroups.values()) {
-                                if (duplicateItems.length < 2) {
-                                    continue;
+                                    group.push(item);
+                                    duplicateGroups.set(normalizedLabel, group);
                                 }
 
-                                for (const item of duplicateItems) {
-                                    if (
-                                        findObjectPropertyByName(
-                                            item.objectExpression,
-                                            "key"
-                                        ) !== null
-                                    ) {
+                                for (const duplicateItems of duplicateGroups.values()) {
+                                    if (duplicateItems.length < 2) {
                                         continue;
                                     }
 
-                                    context.report({
-                                        data: { label: item.label },
-                                        messageId:
-                                            "requireSidebarItemKeyForDuplicateLabels",
-                                        node: item.labelExpression,
-                                    });
+                                    for (const item of duplicateItems) {
+                                        if (
+                                            findObjectPropertyByName(
+                                                item.objectExpression,
+                                                "key"
+                                            ) !== null
+                                        ) {
+                                            continue;
+                                        }
+
+                                        context.report({
+                                            data: { label: item.label },
+                                            messageId:
+                                                "requireSidebarItemKeyForDuplicateLabels",
+                                            node: item.labelExpression,
+                                        });
+                                    }
                                 }
                             }
-                        }
 
-                        for (const element of arrayExpression.elements) {
-                            if (element?.type === "ArrayExpression") {
-                                visitArrayExpression(element);
+                            for (const element of arrayExpression.elements) {
+                                if (element?.type === "ArrayExpression") {
+                                    visitors.visitArrayExpression(element);
+                                }
+
+                                if (element?.type !== "ObjectExpression") {
+                                    continue;
+                                }
+
+                                visitors.visitNode(element);
+                            }
+                        },
+
+                        visitNode(node: Readonly<TSESTree.Node>): void {
+                            if (node.type === "ArrayExpression") {
+                                visitors.visitArrayExpression(node);
+
+                                return;
                             }
 
-                            if (element?.type !== "ObjectExpression") {
-                                continue;
+                            if (node.type !== "ObjectExpression") {
+                                return;
                             }
 
-                            visitNode(element);
-                        }
+                            for (const property of node.properties) {
+                                if (
+                                    property.type === "Property" &&
+                                    property.value.type === "ArrayExpression"
+                                ) {
+                                    visitors.visitArrayExpression(
+                                        property.value
+                                    );
+                                }
+                            }
+                        },
                     };
 
-                    visitNode(rootObjectExpression);
+                    visitors.visitNode(sidebarRootObjectExpression);
                 },
             };
         },

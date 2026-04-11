@@ -14,6 +14,7 @@ import {
     getObjectPropertyValueByName,
     getStaticBooleanValueFromExpressionOrIdentifier,
     getStaticStringValueFromExpressionOrIdentifier,
+    isInternalRouteLikeValue,
 } from "./docusaurus-config-ast.js";
 import {
     findTopLevelModuleConfigurationsByName,
@@ -62,6 +63,11 @@ export type ConfiguredSearchProviderKind =
     | "algolia-theme-config"
     | "docsearch-theme-config"
     | "local-search-plugin";
+/** Resolved effective search config property and its public key label. */
+export type EffectiveSearchThemeConfigProperty = Readonly<{
+    keyLabel: `themeConfig.${SearchThemeConfigPropertyName}`;
+    property: Readonly<TSESTree.Property>;
+}>;
 /** Union of supported community local-search module names. */
 export type LocalSearchPluginModuleName =
     (typeof localSearchPluginModuleNames)[number];
@@ -80,6 +86,7 @@ export type SearchPagePathConflictCandidate = Readonly<{
 export type SearchThemeConfigPropertyName =
     | typeof algoliaThemeConfigPropertyName
     | typeof docsearchThemeConfigPropertyName;
+
 /** Resolved search-provider properties from a Docusaurus `themeConfig` object. */
 export type ThemeConfigSearchProperties = Readonly<{
     algoliaProperty: null | Readonly<TSESTree.Property>;
@@ -140,6 +147,28 @@ export const getThemeConfigSearchProperties = (
     };
 };
 
+/** Resolve the effective search config property, preferring `docsearch`. */
+export const getEffectiveSearchThemeConfigProperty = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+): EffectiveSearchThemeConfigProperty | null => {
+    const { algoliaProperty, docsearchProperty } =
+        getThemeConfigSearchProperties(configObjectExpression);
+
+    if (docsearchProperty !== null) {
+        return {
+            keyLabel: `themeConfig.${docsearchThemeConfigPropertyName}`,
+            property: docsearchProperty,
+        };
+    }
+
+    return algoliaProperty === null
+        ? null
+        : {
+              keyLabel: `themeConfig.${algoliaThemeConfigPropertyName}`,
+              property: algoliaProperty,
+          };
+};
+
 /** Find configured local-search provider entries across `plugins` and `themes`. */
 export const findLocalSearchPluginConfigurations = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>
@@ -169,6 +198,11 @@ export const normalizeRoutePath = (value: string): string => {
 
     return normalizedValue;
 };
+
+/** Check whether a static route value targets the default search page. */
+export const isDefaultSearchPageRouteValue = (value: string): boolean =>
+    isInternalRouteLikeValue(value) &&
+    normalizeRoutePath(value) === defaultSearchPagePath;
 
 /** Determine whether search config is meaningfully configured in this file. */
 export const getConfiguredSearchProviderKinds = (
@@ -203,9 +237,10 @@ export const getConfiguredSearchPagePath = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
     programNode: Readonly<TSESTree.Program>
 ): null | string => {
-    const { algoliaProperty, docsearchProperty } =
-        getThemeConfigSearchProperties(configObjectExpression);
-    const searchConfigProperty = docsearchProperty ?? algoliaProperty;
+    const effectiveSearchConfigProperty = getEffectiveSearchThemeConfigProperty(
+        configObjectExpression
+    );
+    const searchConfigProperty = effectiveSearchConfigProperty?.property;
 
     if (searchConfigProperty?.value.type !== "ObjectExpression") {
         return null;
@@ -237,6 +272,31 @@ export const getConfiguredSearchPagePath = (
     return staticStringValue === null
         ? null
         : normalizeRoutePath(staticStringValue);
+};
+
+/** Determine whether search page support is explicitly disabled with `false`. */
+export const isSearchPageExplicitlyDisabled = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>
+): boolean => {
+    const effectiveSearchConfigProperty = getEffectiveSearchThemeConfigProperty(
+        configObjectExpression
+    );
+    const searchConfigProperty = effectiveSearchConfigProperty?.property;
+
+    if (searchConfigProperty?.value.type !== "ObjectExpression") {
+        return false;
+    }
+
+    const searchPagePathExpression = getObjectPropertyValueByName(
+        searchConfigProperty.value,
+        "searchPagePath"
+    );
+
+    return (
+        searchPagePathExpression !== null &&
+        searchPagePathExpression.type === "Literal" &&
+        searchPagePathExpression.value === false
+    );
 };
 
 /** Collect route-base-path values that can conflict with a search page path. */
