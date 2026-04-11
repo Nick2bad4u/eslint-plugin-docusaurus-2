@@ -4,6 +4,7 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { createImportedTypeReferenceMatcher } from "../_internal/imported-type-reference-matcher.js";
 import { isTypeScriptDocusaurusSidebarFilePath } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -11,13 +12,6 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 
 type MessageIds = "preferSidebarsConfigSatisfies";
-
-const isSidebarsConfigTypeReference = (
-    typeNode: Readonly<TSESTree.TypeNode>
-): typeNode is TSESTree.TSTypeReference & { typeName: TSESTree.Identifier } =>
-    typeNode.type === "TSTypeReference" &&
-    typeNode.typeName.type === "Identifier" &&
-    typeNode.typeName.name === "SidebarsConfig";
 
 const createSatisfiesText = (
     context: Readonly<TSESLint.RuleContext<MessageIds, typeof defaultOptions>>,
@@ -38,6 +32,13 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             if (!isTypeScriptDocusaurusSidebarFilePath(context.filename)) {
                 return {};
             }
+
+            const isSidebarsConfigTypeReference =
+                createImportedTypeReferenceMatcher(context.sourceCode.ast, {
+                    fallbackTypeNames: ["SidebarsConfig"],
+                    importSource: "@docusaurus/plugin-content-docs",
+                    typeName: "SidebarsConfig",
+                });
 
             return {
                 ExportDefaultDeclaration(

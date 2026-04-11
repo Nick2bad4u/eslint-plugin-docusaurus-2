@@ -4,6 +4,7 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { createImportedTypeReferenceMatcher } from "../_internal/imported-type-reference-matcher.js";
 import { isTypeScriptDocusaurusConfigFilePath } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -11,13 +12,6 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 
 type MessageIds = "preferConfigSatisfies";
-
-const isConfigTypeReference = (
-    typeNode: Readonly<TSESTree.TypeNode>
-): typeNode is TSESTree.TSTypeReference & { typeName: TSESTree.Identifier } =>
-    typeNode.type === "TSTypeReference" &&
-    typeNode.typeName.type === "Identifier" &&
-    typeNode.typeName.name === "Config";
 
 const createSatisfiesText = (
     context: Readonly<TSESLint.RuleContext<MessageIds, typeof defaultOptions>>,
@@ -38,6 +32,15 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             if (!isTypeScriptDocusaurusConfigFilePath(context.filename)) {
                 return {};
             }
+
+            const isConfigTypeReference = createImportedTypeReferenceMatcher(
+                context.sourceCode.ast,
+                {
+                    fallbackTypeNames: ["Config"],
+                    importSource: "@docusaurus/types",
+                    typeName: "Config",
+                }
+            );
 
             return {
                 ExportDefaultDeclaration(

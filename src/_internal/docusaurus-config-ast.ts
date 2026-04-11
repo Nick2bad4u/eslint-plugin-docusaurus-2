@@ -377,7 +377,9 @@ export const getObjectPropertyValueByName = (
 
     return property === null
         ? null
-        : safeCastTo<Readonly<TSESTree.Expression>>(property.value);
+        : unwrapTransparentExpression(
+              safeCastTo<Readonly<TSESTree.Expression>>(property.value)
+          );
 };
 
 /**
@@ -385,14 +387,24 @@ export const getObjectPropertyValueByName = (
  */
 export const getObjectExpressionPropertyValueByName = (
     objectExpression: Readonly<TSESTree.ObjectExpression>,
-    propertyName: string
+    propertyName: string,
+    programNode?: Readonly<TSESTree.Program>
 ): null | Readonly<TSESTree.ObjectExpression> => {
     const propertyValue = getObjectPropertyValueByName(
         objectExpression,
         propertyName
     );
 
-    return propertyValue?.type === "ObjectExpression" ? propertyValue : null;
+    if (propertyValue === null) {
+        return null;
+    }
+
+    return programNode === undefined
+        ? getObjectExpressionFromExpression(propertyValue)
+        : getObjectExpressionFromExpressionOrIdentifier(
+              propertyValue,
+              programNode
+          );
 };
 
 /**
@@ -400,14 +412,26 @@ export const getObjectExpressionPropertyValueByName = (
  */
 export const getArrayExpressionPropertyValueByName = (
     objectExpression: Readonly<TSESTree.ObjectExpression>,
-    propertyName: string
+    propertyName: string,
+    programNode?: Readonly<TSESTree.Program>
 ): null | Readonly<TSESTree.ArrayExpression> => {
     const propertyValue = getObjectPropertyValueByName(
         objectExpression,
         propertyName
     );
 
-    return propertyValue?.type === "ArrayExpression" ? propertyValue : null;
+    if (propertyValue === null) {
+        return null;
+    }
+
+    return programNode === undefined
+        ? propertyValue.type === "ArrayExpression"
+            ? propertyValue
+            : null
+        : getArrayExpressionFromExpressionOrIdentifier(
+              propertyValue,
+              programNode
+          );
 };
 
 /**
@@ -455,15 +479,20 @@ export const findNestedObjectPropertyByNamePath = (
 export const getStaticStringValue = (
     expression: Readonly<TSESTree.Expression>
 ): null | string => {
-    if (expression.type === "Literal" && typeof expression.value === "string") {
-        return expression.value;
+    const unwrappedExpression = unwrapTransparentExpression(expression);
+
+    if (
+        unwrappedExpression.type === "Literal" &&
+        typeof unwrappedExpression.value === "string"
+    ) {
+        return unwrappedExpression.value;
     }
 
     if (
-        expression.type === "TemplateLiteral" &&
-        expression.expressions.length === 0
+        unwrappedExpression.type === "TemplateLiteral" &&
+        unwrappedExpression.expressions.length === 0
     ) {
-        return expression.quasis[0]?.value.cooked ?? null;
+        return unwrappedExpression.quasis[0]?.value.cooked ?? null;
     }
 
     return null;
@@ -505,19 +534,29 @@ export const getStaticBooleanValueFromExpressionOrIdentifier = (
     expression: Readonly<TSESTree.Expression>,
     programNode: Readonly<TSESTree.Program>
 ): boolean | null | undefined => {
+    const unwrappedExpression = unwrapTransparentExpression(expression);
+
     if (
-        expression.type === "Literal" &&
-        typeof expression.value === "boolean"
+        unwrappedExpression.type === "Literal" &&
+        typeof unwrappedExpression.value === "boolean"
     ) {
-        return expression.value;
+        return unwrappedExpression.value;
     }
 
-    if (expression.type !== "Identifier") {
+    if (
+        unwrappedExpression.type === "Literal" ||
+        (unwrappedExpression.type === "TemplateLiteral" &&
+            unwrappedExpression.expressions.length === 0)
+    ) {
+        return null;
+    }
+
+    if (unwrappedExpression.type !== "Identifier") {
         return undefined;
     }
 
     const resolvedExpression = resolveExpressionForIdentifier(
-        expression.name,
+        unwrappedExpression.name,
         programNode
     );
 
@@ -525,16 +564,10 @@ export const getStaticBooleanValueFromExpressionOrIdentifier = (
         return undefined;
     }
 
-    if (resolvedExpression.type === "Literal") {
-        return typeof resolvedExpression.value === "boolean"
-            ? resolvedExpression.value
-            : null;
-    }
-
-    return resolvedExpression.type === "TemplateLiteral" &&
-        resolvedExpression.expressions.length === 0
-        ? null
-        : undefined;
+    return getStaticBooleanValueFromExpressionOrIdentifier(
+        resolvedExpression,
+        programNode
+    );
 };
 
 /**
@@ -545,11 +578,20 @@ export const getExpressionFromExpressionOrIdentifier = (
     expression: Readonly<TSESTree.Expression>,
     programNode: Readonly<TSESTree.Program>
 ): null | Readonly<TSESTree.Expression> => {
-    if (expression.type !== "Identifier") {
-        return expression;
+    const unwrappedExpression = unwrapTransparentExpression(expression);
+
+    if (unwrappedExpression.type !== "Identifier") {
+        return unwrappedExpression;
     }
 
-    return resolveExpressionForIdentifier(expression.name, programNode);
+    const resolvedExpression = resolveExpressionForIdentifier(
+        unwrappedExpression.name,
+        programNode
+    );
+
+    return resolvedExpression === null
+        ? null
+        : unwrapTransparentExpression(resolvedExpression);
 };
 
 /**

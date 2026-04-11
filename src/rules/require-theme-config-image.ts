@@ -37,7 +37,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const themeConfigObject =
                         getObjectExpressionPropertyValueByName(
                             configObjectExpression,
-                            "themeConfig"
+                            "themeConfig",
+                            programNode
                         );
 
                     if (themeConfigObject === null) {
