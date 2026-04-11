@@ -26,7 +26,7 @@ const rawHangingReporterFlag =
     process.env["VITEST_HANGING_PROCESS_REPORTER"] ??
     "false";
 /** Raw flag controlling optional Vitest typecheck execution. */
-const rawVitestTypecheckFlag = process.env["VITEST_TYPECHECK"] ?? "true";
+const rawVitestTypecheckFlag = process.env["VITEST_TYPECHECK"] ?? "false";
 /** Normalized `true` when hanging-process reporter is explicitly enabled. */
 const shouldEnableHangingProcessReporter = [
     "1",

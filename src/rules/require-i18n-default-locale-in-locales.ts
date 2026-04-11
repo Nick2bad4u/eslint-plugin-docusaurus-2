@@ -300,7 +300,6 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "experimental",
                 ],
                 recommended: false,
-                requiresTypeChecking: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-i18n-default-locale-in-locales",
             },
             fixable: "code",

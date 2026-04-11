@@ -148,7 +148,6 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "experimental",
                 ],
                 recommended: true,
-                requiresTypeChecking: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-future-experimental-storage",
             },
             fixable: "code",

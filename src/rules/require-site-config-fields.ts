@@ -235,7 +235,6 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                 "experimental",
             ],
             recommended: false,
-            requiresTypeChecking: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-config-fields",
         },
         messages: {

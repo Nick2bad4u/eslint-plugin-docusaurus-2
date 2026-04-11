@@ -137,7 +137,6 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     "experimental",
                 ],
                 recommended: true,
-                requiresTypeChecking: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-rspack-bundler-for-faster-persistent-cache",
             },
             fixable: "code",
