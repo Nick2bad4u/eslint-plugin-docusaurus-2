@@ -1,7 +1,7 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
     "name": "eslint-plugin-docusaurus-2",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "private": false,
     "description": "ESLint plugin for Docusaurus sites, docs repositories, and TypeDoc-integrated documentation workflows.",
     "keywords": [
