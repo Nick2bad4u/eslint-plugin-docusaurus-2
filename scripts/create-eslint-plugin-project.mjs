@@ -459,6 +459,7 @@ function chunkArray(arr, chunkSize) {
  * @returns {string}
  */
 function prettyCmd(cmd, args) {
+    /** @param {string} argument */
     const formatArgument = (argument) =>
         argument.includes(" ") ? `"${argument}"` : argument;
 

@@ -388,6 +388,9 @@ const getHeadingsByDepth = (tree, depth) =>
  * @returns {(tree: Node, file: VFile) => void}
  */
 export default function remarkLintRuleDocHeadings(options = {}) {
+    /** @type {Readonly<
+    Record<keyof typeof defaultHeadingToggles, HeadingToggle>
+>} */
     const headingToggles = {
         ...defaultHeadingToggles,
         ...(options.headings ?? emptyHeadingOverrides),
