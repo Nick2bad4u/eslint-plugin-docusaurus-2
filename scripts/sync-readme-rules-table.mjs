@@ -187,7 +187,7 @@ const createAdditionalConfigSurfaceLabel = (configName) => {
 /** @returns {readonly string[]} */
 const createAdditionalConfigLegendLines = () =>
     Object.entries(additionalConfigMetadataByName).map(
-        ([configName, metadata]) =>
+        ([, metadata]) =>
             `  - [${metadata.icon}](${CONFIG_SURFACES_DOCS_URL}) — [\`${metadata.reference}\`](${CONFIG_SURFACES_DOCS_URL})`
     );
 
