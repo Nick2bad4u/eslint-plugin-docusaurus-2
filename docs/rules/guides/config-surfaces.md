@@ -19,7 +19,7 @@ Use these when you want Docusaurus config, theme, sidebar, routing, and package-
 
 The plugin also exports content-aware configs outside the preset ladder.
 
-### `docusaurus2.configs.content`
+### 📝 `docusaurus2.configs.content`
 
 Use this when you want rules that inspect Markdown or MDX content directly.
 
@@ -28,11 +28,9 @@ Current examples include:
 - MDX migration rules
 - Mermaid content and package checks
 
-### `docusaurus2.configs["strict-mdx-upgrade"]`
+### 🧭 `docusaurus2.configs["strict-mdx-upgrade"]`
 
 Use this narrower config when you only want the Docusaurus 3.10 strict-MDX migration rules for `.mdx` files.
-
-The earlier 3.8 and 3.9 release-upgrade rules are config-level rules, so they stay in the normal preset ladder instead of this MDX-only config.
 
 The earlier 3.8 and 3.9 release-upgrade rules are config-level rules, so they stay in the normal preset ladder instead of this MDX-only config.
 

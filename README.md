@@ -2,6 +2,8 @@
 
 [![npm license.](https://flat.badgen.net/npm/license/eslint-plugin-docusaurus-2?color=purple)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/blob/main/LICENSE) [![npm total downloads.](https://flat.badgen.net/npm/dt/eslint-plugin-docusaurus-2?color=pink)](https://www.npmjs.com/package/eslint-plugin-docusaurus-2) [![latest GitHub release.](https://flat.badgen.net/github/release/Nick2bad4u/eslint-plugin-docusaurus-2?color=cyan)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/releases) [![GitHub stars.](https://flat.badgen.net/github/stars/Nick2bad4u/eslint-plugin-docusaurus-2?color=yellow)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/stargazers) [![GitHub forks.](https://flat.badgen.net/github/forks/Nick2bad4u/eslint-plugin-docusaurus-2?color=green)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/forks) [![GitHub open issues.](https://flat.badgen.net/github/open-issues/Nick2bad4u/eslint-plugin-docusaurus-2?color=red)](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/issues) [![codecov.](https://flat.badgen.net/codecov/github/Nick2bad4u/eslint-plugin-docusaurus-2?color=blue)](https://codecov.io/gh/Nick2bad4u/eslint-plugin-docusaurus-2)
 
+---
+
 `eslint-plugin-docusaurus-2` is an ESLint plugin for Docusaurus sites, docs repositories, and TypeDoc-integrated documentation workflows.
 
 It ships focused Docusaurus-specific rules and Flat Config presets for teams that want stricter guarantees around:
@@ -9,12 +11,14 @@ It ships focused Docusaurus-specific rules and Flat Config presets for teams tha
 - `docusaurus.config.*`
 - theme config (`navbar`, `footer`, `metadata`, `colorMode`, announcement bars)
 - classic-theme global stylesheet configuration
-- search integrations (Algolia DocSearch and local-search providers)
+- search integrations (<ins>Algolia DocSearch</ins> and <ins>@easyops-cn/docusaurus-search-local</ins>)
 - package ownership checks for configured themes and search providers
 - analytics migrations and modern telemetry config
 - sidebars and docs navigation
 - pages, routing, and asset usage
 - plugin-pwa and docs-site integration details
+- Markdown and MDX content hygiene and Docusaurus 3.10 strict-MDX migration
+- and more to come!
 
 ## Table of contents
 
@@ -60,7 +64,6 @@ That is enough for the plugin to provide:
 - the `docusaurus-2` plugin namespace
 - parser wiring through `@typescript-eslint/parser`
 - a stable Flat Config preset surface
-- a generated rules matrix that stays aligned with shipped rule metadata
 
 ## Presets
 
@@ -77,10 +80,10 @@ This plugin currently exports six public presets:
 
 It also exports two opt-in content configs that are intentionally kept outside the preset ladder:
 
-| Config                                      | Scope          | Purpose                                                              |
-| ------------------------------------------- | -------------- | -------------------------------------------------------------------- |
-| `docusaurus2.configs.content`               | `*.md`/`*.mdx` | Enable text/content-aware docs rules without touching JS/TS presets. |
-| `docusaurus2.configs["strict-mdx-upgrade"]` | `*.mdx`        | Enable the Docusaurus 3.10 strict-MDX syntax migration rules only.   |
+| Config                                                                                   | Scope          | Purpose                                                              |
+| ---------------------------------------------------------------------------------------- | -------------- | -------------------------------------------------------------------- |
+| [📝 `docusaurus2.configs.content`](./docs/rules/guides/config-surfaces.md)               | `*.md`/`*.mdx` | Enable text/content-aware docs rules without touching JS/TS presets. |
+| [🧭 `docusaurus2.configs["strict-mdx-upgrade"]`](./docs/rules/guides/config-surfaces.md) | `*.mdx`        | Enable the Docusaurus 3.10 strict-MDX syntax migration rules only.   |
 
 ## Additional opt-in content configs
 
@@ -282,6 +285,10 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 ### Opt-in rules
 
 These rules are intentionally outside the six preset tiers. Some are available through opt-in content configs; others are direct rule opt-ins only.
+
+- `Config surface` legend:
+  - [📝](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/guides/config-surfaces) — [`docusaurus2.configs.content`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/guides/config-surfaces)
+  - [🧭](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/guides/config-surfaces) — [`docusaurus2.configs["strict-mdx-upgrade"]`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/guides/config-surfaces)
 
 | Rule | Fix | Config surface |
 | --- | :-: | --- |

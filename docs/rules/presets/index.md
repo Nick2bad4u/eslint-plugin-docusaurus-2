@@ -164,6 +164,10 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 
 These rules are intentionally outside the preset ladder. Some are enabled through opt-in content configs; others are direct rule opt-ins only.
 
+- `Config surface` legend:
+  - [📝](../guides/config-surfaces.md) — [`docusaurus2.configs.content`](../guides/config-surfaces.md)
+  - [🧭](../guides/config-surfaces.md) — [`docusaurus2.configs["strict-mdx-upgrade"]`](../guides/config-surfaces.md)
+
 | Rule | Fix | Config surface |
 | --- | :-: | --- |
 | [`local-search-will-not-work-in-dev`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/local-search-will-not-work-in-dev) | — | direct rule opt-in only |

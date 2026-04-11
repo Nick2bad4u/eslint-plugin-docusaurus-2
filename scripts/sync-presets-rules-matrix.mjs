@@ -220,6 +220,13 @@ const createAdditionalConfigSurfaceLabel = (configName) => {
     return `[${metadata.icon}](${CONFIG_SURFACES_DOCS_PATH}) [\`${metadata.reference}\`](${CONFIG_SURFACES_DOCS_PATH})`;
 };
 
+/** @returns {readonly string[]} */
+const createAdditionalConfigLegendLines = () =>
+    Object.entries(additionalConfigMetadataByName).map(
+        ([configName, metadata]) =>
+            `  - [${metadata.icon}](${CONFIG_SURFACES_DOCS_PATH}) — [\`${metadata.reference}\`](${CONFIG_SURFACES_DOCS_PATH})`
+    );
+
 /** @param {PresetsRuleModule} ruleModule */
 const getRuleFixIndicator = (ruleModule) => {
     const fixable = ruleModule.meta?.fixable === "code";
@@ -337,6 +344,9 @@ export const generatePresetsRulesMatrixSectionFromRules = (rules) =>
         "### Opt-in rules",
         "",
         "These rules are intentionally outside the preset ladder. Some are enabled through opt-in content configs; others are direct rule opt-ins only.",
+        "",
+        "- `Config surface` legend:",
+        ...createAdditionalConfigLegendLines(),
         "",
         "| Rule | Fix | Config surface |",
         "| --- | :-: | --- |",

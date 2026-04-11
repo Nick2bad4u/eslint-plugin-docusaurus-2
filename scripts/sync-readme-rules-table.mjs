@@ -184,6 +184,13 @@ const createAdditionalConfigSurfaceLabel = (configName) => {
     return `[${metadata.icon} \`${metadata.reference}\`](${CONFIG_SURFACES_DOCS_URL})`;
 };
 
+/** @returns {readonly string[]} */
+const createAdditionalConfigLegendLines = () =>
+    Object.entries(additionalConfigMetadataByName).map(
+        ([configName, metadata]) =>
+            `  - [${metadata.icon}](${CONFIG_SURFACES_DOCS_URL}) — [\`${metadata.reference}\`](${CONFIG_SURFACES_DOCS_URL})`
+    );
+
 /** @param {ReadmeRuleModule} ruleModule */
 const getRuleFixIndicator = (ruleModule) => {
     const fixable = ruleModule.meta?.fixable === "code";
@@ -402,6 +409,9 @@ export const generateReadmeRulesSectionFromRules = (rules) => {
         "### Opt-in rules",
         "",
         "These rules are intentionally outside the six preset tiers. Some are available through opt-in content configs; others are direct rule opt-ins only.",
+        "",
+        "- `Config surface` legend:",
+        ...createAdditionalConfigLegendLines(),
         "",
         "| Rule | Fix | Config surface |",
         "| --- | :-: | --- |",
