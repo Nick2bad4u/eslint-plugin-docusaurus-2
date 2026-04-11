@@ -190,6 +190,61 @@ function isSidebarLinkTokenized(link: HTMLAnchorElement): boolean {
 function applySidebarLabelTokenColoring(): CleanupFunction {
     const mutations: SidebarLabelMutation[] = [];
 
+    const applyRuntimePrefixToken = (
+        link: HTMLAnchorElement,
+        linkLabel: string
+    ): boolean => {
+        const runtimePrefix = getRuntimeSidebarKindPrefix(linkLabel);
+
+        if (runtimePrefix === null) {
+            return false;
+        }
+
+        const remainderText = linkLabel.slice(runtimePrefix.length).trimStart();
+
+        if (remainderText.length === 0) {
+            return true;
+        }
+
+        mutations.push({
+            element: link,
+            originalLabel: linkLabel,
+        });
+
+        setSidebarLeadingToken({
+            link,
+            remainderText,
+            separator: "",
+            tokenClassName: "sb-inline-runtime-kind",
+            tokenText: `${runtimePrefix}\u00A0`,
+        });
+
+        return true;
+    };
+
+    const applyRuleNumberToken = (
+        link: HTMLAnchorElement,
+        linkLabel: string
+    ): void => {
+        const ruleNumberPrefix = getRuleNumberPrefix(linkLabel);
+
+        if (ruleNumberPrefix === null) {
+            return;
+        }
+
+        mutations.push({
+            element: link,
+            originalLabel: linkLabel,
+        });
+
+        setSidebarLeadingToken({
+            link,
+            remainderText: ruleNumberPrefix.remainder,
+            tokenClassName: "sb-inline-rule-number",
+            tokenText: ruleNumberPrefix.numberToken,
+        });
+    };
+
     const processLinks = (sidebarLinks: readonly HTMLAnchorElement[]): void => {
         for (const link of sidebarLinks) {
             if (isSidebarLinkTokenized(link)) {
@@ -203,50 +258,28 @@ function applySidebarLabelTokenColoring(): CleanupFunction {
             }
 
             if (isRuntimeSidebarLink(link)) {
-                const runtimePrefix = getRuntimeSidebarKindPrefix(linkLabel);
-
-                if (runtimePrefix !== null) {
-                    const remainderText = linkLabel
-                        .slice(runtimePrefix.length)
-                        .trimStart();
-
-                    if (remainderText.length > 0) {
-                        mutations.push({
-                            element: link,
-                            originalLabel: linkLabel,
-                        });
-
-                        setSidebarLeadingToken({
-                            link,
-                            remainderText,
-                            separator: "",
-                            tokenClassName: "sb-inline-runtime-kind",
-                            tokenText: `${runtimePrefix}\u00A0`,
-                        });
-                    }
-
+                if (applyRuntimePrefixToken(link, linkLabel)) {
                     continue;
                 }
             }
 
             if (isNumberedRuleSidebarLink(link)) {
-                const ruleNumberPrefix = getRuleNumberPrefix(linkLabel);
-
-                if (ruleNumberPrefix !== null) {
-                    mutations.push({
-                        element: link,
-                        originalLabel: linkLabel,
-                    });
-
-                    setSidebarLeadingToken({
-                        link,
-                        remainderText: ruleNumberPrefix.remainder,
-                        tokenClassName: "sb-inline-rule-number",
-                        tokenText: ruleNumberPrefix.numberToken,
-                    });
-                }
+                applyRuleNumberToken(link, linkLabel);
             }
         }
+    };
+
+    const collectAddedMenuLinks = (
+        addedNode: HTMLElement
+    ): readonly HTMLAnchorElement[] => {
+        const directMenuLinks = addedNode.matches("a.menu__link")
+            ? [addedNode as HTMLAnchorElement]
+            : [];
+        const nestedMenuLinks = Array.from(
+            addedNode.querySelectorAll<HTMLAnchorElement>("a.menu__link")
+        );
+
+        return [...directMenuLinks, ...nestedMenuLinks];
     };
 
     const processSidebarMenuLinks = (): void => {
@@ -292,15 +325,7 @@ function applySidebarLabelTokenColoring(): CleanupFunction {
                               continue;
                           }
 
-                          if (addedNode.matches("a.menu__link")) {
-                              addedLinks.push(addedNode as HTMLAnchorElement);
-                          }
-
-                          const nestedLinks =
-                              addedNode.querySelectorAll<HTMLAnchorElement>(
-                                  "a.menu__link"
-                              );
-                          addedLinks.push(...Array.from(nestedLinks));
+                          addedLinks.push(...collectAddedMenuLinks(addedNode));
                       }
                   }
 
@@ -430,13 +455,15 @@ function applyThemeToggleAnimation(): CleanupFunction {
  * @returns Cleanup callback for all registered enhancement handlers.
  */
 function initializeAdvancedFeatures(): CleanupFunction {
-    const prefersReducedMotion = window.matchMedia(
+    const prefersReducedMotion = globalThis.window.matchMedia(
         "(prefers-reduced-motion: reduce)"
     ).matches;
     const cleanupFunctions: CleanupFunction[] = [];
 
-    cleanupFunctions.push(createScrollIndicator());
-    cleanupFunctions.push(applySidebarLabelTokenColoring());
+    cleanupFunctions.push(
+        createScrollIndicator(),
+        applySidebarLabelTokenColoring()
+    );
 
     if (!prefersReducedMotion) {
         cleanupFunctions.push(applyThemeToggleAnimation());
@@ -492,25 +519,27 @@ function initializeEnhancements(): CleanupFunction {
     };
 
     const handleWindowLoad = (): void => {
-        window.removeEventListener("load", handleWindowLoad);
+        globalThis.window.removeEventListener("load", handleWindowLoad);
         scheduleInitialSetup();
     };
 
-    if (document.readyState === "complete") {
+    if (globalThis.document.readyState === "complete") {
         scheduleInitialSetup();
     } else {
-        window.addEventListener("load", handleWindowLoad, { once: true });
+        globalThis.window.addEventListener("load", handleWindowLoad, {
+            once: true,
+        });
     }
 
     let routeChangeTimer: null | ReturnType<typeof setTimeout> = null;
-    let previousPathname = location.pathname;
+    let previousPathname = globalThis.location.pathname;
 
     const observer = new MutationObserver(() => {
-        if (location.pathname === previousPathname) {
+        if (globalThis.location.pathname === previousPathname) {
             return;
         }
 
-        previousPathname = location.pathname;
+        previousPathname = globalThis.location.pathname;
 
         if (routeChangeTimer) {
             clearTimeout(routeChangeTimer);
@@ -537,17 +566,23 @@ function initializeEnhancements(): CleanupFunction {
         observer.disconnect();
     };
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
+    globalThis.window.addEventListener("beforeunload", handleBeforeUnload);
 
     return (): void => {
-        window.removeEventListener("beforeunload", handleBeforeUnload);
+        globalThis.window.removeEventListener(
+            "beforeunload",
+            handleBeforeUnload
+        );
         handleBeforeUnload();
     };
 }
 
-if (typeof window !== "undefined" && typeof document !== "undefined") {
+if (
+    typeof globalThis.window !== "undefined" &&
+    typeof globalThis.document !== "undefined"
+) {
     initializeEnhancements();
-    window.initializeAdvancedFeatures = initializeAdvancedFeatures;
+    globalThis.window.initializeAdvancedFeatures = initializeAdvancedFeatures;
 }
 
 export { initializeAdvancedFeatures, initializeEnhancements };

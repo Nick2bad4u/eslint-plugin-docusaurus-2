@@ -44,7 +44,47 @@ const getStaticDocId = (
 ): string | undefined => {
     const staticStringValue = getStaticStringValue(expression);
 
-    return staticStringValue === null ? undefined : staticStringValue;
+    return staticStringValue ?? undefined;
+};
+
+const getParentPropertyName = (
+    node: Readonly<TSESTree.Node>
+): null | string => {
+    const parentProperty = getParentNode(node);
+
+    return parentProperty?.type === "Property"
+        ? getObjectPropertyName(parentProperty)
+        : null;
+};
+
+const collectExplicitDocOccurrence = (
+    expression: Readonly<TSESTree.ObjectExpression>
+): DocOccurrence | null => {
+    const typeProperty = findObjectPropertyByName(expression, "type");
+    const idProperty = findObjectPropertyByName(expression, "id");
+
+    if (
+        getParentPropertyName(expression) === "link" ||
+        typeProperty === null ||
+        idProperty === null ||
+        getStaticStringValue(typeProperty.value as TSESTree.Expression) !==
+            "doc"
+    ) {
+        return null;
+    }
+
+    const docId = getStaticDocId(idProperty.value as TSESTree.Expression);
+
+    if (docId === undefined) {
+        return null;
+    }
+
+    return {
+        docId,
+        node: idProperty,
+        occurrenceKind: "explicit-doc-item",
+        typeProperty,
+    };
 };
 
 const isSidebarItemsArrayExpression = (
@@ -123,33 +163,10 @@ const collectDuplicateSidebarDocOccurrences = (
             return;
         }
 
-        const typeProperty = findObjectPropertyByName(expression, "type");
-        const idProperty = findObjectPropertyByName(expression, "id");
-        const parentProperty = getParentNode(expression);
-        const parentPropertyName =
-            parentProperty?.type === "Property"
-                ? getObjectPropertyName(parentProperty)
-                : null;
+        const explicitDocOccurrence = collectExplicitDocOccurrence(expression);
 
-        if (
-            parentPropertyName !== "link" &&
-            typeProperty !== null &&
-            idProperty !== null &&
-            getStaticStringValue(typeProperty.value as TSESTree.Expression) ===
-                "doc"
-        ) {
-            const docId = getStaticDocId(
-                idProperty.value as TSESTree.Expression
-            );
-
-            if (docId !== undefined) {
-                occurrences.push({
-                    docId,
-                    node: idProperty,
-                    occurrenceKind: "explicit-doc-item",
-                    typeProperty,
-                });
-            }
+        if (explicitDocOccurrence !== null) {
+            occurrences.push(explicitDocOccurrence);
         }
 
         for (const property of expression.properties) {
@@ -219,6 +236,23 @@ const createSuggestionsForDuplicateSidebarDocOccurrence = (
     return undefined;
 };
 
+const reportDuplicateSidebarDocOccurrence = (
+    context: Readonly<TSESLint.RuleContext<MessageIds, typeof defaultOptions>>,
+    occurrence: Readonly<DocOccurrence>
+): void => {
+    const suggestions =
+        createSuggestionsForDuplicateSidebarDocOccurrence(occurrence);
+
+    context.report({
+        data: {
+            docId: occurrence.docId,
+        },
+        messageId: "duplicateSidebarDocId",
+        node: occurrence.node,
+        suggest: suggestions === undefined ? null : suggestions,
+    });
+};
+
 /** Rule module for `no-duplicate-sidebar-doc-ids`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
@@ -257,32 +291,21 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        const suggestions =
-                            createSuggestionsForDuplicateSidebarDocOccurrence(
-                                occurrence
-                            );
-
-                        context.report({
-                            data: {
-                                docId: occurrence.docId,
-                            },
-                            messageId: "duplicateSidebarDocId",
-                            node: occurrence.node,
-                            ...(suggestions === undefined
-                                ? {}
-                                : {
-                                      suggest: suggestions,
-                                  }),
-                        });
+                        reportDuplicateSidebarDocOccurrence(
+                            context,
+                            occurrence
+                        );
                     }
                 },
             };
         },
         defaultOptions,
         meta: {
+            deprecated: false,
             docs: {
                 description:
-                    "disallow assigning the same Docusaurus doc id to multiple sidebar doc items in one sidebars file.",
+                    "disallow assigning the same doc id multiple times in Docusaurus sidebar items arrays.",
+                frozen: false,
                 presets: [
                     "strict",
                     "all",

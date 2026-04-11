@@ -127,6 +127,20 @@ const defaultPackageDocumentationLabelPattern =
 const eslintPluginPackagePrefix = "eslint-plugin-";
 
 const packageMetadataCache = new Map();
+const emptyHeadingOverrides = Object.freeze({});
+
+/**
+ * @param {readonly string[]} traversedDirectories
+ * @param {PackageMetadata | undefined} packageMetadata
+ */
+const cacheTraversedPackageMetadata = (
+    traversedDirectories,
+    packageMetadata
+) => {
+    for (const traversedDirectory of traversedDirectories) {
+        packageMetadataCache.set(traversedDirectory, packageMetadata);
+    }
+};
 
 /**
  * @param {string} documentPath
@@ -144,12 +158,10 @@ const getNearestPackageMetadata = (documentPath) => {
             const cachedPackageMetadata =
                 packageMetadataCache.get(currentDirectory);
 
-            for (const traversedDirectory of traversedDirectories) {
-                packageMetadataCache.set(
-                    traversedDirectory,
-                    cachedPackageMetadata
-                );
-            }
+            cacheTraversedPackageMetadata(
+                traversedDirectories,
+                cachedPackageMetadata
+            );
 
             return cachedPackageMetadata;
         }
@@ -167,9 +179,10 @@ const getNearestPackageMetadata = (documentPath) => {
                 packageMetadata = undefined;
             }
 
-            for (const traversedDirectory of traversedDirectories) {
-                packageMetadataCache.set(traversedDirectory, packageMetadata);
-            }
+            cacheTraversedPackageMetadata(
+                traversedDirectories,
+                packageMetadata
+            );
 
             return packageMetadata;
         }
@@ -177,9 +190,7 @@ const getNearestPackageMetadata = (documentPath) => {
         const parentDirectory = dirname(currentDirectory);
 
         if (parentDirectory === currentDirectory) {
-            for (const traversedDirectory of traversedDirectories) {
-                packageMetadataCache.set(traversedDirectory, undefined);
-            }
+            cacheTraversedPackageMetadata(traversedDirectories, undefined);
 
             return undefined;
         }
@@ -379,7 +390,7 @@ const getHeadingsByDepth = (tree, depth) =>
 export default function remarkLintRuleDocHeadings(options = {}) {
     const headingToggles = {
         ...defaultHeadingToggles,
-        ...(options.headings ?? {}),
+        ...(options.headings ?? emptyHeadingOverrides),
     };
     const helperDocPathPattern =
         options.helperDocPathPattern ?? defaultHelperDocPathPattern;
@@ -467,8 +478,12 @@ export default function remarkLintRuleDocHeadings(options = {}) {
             );
 
             if (!expectedH1Titles.includes(actualTitle)) {
+                const expectedTitlesText = expectedH1Titles
+                    .map((title) => `\`${title}\``)
+                    .join(", ");
+
                 file.message(
-                    `H1 heading must match one of: ${expectedH1Titles.map((title) => `\`${title}\``).join(", ")}.`,
+                    `H1 heading must match one of: ${expectedTitlesText}.`,
                     h1Headings[0],
                     "remark-lint:rule-doc-headings:h1-title"
                 );
@@ -702,7 +717,7 @@ export default function remarkLintRuleDocHeadings(options = {}) {
                 nextH2Heading
             );
 
-            if (!/\[[^\]]+\]\([^\)]+\)/u.test(deprecatedSectionContent)) {
+            if (!/\[[^\]]+\]\([^)\r\n]+\)/u.test(deprecatedSectionContent)) {
                 file.message(
                     "`## Deprecated` should include a link to the recommended replacement rule or package.",
                     deprecatedSectionHeading,

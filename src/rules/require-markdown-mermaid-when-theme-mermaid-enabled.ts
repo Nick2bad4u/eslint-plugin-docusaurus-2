@@ -58,12 +58,47 @@ const createInsertMarkdownMermaidFix = (
     });
 };
 
+const getMarkdownMermaidFix = (
+    context: Readonly<TSESLint.RuleContext<MessageIds, typeof defaultOptions>>,
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    markdownExpression: null | Readonly<TSESTree.Expression>,
+    markdownObject: null | Readonly<TSESTree.ObjectExpression>,
+    mermaidExpression: null | Readonly<TSESTree.Expression>,
+    mermaidEnabled: boolean | null | undefined
+): ((fixer: Readonly<TSESLint.RuleFixer>) => TSESLint.RuleFix) | null => {
+    if (markdownExpression === null) {
+        return (fixer) =>
+            createInsertTopLevelMarkdownFix(
+                fixer,
+                configObjectExpression,
+                context.sourceCode
+            );
+    }
+
+    if (markdownObject === null) {
+        return null;
+    }
+
+    if (mermaidExpression === null) {
+        return (fixer) =>
+            createInsertMarkdownMermaidFix(
+                fixer,
+                markdownObject,
+                context.sourceCode
+            );
+    }
+
+    if (mermaidEnabled === false) {
+        return (fixer) => fixer.replaceText(mermaidExpression, "true");
+    }
+
+    return null;
+};
+
 /** Rule module for `require-markdown-mermaid-when-theme-mermaid-enabled`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
         create(context) {
-            const contextSourceCode = context.sourceCode;
-
             if (!isDocusaurusConfigFilePath(context.filename)) {
                 return {};
             }
@@ -115,30 +150,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix:
-                            markdownExpression === null
-                                ? (fixer) =>
-                                      createInsertTopLevelMarkdownFix(
-                                          fixer,
-                                          configObjectExpression,
-                                          contextSourceCode
-                                      )
-                                : markdownObject === null
-                                  ? null
-                                  : mermaidExpression === null
-                                    ? (fixer) =>
-                                          createInsertMarkdownMermaidFix(
-                                              fixer,
-                                              markdownObject,
-                                              contextSourceCode
-                                          )
-                                    : mermaidEnabled === false
-                                      ? (fixer) =>
-                                            fixer.replaceText(
-                                                mermaidExpression,
-                                                "true"
-                                            )
-                                      : null,
+                        fix: getMarkdownMermaidFix(
+                            context,
+                            configObjectExpression,
+                            markdownExpression,
+                            markdownObject,
+                            mermaidExpression,
+                            mermaidEnabled
+                        ),
                         messageId:
                             "requireMarkdownMermaidWhenThemeMermaidEnabled",
                         node:

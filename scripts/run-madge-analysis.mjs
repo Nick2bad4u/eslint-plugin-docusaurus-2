@@ -7,8 +7,7 @@ import madge from "madge";
 import { resolve } from "node:path";
 
 const sourceRootPath = resolve(process.cwd(), "src");
-const excludedPathPattern =
-    "(^|[\\/])(test|dist|node_modules|cache|.cache|coverage|build|eslint-inspector|temp|.docusaurus)($|[\\/])|\\.css$";
+const excludedPathPattern = String.raw`(?:^|/|\\)(test|dist|node_modules|cache|\.cache|coverage|build|eslint-inspector|temp|\.docusaurus)(?:$|/|\\)|\.css$`;
 const madgeOptions = {
     fileExtensions: [
         "ts",
@@ -38,12 +37,24 @@ if (
 }
 
 const dependencyTree = await madge(sourceRootPath, madgeOptions);
-const analysisResult =
-    requestedMode === "circular"
-        ? await dependencyTree.circular()
-        : requestedMode === "leaves"
-          ? await dependencyTree.leaves()
-          : await dependencyTree.orphans();
+let analysisResult;
+
+switch (requestedMode) {
+    case "circular": {
+        analysisResult = await dependencyTree.circular();
+        break;
+    }
+
+    case "leaves": {
+        analysisResult = await dependencyTree.leaves();
+        break;
+    }
+
+    case "orphans": {
+        analysisResult = await dependencyTree.orphans();
+        break;
+    }
+}
 
 if (!Array.isArray(analysisResult)) {
     console.error(

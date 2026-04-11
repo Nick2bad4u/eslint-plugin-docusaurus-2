@@ -459,7 +459,10 @@ function chunkArray(arr, chunkSize) {
  * @returns {string}
  */
 function prettyCmd(cmd, args) {
-    return `${cmd} ${args.map((a) => (a.includes(" ") ? `"${a}"` : a)).join(" ")}`;
+    const formatArgument = (argument) =>
+        argument.includes(" ") ? `"${argument}"` : argument;
+
+    return `${cmd} ${args.map((argument) => formatArgument(argument)).join(" ")}`;
 }
 
 /**
@@ -551,14 +554,18 @@ async function runWithRetry(cmd, args, retries, opts) {
  */
 function ensureSafeToInit({ yes }) {
     const pkgPath = path.join(process.cwd(), "package.json");
-    if (!fs.existsSync(pkgPath)) return;
-
-    if (!yes) {
-        throw new Error(
-            "package.json already exists. Refusing to run npm init -y automatically.\n" +
-                "Use --skip-init to keep existing package.json, or --yes to proceed intentionally."
-        );
+    if (!fs.existsSync(pkgPath)) {
+        return;
     }
+
+    if (yes) {
+        return;
+    }
+
+    throw new Error(
+        "package.json already exists. Refusing to run npm init -y automatically.\n" +
+            "Use --skip-init to keep existing package.json, or --yes to proceed intentionally."
+    );
 }
 
 /**
@@ -645,11 +652,10 @@ async function main() {
     console.log(`\nDone in ${secs}s.`);
 }
 
-main()
-    .then(() => {
-        process.exit(0);
-    })
-    .catch((err) => {
-        console.error("\nERROR:", err instanceof Error ? err.message : err);
-        process.exit(1);
-    });
+try {
+    await main();
+    process.exit(0);
+} catch (err) {
+    console.error("\nERROR:", err instanceof Error ? err.message : err);
+    process.exit(1);
+}

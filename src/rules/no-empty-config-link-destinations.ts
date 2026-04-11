@@ -57,12 +57,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const hrefProperty = findObjectPropertyByName(node, "href");
                     const toProperty = findObjectPropertyByName(node, "to");
-                    const hrefExpression = hrefProperty?.value as
-                        | TSESTree.Expression
-                        | undefined;
-                    const toExpression = toProperty?.value as
-                        | TSESTree.Expression
-                        | undefined;
+                    const hrefExpression = getObjectPropertyValueByName(
+                        node,
+                        "href"
+                    );
+                    const toExpression = getObjectPropertyValueByName(
+                        node,
+                        "to"
+                    );
                     const htmlExpression =
                         linkContext === "footer"
                             ? getObjectPropertyValueByName(node, "html")

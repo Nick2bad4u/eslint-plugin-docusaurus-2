@@ -7,6 +7,7 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueByName,
     getStaticBooleanValueFromExpressionOrIdentifier,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
@@ -138,9 +139,10 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                         configObjectExpression,
                         fieldName
                     );
-                    const expression = property?.value as
-                        | TSESTree.Expression
-                        | undefined;
+                    const expression = getObjectPropertyValueByName(
+                        configObjectExpression,
+                        fieldName
+                    );
 
                     if (
                         hasPresentStringValue(expression ?? null, programNode)
@@ -160,9 +162,10 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                         configObjectExpression,
                         fieldName
                     );
-                    const expression = property?.value as
-                        | TSESTree.Expression
-                        | undefined;
+                    const expression = getObjectPropertyValueByName(
+                        configObjectExpression,
+                        fieldName
+                    );
 
                     if (
                         hasPresentBooleanValue(expression ?? null, programNode)
@@ -182,9 +185,10 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                         configObjectExpression,
                         fieldName
                     );
-                    const expression = property?.value as
-                        | TSESTree.Expression
-                        | undefined;
+                    const expression = getObjectPropertyValueByName(
+                        configObjectExpression,
+                        fieldName
+                    );
 
                     if (
                         hasPresentReportingSeverityValue(

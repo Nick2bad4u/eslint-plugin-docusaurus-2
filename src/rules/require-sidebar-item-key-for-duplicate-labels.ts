@@ -105,6 +105,43 @@ const getSidebarLabeledItems = (
     return labeledItems;
 };
 
+const collectDuplicateGroupsByLabel = (
+    labeledItems: readonly SidebarLabeledItem[]
+): ReadonlyMap<string, readonly SidebarLabeledItem[]> => {
+    const duplicateGroups = new Map<string, SidebarLabeledItem[]>();
+
+    for (const item of labeledItems) {
+        const normalizedLabel = normalizeLabelForComparison(item.label);
+        const group = duplicateGroups.get(normalizedLabel) ?? [];
+
+        group.push(item);
+        duplicateGroups.set(normalizedLabel, group);
+    }
+
+    return duplicateGroups;
+};
+
+const reportDuplicateSidebarLabelItems = (
+    context: Readonly<TSESLint.RuleContext<MessageIds, typeof defaultOptions>>,
+    duplicateItems: readonly SidebarLabeledItem[]
+): void => {
+    if (duplicateItems.length < 2) {
+        return;
+    }
+
+    for (const item of duplicateItems) {
+        if (findObjectPropertyByName(item.objectExpression, "key") !== null) {
+            continue;
+        }
+
+        context.report({
+            data: { label: item.label },
+            messageId: "requireSidebarItemKeyForDuplicateLabels",
+            node: item.labelExpression,
+        });
+    }
+};
+
 /** Rule module for `require-sidebar-item-key-for-duplicate-labels`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
@@ -138,44 +175,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                     arrayExpression,
                                     programNode
                                 );
-                                const duplicateGroups = new Map<
-                                    string,
-                                    SidebarLabeledItem[]
-                                >();
-
-                                for (const item of labeledItems) {
-                                    const normalizedLabel =
-                                        normalizeLabelForComparison(item.label);
-                                    const group =
-                                        duplicateGroups.get(normalizedLabel) ??
-                                        [];
-
-                                    group.push(item);
-                                    duplicateGroups.set(normalizedLabel, group);
-                                }
+                                const duplicateGroups =
+                                    collectDuplicateGroupsByLabel(labeledItems);
 
                                 for (const duplicateItems of duplicateGroups.values()) {
-                                    if (duplicateItems.length < 2) {
-                                        continue;
-                                    }
-
-                                    for (const item of duplicateItems) {
-                                        if (
-                                            findObjectPropertyByName(
-                                                item.objectExpression,
-                                                "key"
-                                            ) !== null
-                                        ) {
-                                            continue;
-                                        }
-
-                                        context.report({
-                                            data: { label: item.label },
-                                            messageId:
-                                                "requireSidebarItemKeyForDuplicateLabels",
-                                            node: item.labelExpression,
-                                        });
-                                    }
+                                    reportDuplicateSidebarLabelItems(
+                                        context,
+                                        duplicateItems
+                                    );
                                 }
                             }
 
