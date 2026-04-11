@@ -103,7 +103,7 @@ const suppressKnownWebpackWarningsPlugin: PluginModule = () => {
                      * warning during docs builds. This is third-party noise,
                      * not a site-level problem.
                      */
-                    (warning) => {
+                    (warning: unknown) => {
                         const warningRecord = warning as unknown as
                             | Readonly<Record<string, unknown>>
                             | undefined;
@@ -319,6 +319,11 @@ const config = {
                     feedOptions: {
                         type: ["rss", "atom"],
                         xslt: true,
+                        title: "eslint-plugin-docusaurus-2 Blog",
+                        copyright: `Copyright © ${new Date().getFullYear()} eslint-plugin-docusaurus-2`,
+                        description:
+                            "Updates, architecture notes, and practical guidance for eslint-plugin-docusaurus-2 maintainers and users.",
+                        language: "en",
                     },
                     onInlineAuthors: "warn",
                     onInlineTags: "warn",
