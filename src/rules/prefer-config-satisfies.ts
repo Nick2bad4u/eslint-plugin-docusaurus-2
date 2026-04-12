@@ -4,8 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
-import { createImportedTypeReferenceMatcher } from "../_internal/imported-type-reference-matcher.js";
 import { isTypeScriptDocusaurusConfigFilePath } from "../_internal/docusaurus-config-ast.js";
+import { createImportedTypeReferenceMatcher } from "../_internal/imported-type-reference-matcher.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
