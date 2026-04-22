@@ -720,7 +720,7 @@ const config = {
         ],
     ],
     title: "eslint-plugin-docusaurus-2",
-    trailingSlash: false,
+    trailingSlash: true,
     url: siteOrigin,
 } satisfies Config;
 

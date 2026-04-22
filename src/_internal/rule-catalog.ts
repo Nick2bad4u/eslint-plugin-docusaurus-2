@@ -142,6 +142,8 @@ const orderedRuleNames = [
     "no-deprecated-heading-id-syntax",
     "no-deprecated-admonition-title-syntax",
     "require-mermaid-elk-package-installed",
+    "require-markdown-format-detect",
+    "require-balanced-footer-link-columns",
 ] as const satisfies readonly string[];
 
 const toRuleCatalogId = (ruleNumber: number): RuleCatalogId =>

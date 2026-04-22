@@ -66,10 +66,12 @@ import * as pluginJSDoc from "eslint-plugin-require-jsdoc";
 import sdl from "eslint-plugin-sdl-2";
 import pluginSecurity from "eslint-plugin-security";
 import sonarjs, { configs as sonarjsConfigs } from "eslint-plugin-sonarjs";
+import stylelint2 from "eslint-plugin-stylelint-2";
 import pluginTestingLibrary from "eslint-plugin-testing-library";
 import eslintPluginToml from "eslint-plugin-toml";
 import pluginTsdoc from "eslint-plugin-tsdoc";
 import tsdocRequire from "eslint-plugin-tsdoc-require-2";
+import typedocPlugin from "eslint-plugin-typedoc";
 import pluginUndefinedCss from "eslint-plugin-undefined-css-classes";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 import pluginUnusedImports from "eslint-plugin-unused-imports";
@@ -82,6 +84,7 @@ import * as path from "node:path";
 import { fileURLToPath } from "node:url";
 import * as tomlEslintParser from "toml-eslint-parser";
 import * as yamlEslintParser from "yaml-eslint-parser";
+import typefest from "eslint-plugin-typefest";
 
 /**
  * @remarks
@@ -91,7 +94,7 @@ import * as yamlEslintParser from "yaml-eslint-parser";
  * 2. Wire the plugin under its public ESLint namespace in the local config block
  * 3. Setup the `🚢 Local Plugin Import` section below for new plugin
  */
-import docusaurus2Plugin from "./plugin.mjs";
+import docusaurus2 from "./plugin.mjs";
 
 // NOTE: eslint-plugin-json-schema-validator may attempt to fetch remote schemas
 // at lint time. That makes linting flaky/offline-hostile.
@@ -101,7 +104,7 @@ const enableJsonSchemaValidation =
 
 const jsonSchemaValidatorPackageName = "eslint-plugin-json-schema-validator";
 
-let eslintPluginJsonSchemaValidator = undefined;
+let eslintPluginJsonSchemaValidator = null;
 
 if (enableJsonSchemaValidation) {
     eslintPluginJsonSchemaValidator =
@@ -206,6 +209,8 @@ export default defineConfig([
         "**/CHANGELOG.md",
         ".remarkrc.mjs",
         "test/fixtures/**",
+        "docs/docusaurus/site-contract.config.d.mts",
+        "docs/docusaurus/site-contract.config.mjs",
     ]),
     gitignore({
         name: "Global - .gitignore Rules",
@@ -295,11 +300,47 @@ export default defineConfig([
         files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,cts,mts}"],
         name: "Import-X TypeScript (code files only)",
     },
+    {
+        ...docusaurus2.configs.all,
+        rules: {
+            ...docusaurus2.configs.all.rules,
+            ...docusaurus2.configs["strict-mdx-upgrade"].rules,
+            ...docusaurus2.configs.content.rules,
+            "docusaurus-2/local-search-will-not-work-in-dev": "off",
+        },
+    },
     progress.configs["recommended-ci"],
     copilot.configs.all,
     sdl.configs.required,
     githubActions.configs.all,
     vite.configs.all,
+    stylelint2.configs.all,
+    {
+        ...typedocPlugin.configs.recommended,
+        name: "TypeDoc recommended (repo tuned)",
+        rules: {
+            ...typedocPlugin.configs.recommended.rules,
+
+            "typedoc/no-empty-private-remarks-tag": "off",
+            "typedoc/no-extra-type-param-tags": "off",
+            "typedoc/no-unknown-tags": "warn",
+            "typedoc/require-code-fence-language": "off",
+            "typedoc/require-default-value-tag": "off",
+            "typedoc/require-example-tag": "off",
+            "typedoc/require-package-documentation": "off",
+            "typedoc/require-package-documentation-description": "off",
+            "typedoc/require-param-tag-description": "off",
+            "typedoc/require-param-tags": "off",
+            "typedoc/require-returns-description": "off",
+            "typedoc/require-returns-tag": "off",
+            "typedoc/require-see-tag-link": "off",
+            "typedoc/require-since-tag-description": "off",
+            "typedoc/require-throws-description": "off",
+            "typedoc/require-throws-tag": "off",
+            "typedoc/require-type-param-tag-description": "off",
+            "typedoc/require-type-param-tags": "off",
+        },
+    },
     {
         ...immutable.configs.all,
         files: ["functional/*.{js,jsx,mjs,cjs,ts,tsx,cts,mts}"],
@@ -462,31 +503,63 @@ export default defineConfig([
         },
         rules: {
             "tsdoc-require-2/require": "warn",
+            "tsdoc-require-2/require-abstract": "off",
             "tsdoc-require-2/require-alpha": "off",
+            "tsdoc-require-2/require-author": "off",
             "tsdoc-require-2/require-beta": "off",
+            "tsdoc-require-2/require-category": "off",
+            "tsdoc-require-2/require-class": "off",
             "tsdoc-require-2/require-decorator": "off",
             "tsdoc-require-2/require-default-value": "off",
             "tsdoc-require-2/require-deprecated": "off",
+            "tsdoc-require-2/require-document": "off",
+            "tsdoc-require-2/require-enum": "off",
+            "tsdoc-require-2/require-event": "off",
             "tsdoc-require-2/require-event-property": "off",
             "tsdoc-require-2/require-example": "off",
+            "tsdoc-require-2/require-expand": "off",
             "tsdoc-require-2/require-experimental": "off",
+            "tsdoc-require-2/require-function": "off",
+            "tsdoc-require-2/require-group": "off",
+            "tsdoc-require-2/require-hidden": "off",
+            "tsdoc-require-2/require-hideconstructor": "off",
+            "tsdoc-require-2/require-ignore": "off",
+            "tsdoc-require-2/require-import": "off",
+            "tsdoc-require-2/require-include": "off",
             "tsdoc-require-2/require-inherit-doc": "off",
+            "tsdoc-require-2/require-inline": "off",
+            "tsdoc-require-2/require-interface": "off",
             "tsdoc-require-2/require-internal": "off",
             "tsdoc-require-2/require-label": "off",
+            "tsdoc-require-2/require-license": "off",
             "tsdoc-require-2/require-link": "off",
+            "tsdoc-require-2/require-merge-module-with": "off",
+            "tsdoc-require-2/require-module": "off",
+            "tsdoc-require-2/require-namespace": "off",
+            "tsdoc-require-2/require-overload": "off",
             "tsdoc-require-2/require-override": "off",
             "tsdoc-require-2/require-package-documentation": "off",
             "tsdoc-require-2/require-param": "off",
+            "tsdoc-require-2/require-primary-export": "off",
+            "tsdoc-require-2/require-private": "off",
             "tsdoc-require-2/require-private-remarks": "off",
+            "tsdoc-require-2/require-property": "off",
+            "tsdoc-require-2/require-protected": "off",
             "tsdoc-require-2/require-public": "off",
             "tsdoc-require-2/require-readonly": "off",
             "tsdoc-require-2/require-remarks": "off",
             "tsdoc-require-2/require-returns": "off",
             "tsdoc-require-2/require-sealed": "off",
             "tsdoc-require-2/require-see": "off",
+            "tsdoc-require-2/require-since": "off",
+            "tsdoc-require-2/require-sort-strategy": "off",
+            "tsdoc-require-2/require-summary": "off",
+            "tsdoc-require-2/require-template": "off",
             "tsdoc-require-2/require-throws": "off",
             "tsdoc-require-2/require-type-param": "off",
+            "tsdoc-require-2/require-use-declared-type": "off",
             "tsdoc-require-2/require-virtual": "off",
+            "tsdoc-require-2/restrict-tags": "off",
         },
     },
     // #endregion
@@ -547,7 +620,6 @@ export default defineConfig([
                 jsDocParsingMode: "all",
                 projectService: {
                     allowDefaultProject: [
-                        "docs/docusaurus/site-contract.config.mjs",
                         "docs/docusaurus/typedoc.local.config.mjs",
                         "docs/docusaurus/typedoc-plugins/*.mjs",
                         "docs/docusaurus/typedoc-plugins/*.mts",
@@ -576,6 +648,7 @@ export default defineConfig([
             // plugin upgrade.
             "@eslint-react/dom-prefer-namespace-import": "warn",
             "@eslint-react/immutability": "warn",
+            "@eslint-react/jsx-no-leaked-dollar": "warn",
             "@eslint-react/no-duplicate-key": "warn",
             "@eslint-react/no-implicit-children": "warn",
             "@eslint-react/no-implicit-key": "warn",
@@ -661,42 +734,28 @@ export default defineConfig([
     //     ],
     //     name: "Local Plugin Rules from Source",
     //     plugins: {
-    //         "docusaurus-2": docusaurus2Plugin,
+    //         typefest: typefest,
     //     },
     //     rules: {
-    //         ...docusaurus2Plugin.configs.all.rules,
+    //         ...typefest.configs.all.rules,
     //     },
     // },
     // #endregion
-    // #region ⌨️ Local Plugin
+    // #region ⌨️ Typefest
     // ═══════════════════════════════════════════════════════════════════════════════
-    // SECTION: ⌨️ Local plugin (docusaurus-2/*)
+    // SECTION: ⌨️ Typefest (typefest/*)
     // ═══════════════════════════════════════════════════════════════════════════════
     {
         files: [
-            "docs/docusaurus/src/**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}",
             "src/**/*.{ts,tsx,mts,cts}",
             //    "test/**/*.{ts,tsx,mts,cts}"
         ],
-        name: "Docusaurus-2 Rules for Source",
+        name: "Typefest Rules for Source",
         plugins: {
-            "docusaurus-2": docusaurus2Plugin,
+            typefest: typefest,
         },
         rules: {
-            ...docusaurus2Plugin.configs.experimental.rules,
-        },
-    },
-    {
-        files: [
-            "docs/docusaurus/docusaurus.config.ts",
-            "docs/docusaurus/sidebars*.ts",
-        ],
-        name: "Docusaurus-2 Rules for Docusaurus config",
-        plugins: {
-            "docusaurus-2": docusaurus2Plugin,
-        },
-        rules: {
-            ...docusaurus2Plugin.configs.recommended.rules,
+            ...typefest.configs.experimental.rules,
         },
     },
     // #endregion
@@ -2314,6 +2373,7 @@ export default defineConfig([
             "html/require-attrs": "warn",
             "html/require-button-type": "warn",
             "html/require-closing-tags": "off",
+            "html/require-content": "warn",
             "html/require-details-summary": "warn",
             "html/require-explicit-size": "warn",
             "html/require-form-method": "warn",
@@ -2324,6 +2384,7 @@ export default defineConfig([
             "html/require-meta-viewport": "warn",
             "html/require-open-graph-protocol": "warn",
             "html/sort-attrs": "warn",
+            "html/svg-require-viewbox": "warn",
         },
     },
     // #endregion
@@ -2997,6 +3058,7 @@ export default defineConfig([
             "class-methods-use-this": "off",
             "depend/ban-dependencies": "off",
             "dot-notation": "off",
+            "github-actions/no-top-level-permissions": "off",
             // Deprecated rules - to be removed in future
             "id-length": "off",
             "max-classes-per-file": "off",
@@ -3057,13 +3119,14 @@ export default defineConfig([
             "**/*.test.{ts,tsx}",
             "**/*.spec.{ts,tsx}",
             "src/test/**/*.{ts,tsx}",
-            "tests/**/*.{ts,tsx}",
+            "{tests,test}/**/*.{ts,tsx}",
         ],
         name: "Tests: relax strict void rules",
         rules: {
             // This rule is extremely noisy in tests (especially property-based
             // tests) where callback return values are often incidental.
             "@typescript-eslint/strict-void-return": "off",
+            "typedoc/require-exported-doc-comment": "off", // Tests often have non-exported members where doc comments would be low-value and high-effort.
         },
     },
     {
@@ -3077,6 +3140,7 @@ export default defineConfig([
             // Scripts commonly use void/Promise-returning callbacks where the
             // return value is intentionally ignored.
             "@typescript-eslint/strict-void-return": "off",
+            "typedoc/require-exported-doc-comment": "off", // Benchmarks and scripts often have non-exported members where doc comments would be low-value and high-effort.
         },
     },
     {
