@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, arrayJoin, setHas } from "ts-extras";
+
 import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
@@ -50,7 +52,7 @@ const createAttributesWrappedObjectText = (
 
         if (
             propertyName !== null &&
-            reservedHeadTagPropertyNames.has(propertyName)
+            setHas(reservedHeadTagPropertyNames, propertyName)
         ) {
             preservedPropertyTexts.push(sourceCode.getText(property));
             continue;
@@ -69,11 +71,11 @@ const createAttributesWrappedObjectText = (
                   )
                 : preservedPropertyTexts.length,
             0,
-            `attributes: { ${attributePropertyTexts.join(", ")} }`
+            `attributes: { ${arrayJoin(attributePropertyTexts, ", ")} }`
         );
     }
 
-    return `{ ${nextPropertyTexts.join(", ")} }`;
+    return `{ ${arrayJoin(nextPropertyTexts, ", ")} }`;
 };
 
 /** Rule module for `prefer-head-tag-attributes-object`. */
@@ -131,7 +133,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                                     return (
                                         propertyName !== null &&
-                                        !reservedHeadTagPropertyNames.has(
+                                        !setHas(
+                                            reservedHeadTagPropertyNames,
                                             propertyName
                                         )
                                     );
@@ -146,8 +149,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             context.report({
                                 messageId: "preferHeadTagAttributesObject",
                                 node:
-                                    directAttributeProperties[0]?.key ??
-                                    headTagEntry,
+                                    arrayFirst(directAttributeProperties)
+                                        ?.key ?? headTagEntry,
                             });
 
                             continue;
@@ -167,7 +170,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 : null,
                             messageId: "preferHeadTagAttributesObject",
                             node:
-                                directAttributeProperties[0]?.key ??
+                                arrayFirst(directAttributeProperties)?.key ??
                                 headTagEntry,
                         });
                     }

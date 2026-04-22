@@ -5,6 +5,8 @@
 
 import type { TSESLint } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     collectFencedCodeBlockRanges,
     createTextSourceLocator,
@@ -52,8 +54,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         const matchStart = match.index;
 
                         if (
-                            matchedComment === undefined ||
-                            matchStart === undefined
+                            !isDefined(matchedComment) ||
+                            !isDefined(matchStart)
                         ) {
                             continue;
                         }

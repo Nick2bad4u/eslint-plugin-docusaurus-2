@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayJoin, setHas } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findPluginOptionsObjectsByName,
@@ -54,7 +56,7 @@ const getHeadTagSignature = (
 
     propertyEntries.sort((left, right) => left.localeCompare(right));
 
-    return propertyEntries.join("|");
+    return arrayJoin(propertyEntries, "|");
 };
 
 /** Rule module for `no-duplicate-plugin-pwa-head-tags`. */
@@ -119,7 +121,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 continue;
                             }
 
-                            if (seenSignatures.has(entrySignature)) {
+                            if (setHas(seenSignatures, entrySignature)) {
                                 duplicateTagEntries.push(headTagEntry);
 
                                 continue;

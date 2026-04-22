@@ -5,6 +5,16 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import {
+    arrayAt,
+    arrayFirst,
+    arrayIncludes,
+    arrayJoin,
+    isEmpty,
+    isPresent,
+    not,
+} from "ts-extras";
+
+import {
     findClassicPresetOptionsObjects,
     findObjectPropertyByName,
     getArrayExpressionPropertyValueByName,
@@ -14,7 +24,6 @@ import {
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
-import { arrayJoin } from "../_internal/runtime-utils.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
@@ -47,7 +56,9 @@ const getMissingPageExcludePatterns = (
     existingPatterns: readonly string[]
 ): readonly string[] =>
     requiredPageExcludePatterns.filter(
-        (requiredPattern) => !existingPatterns.includes(requiredPattern)
+        not((requiredPattern) =>
+            arrayIncludes(existingPatterns, requiredPattern)
+        )
     );
 
 const createMissingPatternsText = (patterns: readonly string[]): string =>
@@ -61,12 +72,15 @@ const createInsertExcludePropertyFix = (
     pagesOptionsObject: Readonly<TSESTree.ObjectExpression>,
     missingPatterns: readonly string[]
 ) => {
-    const lastProperty = pagesOptionsObject.properties.at(-1);
+    const lastProperty = arrayAt(pagesOptionsObject.properties, -1);
     const propertyText = `exclude: [${createMissingPatternsText(missingPatterns)}]`;
 
     if (lastProperty === undefined) {
         return fixer.insertTextAfterRange(
-            [pagesOptionsObject.range[0], pagesOptionsObject.range[0] + 1],
+            [
+                arrayFirst(pagesOptionsObject.range),
+                arrayFirst(pagesOptionsObject.range) + 1,
+            ],
             propertyText
         );
     }
@@ -79,14 +93,14 @@ const createAppendExcludePatternsFix = (
     excludeArrayExpression: Readonly<TSESTree.ArrayExpression>,
     missingPatterns: readonly string[]
 ) => {
-    const lastElement = excludeArrayExpression.elements.at(-1);
+    const lastElement = arrayAt(excludeArrayExpression.elements, -1);
     const missingPatternsText = createMissingPatternsText(missingPatterns);
 
-    if (lastElement === undefined || lastElement === null) {
+    if (!isPresent(lastElement)) {
         return fixer.insertTextAfterRange(
             [
-                excludeArrayExpression.range[0],
-                excludeArrayExpression.range[0] + 1,
+                arrayFirst(excludeArrayExpression.range),
+                arrayFirst(excludeArrayExpression.range) + 1,
             ],
             missingPatternsText
         );
@@ -163,14 +177,17 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                   )
                         );
 
-                        if (missingPatterns.length === 0) {
+                        if (isEmpty(missingPatterns)) {
                             continue;
                         }
 
                         reportWithOptionalFix({
                             context,
                             data: {
-                                missingPatterns: missingPatterns.join(", "),
+                                missingPatterns: arrayJoin(
+                                    missingPatterns,
+                                    ", "
+                                ),
                             },
                             fix(fixer) {
                                 return excludeArrayExpression === null

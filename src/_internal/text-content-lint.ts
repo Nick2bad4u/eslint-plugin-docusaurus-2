@@ -5,6 +5,8 @@
 
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isFinite } from "ts-extras";
+
 /** Inclusive-exclusive text range measured in UTF-16 code units. */
 export type TextContentLine = Readonly<{
     end: number;
@@ -39,7 +41,7 @@ export const isMdxFilePath = (filePath: string): boolean =>
     filePath.toLowerCase().endsWith(".mdx");
 
 const clampIndex = (index: number, maxIndex: number): number => {
-    if (!Number.isFinite(index)) {
+    if (!isFinite(index)) {
         return 0;
     }
 

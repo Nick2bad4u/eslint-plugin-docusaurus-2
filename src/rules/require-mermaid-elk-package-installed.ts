@@ -5,6 +5,8 @@
 
 import type { TSESLint } from "@typescript-eslint/utils";
 
+import { arrayFirst, isDefined } from "ts-extras";
+
 import { isPackageDeclaredInNearestManifest } from "../_internal/package-manifest.js";
 import {
     collectFencedCodeBlocks,
@@ -38,14 +40,14 @@ const usesMermaidElkLayout = (blockContent: string): boolean => {
 
     const frontmatterLines = trimmedContent.split(/\r?\n/u);
 
-    if (frontmatterLines.length < 3 || frontmatterLines[0] !== "---") {
+    if (frontmatterLines.length < 3 || arrayFirst(frontmatterLines) !== "---") {
         return false;
     }
 
     for (let index = 1; index < frontmatterLines.length; index += 1) {
         const normalizedLine = frontmatterLines[index]?.trim();
 
-        if (normalizedLine === undefined) {
+        if (!isDefined(normalizedLine)) {
             continue;
         }
 

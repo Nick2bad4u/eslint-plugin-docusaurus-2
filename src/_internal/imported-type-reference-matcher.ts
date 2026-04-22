@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 type ImportedTypeReferenceMatcherOptions = Readonly<{
     fallbackTypeNames?: readonly string[];
     importSource: string;
@@ -47,6 +49,7 @@ const getImportedTypeReferenceNames = (
     };
 };
 
+/** Creates a type-node matcher that identifies imported type references by name. */
 export const createImportedTypeReferenceMatcher = (
     programNode: Readonly<TSESTree.Program>,
     options: ImportedTypeReferenceMatcherOptions
@@ -64,7 +67,8 @@ export const createImportedTypeReferenceMatcher = (
         }
 
         if (typeNode.typeName.type === "Identifier") {
-            return importedTypeReferenceNames.directTypeNames.has(
+            return setHas(
+                importedTypeReferenceNames.directTypeNames,
                 typeNode.typeName.name
             );
         }
@@ -73,7 +77,8 @@ export const createImportedTypeReferenceMatcher = (
             typeNode.typeName.type === "TSQualifiedName" &&
             typeNode.typeName.left.type === "Identifier" &&
             typeNode.typeName.right.type === "Identifier" &&
-            importedTypeReferenceNames.namespaceImportNames.has(
+            setHas(
+                importedTypeReferenceNames.namespaceImportNames,
                 typeNode.typeName.left.name
             ) &&
             typeNode.typeName.right.name === options.typeName

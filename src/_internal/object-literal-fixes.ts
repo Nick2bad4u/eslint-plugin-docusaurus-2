@@ -1,5 +1,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayFirst } from "ts-extras";
+
 /**
  * @packageDocumentation
  * Shared fixer helpers for inserting properties into object literals.
@@ -17,11 +19,14 @@ export const createInsertObjectPropertyFix = (
 ): TSESLint.RuleFix => {
     const { fixer, indentation, objectExpression, propertyText, sourceCode } =
         options;
-    const lastProperty = objectExpression.properties.at(-1);
+    const lastProperty = arrayAt(objectExpression.properties, -1);
 
     if (lastProperty === undefined) {
         return fixer.insertTextAfterRange(
-            [objectExpression.range[0], objectExpression.range[0] + 1],
+            [
+                arrayFirst(objectExpression.range),
+                arrayFirst(objectExpression.range) + 1,
+            ],
             `\n${indentation}${propertyText}\n`
         );
     }

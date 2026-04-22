@@ -53,6 +53,7 @@ const liveBadges = [
 const getStyleClassName = (className: string): string =>
     styles[className] ?? "";
 
+/** Displays a row of live GitHub badge stats for the plugin repository. */
 export default function GitHubStats({ className = "" }: GitHubStatsProps) {
     const badgeListClassName = [getStyleClassName("liveBadgeList"), className]
         .filter(Boolean)

@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     isDocusaurusSiteComponentFilePath,
     isDocusaurusSitePageFilePath,
@@ -114,7 +116,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         const attributeValue = attribute.value;
                         const suggestions =
-                            useBaseUrlLocalName === undefined ||
+                            !isDefined(useBaseUrlLocalName) ||
                             attributeValue === null
                                 ? undefined
                                 : [
@@ -131,11 +133,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         context.report({
                             messageId: "preferUseBaseUrlForStaticAssets",
                             node: attribute.name,
-                            ...(suggestions === undefined
-                                ? {}
-                                : {
+                            ...(isDefined(suggestions)
+                                ? {
                                       suggest: suggestions,
-                                  }),
+                                  }
+                                : {}),
                         });
                     }
                 },

@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isPresent } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     isDocusaurusConfigFilePath,
@@ -42,9 +44,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         findObjectPropertyByName(node, "href"),
                         findObjectPropertyByName(node, "label"),
                         findObjectPropertyByName(node, "to"),
-                    ].filter(
-                        (property): property is TSESTree.Property =>
-                            property !== null
+                    ].filter((property): property is TSESTree.Property =>
+                        isPresent(property)
                     );
 
                     if (conflictingProperties.length === 0) {

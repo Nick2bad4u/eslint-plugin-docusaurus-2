@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayIncludes, arrayJoin } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getArrayExpressionFromExpressionOrIdentifier,
@@ -26,7 +28,10 @@ type I18nLocaleSuggestion = NonNullable<
 type MessageIds = "moveDefaultLocaleFirst" | "preferI18nDefaultLocaleFirst";
 
 const createLocalesArrayText = (locales: readonly string[]): string =>
-    `[${locales.map((locale) => JSON.stringify(locale)).join(", ")}]`;
+    `[${arrayJoin(
+        locales.map((locale) => JSON.stringify(locale)),
+        ", "
+    )}]`;
 
 const getStaticLocaleArrayValues = (
     arrayExpression: Readonly<TSESTree.ArrayExpression>,
@@ -170,7 +175,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    if (!localesValues.includes(normalizedDefaultLocale)) {
+                    if (
+                        !arrayIncludes(localesValues, normalizedDefaultLocale)
+                    ) {
                         return;
                     }
 

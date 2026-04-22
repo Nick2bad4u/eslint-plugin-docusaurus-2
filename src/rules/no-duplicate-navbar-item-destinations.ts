@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     getArrayExpressionFromExpressionOrIdentifier,
@@ -216,7 +218,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 continue;
                             }
 
-                            if (seenDestinations.has(destination)) {
+                            if (setHas(seenDestinations, destination)) {
                                 context.report({
                                     data: {
                                         destination,

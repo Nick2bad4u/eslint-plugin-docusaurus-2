@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayIncludes, arrayJoin, setHas } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
@@ -34,7 +36,10 @@ type StaticLocaleArrayData = Readonly<{
 }>;
 
 const createLocaleArrayText = (locales: readonly string[]): string =>
-    `[${locales.map((locale) => JSON.stringify(locale)).join(", ")}]`;
+    `[${arrayJoin(
+        locales.map((locale) => JSON.stringify(locale)),
+        ", "
+    )}]`;
 
 const getStaticLocaleArrayData = (
     localesArrayExpression: Readonly<TSESTree.ArrayExpression>,
@@ -65,10 +70,10 @@ const getStaticLocaleArrayData = (
 
         localeElements.push(element);
 
-        if (seenLocales.has(normalizedLocaleValue)) {
+        if (setHas(seenLocales, normalizedLocaleValue)) {
             duplicateLocaleElements.push(element);
 
-            if (!duplicateLocaleValues.includes(normalizedLocaleValue)) {
+            if (!arrayIncludes(duplicateLocaleValues, normalizedLocaleValue)) {
                 duplicateLocaleValues.push(normalizedLocaleValue);
             }
 
@@ -166,10 +171,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    const duplicateLocalesText =
-                        staticLocaleArrayData.duplicateLocaleValues
-                            .map((localeValue) => JSON.stringify(localeValue))
-                            .join(", ");
+                    const duplicateLocalesText = arrayJoin(
+                        staticLocaleArrayData.duplicateLocaleValues.map(
+                            (localeValue) => JSON.stringify(localeValue)
+                        ),
+                        ", "
+                    );
 
                     if (localesExpression.type === "ArrayExpression") {
                         reportWithOptionalFix({

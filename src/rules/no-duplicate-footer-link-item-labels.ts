@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
@@ -91,7 +93,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 continue;
                             }
 
-                            if (seenLabels.has(normalizedLabel)) {
+                            if (setHas(seenLabels, normalizedLabel)) {
                                 context.report({
                                     data: {
                                         label: staticLabel.trim(),

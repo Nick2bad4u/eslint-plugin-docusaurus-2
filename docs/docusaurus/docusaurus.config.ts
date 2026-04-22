@@ -433,14 +433,6 @@ const config = {
                 content: "eslint-plugin-docusaurus-2",
                 property: "og:site_name",
             },
-            {
-                content: socialCardImageUrl,
-                property: "og:image",
-            },
-            {
-                content: socialCardImageUrl,
-                name: "twitter:image",
-            },
         ],
         footer: {
             copyright: footerCopyright,
@@ -458,10 +450,6 @@ const config = {
                         {
                             label: "🛠️ Presets",
                             to: "/docs/rules/presets",
-                        },
-                        {
-                            label: "📏 Rule Reference",
-                            to: "/docs/rules/overview",
                         },
                     ],
                     title: "📚 Explore",
@@ -524,10 +512,10 @@ const config = {
             hideOnScroll: true,
             items: [
                 {
-                    activeBaseRegex: "^/docs/rules/overview/?$",
+                    activeBaseRegex: "^/docs/rules/getting-started/?$",
                     label: "📚 Docs",
                     position: "left",
-                    to: "/docs/rules/overview",
+                    to: "/docs/rules/getting-started",
                     type: "dropdown",
                     items: [
                         {

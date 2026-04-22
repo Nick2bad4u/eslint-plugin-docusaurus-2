@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import { isInternalRouteLikeValue } from "../_internal/docusaurus-config-ast.js";
 import {
     collectDefaultImportLocalNamesFromModule,
@@ -37,7 +39,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 JSXOpeningElement(node: Readonly<TSESTree.JSXOpeningElement>) {
                     if (
                         node.name.type !== "JSXIdentifier" ||
-                        !docusaurusLinkLocalNames.has(node.name.name)
+                        !setHas(docusaurusLinkLocalNames, node.name.name)
                     ) {
                         return;
                     }

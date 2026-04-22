@@ -1,5 +1,8 @@
+import type { UnknownRecord } from "type-fest";
+
 import * as fs from "node:fs";
 import * as path from "node:path";
+import { objectKeys, setHas } from "ts-extras";
 
 /**
  * @packageDocumentation
@@ -20,7 +23,7 @@ type PackageManifestRecord = Readonly<{
     peerDependencies?: PackageDependencyMap;
 }>;
 
-const isRecord = (value: unknown): value is Record<string, unknown> =>
+const isRecord = (value: unknown): value is UnknownRecord =>
     typeof value === "object" && value !== null;
 
 const getDependencyNamesFromManifest = (
@@ -40,7 +43,7 @@ const getDependencyNamesFromManifest = (
             continue;
         }
 
-        for (const dependencyName of Object.keys(dependencyField)) {
+        for (const dependencyName of objectKeys(dependencyField)) {
             dependencyNames.add(dependencyName);
         }
     }
@@ -62,9 +65,7 @@ const readResolvedPackageManifest = (
         }
 
         return {
-            dependencyNames: getDependencyNamesFromManifest(
-                parsedPackageJson as PackageManifestRecord
-            ),
+            dependencyNames: getDependencyNamesFromManifest(parsedPackageJson),
             packageJsonPath,
         };
     } catch {
@@ -122,7 +123,7 @@ export const isAnyPackageDeclaredInNearestManifest = (
     return (
         manifest !== null &&
         packageNames.some((packageName) =>
-            manifest.dependencyNames.has(packageName)
+            setHas(manifest.dependencyNames, packageName)
         )
     );
 };

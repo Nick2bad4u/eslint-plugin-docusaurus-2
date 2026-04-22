@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayIncludes } from "ts-extras";
+
 import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
@@ -129,7 +131,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         if (
                             localeName === null ||
-                            localeNames.includes(localeName)
+                            arrayIncludes(localeNames, localeName)
                         ) {
                             continue;
                         }

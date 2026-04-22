@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayFirst } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -48,13 +50,13 @@ const createInsertTrailingSlashFix = (
     value: boolean
 ): TSESLint.RuleFix => {
     const trailingSlashPropertyText = `trailingSlash: ${String(value)}`;
-    const lastProperty = configObjectExpression.properties.at(-1);
+    const lastProperty = arrayAt(configObjectExpression.properties, -1);
 
     if (lastProperty === undefined) {
         return fixer.insertTextAfterRange(
             [
-                configObjectExpression.range[0],
-                configObjectExpression.range[0] + 1,
+                arrayFirst(configObjectExpression.range),
+                arrayFirst(configObjectExpression.range) + 1,
             ],
             trailingSlashPropertyText
         );

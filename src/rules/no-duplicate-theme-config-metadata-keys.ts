@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, setHas } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     getArrayExpressionFromExpressionOrIdentifier,
@@ -115,7 +117,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        if (seenMetadataKeys.has(normalizedMetadataKey)) {
+                        if (setHas(seenMetadataKeys, normalizedMetadataKey)) {
                             duplicateMetadataEntries.push(metadataElement);
                             continue;
                         }
@@ -141,7 +143,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             ),
                         messageId: "noDuplicateThemeConfigMetadataKeys",
                         node:
-                            duplicateMetadataEntries[0] ??
+                            arrayFirst(duplicateMetadataEntries) ??
                             metadataArrayExpression,
                     });
                 },

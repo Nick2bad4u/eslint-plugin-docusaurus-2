@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt } from "ts-extras";
+
 import {
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
@@ -26,7 +28,7 @@ const createInsertMarkdownFormatFix = (
     markdownObjectExpression: Readonly<TSESTree.ObjectExpression>,
     sourceCode: Readonly<TSESLint.SourceCode>
 ): TSESLint.RuleFix => {
-    const lastProperty = markdownObjectExpression.properties.at(-1);
+    const lastProperty = arrayAt(markdownObjectExpression.properties, -1);
 
     if (lastProperty === undefined) {
         return fixer.replaceText(
@@ -39,7 +41,7 @@ const createInsertMarkdownFormatFix = (
         fixer,
         indentation: "        ",
         objectExpression: markdownObjectExpression,
-        propertyText: `format: \"${detectMarkdownFormat}\"`,
+        propertyText: `format: "${detectMarkdownFormat}"`,
         sourceCode,
     });
 };

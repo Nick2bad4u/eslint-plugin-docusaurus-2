@@ -5,6 +5,14 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import {
+    arrayAt,
+    arrayFirst,
+    arrayIncludes,
+    arrayJoin,
+    isPresent,
+} from "ts-extras";
+
+import {
     findObjectPropertyByName,
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
@@ -62,19 +70,22 @@ const getStaticLocaleArrayValues = (
 };
 
 const createLocalesArrayText = (locales: readonly string[]): string =>
-    `[${locales.map((locale) => JSON.stringify(locale)).join(", ")}]`;
+    `[${arrayJoin(
+        locales.map((locale) => JSON.stringify(locale)),
+        ", "
+    )}]`;
 
 const createInsertLocalesPropertyFix = (
     fixer: Readonly<TSESLint.RuleFixer>,
     i18nObject: Readonly<TSESTree.ObjectExpression>,
     defaultLocale: string
 ): TSESLint.RuleFix => {
-    const lastProperty = i18nObject.properties.at(-1);
+    const lastProperty = arrayAt(i18nObject.properties, -1);
     const localesPropertyText = `locales: [${JSON.stringify(defaultLocale)}]`;
 
     if (lastProperty === undefined) {
         return fixer.insertTextAfterRange(
-            [i18nObject.range[0], i18nObject.range[0] + 1],
+            [arrayFirst(i18nObject.range), arrayFirst(i18nObject.range) + 1],
             localesPropertyText
         );
     }
@@ -88,13 +99,13 @@ const createAppendDefaultLocaleFix = (
     defaultLocale: string
 ): TSESLint.RuleFix => {
     const defaultLocaleText = JSON.stringify(defaultLocale);
-    const lastElement = localesArrayExpression.elements.at(-1);
+    const lastElement = arrayAt(localesArrayExpression.elements, -1);
 
-    if (lastElement === undefined || lastElement === null) {
+    if (!isPresent(lastElement)) {
         return fixer.insertTextAfterRange(
             [
-                localesArrayExpression.range[0],
-                localesArrayExpression.range[0] + 1,
+                arrayFirst(localesArrayExpression.range),
+                arrayFirst(localesArrayExpression.range) + 1,
             ],
             defaultLocaleText
         );
@@ -239,7 +250,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    if (localesValues.includes(normalizedDefaultLocale)) {
+                    if (arrayIncludes(localesValues, normalizedDefaultLocale)) {
                         return;
                     }
 

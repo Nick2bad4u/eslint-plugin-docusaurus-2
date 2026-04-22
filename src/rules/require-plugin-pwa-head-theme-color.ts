@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { objectEntries } from "ts-extras";
+
 import {
     findPluginOptionsObjectsByName,
     getArrayExpressionFromExpressionOrIdentifier,
@@ -30,7 +32,7 @@ const hasMatchingHeadTagEntry = (
             continue;
         }
 
-        const matchesEntry = Object.entries(matcher).every(
+        const matchesEntry = objectEntries(matcher).every(
             ([propertyName, expectedValue]) => {
                 const propertyValue = getObjectPropertyValueByName(
                     element,

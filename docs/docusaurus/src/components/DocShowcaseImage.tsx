@@ -14,6 +14,7 @@ const getClassName = (compact: boolean): string =>
         ? `${DOC_SHOWCASE_IMAGE_CLASS_NAME} ${DOC_SHOWCASE_IMAGE_COMPACT_CLASS_NAME}`
         : DOC_SHOWCASE_IMAGE_CLASS_NAME;
 
+/** Renders a rule showcase image with optional compact layout. */
 export default function DocShowcaseImage({
     alt,
     assetPath,

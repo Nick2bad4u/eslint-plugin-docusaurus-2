@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, isDefined, setHas } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import { getStaticConfiguredPathResolution } from "../_internal/config-paths.js";
 import {
@@ -87,7 +89,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             }
 
                             if (
-                                seenResolvedPaths.has(
+                                setHas(
+                                    seenResolvedPaths,
                                     pathResolution.resolvedPath
                                 )
                             ) {
@@ -103,9 +106,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        const firstDuplicateItem = duplicateItems[0];
+                        const firstDuplicateItem = arrayFirst(duplicateItems);
 
-                        if (firstDuplicateItem === undefined) {
+                        if (!isDefined(firstDuplicateItem)) {
                             continue;
                         }
 

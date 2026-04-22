@@ -5,8 +5,7 @@ import type { TSESTree } from "@typescript-eslint/utils";
  * Shared AST and filename helpers for Docusaurus config and sidebar rules.
  */
 import * as path from "node:path";
-
-import { safeCastTo } from "./runtime-utils.js";
+import { arrayFirst, isPresent, setHas, stringSplit } from "ts-extras";
 
 const supportedConfigExtensions = new Set([
     ".cjs",
@@ -62,9 +61,9 @@ const normalizeFilePath = (filePath: string): string =>
     filePath.replaceAll("\\", "/");
 
 const getPathSegments = (filePath: string): readonly string[] =>
-    normalizeFilePath(filePath)
-        .split("/")
-        .filter((pathSegment) => pathSegment.length > 0);
+    stringSplit(normalizeFilePath(filePath), "/").filter(
+        (pathSegment) => pathSegment.length > 0
+    );
 
 const hasPathSegmentSequence = (
     filePath: string,
@@ -191,7 +190,7 @@ export const isDocusaurusConfigFilePath = (filePath: string): boolean => {
 
     return (
         baseName.startsWith("docusaurus.config") &&
-        supportedConfigExtensions.has(path.posix.extname(baseName))
+        setHas(supportedConfigExtensions, path.posix.extname(baseName))
     );
 };
 
@@ -208,7 +207,7 @@ export const isDocusaurusSidebarFilePath = (filePath: string): boolean => {
 
     return (
         baseName.startsWith("sidebars") &&
-        supportedConfigExtensions.has(path.posix.extname(baseName))
+        setHas(supportedConfigExtensions, path.posix.extname(baseName))
     );
 };
 
@@ -224,7 +223,7 @@ export const isTypeScriptDocusaurusSidebarFilePath = (
 
     return (
         baseName.startsWith("sidebars") &&
-        supportedTypeScriptExtensions.has(path.posix.extname(baseName))
+        setHas(supportedTypeScriptExtensions, path.posix.extname(baseName))
     );
 };
 
@@ -239,7 +238,7 @@ export const isTypeScriptDocusaurusConfigFilePath = (
 
     return (
         baseName.startsWith("docusaurus.config") &&
-        supportedTypeScriptExtensions.has(path.posix.extname(baseName))
+        setHas(supportedTypeScriptExtensions, path.posix.extname(baseName))
     );
 };
 
@@ -274,7 +273,7 @@ export const isRoutableDocusaurusSitePageFilePath = (
     const baseName = path.posix.basename(normalizedPath);
     const extension = path.posix.extname(baseName);
 
-    if (!supportedScriptExtensions.has(extension)) {
+    if (!setHas(supportedScriptExtensions, extension)) {
         return false;
     }
 
@@ -293,7 +292,7 @@ export const isRoutableDocusaurusSitePageFilePath = (
  * Determine whether an import specifier points at a stylesheet.
  */
 export const isStylesheetImportSpecifier = (importSource: string): boolean =>
-    supportedStyleExtensions.has(path.posix.extname(importSource));
+    setHas(supportedStyleExtensions, path.posix.extname(importSource));
 
 /**
  * Determine whether an import specifier points at a CSS/Sass module file.
@@ -378,8 +377,78 @@ export const getObjectPropertyValueByName = (
     return property === null
         ? null
         : unwrapTransparentExpression(
-              safeCastTo<Readonly<TSESTree.Expression>>(property.value)
+              property.value as Readonly<TSESTree.Expression>
           );
+};
+
+/**
+ * Resolve an expression from a direct expression or an identifier bound in the
+ * same program.
+ */
+export const getExpressionFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.Expression> => {
+    const unwrappedExpression = unwrapTransparentExpression(expression);
+
+    if (unwrappedExpression.type !== "Identifier") {
+        return unwrappedExpression;
+    }
+
+    const resolvedExpression = resolveExpressionForIdentifier(
+        unwrappedExpression.name,
+        programNode
+    );
+
+    return resolvedExpression === null
+        ? null
+        : unwrapTransparentExpression(resolvedExpression);
+};
+
+/**
+ * Resolve an object expression from a direct expression or an identifier bound
+ * to an object expression in the same program.
+ */
+export const getObjectExpressionFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.ObjectExpression> => {
+    const resolvedExpression = getExpressionFromExpressionOrIdentifier(
+        expression,
+        programNode
+    );
+
+    if (resolvedExpression === null) {
+        return null;
+    }
+
+    return getObjectExpressionFromExpression(resolvedExpression);
+};
+
+/**
+ * Resolve an array expression from a direct expression or from an identifier
+ * bound to an array expression in the same program.
+ */
+export const getArrayExpressionFromExpressionOrIdentifier = (
+    expression: Readonly<TSESTree.Expression>,
+    programNode: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.ArrayExpression> => {
+    if (expression.type === "ArrayExpression") {
+        return expression;
+    }
+
+    if (expression.type !== "Identifier") {
+        return null;
+    }
+
+    const resolvedExpression = resolveExpressionForIdentifier(
+        expression.name,
+        programNode
+    );
+
+    return resolvedExpression?.type === "ArrayExpression"
+        ? resolvedExpression
+        : null;
 };
 
 /**
@@ -492,7 +561,7 @@ export const getStaticStringValue = (
         unwrappedExpression.type === "TemplateLiteral" &&
         unwrappedExpression.expressions.length === 0
     ) {
-        return unwrappedExpression.quasis[0]?.value.cooked ?? null;
+        return arrayFirst(unwrappedExpression.quasis)?.value.cooked ?? null;
     }
 
     return null;
@@ -568,76 +637,6 @@ export const getStaticBooleanValueFromExpressionOrIdentifier = (
         resolvedExpression,
         programNode
     );
-};
-
-/**
- * Resolve an expression from a direct expression or an identifier bound in the
- * same program.
- */
-export const getExpressionFromExpressionOrIdentifier = (
-    expression: Readonly<TSESTree.Expression>,
-    programNode: Readonly<TSESTree.Program>
-): null | Readonly<TSESTree.Expression> => {
-    const unwrappedExpression = unwrapTransparentExpression(expression);
-
-    if (unwrappedExpression.type !== "Identifier") {
-        return unwrappedExpression;
-    }
-
-    const resolvedExpression = resolveExpressionForIdentifier(
-        unwrappedExpression.name,
-        programNode
-    );
-
-    return resolvedExpression === null
-        ? null
-        : unwrapTransparentExpression(resolvedExpression);
-};
-
-/**
- * Resolve an object expression from a direct expression or an identifier bound
- * to an object expression in the same program.
- */
-export const getObjectExpressionFromExpressionOrIdentifier = (
-    expression: Readonly<TSESTree.Expression>,
-    programNode: Readonly<TSESTree.Program>
-): null | Readonly<TSESTree.ObjectExpression> => {
-    const resolvedExpression = getExpressionFromExpressionOrIdentifier(
-        expression,
-        programNode
-    );
-
-    if (resolvedExpression === null) {
-        return null;
-    }
-
-    return getObjectExpressionFromExpression(resolvedExpression);
-};
-
-/**
- * Resolve an array expression from a direct expression or from an identifier
- * bound to an array expression in the same program.
- */
-export const getArrayExpressionFromExpressionOrIdentifier = (
-    expression: Readonly<TSESTree.Expression>,
-    programNode: Readonly<TSESTree.Program>
-): null | Readonly<TSESTree.ArrayExpression> => {
-    if (expression.type === "ArrayExpression") {
-        return expression;
-    }
-
-    if (expression.type !== "Identifier") {
-        return null;
-    }
-
-    const resolvedExpression = resolveExpressionForIdentifier(
-        expression.name,
-        programNode
-    );
-
-    return resolvedExpression?.type === "ArrayExpression"
-        ? resolvedExpression
-        : null;
 };
 
 /**
@@ -758,7 +757,10 @@ export const findClassicPresetOptionsObjects = (
         if (
             presetSpecifier?.type !== "Literal" ||
             typeof presetSpecifier.value !== "string" ||
-            !docusaurusClassicPresetModuleNames.has(presetSpecifier.value) ||
+            !setHas(
+                docusaurusClassicPresetModuleNames,
+                presetSpecifier.value
+            ) ||
             presetOptions === undefined ||
             presetOptions === null ||
             presetOptions.type === "SpreadElement"
@@ -842,8 +844,7 @@ export const findPluginConfigurationsByName = (
         }
 
         if (
-            pluginOptions === undefined ||
-            pluginOptions === null ||
+            !isPresent(pluginOptions) ||
             pluginOptions.type === "SpreadElement"
         ) {
             pluginEntries.push({
@@ -881,7 +882,4 @@ export const findPluginOptionsObjectsByName = (
         programNode
     )
         .map((entry) => entry.optionsObject)
-        .filter(
-            (optionsObject): optionsObject is TSESTree.ObjectExpression =>
-                optionsObject !== null
-        );
+        .filter(isPresent);

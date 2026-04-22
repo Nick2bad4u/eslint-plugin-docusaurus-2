@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, arrayJoin, setHas } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     getArrayExpressionFromExpressionOrIdentifier,
@@ -52,7 +54,7 @@ const getExpressionSignature = (
             elementSignatures.push(elementSignature);
         }
 
-        return `array:[${elementSignatures.join(",")}]`;
+        return `array:[${arrayJoin(elementSignatures, ",")}]`;
     }
 
     if (expression.type === "Identifier") {
@@ -95,12 +97,12 @@ const getExpressionSignature = (
 
         propertyEntries.sort((left, right) => left.localeCompare(right));
 
-        return `object:{${propertyEntries.join("|")}}`;
+        return `object:{${arrayJoin(propertyEntries, "|")}}`;
     }
 
     if (expression.type === "TemplateLiteral") {
         return expression.expressions.length === 0
-            ? `template:${expression.quasis[0]?.value.cooked ?? ""}`
+            ? `template:${arrayFirst(expression.quasis)?.value.cooked ?? ""}`
             : null;
     }
 
@@ -170,7 +172,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        if (seenSignatures.has(headTagSignature)) {
+                        if (setHas(seenSignatures, headTagSignature)) {
                             duplicateHeadTagEntries.push(headTagEntry);
                             continue;
                         }

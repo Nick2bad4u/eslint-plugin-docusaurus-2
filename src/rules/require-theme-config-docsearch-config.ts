@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayJoin, isEmpty } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -104,7 +106,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             searchConfigProperty.value
                         );
 
-                    if (missingOptionNames.length === 0) {
+                    if (isEmpty(missingOptionNames)) {
                         return;
                     }
 
@@ -117,9 +119,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     context.report({
                         data: {
-                            missingKeys: missingOptionNames
-                                .map((optionName) => `\`${optionName}\``)
-                                .join(", "),
+                            missingKeys: arrayJoin(
+                                missingOptionNames.map(
+                                    (optionName) => `\`${optionName}\``
+                                ),
+                                ", "
+                            ),
                             searchConfigKey: searchConfigKeyLabel,
                         },
                         messageId: "requireThemeConfigDocsearchConfig",

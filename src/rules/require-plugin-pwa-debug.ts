@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, isDefined, isEmpty, setHas } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     findPluginConfigurationsByName,
@@ -30,12 +32,12 @@ type PwaDebugRuleOption = Readonly<{
     allowedEnvVarNames?: string[];
 }>;
 
-const defaultOptions: Options = [
+const defaultOptions = [
     {
         allowBooleanLiteralTrue: true,
         allowedEnvVarNames: [...defaultAllowedEnvVarNames],
     },
-];
+] satisfies Options;
 
 type MessageIds = "requirePluginPwaDebug" | "requirePluginPwaDebugValue";
 
@@ -47,7 +49,7 @@ type ResolvedPwaDebugRuleOption = Readonly<{
 const normalizeAllowedEnvVarNames = (
     allowedEnvVarNames: readonly string[] | undefined
 ): readonly string[] => {
-    if (allowedEnvVarNames === undefined || allowedEnvVarNames.length === 0) {
+    if (!isDefined(allowedEnvVarNames) || isEmpty(allowedEnvVarNames)) {
         return [...defaultAllowedEnvVarNames];
     }
 
@@ -59,7 +61,7 @@ const normalizeAllowedEnvVarNames = (
 
         if (
             normalizedCandidate.length === 0 ||
-            seenNames.has(normalizedCandidate)
+            setHas(seenNames, normalizedCandidate)
         ) {
             continue;
         }
@@ -211,10 +213,10 @@ const hasAllowedEnvironmentComparison = (
 
     return (
         (leftVariableName !== null &&
-            allowedEnvVarNameSet.has(leftVariableName) &&
+            setHas(allowedEnvVarNameSet, leftVariableName) &&
             isTrueStringExpression(normalizedExpression.right, programNode)) ||
         (rightVariableName !== null &&
-            allowedEnvVarNameSet.has(rightVariableName) &&
+            setHas(allowedEnvVarNameSet, rightVariableName) &&
             isTrueStringExpression(normalizedExpression.left, programNode))
     );
 };
@@ -254,8 +256,8 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
 
         const resolvedOption = normalizeRuleOption(option);
         const exampleEnvVarName =
-            resolvedOption.allowedEnvVarNames[0] ??
-            defaultAllowedEnvVarNames[0];
+            arrayFirst(resolvedOption.allowedEnvVarNames) ??
+            arrayFirst(defaultAllowedEnvVarNames);
 
         return {
             Program(programNode: TSESTree.Program) {
@@ -271,12 +273,12 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                     pluginPwaModuleName
                 );
 
-                if (pluginEntries.length === 0) {
+                if (isEmpty(pluginEntries)) {
                     return;
                 }
 
                 for (const pluginEntry of pluginEntries) {
-                    if (pluginEntry.optionsExpression === undefined) {
+                    if (!isDefined(pluginEntry.optionsExpression)) {
                         continue;
                     }
 
@@ -338,7 +340,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                 allowBooleanLiteralTrue: true,
                 allowedEnvVarNames: ["DOCUSAURUS_PWA_DEBUG"],
             },
-        ] as [PwaDebugRuleOption],
+        ] satisfies [PwaDebugRuleOption],
         deprecated: false,
         docs: {
             description:

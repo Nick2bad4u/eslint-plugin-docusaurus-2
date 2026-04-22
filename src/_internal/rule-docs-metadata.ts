@@ -4,6 +4,8 @@
  */
 import type { TSESLint } from "@typescript-eslint/utils";
 
+import { arrayIncludes, isDefined, isInteger, objectKeys } from "ts-extras";
+
 import type {
     AdditionalConfigName,
     PresetConfigName,
@@ -15,12 +17,6 @@ import {
     isPresetConfigName,
 } from "./preset-config-references.js";
 import { createRuleDocsUrl } from "./rule-docs-url.js";
-import {
-    arrayIncludes,
-    isDefined,
-    isInteger,
-    objectEntries,
-} from "./runtime-utils.js";
 
 /** Normalized docs metadata derived for each rule. */
 export type RuleDocsMetadata = Readonly<{
@@ -187,7 +183,7 @@ const getRuleDocsContract = (
     }
 
     if (
-        requiresTypeChecking !== undefined &&
+        isDefined(requiresTypeChecking) &&
         typeof requiresTypeChecking !== "boolean"
     ) {
         throw new TypeError(
@@ -216,7 +212,7 @@ const getRuleDocsContract = (
     }
 
     const normalizedConfigNames = (() => {
-        if (configs === undefined) {
+        if (!isDefined(configs)) {
             return [] as const;
         }
 
@@ -251,9 +247,9 @@ const getRuleDocsContract = (
             description,
             presets,
             recommended,
-            ...(requiresTypeChecking === undefined
-                ? {}
-                : { requiresTypeChecking }),
+            ...(isDefined(requiresTypeChecking)
+                ? { requiresTypeChecking }
+                : {}),
             ruleId,
             ruleNumber,
             url,
@@ -283,7 +279,7 @@ const getRuleDocsContract = (
         description,
         presets: normalizedPresetNames,
         recommended,
-        ...(requiresTypeChecking === undefined ? {} : { requiresTypeChecking }),
+        ...(isDefined(requiresTypeChecking) ? { requiresTypeChecking } : {}),
         ruleId,
         ruleNumber,
         url,
@@ -296,7 +292,8 @@ export const deriveRuleDocsMetadataByName = <RuleName extends string>(
 ): RuleDocsMetadataByName<RuleName> => {
     const metadataByRuleName = {} as Record<RuleName, RuleDocsMetadata>;
 
-    for (const [ruleName, rule] of objectEntries(rules)) {
+    for (const ruleName of objectKeys(rules) as RuleName[]) {
+        const rule = rules[ruleName];
         const ruleDocsContract = getRuleDocsContract(ruleName, rule.meta?.docs);
         const presetNames = normalizePresetNames(
             ruleName,
@@ -332,8 +329,9 @@ export const deriveRuleAdditionalConfigMembershipByRuleName = <
         readonly AdditionalConfigName[]
     >;
 
-    for (const [ruleName, metadata] of objectEntries(ruleDocsMetadataByName)) {
-        membershipByRuleName[ruleName] = metadata.additionalConfigNames;
+    for (const ruleName of objectKeys(ruleDocsMetadataByName) as RuleName[]) {
+        membershipByRuleName[ruleName] =
+            ruleDocsMetadataByName[ruleName].additionalConfigNames;
     }
 
     return membershipByRuleName;
@@ -348,8 +346,9 @@ export const deriveRulePresetMembershipByRuleName = <RuleName extends string>(
         readonly PresetConfigName[]
     >;
 
-    for (const [ruleName, metadata] of objectEntries(ruleDocsMetadataByName)) {
-        membershipByRuleName[ruleName] = metadata.presetNames;
+    for (const ruleName of objectKeys(ruleDocsMetadataByName) as RuleName[]) {
+        membershipByRuleName[ruleName] =
+            ruleDocsMetadataByName[ruleName].presetNames;
     }
 
     return membershipByRuleName;

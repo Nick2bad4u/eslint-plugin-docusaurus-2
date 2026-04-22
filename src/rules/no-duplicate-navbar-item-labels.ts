@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     getObjectPropertyName,
     getObjectPropertyValueByName,
@@ -109,7 +111,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             normalizeLabelForComparison(trimmedLabel);
                         const firstSeenLabel = seenLabels.get(normalizedLabel);
 
-                        if (firstSeenLabel === undefined) {
+                        if (!isDefined(firstSeenLabel)) {
                             seenLabels.set(normalizedLabel, trimmedLabel);
                             continue;
                         }

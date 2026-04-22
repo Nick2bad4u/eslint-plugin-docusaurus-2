@@ -9,6 +9,7 @@ import {
     type TSESLint,
     type TSESTree,
 } from "@typescript-eslint/utils";
+import { isDefined } from "ts-extras";
 
 import type {
     AdditionalConfigName,
@@ -19,7 +20,6 @@ import type { UnknownArray } from "./types.js";
 import { registerProgramSettingsForContext } from "./plugin-settings.js";
 import { getRuleCatalogEntryForRuleNameOrNull } from "./rule-catalog.js";
 import { createRuleDocsUrl } from "./rule-docs-url.js";
-import { isDefined } from "./runtime-utils.js";
 import { safeTypeOperation } from "./safe-type-operation.js";
 import { getScopeFromContextSourceCode } from "./scope-resolution.js";
 import { getVariableInScopeChain } from "./scope-variable.js";
@@ -84,7 +84,7 @@ export const createTypedRule: PluginRuleCreator = (ruleDefinition) => {
     const createdRule = ESLintUtils.RuleCreator.withoutDocs(ruleDefinition);
     const ruleDocs = createdRule.meta.docs;
 
-    if (ruleDocs === undefined) {
+    if (!isDefined(ruleDocs)) {
         throw new TypeError(
             `Rule '${ruleDefinition.name}' must define meta.docs.`
         );
@@ -104,7 +104,7 @@ export const createTypedRule: PluginRuleCreator = (ruleDefinition) => {
         );
     }
 
-    const docsWithCatalog: PluginRuleDocs & TSESLint.RuleMetaDataDocs =
+    const docsWithCatalog =
         catalogEntry === null
             ? {
                   ...ruleDocs,

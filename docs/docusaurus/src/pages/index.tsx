@@ -119,6 +119,7 @@ const ruleFamilyCards = [
 const getStyleClassName = (className: string): string =>
     styles[className] ?? "";
 
+/** Homepage component for the eslint-plugin-docusaurus-2 documentation site. */
 export default function Home() {
     const heroArtUrl = useBaseUrl("/img/docusaurus.svg");
     const heroMarkUrl = useBaseUrl("/img/docusaurus_speed.svg");

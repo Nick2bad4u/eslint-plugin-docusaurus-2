@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
@@ -96,11 +98,14 @@ const createInsertTagNameFix = (
     tagName: HeadTagName
 ): TSESLint.RuleFix => {
     const tagNameText = `tagName: ${JSON.stringify(tagName)}`;
-    const firstProperty = headTagObject.properties[0];
+    const firstProperty = arrayFirst(headTagObject.properties);
 
     if (firstProperty === undefined) {
         return fixer.insertTextAfterRange(
-            [headTagObject.range[0], headTagObject.range[0] + 1],
+            [
+                arrayFirst(headTagObject.range),
+                arrayFirst(headTagObject.range) + 1,
+            ],
             tagNameText
         );
     }

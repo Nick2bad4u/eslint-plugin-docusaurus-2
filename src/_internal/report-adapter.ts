@@ -4,9 +4,9 @@
  */
 import type { TSESLint } from "@typescript-eslint/utils";
 
-import type { UnknownArray } from "./types.js";
+import { isDefined, objectHasOwn } from "ts-extras";
 
-import { isDefined, objectHasOwn } from "./runtime-utils.js";
+import type { UnknownArray } from "./types.js";
 
 /**
  * Report callback type for a given message/options pair.

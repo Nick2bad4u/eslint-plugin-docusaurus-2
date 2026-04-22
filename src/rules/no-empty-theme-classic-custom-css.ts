@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
@@ -89,7 +91,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 continue;
                             }
 
-                            const firstEmptyItem = emptyItems[0];
+                            const firstEmptyItem = arrayFirst(emptyItems);
 
                             if (firstEmptyItem === undefined) {
                                 continue;

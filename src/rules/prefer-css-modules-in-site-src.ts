@@ -58,7 +58,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             deprecated: false,
             docs: {
                 description:
-                    "disallow global stylesheet imports in Docusaurus component and page source files when CSS modules should be used instead.",
+                    "disallow global stylesheet imports in Docusaurus component and page source files when CSS Modules should be used instead.",
                 frozen: false,
                 presets: [
                     "strict",
@@ -70,7 +70,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             messages: {
                 preferCssModules:
-                    "Prefer CSS modules for `{{ importSource }}` in Docusaurus component/page files. Load truly global styles through `theme.customCss` or a client module instead.",
+                    "Prefer CSS Modules for `{{ importSource }}` in Docusaurus component/page files. Load truly global styles through `theme.customCss` or a client module instead.",
             },
             schema: [],
             type: "suggestion",

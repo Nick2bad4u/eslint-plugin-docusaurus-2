@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getObjectPropertyValueByName,
@@ -64,7 +66,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const messageId =
                         getNavbarDropdownItemsProblemMessageId(node);
 
-                    if (messageId === undefined) {
+                    if (!isDefined(messageId)) {
                         return;
                     }
 

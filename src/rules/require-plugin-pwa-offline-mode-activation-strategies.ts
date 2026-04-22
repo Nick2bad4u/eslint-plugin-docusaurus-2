@@ -5,6 +5,15 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import {
+    arrayIncludes,
+    arrayJoin,
+    isDefined,
+    isEmpty,
+    not,
+    setHas,
+} from "ts-extras";
+
+import {
     findObjectPropertyByName,
     findPluginConfigurationsByName,
     getArrayExpressionFromExpressionOrIdentifier,
@@ -28,11 +37,11 @@ type PwaOfflineModeActivationStrategiesRuleOption = Readonly<{
     requiredStrategies?: string[];
 }>;
 
-const defaultOptions: Options = [
+const defaultOptions = [
     {
         requiredStrategies: [...defaultRequiredStrategies],
     },
-];
+] satisfies Options;
 
 type MessageIds = "requirePluginPwaOfflineModeActivationStrategies";
 
@@ -43,7 +52,7 @@ type ResolvedPwaOfflineModeActivationStrategiesRuleOption = Readonly<{
 const normalizeRequiredStrategies = (
     requiredStrategies: readonly string[] | undefined
 ): readonly string[] => {
-    if (requiredStrategies === undefined || requiredStrategies.length === 0) {
+    if (!isDefined(requiredStrategies) || isEmpty(requiredStrategies)) {
         return [...defaultRequiredStrategies];
     }
 
@@ -55,7 +64,7 @@ const normalizeRequiredStrategies = (
 
         if (
             normalizedCandidate.length === 0 ||
-            seenStrategies.has(normalizedCandidate)
+            setHas(seenStrategies, normalizedCandidate)
         ) {
             continue;
         }
@@ -106,11 +115,16 @@ const getMissingRequiredStrategies = (
     requiredStrategies: readonly string[]
 ): readonly string[] =>
     requiredStrategies.filter(
-        (requiredStrategy) => !configuredStrategies.includes(requiredStrategy)
+        not((requiredStrategy) =>
+            arrayIncludes(configuredStrategies, requiredStrategy)
+        )
     );
 
 const formatQuotedStrategies = (strategies: readonly string[]): string =>
-    strategies.map((strategy) => JSON.stringify(strategy)).join(", ");
+    arrayJoin(
+        strategies.map((strategy) => JSON.stringify(strategy)),
+        ", "
+    );
 
 /** Rule module for `require-plugin-pwa-offline-mode-activation-strategies`. */
 const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
@@ -138,12 +152,12 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                     pluginPwaModuleName
                 );
 
-                if (pluginEntries.length === 0) {
+                if (isEmpty(pluginEntries)) {
                     return;
                 }
 
                 for (const pluginEntry of pluginEntries) {
-                    if (pluginEntry.optionsExpression === undefined) {
+                    if (!isDefined(pluginEntry.optionsExpression)) {
                         continue;
                     }
 
@@ -200,7 +214,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                         resolvedOption.requiredStrategies
                     );
 
-                    if (missingStrategies.length === 0) {
+                    if (isEmpty(missingStrategies)) {
                         continue;
                     }
 
@@ -227,7 +241,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                     "queryString",
                 ],
             },
-        ] as [PwaOfflineModeActivationStrategiesRuleOption],
+        ] satisfies [PwaOfflineModeActivationStrategiesRuleOption],
         deprecated: false,
         docs: {
             description:

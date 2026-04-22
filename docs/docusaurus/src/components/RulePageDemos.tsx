@@ -82,14 +82,17 @@ const liveCodeBlockConfigDemoCode = `function LiveCodeBlockConfigDemo() {
 
 render(<LiveCodeBlockConfigDemo />);`;
 
+/** Live demo for the local-search runtime hint rule. */
 export function LocalSearchRuntimeHintDemo() {
     return <RuleLiveDemo code={localSearchRuntimeHintCode} />;
 }
 
+/** Live demo for the live code block package requirement rule. */
 export function LiveCodeBlockPackageDemo() {
     return <RuleLiveDemo code={liveCodeBlockPackageDemoCode} />;
 }
 
+/** Live demo for the live code block configuration rule. */
 export function LiveCodeBlockConfigDemo() {
     return <RuleLiveDemo code={liveCodeBlockConfigDemoCode} />;
 }

@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayIncludes } from "ts-extras";
+
 import {
     getDefaultExportedObjectExpression,
     getObjectExpressionFromExpressionOrIdentifier,
@@ -113,7 +115,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     if (
-                        validPlaygroundPositions.includes(
+                        arrayIncludes(
+                            validPlaygroundPositions,
                             playgroundPosition as PlaygroundPosition
                         )
                     ) {

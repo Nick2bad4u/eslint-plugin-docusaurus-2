@@ -3,7 +3,7 @@
  * Shared preset/config reference constants and type guards.
  */
 
-import { objectHasOwn } from "./runtime-utils.js";
+import { objectFromEntries, objectHasOwn } from "ts-extras";
 
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
 export const presetConfigNames = [
@@ -114,13 +114,13 @@ export const presetConfigNamesByReadmeOrder: readonly PresetConfigName[] = [
 ] as const;
 
 const presetConfigNameLookup = Object.freeze(
-    Object.fromEntries(
+    objectFromEntries(
         presetConfigNames.map((presetName) => [presetName, true] as const)
     )
 );
 
 const additionalConfigNameLookup = Object.freeze(
-    Object.fromEntries(
+    objectFromEntries(
         additionalConfigNames.map((configName) => [configName, true] as const)
     )
 );

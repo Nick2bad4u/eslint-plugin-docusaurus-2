@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isPresent } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
@@ -101,10 +103,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                     propertyName_
                                 )
                             )
-                            .filter(
-                                (property): property is TSESTree.Property =>
-                                    property !== null
-                            );
+                            .filter(isPresent);
                     const suggestions:
                         | readonly MixedSidebarLinkKindSuggestion[]
                         | undefined =

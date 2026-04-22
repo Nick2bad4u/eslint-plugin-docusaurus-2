@@ -4,6 +4,8 @@
  */
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 /**
  * Collect local names introduced by default imports from one module source.
  */
@@ -81,6 +83,6 @@ export const getStaticStringValueFromJsxAttribute = (
 
     return expression.type === "TemplateLiteral" &&
         expression.expressions.length === 0
-        ? (expression.quasis[0]?.value.cooked ?? null)
+        ? (arrayFirst(expression.quasis)?.value.cooked ?? null)
         : null;
 };

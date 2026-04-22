@@ -1,5 +1,7 @@
 import type { TSESTree } from "@typescript-eslint/utils";
 
+import { isPresent } from "ts-extras";
+
 /**
  * @packageDocumentation
  * Shared helpers for top-level Docusaurus `plugins` and `themes` module arrays.
@@ -65,8 +67,7 @@ export const findTopLevelModuleConfigurationsByName = (
         }
 
         if (
-            moduleOptions === undefined ||
-            moduleOptions === null ||
+            !isPresent(moduleOptions) ||
             moduleOptions.type === "SpreadElement"
         ) {
             moduleEntries.push({

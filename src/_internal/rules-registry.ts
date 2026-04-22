@@ -68,8 +68,8 @@ import preferThemeConfigMetadataPropertyForOgTagsRule from "../rules/prefer-them
 import preferToForInternalLinkComponentsRule from "../rules/prefer-to-for-internal-link-components.js";
 import preferToForInternalLinksRule from "../rules/prefer-to-for-internal-links.js";
 import preferUseBaseUrlForStaticAssetsRule from "../rules/prefer-use-base-url-for-static-assets.js";
-import requireBaseUrlIssueBannerEnabledRule from "../rules/require-base-url-issue-banner-enabled.js";
 import requireBalancedFooterLinkColumnsRule from "../rules/require-balanced-footer-link-columns.js";
+import requireBaseUrlIssueBannerEnabledRule from "../rules/require-base-url-issue-banner-enabled.js";
 import requireBaseUrlSlashesRule from "../rules/require-base-url-slashes.js";
 import requireConfigLinkContentRule from "../rules/require-config-link-content.js";
 import requireConfigLinkDestinationRule from "../rules/require-config-link-destination.js";
@@ -221,10 +221,10 @@ const docusaurusRuleRegistry = {
     "prefer-to-for-internal-links": preferToForInternalLinksRule,
     "prefer-use-base-url-for-static-assets":
         preferUseBaseUrlForStaticAssetsRule,
-    "require-base-url-issue-banner-enabled":
-        requireBaseUrlIssueBannerEnabledRule,
     "require-balanced-footer-link-columns":
         requireBalancedFooterLinkColumnsRule,
+    "require-base-url-issue-banner-enabled":
+        requireBaseUrlIssueBannerEnabledRule,
     "require-base-url-slashes": requireBaseUrlSlashesRule,
     "require-config-link-content": requireConfigLinkContentRule,
     "require-config-link-destination": requireConfigLinkDestinationRule,

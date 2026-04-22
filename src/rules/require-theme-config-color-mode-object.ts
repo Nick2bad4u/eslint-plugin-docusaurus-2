@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import {
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
@@ -33,13 +35,13 @@ const createInsertColorModeSuggestion = (
 ): ColorModeObjectSuggestion => ({
     fix: (fixer) => {
         const colorModeText = `colorMode: { defaultMode: ${JSON.stringify(options.value)} }`;
-        const firstProperty = options.themeConfigObject.properties[0];
+        const firstProperty = arrayFirst(options.themeConfigObject.properties);
 
         if (firstProperty === undefined) {
             return fixer.insertTextAfterRange(
                 [
-                    options.themeConfigObject.range[0],
-                    options.themeConfigObject.range[0] + 1,
+                    arrayFirst(options.themeConfigObject.range),
+                    arrayFirst(options.themeConfigObject.range) + 1,
                 ],
                 ` ${colorModeText} `
             );

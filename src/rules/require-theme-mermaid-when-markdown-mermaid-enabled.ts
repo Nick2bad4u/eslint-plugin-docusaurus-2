@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt, arrayFirst, isPresent } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getArrayExpressionPropertyValueByName,
@@ -34,12 +36,15 @@ const createAppendModuleEntryFix = (
     arrayExpression: Readonly<TSESTree.ArrayExpression>,
     moduleName: string
 ): TSESLint.RuleFix => {
-    const lastElement = arrayExpression.elements.at(-1);
+    const lastElement = arrayAt(arrayExpression.elements, -1);
     const moduleText = JSON.stringify(moduleName);
 
-    if (lastElement === undefined || lastElement === null) {
+    if (!isPresent(lastElement)) {
         return fixer.insertTextAfterRange(
-            [arrayExpression.range[0], arrayExpression.range[0] + 1],
+            [
+                arrayFirst(arrayExpression.range),
+                arrayFirst(arrayExpression.range) + 1,
+            ],
             moduleText
         );
     }

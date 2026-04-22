@@ -5,6 +5,8 @@
 
 import type { TSESLint } from "@typescript-eslint/utils";
 
+import { isDefined } from "ts-extras";
+
 import {
     collectFencedCodeBlockRanges,
     createTextSourceLocator,
@@ -26,7 +28,7 @@ const isAsciiLetter = (value: string): boolean => {
     const codePoint = value.codePointAt(0);
 
     return (
-        codePoint !== undefined &&
+        isDefined(codePoint) &&
         ((codePoint >= 65 && codePoint <= 90) ||
             (codePoint >= 97 && codePoint <= 122))
     );
@@ -59,7 +61,7 @@ const parseDeprecatedAdmonitionTitleLine = (
     const directive = line.slice(0, cursor);
     const separatorCharacter = line[cursor];
 
-    if (separatorCharacter === undefined) {
+    if (!isDefined(separatorCharacter)) {
         return null;
     }
 

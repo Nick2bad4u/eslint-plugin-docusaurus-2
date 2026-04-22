@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { safeCastTo } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -30,7 +32,7 @@ type SidebarLabeledItem = Readonly<{
 const getParentNode = (
     node: Readonly<TSESTree.Node>
 ): Readonly<TSESTree.Node> | undefined =>
-    (node as NodeWithOptionalParent).parent;
+    safeCastTo<NodeWithOptionalParent>(node).parent;
 
 const normalizeLabelForComparison = (label: string): string =>
     label.trim().toLowerCase();

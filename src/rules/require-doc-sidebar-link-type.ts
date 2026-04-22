@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getObjectPropertyName,
@@ -23,11 +25,11 @@ const createInsertDocTypeFix = (
     fixer: Readonly<TSESLint.RuleFixer>,
     linkObject: Readonly<TSESTree.ObjectExpression>
 ) => {
-    const firstProperty = linkObject.properties[0];
+    const firstProperty = arrayFirst(linkObject.properties);
 
     if (firstProperty === undefined) {
         return fixer.insertTextAfterRange(
-            [linkObject.range[0], linkObject.range[0] + 1],
+            [arrayFirst(linkObject.range), arrayFirst(linkObject.range) + 1],
             'type: "doc"'
         );
     }

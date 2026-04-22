@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, setHas } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -51,11 +53,14 @@ const createInsertDefaultModeFix = (
     defaultMode: "dark" | "light"
 ): TSESLint.RuleFix => {
     const defaultModePropertyText = `defaultMode: ${JSON.stringify(defaultMode)}`;
-    const firstProperty = colorModeObject.properties[0];
+    const firstProperty = arrayFirst(colorModeObject.properties);
 
     if (firstProperty === undefined) {
         return fixer.insertTextAfterRange(
-            [colorModeObject.range[0], colorModeObject.range[0] + 1],
+            [
+                arrayFirst(colorModeObject.range),
+                arrayFirst(colorModeObject.range) + 1,
+            ],
             ` ${defaultModePropertyText} `
         );
     }
@@ -193,7 +198,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             .trim()
                             .toLowerCase();
 
-                        if (validDefaultModes.has(normalizedDefaultMode)) {
+                        if (setHas(validDefaultModes, normalizedDefaultMode)) {
                             if (
                                 staticDefaultMode === normalizedDefaultMode ||
                                 !canAutofixStringExpression(

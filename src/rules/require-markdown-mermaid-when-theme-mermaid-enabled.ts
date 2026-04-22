@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayAt } from "ts-extras";
+
 import {
     getDefaultExportedObjectExpression,
     getObjectExpressionFromExpressionOrIdentifier,
@@ -42,7 +44,7 @@ const createInsertMarkdownMermaidFix = (
     markdownObject: Readonly<TSESTree.ObjectExpression>,
     sourceCode: Readonly<TSESLint.SourceCode>
 ): TSESLint.RuleFix => {
-    const lastProperty = markdownObject.properties.at(-1);
+    const lastProperty = arrayAt(markdownObject.properties, -1);
     const propertyText = "mermaid: true";
 
     if (lastProperty === undefined) {

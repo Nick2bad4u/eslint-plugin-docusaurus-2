@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, isPresent } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
@@ -26,7 +28,7 @@ const getConflictingDirectLinkProperties = (
         findObjectPropertyByName(objectExpression, "href"),
         findObjectPropertyByName(objectExpression, "html"),
         findObjectPropertyByName(objectExpression, "to"),
-    ].filter((property): property is TSESTree.Property => property !== null);
+    ].filter((property): property is TSESTree.Property => isPresent(property));
 
 /** Rule module for `no-conflicting-navbar-doc-item-props`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -86,7 +88,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                           }
                                       ),
                         messageId: "noConflictingNavbarDocItemProps",
-                        node: conflictingProperties[0]?.key ?? node,
+                        node: arrayFirst(conflictingProperties)?.key ?? node,
                     });
                 },
             };

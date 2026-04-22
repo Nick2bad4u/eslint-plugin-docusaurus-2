@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     getArrayExpressionPropertyValueByName,
@@ -99,7 +101,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         if (
                             metadataName === null ||
-                            !socialCardMetadataNames.has(metadataName)
+                            !setHas(socialCardMetadataNames, metadataName)
                         ) {
                             continue;
                         }

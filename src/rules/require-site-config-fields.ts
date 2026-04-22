@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, isDefined, setHas } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -69,7 +71,7 @@ const hasPresentBooleanValue = (
         return false;
     }
 
-    if (staticValue !== undefined) {
+    if (isDefined(staticValue)) {
         return true;
     }
 
@@ -90,7 +92,7 @@ const hasPresentReportingSeverityValue = (
     );
 
     if (staticValue !== null) {
-        return reportingSeverities.has(staticValue);
+        return setHas(reportingSeverities, staticValue);
     }
 
     return expression.type !== "Literal";
@@ -123,7 +125,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
             return {};
         }
 
-        const resolvedOptions = options ?? defaultOptions[0];
+        const resolvedOptions = options ?? arrayFirst(defaultOptions);
 
         return {
             Program(programNode: TSESTree.Program) {

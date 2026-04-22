@@ -1,11 +1,13 @@
 import type { TSESLint } from "@typescript-eslint/utils";
+import type { ESLint, Linter } from "eslint";
 /**
  * @packageDocumentation
  * Public plugin entrypoint for eslint-plugin-docusaurus-2 exports and preset wiring.
  */
-import type { ESLint, Linter } from "eslint";
+import type { Except } from "type-fest";
 
 import typeScriptParser from "@typescript-eslint/parser";
+import { isDefined, isEmpty, objectEntries, safeCastTo } from "ts-extras";
 
 import type { AdditionalConfigName } from "./_internal/preset-config-references.js";
 import type { UnknownArray } from "./_internal/types.js";
@@ -96,9 +98,12 @@ export type Docusaurus2RuleId = `docusaurus-2/${Docusaurus2RuleName}`;
 /** Unqualified rule name supported by `eslint-plugin-docusaurus-2`. */
 export type Docusaurus2RuleName = keyof typeof docusaurusRules;
 
-const runtimeRules = docusaurusRules as Readonly<
-    Record<string, TSESLint.RuleModule<string, Readonly<UnknownArray>>>
->;
+const runtimeRules =
+    safeCastTo<
+        Readonly<
+            Record<string, TSESLint.RuleModule<string, Readonly<UnknownArray>>>
+        >
+    >(docusaurusRules);
 
 /** ESLint-compatible rule map view of the strongly typed internal rule record. */
 const docusaurusEslintRules: NonNullable<ESLint.Plugin["rules"]> &
@@ -113,7 +118,7 @@ const ruleAdditionalConfigMembership =
 const rulePresetMembership = deriveRulePresetMembershipByRuleName(
     ruleDocsMetadataByRuleName
 );
-const docusaurusRuleEntries = Object.entries(runtimeRules);
+const docusaurusRuleEntries = objectEntries(runtimeRules);
 
 const createEmptyPresetRuleMap = (): Record<
     Docusaurus2PresetConfigName,
@@ -140,7 +145,7 @@ const derivePresetRuleNamesByConfig = (): Readonly<
     for (const [ruleName] of docusaurusRuleEntries) {
         const configNames = rulePresetMembership[ruleName];
 
-        if (configNames === undefined || configNames.length === 0) {
+        if (!isDefined(configNames) || isEmpty(configNames)) {
             continue;
         }
 
@@ -184,14 +189,14 @@ const deriveAdditionalConfigRuleNamesByConfig = (): Readonly<
     for (const [ruleName] of docusaurusRuleEntries) {
         const configNames = ruleAdditionalConfigMembership[ruleName];
 
-        if (configNames === undefined || configNames.length === 0) {
+        if (!isDefined(configNames) || isEmpty(configNames)) {
             continue;
         }
 
         for (const configName of configNames) {
             const existingRuleNames = ruleNamesByConfig[configName];
 
-            if (existingRuleNames === undefined) {
+            if (!isDefined(existingRuleNames)) {
                 continue;
             }
 
@@ -322,7 +327,7 @@ const docusaurus2Configs: Record<
 > = configsDefinition;
 
 /** Main plugin object exported for ESLint consumption. */
-const docusaurus2Plugin: Omit<ESLint.Plugin, "configs" | "rules"> & {
+const docusaurus2Plugin: Except<ESLint.Plugin, "configs" | "rules"> & {
     configs: Record<Docusaurus2ConfigName, Docusaurus2PresetConfig>;
     meta: {
         name: string;

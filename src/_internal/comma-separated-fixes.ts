@@ -5,6 +5,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst, assertDefined, isDefined, isEmpty } from "ts-extras";
+
 type CommaSeparatedContainer = Readonly<
     TSESTree.ArrayExpression | TSESTree.ObjectExpression
 >;
@@ -17,9 +19,9 @@ type RemovalIndexGroup = Readonly<{
 const createRemovalIndexGroups = (
     removalIndices: readonly number[]
 ): readonly RemovalIndexGroup[] => {
-    const firstRemovalIndex = removalIndices[0];
+    const firstRemovalIndex = arrayFirst(removalIndices);
 
-    if (firstRemovalIndex === undefined) {
+    if (!isDefined(firstRemovalIndex)) {
         return [];
     }
 
@@ -93,22 +95,19 @@ export const createRemoveCommaSeparatedItemsFixes = <
         .filter((index) => index >= 0)
         .toSorted((left, right) => left - right);
 
-    if (removalIndices.length === 0) {
+    if (isEmpty(removalIndices)) {
         return [];
     }
 
-    const containerInnerStart = container.range[0] + 1;
+    const containerInnerStart = arrayFirst(container.range) + 1;
 
     return createRemovalIndexGroups(removalIndices).map(
         ({ endIndex, startIndex }) => {
             const firstItem = items[startIndex];
             const lastItem = items[endIndex];
 
-            if (firstItem === undefined || lastItem === undefined) {
-                throw new TypeError(
-                    "Cannot remove comma-separated items outside the original container ordering."
-                );
-            }
+            assertDefined(firstItem);
+            assertDefined(lastItem);
 
             const previousItem = items[startIndex - 1];
             const nextItem = items[endIndex + 1];
@@ -123,16 +122,12 @@ export const createRemoveCommaSeparatedItemsFixes = <
 
             if (nextItem !== undefined) {
                 return fixer.removeRange([
-                    firstItem.range[0],
-                    nextItem.range[0],
+                    arrayFirst(firstItem.range),
+                    arrayFirst(nextItem.range),
                 ]);
             }
 
-            if (previousItem === undefined) {
-                throw new TypeError(
-                    "Cannot remove a trailing comma-separated item without a preceding sibling."
-                );
-            }
+            assertDefined(previousItem);
 
             const previousSeparatorComma = getCommaTokenAfterItem(
                 sourceCode,

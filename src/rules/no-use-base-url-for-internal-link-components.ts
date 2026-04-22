@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import {
     getStaticStringValue,
     isInternalRouteLikeValue,
@@ -38,7 +40,7 @@ const getUseBaseUrlWrappedInternalRoute = (
         expression.type !== "CallExpression" ||
         expression.arguments.length !== 1 ||
         expression.callee.type !== "Identifier" ||
-        !useBaseUrlLocalNames.has(expression.callee.name)
+        !setHas(useBaseUrlLocalNames, expression.callee.name)
     ) {
         return null;
     }
@@ -87,7 +89,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 JSXOpeningElement(node: Readonly<TSESTree.JSXOpeningElement>) {
                     if (
                         node.name.type !== "JSXIdentifier" ||
-                        !docusaurusLinkLocalNames.has(node.name.name)
+                        !setHas(docusaurusLinkLocalNames, node.name.name)
                     ) {
                         return;
                     }

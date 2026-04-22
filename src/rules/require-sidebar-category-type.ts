@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayFirst } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getStaticStringValue,
@@ -22,22 +24,28 @@ const createInsertCategoryTypeFix = (
     sourceCode: Readonly<TSESLint.SourceCode>,
     categoryObject: Readonly<TSESTree.ObjectExpression>
 ): TSESLint.RuleFix => {
-    const firstProperty = categoryObject.properties[0];
+    const firstProperty = arrayFirst(categoryObject.properties);
 
     if (firstProperty === undefined) {
         return fixer.insertTextAfterRange(
-            [categoryObject.range[0], categoryObject.range[0] + 1],
+            [
+                arrayFirst(categoryObject.range),
+                arrayFirst(categoryObject.range) + 1,
+            ],
             'type: "category"'
         );
     }
 
     const leadingTrivia = sourceCode.text.slice(
-        categoryObject.range[0] + 1,
-        firstProperty.range[0]
+        arrayFirst(categoryObject.range) + 1,
+        arrayFirst(firstProperty.range)
     );
 
     return fixer.insertTextAfterRange(
-        [categoryObject.range[0], categoryObject.range[0] + 1],
+        [
+            arrayFirst(categoryObject.range),
+            arrayFirst(categoryObject.range) + 1,
+        ],
         `${leadingTrivia}type: "category",`
     );
 };

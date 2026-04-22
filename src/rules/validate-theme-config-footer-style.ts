@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -121,7 +123,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             .trim()
                             .toLowerCase();
 
-                        if (validFooterStyles.has(normalizedStyle)) {
+                        if (setHas(validFooterStyles, normalizedStyle)) {
                             if (
                                 staticStyle === normalizedStyle ||
                                 !canAutofixStringExpression(styleExpression)

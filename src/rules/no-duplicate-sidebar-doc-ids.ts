@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isDefined, safeCastTo } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -37,7 +39,7 @@ type NodeWithOptionalParent = Readonly<TSESTree.Node> & {
 const getParentNode = (
     node: Readonly<TSESTree.Node>
 ): Readonly<TSESTree.Node> | undefined =>
-    (node as NodeWithOptionalParent).parent;
+    safeCastTo<NodeWithOptionalParent>(node).parent;
 
 const getStaticDocId = (
     expression: Readonly<TSESTree.Expression>
@@ -75,7 +77,7 @@ const collectExplicitDocOccurrence = (
 
     const docId = getStaticDocId(idProperty.value as TSESTree.Expression);
 
-    if (docId === undefined) {
+    if (!isDefined(docId)) {
         return null;
     }
 
@@ -200,7 +202,7 @@ const createSuggestionsForDuplicateSidebarDocOccurrence = (
 
     if (
         occurrence.occurrenceKind === "explicit-doc-item" &&
-        typeProperty !== undefined
+        isDefined(typeProperty)
     ) {
         return [
             {
@@ -249,7 +251,7 @@ const reportDuplicateSidebarDocOccurrence = (
         },
         messageId: "duplicateSidebarDocId",
         node: occurrence.node,
-        suggest: suggestions === undefined ? null : suggestions,
+        suggest: isDefined(suggestions) ? suggestions : null,
     });
 };
 
@@ -282,7 +284,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             occurrence.docId
                         );
 
-                        if (firstOccurrence === undefined) {
+                        if (!isDefined(firstOccurrence)) {
                             firstOccurrenceByDocId.set(
                                 occurrence.docId,
                                 occurrence

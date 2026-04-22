@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
@@ -57,7 +59,7 @@ const normalizeSiteUrlValue = (siteUrl: Readonly<URL>): string => {
 
     if (
         normalizedUrl.protocol === "http:" &&
-        !localhostHostNames.has(normalizedUrl.hostname)
+        !setHas(localhostHostNames, normalizedUrl.hostname)
     ) {
         normalizedUrl.protocol = "https:";
     }

@@ -3,7 +3,7 @@
  * Stable catalog IDs for all plugin rules.
  */
 
-import { objectFromEntries, setHas } from "./runtime-utils.js";
+import { objectFromEntries, setHas } from "ts-extras";
 
 /** Catalog metadata for a single rule. */
 export type RuleCatalogEntry = Readonly<{

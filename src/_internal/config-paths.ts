@@ -4,6 +4,7 @@ import * as fs from "node:fs";
 import { createRequire } from "node:module";
 import * as path from "node:path";
 import { pathToFileURL } from "node:url";
+import { isDefined } from "ts-extras";
 
 /**
  * @packageDocumentation
@@ -144,7 +145,7 @@ export const doesResolvedPathExist = (resolvedPath: string): boolean => {
     const normalizedPath = path.normalize(resolvedPath);
     const cachedExists = existenceCache.get(normalizedPath);
 
-    if (cachedExists !== undefined) {
+    if (isDefined(cachedExists)) {
         return cachedExists;
     }
 

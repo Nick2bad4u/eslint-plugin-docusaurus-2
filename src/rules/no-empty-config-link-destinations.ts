@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { isPresent } from "ts-extras";
+
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
@@ -74,7 +76,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         [hrefProperty, toExpression],
                         [toProperty, hrefExpression],
                     ] as const) {
-                        if (property === null || property === undefined) {
+                        if (!isPresent(property)) {
                             continue;
                         }
 

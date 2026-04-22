@@ -4,9 +4,9 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
-import type { JsonObject, UnknownArray } from "./types.js";
+import { isPresent, objectHasOwn } from "ts-extras";
 
-import { isPresent, objectHasOwn } from "./runtime-utils.js";
+import type { JsonObject, UnknownArray } from "./types.js";
 
 /** Top-level `settings` key for this plugin. */
 const PLUGIN_SETTINGS_KEY = "docusaurus-2";

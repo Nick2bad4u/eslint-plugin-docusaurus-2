@@ -35,9 +35,9 @@ const assertRuleTesterHook: (
 };
 
 assertRuleTesterHook(afterAll, "afterAll");
-RuleTester.afterAll = afterAll as unknown as typeof RuleTester.afterAll;
+RuleTester.afterAll = afterAll;
 assertRuleTesterHook(describe, "describe");
-RuleTester.describe = describe as unknown as typeof RuleTester.describe;
+RuleTester.describe = describe;
 assertRuleTesterHook(it, "it");
 RuleTester.it = it;
 const vitestItOnly: unknown = Reflect.get(it, "only");
@@ -167,13 +167,13 @@ const patchRuleTesterRunWithGeneratedCaseNames = (
 ): RuleTester => {
     const writableTester = tester as RuleTester;
     const originalRun = writableTester.run.bind(writableTester);
-    writableTester.run = ((ruleName, ruleModule, runCases) => {
+    writableTester.run = (ruleName, ruleModule, runCases) => {
         (originalRun as (...args: UnknownArray) => void)(
             ruleName,
             ruleModule,
             withGeneratedRuleCaseNames(ruleName, runCases)
         );
-    }) as RuleTester["run"];
+    };
     return writableTester;
 };
 

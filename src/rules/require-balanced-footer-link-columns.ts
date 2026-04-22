@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { arrayJoin } from "ts-extras";
+
 import {
     getArrayExpressionFromExpressionOrIdentifier,
     getArrayExpressionPropertyValueByName,
@@ -17,12 +19,12 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 
-type MessageIds = "requireBalancedFooterLinkColumns";
-
 type FooterColumnLinkCount = Readonly<{
     column: Readonly<TSESTree.ObjectExpression>;
     linkCount: number;
 }>;
+
+type MessageIds = "requireBalancedFooterLinkColumns";
 
 const getStaticFooterColumnLinkCounts = (
     footerLinkColumns: readonly Readonly<TSESTree.ObjectExpression>[],
@@ -71,7 +73,10 @@ const getStaticFooterColumnLinkCounts = (
 const createCountsSummary = (
     columnLinkCounts: readonly FooterColumnLinkCount[]
 ): string =>
-    columnLinkCounts.map(({ linkCount }) => String(linkCount)).join("/");
+    arrayJoin(
+        columnLinkCounts.map(({ linkCount }) => String(linkCount)),
+        "/"
+    );
 
 /** Rule module for `require-balanced-footer-link-columns`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =

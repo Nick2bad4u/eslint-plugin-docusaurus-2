@@ -4,6 +4,8 @@
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
+import { setHas } from "ts-extras";
+
 import {
     getDefaultExportedObjectExpression,
     getObjectPropertyValueByName,
@@ -68,7 +70,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        if (seenTitles.has(normalizedTitle)) {
+                        if (setHas(seenTitles, normalizedTitle)) {
                             context.report({
                                 data: {
                                     title: staticTitle.trim(),
