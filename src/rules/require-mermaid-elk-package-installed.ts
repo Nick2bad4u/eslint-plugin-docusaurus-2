@@ -5,7 +5,7 @@
 
 import type { TSESLint } from "@typescript-eslint/utils";
 
-import { arrayFirst, isDefined } from "ts-extras";
+import { arrayFirst, isDefined, stringSplit } from "ts-extras";
 
 import { isPackageDeclaredInNearestManifest } from "../_internal/package-manifest.js";
 import {
@@ -38,7 +38,11 @@ const usesMermaidElkLayout = (blockContent: string): boolean => {
         return false;
     }
 
-    const frontmatterLines = trimmedContent.split(/\r?\n/u);
+    const normalizedFrontmatterContent = trimmedContent.replaceAll(
+        "\r\n",
+        "\n"
+    );
+    const frontmatterLines = stringSplit(normalizedFrontmatterContent, "\n");
 
     if (frontmatterLines.length < 3 || arrayFirst(frontmatterLines) !== "---") {
         return false;
