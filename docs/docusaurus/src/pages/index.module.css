@@ -163,7 +163,7 @@
     &:focus {
         border-color: rgb(255 255 255 / 74%);
         background: rgb(255 255 255 / 16%);
-        color: #ffffff;
+        color: #0f172a;
         text-decoration: none;
         transform: translateY(-1px);
     }
@@ -197,7 +197,7 @@
     &:focus {
         border-color: rgb(103 232 249 / 82%);
         background: rgb(8 145 178 / 38%);
-        color: rgb(240 249 255);
+        color: #000000;
     }
 }
 

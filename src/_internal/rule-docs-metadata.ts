@@ -139,102 +139,79 @@ const normalizeAdditionalConfigNames = (
     return normalizedConfigNames;
 };
 
-/** Validate and narrow dynamic `meta.docs` values to the plugin docs contract. */
-const getRuleDocsContract = (
+const requireNonEmptyString = (
     ruleName: string,
-    docs: unknown
-): PluginRuleDocsContract => {
-    if (!isUnknownRecord(docs)) {
-        throw new TypeError(`Rule '${ruleName}' must declare meta.docs.`);
-    }
-
-    const description = docs["description"];
-    const configs = docs["configs"];
-    const recommended = docs["recommended"];
-    const requiresTypeChecking = docs["requiresTypeChecking"];
-    const ruleId = docs["ruleId"];
-    const ruleNumber = docs["ruleNumber"];
-    const presets = docs["presets"];
-    const url = docs["url"];
-
-    if (typeof description !== "string" || description.trim().length === 0) {
+    value: unknown,
+    fieldName: string
+): string => {
+    if (typeof value !== "string" || value.trim().length === 0) {
         throw new TypeError(
-            `Rule '${ruleName}' must declare a non-empty docs.description.`
+            `Rule '${ruleName}' must declare a non-empty docs.${fieldName}.`
         );
     }
 
-    if (typeof url !== "string" || url.trim().length === 0) {
+    return value;
+};
+
+const requireBoolean = (
+    ruleName: string,
+    value: unknown,
+    fieldName: string
+): boolean => {
+    if (typeof value !== "boolean") {
         throw new TypeError(
-            `Rule '${ruleName}' must declare a non-empty docs.url.`
+            `Rule '${ruleName}' must declare boolean docs.${fieldName}.`
         );
     }
 
-    const expectedRuleDocsUrl = createRuleDocsUrl(ruleName);
-    if (url !== expectedRuleDocsUrl) {
+    return value;
+};
+
+const requirePositiveInteger = (
+    ruleName: string,
+    value: unknown,
+    fieldName: string
+): number => {
+    if (typeof value !== "number" || !isInteger(value) || value < 1) {
         throw new TypeError(
-            `Rule '${ruleName}' must declare docs.url as '${expectedRuleDocsUrl}'.`
+            `Rule '${ruleName}' must declare positive integer docs.${fieldName}.`
         );
     }
 
-    if (typeof recommended !== "boolean") {
-        throw new TypeError(
-            `Rule '${ruleName}' must declare boolean docs.recommended.`
-        );
+    return value;
+};
+
+const normalizeConfigsFromUnknown = (
+    ruleName: string,
+    configs: unknown
+): readonly AdditionalConfigName[] => {
+    if (!isDefined(configs)) {
+        return [] as const;
     }
 
-    if (
-        isDefined(requiresTypeChecking) &&
-        typeof requiresTypeChecking !== "boolean"
-    ) {
-        throw new TypeError(
-            `Rule '${ruleName}' must declare boolean docs.requiresTypeChecking.`
-        );
-    }
-
-    if (
-        typeof ruleId !== "string" ||
-        !isRuleIdInCanonicalFormat(ruleId) ||
-        ruleId.trim().length === 0
-    ) {
-        throw new TypeError(
-            `Rule '${ruleName}' must declare docs.ruleId using the 'R###' format.`
-        );
-    }
-
-    if (
-        typeof ruleNumber !== "number" ||
-        !isInteger(ruleNumber) ||
-        ruleNumber < 1
-    ) {
-        throw new TypeError(
-            `Rule '${ruleName}' must declare positive integer docs.ruleNumber.`
-        );
-    }
-
-    const normalizedConfigNames = (() => {
-        if (!isDefined(configs)) {
-            return [] as const;
-        }
-
-        if (typeof configs === "string") {
-            if (!isAdditionalConfigName(configs)) {
-                throw new TypeError(
-                    `Rule '${ruleName}' has invalid docs.configs value '${configs}'.`
-                );
-            }
-
-            return [configs] as const;
-        }
-
-        if (!Array.isArray(configs)) {
+    if (typeof configs === "string") {
+        if (!isAdditionalConfigName(configs)) {
             throw new TypeError(
-                `Rule '${ruleName}' must declare docs.configs as a config key or array.`
+                `Rule '${ruleName}' has invalid docs.configs value '${configs}'.`
             );
         }
 
-        return normalizeAdditionalConfigNames(ruleName, configs);
-    })();
+        return [configs] as const;
+    }
 
+    if (!Array.isArray(configs)) {
+        throw new TypeError(
+            `Rule '${ruleName}' must declare docs.configs as a config key or array.`
+        );
+    }
+
+    return normalizeAdditionalConfigNames(ruleName, configs);
+};
+
+const normalizePresetsFromUnknown = (
+    ruleName: string,
+    presets: unknown
+): readonly PresetConfigName[] => {
     if (typeof presets === "string") {
         if (!isPresetConfigName(presets)) {
             throw new TypeError(
@@ -242,18 +219,7 @@ const getRuleDocsContract = (
             );
         }
 
-        return {
-            configs: normalizedConfigNames,
-            description,
-            presets,
-            recommended,
-            ...(isDefined(requiresTypeChecking)
-                ? { requiresTypeChecking }
-                : {}),
-            ruleId,
-            ruleNumber,
-            url,
-        };
+        return [presets] as const;
     }
 
     if (!Array.isArray(presets)) {
@@ -274,15 +240,89 @@ const getRuleDocsContract = (
         normalizedPresetNames.push(candidate);
     }
 
+    return normalizedPresetNames;
+};
+
+/** Validate and narrow dynamic `meta.docs` values to the plugin docs contract. */
+const getRuleDocsContract = (
+    ruleName: string,
+    docs: unknown
+): PluginRuleDocsContract => {
+    if (!isUnknownRecord(docs)) {
+        throw new TypeError(`Rule '${ruleName}' must declare meta.docs.`);
+    }
+
+    const description = docs["description"];
+    const configs = docs["configs"];
+    const recommended = docs["recommended"];
+    const requiresTypeChecking = docs["requiresTypeChecking"];
+    const ruleId = docs["ruleId"];
+    const ruleNumber = docs["ruleNumber"];
+    const presets = docs["presets"];
+    const url = docs["url"];
+
+    const normalizedDescription = requireNonEmptyString(
+        ruleName,
+        description,
+        "description"
+    );
+    const normalizedUrl = requireNonEmptyString(ruleName, url, "url");
+
+    const expectedRuleDocsUrl = createRuleDocsUrl(ruleName);
+    if (normalizedUrl !== expectedRuleDocsUrl) {
+        throw new TypeError(
+            `Rule '${ruleName}' must declare docs.url as '${expectedRuleDocsUrl}'.`
+        );
+    }
+
+    const normalizedRecommended = requireBoolean(
+        ruleName,
+        recommended,
+        "recommended"
+    );
+
+    if (
+        isDefined(requiresTypeChecking) &&
+        typeof requiresTypeChecking !== "boolean"
+    ) {
+        throw new TypeError(
+            `Rule '${ruleName}' must declare boolean docs.requiresTypeChecking.`
+        );
+    }
+
+    if (
+        typeof ruleId !== "string" ||
+        !isRuleIdInCanonicalFormat(ruleId) ||
+        ruleId.trim().length === 0
+    ) {
+        throw new TypeError(
+            `Rule '${ruleName}' must declare docs.ruleId using the 'R###' format.`
+        );
+    }
+
+    const normalizedRuleNumber = requirePositiveInteger(
+        ruleName,
+        ruleNumber,
+        "ruleNumber"
+    );
+    const normalizedConfigNames = normalizeConfigsFromUnknown(
+        ruleName,
+        configs
+    );
+    const normalizedPresetNames = normalizePresetsFromUnknown(
+        ruleName,
+        presets
+    );
+
     return {
         configs: normalizedConfigNames,
-        description,
+        description: normalizedDescription,
         presets: normalizedPresetNames,
-        recommended,
+        recommended: normalizedRecommended,
         ...(isDefined(requiresTypeChecking) ? { requiresTypeChecking } : {}),
         ruleId,
-        ruleNumber,
-        url,
+        ruleNumber: normalizedRuleNumber,
+        url: normalizedUrl,
     };
 };
 

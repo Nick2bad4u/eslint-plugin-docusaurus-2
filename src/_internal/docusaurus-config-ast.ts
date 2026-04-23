@@ -121,6 +121,11 @@ const getObjectExpressionFromExpression = (
         : null;
 };
 
+const getObjectExpressionFromDirectExpression = (
+    expression: Readonly<TSESTree.Expression>
+): null | Readonly<TSESTree.ObjectExpression> =>
+    expression.type === "ObjectExpression" ? expression : null;
+
 const resolveExpressionForIdentifier = (
     identifierName: string,
     programNode: Readonly<TSESTree.Program>
@@ -493,14 +498,18 @@ export const getArrayExpressionPropertyValueByName = (
         return null;
     }
 
-    return programNode === undefined
-        ? propertyValue.type === "ArrayExpression"
-            ? propertyValue
-            : null
-        : getArrayExpressionFromExpressionOrIdentifier(
-              propertyValue,
-              programNode
-          );
+    if (programNode === undefined) {
+        if (propertyValue.type !== "ArrayExpression") {
+            return null;
+        }
+
+        return propertyValue;
+    }
+
+    return getArrayExpressionFromExpressionOrIdentifier(
+        propertyValue,
+        programNode
+    );
 };
 
 /**
@@ -770,9 +779,7 @@ export const findClassicPresetOptionsObjects = (
 
         const presetOptionsObject =
             programNode === undefined
-                ? presetOptions.type === "ObjectExpression"
-                    ? presetOptions
-                    : null
+                ? getObjectExpressionFromDirectExpression(presetOptions)
                 : getObjectExpressionFromExpressionOrIdentifier(
                       presetOptions,
                       programNode
