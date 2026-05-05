@@ -631,7 +631,7 @@ const config = {
                         },
                         {
                             label: "• API Reference",
-                            to: "/docs/developer/api/globals",
+                            to: "/docs/developer/api",
                         },
                         {
                             label: "• Pages SEO & IndexNow",

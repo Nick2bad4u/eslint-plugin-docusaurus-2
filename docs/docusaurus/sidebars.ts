@@ -39,7 +39,7 @@ const sidebars = {
                     ],
                     label: "API Reference",
                     link: {
-                        id: "developer/api/globals",
+                        id: "developer/api/index",
                         type: "doc",
                     },
                     type: "category",
