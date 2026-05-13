@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-theme-classic-custom-css-files-exist`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     doesResolvedPathExist,
@@ -69,7 +73,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                   );
 
                         for (const customCssEntry of customCssExpressions) {
-                            if (customCssEntry.type === "SpreadElement") {
+                            if (
+                                customCssEntry.type ===
+                                AST_NODE_TYPES.SpreadElement
+                            ) {
                                 continue;
                             }
 

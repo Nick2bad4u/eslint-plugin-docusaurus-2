@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-head-tag-content-or-attributes`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     getArrayExpressionFromExpressionOrIdentifier,
@@ -92,7 +96,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     for (const headTagEntry of headTagsArrayExpression.elements) {
-                        if (headTagEntry?.type !== "ObjectExpression") {
+                        if (
+                            headTagEntry?.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 

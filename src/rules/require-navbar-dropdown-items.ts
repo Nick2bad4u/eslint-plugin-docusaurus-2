@@ -2,13 +2,17 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-navbar-dropdown-items`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -41,11 +45,11 @@ const getNavbarDropdownItemsProblemMessageId = (
         return "requireNavbarDropdownItems";
     }
 
-    const itemsExpression = itemsProperty.value as TSESTree.Expression;
+    const itemsExpression = getObjectPropertyValueExpression(itemsProperty);
 
     if (
-        itemsExpression.type === "ArrayExpression" ||
-        itemsExpression.type === "Identifier"
+        itemsExpression.type === AST_NODE_TYPES.ArrayExpression ||
+        itemsExpression.type === AST_NODE_TYPES.Identifier
     ) {
         return undefined;
     }

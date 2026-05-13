@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-navbar-item-labels`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -27,7 +30,7 @@ const isNavbarItemsArrayExpression = (
 ): boolean => {
     const parentNode = arrayExpression.parent;
 
-    if (parentNode?.type !== "Property") {
+    if (parentNode?.type !== AST_NODE_TYPES.Property) {
         return false;
     }
 
@@ -37,14 +40,14 @@ const isNavbarItemsArrayExpression = (
 
     const ownerObject = parentNode.parent;
 
-    if (ownerObject?.type !== "ObjectExpression") {
+    if (ownerObject?.type !== AST_NODE_TYPES.ObjectExpression) {
         return false;
     }
 
     const ownerProperty = ownerObject.parent;
 
     if (
-        ownerProperty?.type === "Property" &&
+        ownerProperty?.type === AST_NODE_TYPES.Property &&
         getObjectPropertyName(ownerProperty) === "navbar"
     ) {
         return true;
@@ -78,7 +81,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const seenLabels = new Map<string, string>();
 
                     for (const itemElement of node.elements) {
-                        if (itemElement?.type !== "ObjectExpression") {
+                        if (
+                            itemElement?.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 

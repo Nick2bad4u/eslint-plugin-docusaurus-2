@@ -2,11 +2,16 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-base-url-issue-banner-enabled`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     getStaticBooleanValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -20,13 +25,14 @@ type MessageIds = "requireBaseUrlIssueBannerEnabled";
 const isBooleanLiteralExpression = (
     expression: Readonly<TSESTree.Expression>
 ): expression is TSESTree.Literal =>
-    expression.type === "Literal" && typeof expression.value === "boolean";
+    expression.type === AST_NODE_TYPES.Literal &&
+    typeof expression.value === "boolean";
 
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 /** Rule module for `require-base-url-issue-banner-enabled`. */
@@ -61,7 +67,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const issueBannerExpression =
-                        issueBannerProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(issueBannerProperty);
                     const staticIssueBannerValue =
                         getStaticBooleanValueFromExpressionOrIdentifier(
                             issueBannerExpression,

@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-theme-config-metadata-keys`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst, setHas } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -81,7 +84,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         [];
 
                     for (const metadataElement of metadataArrayItems) {
-                        if (metadataElement.type !== "ObjectExpression") {
+                        if (
+                            metadataElement.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 

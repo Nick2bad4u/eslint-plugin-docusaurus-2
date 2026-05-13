@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-i18n-locales`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayIncludes, arrayJoin, setHas } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -12,6 +15,7 @@ import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -52,7 +56,7 @@ const getStaticLocaleArrayData = (
     const seenLocales = new Set<string>();
 
     for (const element of localesArrayExpression.elements) {
-        if (element === null || element.type === "SpreadElement") {
+        if (element === null || element.type === AST_NODE_TYPES.SpreadElement) {
             return null;
         }
 
@@ -144,7 +148,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const localesExpression =
-                        localesProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(localesProperty);
                     const localesArrayExpression =
                         getArrayExpressionFromExpressionOrIdentifier(
                             localesExpression,
@@ -178,7 +182,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         ", "
                     );
 
-                    if (localesExpression.type === "ArrayExpression") {
+                    if (
+                        localesExpression.type ===
+                        AST_NODE_TYPES.ArrayExpression
+                    ) {
                         reportWithOptionalFix({
                             context,
                             data: {

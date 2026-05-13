@@ -2,13 +2,17 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-generated-index-link-type`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getObjectPropertyName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusSidebarFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -42,7 +46,9 @@ const isSidebarCategoryObject = (
     const typeValue =
         typeProperty === null
             ? null
-            : getStaticStringValue(typeProperty.value as TSESTree.Expression);
+            : getStaticStringValue(
+                  getObjectPropertyValueExpression(typeProperty)
+              );
 
     return (
         typeValue === "category" ||
@@ -79,8 +85,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     node: TSESTree.Node
                 ) {
                     if (
-                        node.type !== "Property" ||
-                        node.value.type !== "ObjectExpression"
+                        node.type !== AST_NODE_TYPES.Property ||
+                        node.value.type !== AST_NODE_TYPES.ObjectExpression
                     ) {
                         return;
                     }
@@ -94,7 +100,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const parentObject = node.parent;
 
                     if (
-                        parentObject?.type !== "ObjectExpression" ||
+                        parentObject?.type !==
+                            AST_NODE_TYPES.ObjectExpression ||
                         !isSidebarCategoryObject(parentObject)
                     ) {
                         return;
@@ -132,7 +139,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const typeValue = getStaticStringValue(
-                        typeProperty.value as TSESTree.Expression
+                        getObjectPropertyValueExpression(typeProperty)
                     );
 
                     if (typeValue === null || typeValue === "generated-index") {

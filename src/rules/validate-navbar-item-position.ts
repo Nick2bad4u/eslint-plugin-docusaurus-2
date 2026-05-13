@@ -2,11 +2,16 @@
  * @packageDocumentation
  * ESLint rule implementation for `validate-navbar-item-position`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getExpressionFromExpressionOrIdentifier,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -30,15 +35,16 @@ type NavbarPositionSuggestion = NonNullable<
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const canAutofixPositionExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    (expression.type === "Literal" && typeof expression.value === "string") ||
-    (expression.type === "TemplateLiteral" &&
+    (expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string") ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const normalizePosition = (position: string): string =>
@@ -105,7 +111,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const positionExpression =
-                        positionProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(positionProperty);
                     const staticPositionValue =
                         getStaticStringValueFromExpressionOrIdentifier(
                             positionExpression,

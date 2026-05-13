@@ -1,10 +1,9 @@
-import type { TSESTree } from "@typescript-eslint/utils";
-
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 /**
  * @packageDocumentation
  * Shared AST and filename helpers for Docusaurus config and sidebar rules.
  */
-import * as path from "node:path";
+import path from "node:path";
 import { arrayFirst, isPresent, setHas, stringSplit } from "ts-extras";
 
 const supportedConfigExtensions = new Set([
@@ -55,8 +54,6 @@ const docusaurusClassicPresetModuleNames = new Set([
     "classic",
 ]);
 
-const defaultExportDeclarationType = "ExportDefaultDeclaration" as const;
-
 const normalizeFilePath = (filePath: string): string =>
     filePath.replaceAll("\\", "/");
 
@@ -96,19 +93,49 @@ const hasPathSegmentSequence = (
 const unwrapTransparentExpression = (
     expression: Readonly<TSESTree.Expression>
 ): Readonly<TSESTree.Expression> => {
-    if (expression.type === "TSAsExpression") {
+    if (expression.type === AST_NODE_TYPES.TSAsExpression) {
         return unwrapTransparentExpression(expression.expression);
     }
 
-    if (expression.type === "TSSatisfiesExpression") {
+    if (expression.type === AST_NODE_TYPES.TSSatisfiesExpression) {
         return unwrapTransparentExpression(expression.expression);
     }
 
-    if (expression.type === "TSTypeAssertion") {
+    if (expression.type === AST_NODE_TYPES.TSTypeAssertion) {
         return unwrapTransparentExpression(expression.expression);
     }
 
     return expression;
+};
+
+const getExpressionNodeOrNull = (
+    node: Readonly<TSESTree.Property["value"]>
+): null | Readonly<TSESTree.Expression> => {
+    if (
+        node.type === AST_NODE_TYPES.ArrayPattern ||
+        node.type === AST_NODE_TYPES.AssignmentPattern ||
+        node.type === AST_NODE_TYPES.ObjectPattern ||
+        node.type === AST_NODE_TYPES.TSEmptyBodyFunctionExpression
+    ) {
+        return null;
+    }
+
+    return node;
+};
+
+/** Resolve an object-property value to an expression or throw for pattern nodes. */
+export const getObjectPropertyValueExpression = (
+    property: Readonly<TSESTree.Property>
+): Readonly<TSESTree.Expression> => {
+    const expressionNode = getExpressionNodeOrNull(property.value);
+
+    if (expressionNode === null) {
+        throw new TypeError(
+            "Expected object-property value to be an expression node."
+        );
+    }
+
+    return expressionNode;
 };
 
 const getObjectExpressionFromExpression = (
@@ -116,7 +143,7 @@ const getObjectExpressionFromExpression = (
 ): null | Readonly<TSESTree.ObjectExpression> => {
     const unwrappedExpression = unwrapTransparentExpression(expression);
 
-    return unwrappedExpression.type === "ObjectExpression"
+    return unwrappedExpression.type === AST_NODE_TYPES.ObjectExpression
         ? unwrappedExpression
         : null;
 };
@@ -124,20 +151,20 @@ const getObjectExpressionFromExpression = (
 const getObjectExpressionFromDirectExpression = (
     expression: Readonly<TSESTree.Expression>
 ): null | Readonly<TSESTree.ObjectExpression> =>
-    expression.type === "ObjectExpression" ? expression : null;
+    expression.type === AST_NODE_TYPES.ObjectExpression ? expression : null;
 
 const resolveExpressionForIdentifier = (
     identifierName: string,
     programNode: Readonly<TSESTree.Program>
 ): null | Readonly<TSESTree.Expression> => {
     for (const statement of programNode.body) {
-        if (statement.type !== "VariableDeclaration") {
+        if (statement.type !== AST_NODE_TYPES.VariableDeclaration) {
             continue;
         }
 
         for (const declaration of statement.declarations) {
             if (
-                declaration.id.type !== "Identifier" ||
+                declaration.id.type !== AST_NODE_TYPES.Identifier ||
                 declaration.id.name !== identifierName ||
                 declaration.init === null
             ) {
@@ -156,13 +183,13 @@ const resolveObjectExpressionForIdentifier = (
     programNode: Readonly<TSESTree.Program>
 ): null | Readonly<TSESTree.ObjectExpression> => {
     for (const statement of programNode.body) {
-        if (statement.type !== "VariableDeclaration") {
+        if (statement.type !== AST_NODE_TYPES.VariableDeclaration) {
             continue;
         }
 
         for (const declaration of statement.declarations) {
             if (
-                declaration.id.type !== "Identifier" ||
+                declaration.id.type !== AST_NODE_TYPES.Identifier ||
                 declaration.id.name !== identifierName ||
                 declaration.init === null
             ) {
@@ -286,7 +313,7 @@ export const isRoutableDocusaurusSitePageFilePath = (
         return false;
     }
 
-    if (/\.(?:spec|test)\.[^.]+$/u.test(baseName)) {
+    if (/\.(?:spec|test)\.[^.]+$/v.test(baseName)) {
         return false;
     }
 
@@ -305,7 +332,7 @@ export const isStylesheetImportSpecifier = (importSource: string): boolean =>
 export const isModuleStylesheetImportSpecifier = (
     importSource: string
 ): boolean =>
-    /\.module\.(?:css|sass|scss)$/u.test(importSource) &&
+    /\.module\.(?:css|sass|scss)$/v.test(importSource) &&
     isStylesheetImportSpecifier(importSource);
 
 /**
@@ -331,12 +358,12 @@ export const getObjectPropertyName = (
         return null;
     }
 
-    if (property.key.type === "Identifier") {
+    if (property.key.type === AST_NODE_TYPES.Identifier) {
         return property.key.name;
     }
 
     if (
-        property.key.type === "Literal" &&
+        property.key.type === AST_NODE_TYPES.Literal &&
         typeof property.key.value === "string"
     ) {
         return property.key.value;
@@ -358,7 +385,7 @@ export const findObjectPropertyByName = (
     propertyName: string
 ): null | TSESTree.Property => {
     for (const property of objectExpression.properties) {
-        if (property.type !== "Property") {
+        if (property.type !== AST_NODE_TYPES.Property) {
             continue;
         }
 
@@ -378,12 +405,12 @@ export const getObjectPropertyValueByName = (
     propertyName: string
 ): null | Readonly<TSESTree.Expression> => {
     const property = findObjectPropertyByName(objectExpression, propertyName);
+    const propertyValueExpression =
+        property === null ? null : getObjectPropertyValueExpression(property);
 
-    return property === null
+    return propertyValueExpression === null
         ? null
-        : unwrapTransparentExpression(
-              property.value as Readonly<TSESTree.Expression>
-          );
+        : unwrapTransparentExpression(propertyValueExpression);
 };
 
 /**
@@ -396,7 +423,7 @@ export const getExpressionFromExpressionOrIdentifier = (
 ): null | Readonly<TSESTree.Expression> => {
     const unwrappedExpression = unwrapTransparentExpression(expression);
 
-    if (unwrappedExpression.type !== "Identifier") {
+    if (unwrappedExpression.type !== AST_NODE_TYPES.Identifier) {
         return unwrappedExpression;
     }
 
@@ -438,11 +465,11 @@ export const getArrayExpressionFromExpressionOrIdentifier = (
     expression: Readonly<TSESTree.Expression>,
     programNode: Readonly<TSESTree.Program>
 ): null | Readonly<TSESTree.ArrayExpression> => {
-    if (expression.type === "ArrayExpression") {
+    if (expression.type === AST_NODE_TYPES.ArrayExpression) {
         return expression;
     }
 
-    if (expression.type !== "Identifier") {
+    if (expression.type !== AST_NODE_TYPES.Identifier) {
         return null;
     }
 
@@ -451,7 +478,7 @@ export const getArrayExpressionFromExpressionOrIdentifier = (
         programNode
     );
 
-    return resolvedExpression?.type === "ArrayExpression"
+    return resolvedExpression?.type === AST_NODE_TYPES.ArrayExpression
         ? resolvedExpression
         : null;
 };
@@ -499,7 +526,7 @@ export const getArrayExpressionPropertyValueByName = (
     }
 
     if (programNode === undefined) {
-        if (propertyValue.type !== "ArrayExpression") {
+        if (propertyValue.type !== AST_NODE_TYPES.ArrayExpression) {
             return null;
         }
 
@@ -537,7 +564,7 @@ export const findNestedObjectPropertyByNamePath = (
             return currentProperty;
         }
 
-        if (currentProperty.value.type !== "ObjectExpression") {
+        if (currentProperty.value.type !== AST_NODE_TYPES.ObjectExpression) {
             return null;
         }
 
@@ -560,14 +587,14 @@ export const getStaticStringValue = (
     const unwrappedExpression = unwrapTransparentExpression(expression);
 
     if (
-        unwrappedExpression.type === "Literal" &&
+        unwrappedExpression.type === AST_NODE_TYPES.Literal &&
         typeof unwrappedExpression.value === "string"
     ) {
         return unwrappedExpression.value;
     }
 
     if (
-        unwrappedExpression.type === "TemplateLiteral" &&
+        unwrappedExpression.type === AST_NODE_TYPES.TemplateLiteral &&
         unwrappedExpression.expressions.length === 0
     ) {
         return arrayFirst(unwrappedExpression.quasis)?.value.cooked ?? null;
@@ -590,7 +617,7 @@ export const getStaticStringValueFromExpressionOrIdentifier = (
         return directValue;
     }
 
-    if (expression.type !== "Identifier") {
+    if (expression.type !== AST_NODE_TYPES.Identifier) {
         return null;
     }
 
@@ -615,21 +642,21 @@ export const getStaticBooleanValueFromExpressionOrIdentifier = (
     const unwrappedExpression = unwrapTransparentExpression(expression);
 
     if (
-        unwrappedExpression.type === "Literal" &&
+        unwrappedExpression.type === AST_NODE_TYPES.Literal &&
         typeof unwrappedExpression.value === "boolean"
     ) {
         return unwrappedExpression.value;
     }
 
     if (
-        unwrappedExpression.type === "Literal" ||
-        (unwrappedExpression.type === "TemplateLiteral" &&
+        unwrappedExpression.type === AST_NODE_TYPES.Literal ||
+        (unwrappedExpression.type === AST_NODE_TYPES.TemplateLiteral &&
             unwrappedExpression.expressions.length === 0)
     ) {
         return null;
     }
 
-    if (unwrappedExpression.type !== "Identifier") {
+    if (unwrappedExpression.type !== AST_NODE_TYPES.Identifier) {
         return undefined;
     }
 
@@ -656,10 +683,14 @@ export const isDocusaurusSidebarCategoryObject = (
     objectExpression: Readonly<TSESTree.ObjectExpression>
 ): boolean => {
     const typeProperty = findObjectPropertyByName(objectExpression, "type");
-    const typeValue =
+    const typePropertyValueExpression =
         typeProperty === null
             ? null
-            : getStaticStringValue(typeProperty.value as TSESTree.Expression);
+            : getExpressionNodeOrNull(typeProperty.value);
+    const typeValue =
+        typePropertyValueExpression === null
+            ? null
+            : getStaticStringValue(typePropertyValueExpression);
 
     return (
         typeValue === "category" ||
@@ -696,7 +727,7 @@ export const isInternalRouteLikeValue = (value: string): boolean =>
  * @returns `true` when the string looks like an external destination.
  */
 export const isExternalLinkLikeValue = (value: string): boolean =>
-    /^https?:\/\//u.test(value) ||
+    /^https?:\/\//v.test(value) ||
     value.startsWith("mailto:") ||
     value.startsWith("tel:") ||
     value.startsWith("//");
@@ -708,27 +739,27 @@ export const getDefaultExportedObjectExpression = (
     programNode: Readonly<TSESTree.Program>
 ): null | Readonly<TSESTree.ObjectExpression> => {
     for (const statement of programNode.body) {
-        if (statement.type !== defaultExportDeclarationType) {
+        if (statement.type !== AST_NODE_TYPES.ExportDefaultDeclaration) {
             continue;
         }
 
         const exportDeclaration = statement.declaration;
 
-        if (exportDeclaration.type === "Identifier") {
+        if (exportDeclaration.type === AST_NODE_TYPES.Identifier) {
             return resolveObjectExpressionForIdentifier(
                 exportDeclaration.name,
                 programNode
             );
         }
 
-        if (exportDeclaration.type === "ObjectExpression") {
+        if (exportDeclaration.type === AST_NODE_TYPES.ObjectExpression) {
             return exportDeclaration;
         }
 
         if (
-            exportDeclaration.type === "TSAsExpression" ||
-            exportDeclaration.type === "TSSatisfiesExpression" ||
-            exportDeclaration.type === "TSTypeAssertion"
+            exportDeclaration.type === AST_NODE_TYPES.TSAsExpression ||
+            exportDeclaration.type === AST_NODE_TYPES.TSSatisfiesExpression ||
+            exportDeclaration.type === AST_NODE_TYPES.TSTypeAssertion
         ) {
             return getObjectExpressionFromExpression(exportDeclaration);
         }
@@ -757,14 +788,14 @@ export const findClassicPresetOptionsObjects = (
     const presetOptionsObjects: TSESTree.ObjectExpression[] = [];
 
     for (const element of presetsArrayExpression.elements) {
-        if (element?.type !== "ArrayExpression") {
+        if (element?.type !== AST_NODE_TYPES.ArrayExpression) {
             continue;
         }
 
         const [presetSpecifier, presetOptions] = element.elements;
 
         if (
-            presetSpecifier?.type !== "Literal" ||
+            presetSpecifier?.type !== AST_NODE_TYPES.Literal ||
             typeof presetSpecifier.value !== "string" ||
             !setHas(
                 docusaurusClassicPresetModuleNames,
@@ -772,7 +803,7 @@ export const findClassicPresetOptionsObjects = (
             ) ||
             presetOptions === undefined ||
             presetOptions === null ||
-            presetOptions.type === "SpreadElement"
+            presetOptions.type === AST_NODE_TYPES.SpreadElement
         ) {
             continue;
         }
@@ -824,7 +855,7 @@ export const findPluginConfigurationsByName = (
 
     for (const element of pluginsArrayExpression.elements) {
         if (
-            element?.type === "Literal" &&
+            element?.type === AST_NODE_TYPES.Literal &&
             typeof element.value === "string" &&
             element.value === pluginName
         ) {
@@ -836,14 +867,14 @@ export const findPluginConfigurationsByName = (
             continue;
         }
 
-        if (element?.type !== "ArrayExpression") {
+        if (element?.type !== AST_NODE_TYPES.ArrayExpression) {
             continue;
         }
 
         const [pluginSpecifier, pluginOptions] = element.elements;
 
         if (
-            pluginSpecifier?.type !== "Literal" ||
+            pluginSpecifier?.type !== AST_NODE_TYPES.Literal ||
             typeof pluginSpecifier.value !== "string" ||
             pluginSpecifier.value !== pluginName
         ) {
@@ -852,7 +883,7 @@ export const findPluginConfigurationsByName = (
 
         if (
             !isPresent(pluginOptions) ||
-            pluginOptions.type === "SpreadElement"
+            pluginOptions.type === AST_NODE_TYPES.SpreadElement
         ) {
             pluginEntries.push({
                 node: element,
@@ -866,7 +897,7 @@ export const findPluginConfigurationsByName = (
             node: element,
             optionsExpression: pluginOptions,
             optionsObject:
-                pluginOptions.type === "ObjectExpression"
+                pluginOptions.type === AST_NODE_TYPES.ObjectExpression
                     ? pluginOptions
                     : null,
         });

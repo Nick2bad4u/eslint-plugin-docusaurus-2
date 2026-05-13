@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-empty-navbar-dropdown-items`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
@@ -27,7 +31,7 @@ const collectNavbarDropdownEntries = (
     }>
 ): void => {
     for (const itemElement of options.itemsArrayExpression.elements) {
-        if (itemElement?.type !== "ObjectExpression") {
+        if (itemElement?.type !== AST_NODE_TYPES.ObjectExpression) {
             continue;
         }
 
@@ -160,13 +164,16 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     ] of emptyDropdownEntries.entries()) {
                         const parentArray = emptyDropdownEntry.parent;
 
-                        if (parentArray?.type !== "ArrayExpression") {
+                        if (
+                            parentArray?.type !== AST_NODE_TYPES.ArrayExpression
+                        ) {
                             continue;
                         }
 
                         const siblingItems = parentArray.elements.filter(
                             (element): element is TSESTree.ObjectExpression =>
-                                element?.type === "ObjectExpression"
+                                element?.type ===
+                                AST_NODE_TYPES.ObjectExpression
                         );
 
                         context.report({

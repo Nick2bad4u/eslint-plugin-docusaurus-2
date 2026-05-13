@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-theme-config-metadata-property-for-og-tags`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
@@ -10,6 +14,7 @@ import {
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -24,14 +29,14 @@ const getReplacementKeyText = (
     key: Readonly<TSESTree.Property["key"]>
 ): string => {
     if (
-        key.type === "Literal" &&
+        key.type === AST_NODE_TYPES.Literal &&
         typeof key.raw === "string" &&
         key.raw.startsWith("'")
     ) {
         return "'property'";
     }
 
-    if (key.type === "Literal") {
+    if (key.type === AST_NODE_TYPES.Literal) {
         return '"property"';
     }
 
@@ -85,7 +90,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     for (const metadataElement of metadataArrayExpression.elements) {
-                        if (metadataElement?.type !== "ObjectExpression") {
+                        if (
+                            metadataElement?.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 
@@ -107,7 +115,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         const staticNameValue =
                             getStaticStringValueFromExpressionOrIdentifier(
-                                nameProperty.value as TSESTree.Expression,
+                                getObjectPropertyValueExpression(nameProperty),
                                 programNode
                             );
 

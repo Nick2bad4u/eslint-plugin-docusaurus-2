@@ -20,7 +20,7 @@ const mermaidElkPackageName = "@mermaid-js/layout-elk" as const;
 type MessageIds = "requireMermaidElkPackageInstalled";
 
 const getPrimaryFenceLanguage = (infoString: string): string => {
-    const firstWhitespaceIndex = infoString.search(/\s/u);
+    const firstWhitespaceIndex = infoString.search(/\s/v);
 
     return (
         firstWhitespaceIndex === -1

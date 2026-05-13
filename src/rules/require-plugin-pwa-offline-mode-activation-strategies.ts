@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-plugin-pwa-offline-mode-activation-strategies`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import {
     arrayIncludes,
     arrayJoin,
@@ -19,6 +22,7 @@ import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
     getObjectExpressionFromExpressionOrIdentifier,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -27,8 +31,8 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const pluginPwaModuleName = "@docusaurus/plugin-pwa" as const;
 const defaultRequiredStrategies = [
     "appInstalled",
-    "standalone",
     "queryString",
+    "standalone",
 ] as const;
 
 type Options = readonly [PwaOfflineModeActivationStrategiesRuleOption];
@@ -91,7 +95,7 @@ const getStaticStringArrayValues = (
     const values: string[] = [];
 
     for (const element of arrayExpression.elements) {
-        if (element === null || element.type === "SpreadElement") {
+        if (element === null || element.type === AST_NODE_TYPES.SpreadElement) {
             return null;
         }
 
@@ -189,7 +193,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                     }
 
                     const strategiesExpression =
-                        strategiesProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(strategiesProperty);
                     const strategiesArrayExpression =
                         getArrayExpressionFromExpressionOrIdentifier(
                             strategiesExpression,

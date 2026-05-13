@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-theme-config-docsearch`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     getDefaultExportedObjectExpression,
@@ -25,11 +29,11 @@ const createPropertyKeyReplacementText = (
     property: Readonly<TSESTree.Property>,
     replacementPropertyName: string
 ): null | string => {
-    if (property.key.type === "Identifier") {
+    if (property.key.type === AST_NODE_TYPES.Identifier) {
         return replacementPropertyName;
     }
 
-    return property.key.type === "Literal" &&
+    return property.key.type === AST_NODE_TYPES.Literal &&
         typeof property.key.value === "string"
         ? JSON.stringify(replacementPropertyName)
         : null;

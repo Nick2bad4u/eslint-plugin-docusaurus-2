@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-default-export-pages`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { isRoutableDocusaurusSitePageFilePath } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
@@ -18,20 +22,20 @@ const isLikelyPageComponentExport = (
         | Readonly<TSESTree.Expression>
 ): boolean => {
     if (
-        node.type === "TSAsExpression" ||
-        node.type === "TSSatisfiesExpression" ||
-        node.type === "TSTypeAssertion"
+        node.type === AST_NODE_TYPES.TSAsExpression ||
+        node.type === AST_NODE_TYPES.TSSatisfiesExpression ||
+        node.type === AST_NODE_TYPES.TSTypeAssertion
     ) {
         return isLikelyPageComponentExport(node.expression);
     }
 
     return (
-        node.type === "ArrowFunctionExpression" ||
-        node.type === "CallExpression" ||
-        node.type === "ClassDeclaration" ||
-        node.type === "FunctionDeclaration" ||
-        node.type === "FunctionExpression" ||
-        node.type === "Identifier"
+        node.type === AST_NODE_TYPES.ArrowFunctionExpression ||
+        node.type === AST_NODE_TYPES.CallExpression ||
+        node.type === AST_NODE_TYPES.ClassDeclaration ||
+        node.type === AST_NODE_TYPES.FunctionDeclaration ||
+        node.type === AST_NODE_TYPES.FunctionExpression ||
+        node.type === AST_NODE_TYPES.Identifier
     );
 };
 
@@ -49,7 +53,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         (
                             statement
                         ): statement is TSESTree.ExportDefaultDeclaration =>
-                            statement.type === "ExportDefaultDeclaration"
+                            statement.type ===
+                            AST_NODE_TYPES.ExportDefaultDeclaration
                     );
 
                     if (defaultExportDeclaration === undefined) {

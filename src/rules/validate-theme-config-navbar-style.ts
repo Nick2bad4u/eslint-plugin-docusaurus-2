@@ -2,14 +2,18 @@
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-navbar-style`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -33,15 +37,16 @@ type NavbarStyleSuggestion = NonNullable<
 const canAutofixStringExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    (expression.type === "Literal" && typeof expression.value === "string") ||
-    (expression.type === "TemplateLiteral" &&
+    (expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string") ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const createSetNavbarStyleSuggestion = (
@@ -111,7 +116,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const styleExpression =
-                        styleProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(styleProperty);
                     const staticStyle =
                         getStaticStringValueFromExpressionOrIdentifier(
                             styleExpression,

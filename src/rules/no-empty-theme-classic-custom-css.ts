@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-empty-theme-classic-custom-css`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -11,6 +14,7 @@ import {
     findObjectPropertyByName,
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -56,7 +60,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         }
 
                         const customCssExpression =
-                            customCssProperty.value as TSESTree.Expression;
+                            getObjectPropertyValueExpression(customCssProperty);
                         const customCssArrayExpression =
                             getArrayExpressionFromExpressionOrIdentifier(
                                 customCssExpression,
@@ -70,7 +74,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 );
                             const emptyItems = presentItems.filter(
                                 (item): item is TSESTree.Expression => {
-                                    if (item.type === "SpreadElement") {
+                                    if (
+                                        item.type ===
+                                        AST_NODE_TYPES.SpreadElement
+                                    ) {
                                         return false;
                                     }
 

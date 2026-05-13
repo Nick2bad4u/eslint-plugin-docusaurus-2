@@ -9,9 +9,9 @@ import type {
 } from "type-fest";
 
 /** JSON-compatible object shape. */
-export type JsonObject = {
+export interface JsonObject {
     readonly [key: string]: JsonValue;
-};
+}
 
 /** Primitive JSON-compatible values. */
 export type JsonPrimitive = TypeFestJsonPrimitive;

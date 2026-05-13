@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-color-mode-default-mode`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst, setHas } from "ts-extras";
 
 import {
@@ -12,6 +15,7 @@ import {
     getObjectExpressionFromExpressionOrIdentifier,
     getObjectExpressionPropertyValueByName,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -36,15 +40,16 @@ type MessageIds =
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const canAutofixStringExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    (expression.type === "Literal" && typeof expression.value === "string") ||
-    (expression.type === "TemplateLiteral" &&
+    (expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string") ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const createInsertDefaultModeFix = (
@@ -186,7 +191,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const defaultModeExpression =
-                        defaultModeProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(defaultModeProperty);
                     const staticDefaultMode =
                         getStaticStringValueFromExpressionOrIdentifier(
                             defaultModeExpression,

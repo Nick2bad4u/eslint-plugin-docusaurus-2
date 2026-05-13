@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-empty-navbar-item-objects`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
@@ -28,7 +32,7 @@ const collectNavbarItemArrays = (
     options.arrays.push(options.itemsArrayExpression);
 
     for (const itemElement of options.itemsArrayExpression.elements) {
-        if (itemElement?.type !== "ObjectExpression") {
+        if (itemElement?.type !== AST_NODE_TYPES.ObjectExpression) {
             continue;
         }
 
@@ -119,7 +123,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     for (const navbarItemArray of navbarItemArrays) {
                         const navbarItems = navbarItemArray.elements.filter(
                             (element): element is TSESTree.ObjectExpression =>
-                                element?.type === "ObjectExpression"
+                                element?.type ===
+                                AST_NODE_TYPES.ObjectExpression
                         );
                         const emptyNavbarItems = navbarItems.filter(
                             (navbarItem) => navbarItem.properties.length === 0

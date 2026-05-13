@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-i18n-default-locale-first`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayIncludes, arrayJoin } from "ts-extras";
 
 import {
@@ -11,6 +14,7 @@ import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -40,7 +44,7 @@ const getStaticLocaleArrayValues = (
     const values: string[] = [];
 
     for (const element of arrayExpression.elements) {
-        if (element === null || element.type === "SpreadElement") {
+        if (element === null || element.type === AST_NODE_TYPES.SpreadElement) {
             return null;
         }
 
@@ -128,7 +132,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const defaultLocaleExpression =
-                        defaultLocaleProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(defaultLocaleProperty);
                     const defaultLocaleValue =
                         getStaticStringValueFromExpressionOrIdentifier(
                             defaultLocaleExpression,
@@ -155,7 +159,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const localesExpression =
-                        localesProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(localesProperty);
                     const localesArrayExpression =
                         getArrayExpressionFromExpressionOrIdentifier(
                             localesExpression,
@@ -190,7 +194,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    if (localesExpression.type === "ArrayExpression") {
+                    if (
+                        localesExpression.type ===
+                        AST_NODE_TYPES.ArrayExpression
+                    ) {
                         reportWithOptionalFix({
                             context,
                             data: {

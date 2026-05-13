@@ -2,14 +2,18 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-sidebar-doc-ids`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { isDefined, safeCastTo } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getObjectPropertyName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusSidebarFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -54,7 +58,7 @@ const getParentPropertyName = (
 ): null | string => {
     const parentProperty = getParentNode(node);
 
-    return parentProperty?.type === "Property"
+    return parentProperty?.type === AST_NODE_TYPES.Property
         ? getObjectPropertyName(parentProperty)
         : null;
 };
@@ -69,13 +73,13 @@ const collectExplicitDocOccurrence = (
         getParentPropertyName(expression) === "link" ||
         typeProperty === null ||
         idProperty === null ||
-        getStaticStringValue(typeProperty.value as TSESTree.Expression) !==
+        getStaticStringValue(getObjectPropertyValueExpression(typeProperty)) !==
             "doc"
     ) {
         return null;
     }
 
-    const docId = getStaticDocId(idProperty.value as TSESTree.Expression);
+    const docId = getStaticDocId(getObjectPropertyValueExpression(idProperty));
 
     if (!isDefined(docId)) {
         return null;
@@ -95,13 +99,13 @@ const isSidebarItemsArrayExpression = (
 ): boolean => {
     const parentProperty = getParentNode(arrayExpression);
 
-    if (parentProperty?.type !== "Property") {
+    if (parentProperty?.type !== AST_NODE_TYPES.Property) {
         return false;
     }
 
     const propertyOwner = parentProperty.parent;
 
-    if (propertyOwner?.type !== "ObjectExpression") {
+    if (propertyOwner?.type !== AST_NODE_TYPES.ObjectExpression) {
         return false;
     }
 
@@ -117,7 +121,7 @@ const isSidebarItemsArrayExpression = (
 
     const ownerParent = getParentNode(propertyOwner);
 
-    return ownerParent?.type === "ArrayExpression"
+    return ownerParent?.type === AST_NODE_TYPES.ArrayExpression
         ? isSidebarItemsArrayExpression(ownerParent, rootObjectExpression)
         : false;
 };
@@ -130,14 +134,14 @@ const collectDuplicateSidebarDocOccurrences = (
     const visitExpression = (
         expression: Readonly<TSESTree.Expression>
     ): void => {
-        if (expression.type === "ArrayExpression") {
+        if (expression.type === AST_NODE_TYPES.ArrayExpression) {
             for (const element of expression.elements) {
                 if (element === null) {
                     continue;
                 }
 
                 if (
-                    element.type === "Literal" &&
+                    element.type === AST_NODE_TYPES.Literal &&
                     typeof element.value === "string" &&
                     isSidebarItemsArrayExpression(
                         expression,
@@ -153,7 +157,7 @@ const collectDuplicateSidebarDocOccurrences = (
                     continue;
                 }
 
-                if (element.type !== "SpreadElement") {
+                if (element.type !== AST_NODE_TYPES.SpreadElement) {
                     visitExpression(element);
                 }
             }
@@ -161,7 +165,7 @@ const collectDuplicateSidebarDocOccurrences = (
             return;
         }
 
-        if (expression.type !== "ObjectExpression") {
+        if (expression.type !== AST_NODE_TYPES.ObjectExpression) {
             return;
         }
 
@@ -172,11 +176,11 @@ const collectDuplicateSidebarDocOccurrences = (
         }
 
         for (const property of expression.properties) {
-            if (property.type !== "Property") {
+            if (property.type !== AST_NODE_TYPES.Property) {
                 continue;
             }
 
-            visitExpression(property.value as TSESTree.Expression);
+            visitExpression(getObjectPropertyValueExpression(property));
         }
     };
 
@@ -189,7 +193,7 @@ const createQuotedStringLiteralText = (
     node: Readonly<TSESTree.Expression>,
     value: string
 ): string =>
-    node.type === "Literal" &&
+    node.type === AST_NODE_TYPES.Literal &&
     typeof node.raw === "string" &&
     node.raw.startsWith("'")
         ? `'${value}'`
@@ -210,7 +214,7 @@ const createSuggestionsForDuplicateSidebarDocOccurrence = (
                     fixer.replaceText(
                         typeProperty.value,
                         createQuotedStringLiteralText(
-                            typeProperty.value as TSESTree.Expression,
+                            getObjectPropertyValueExpression(typeProperty),
                             "ref"
                         )
                     ),
@@ -221,7 +225,7 @@ const createSuggestionsForDuplicateSidebarDocOccurrence = (
 
     if (
         occurrence.occurrenceKind === "shorthand" &&
-        occurrence.node.type === "Literal"
+        occurrence.node.type === AST_NODE_TYPES.Literal
     ) {
         return [
             {

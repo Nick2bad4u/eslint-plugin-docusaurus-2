@@ -7,6 +7,7 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import {
     findNestedObjectPropertyByNamePath,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -28,18 +29,17 @@ type ValidationSeverity = "throw" | "warn";
 const validationSettings = [
     {
         defaultSeverity: "throw",
+        propertyNamePath: [
+            "markdown",
+            "hooks",
+            "onBrokenMarkdownImages",
+        ],
+        settingName: "markdown.hooks.onBrokenMarkdownImages",
+    },
+    {
+        defaultSeverity: "throw",
         propertyNamePath: ["onBrokenLinks"],
         settingName: "onBrokenLinks",
-    },
-    {
-        defaultSeverity: "warn",
-        propertyNamePath: ["onBrokenAnchors"],
-        settingName: "onBrokenAnchors",
-    },
-    {
-        defaultSeverity: "warn",
-        propertyNamePath: ["onDuplicateRoutes"],
-        settingName: "onDuplicateRoutes",
     },
     {
         defaultSeverity: "warn",
@@ -51,13 +51,14 @@ const validationSettings = [
         settingName: "markdown.hooks.onBrokenMarkdownLinks",
     },
     {
-        defaultSeverity: "throw",
-        propertyNamePath: [
-            "markdown",
-            "hooks",
-            "onBrokenMarkdownImages",
-        ],
-        settingName: "markdown.hooks.onBrokenMarkdownImages",
+        defaultSeverity: "warn",
+        propertyNamePath: ["onBrokenAnchors"],
+        settingName: "onBrokenAnchors",
+    },
+    {
+        defaultSeverity: "warn",
+        propertyNamePath: ["onDuplicateRoutes"],
+        settingName: "onDuplicateRoutes",
     },
 ] as const satisfies readonly ValidationSetting[];
 
@@ -89,7 +90,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         }
 
                         const propertyValue = getStaticStringValue(
-                            property.value as TSESTree.Expression
+                            getObjectPropertyValueExpression(property)
                         );
 
                         if (propertyValue !== "ignore") {

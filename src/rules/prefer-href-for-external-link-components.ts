@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-href-for-external-link-components`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 import { isExternalLinkLikeValue } from "../_internal/docusaurus-config-ast.js";
@@ -38,7 +41,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             return {
                 JSXOpeningElement(node: Readonly<TSESTree.JSXOpeningElement>) {
                     if (
-                        node.name.type !== "JSXIdentifier" ||
+                        node.name.type !== AST_NODE_TYPES.JSXIdentifier ||
                         !setHas(docusaurusLinkLocalNames, node.name.name)
                     ) {
                         return;

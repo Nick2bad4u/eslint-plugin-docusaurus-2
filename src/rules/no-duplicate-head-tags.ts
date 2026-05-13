@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-head-tags`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst, arrayJoin, setHas } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -12,6 +15,7 @@ import {
     getDefaultExportedObjectExpression,
     getObjectPropertyName,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
@@ -29,7 +33,7 @@ const getExpressionSignature = (
     expression: Readonly<TSESTree.Expression>,
     sourceCode: Readonly<TSESLint.SourceCode>
 ): null | string => {
-    if (expression.type === "ArrayExpression") {
+    if (expression.type === AST_NODE_TYPES.ArrayExpression) {
         const elementSignatures: string[] = [];
 
         for (const element of expression.elements) {
@@ -38,7 +42,7 @@ const getExpressionSignature = (
                 continue;
             }
 
-            if (element.type === "SpreadElement") {
+            if (element.type === AST_NODE_TYPES.SpreadElement) {
                 return `spread:${sourceCode.getText(element).trim()}`;
             }
 
@@ -57,19 +61,19 @@ const getExpressionSignature = (
         return `array:[${arrayJoin(elementSignatures, ",")}]`;
     }
 
-    if (expression.type === "Identifier") {
+    if (expression.type === AST_NODE_TYPES.Identifier) {
         return null;
     }
 
-    if (expression.type === "Literal") {
+    if (expression.type === AST_NODE_TYPES.Literal) {
         return `literal:${JSON.stringify(expression.value)}`;
     }
 
-    if (expression.type === "ObjectExpression") {
+    if (expression.type === AST_NODE_TYPES.ObjectExpression) {
         const propertyEntries: string[] = [];
 
         for (const property of expression.properties) {
-            if (property.type !== "Property") {
+            if (property.type !== AST_NODE_TYPES.Property) {
                 return `spread:${sourceCode.getText(property).trim()}`;
             }
 
@@ -84,7 +88,7 @@ const getExpressionSignature = (
             }
 
             const propertyValueSignature = getExpressionSignature(
-                property.value as TSESTree.Expression,
+                getObjectPropertyValueExpression(property),
                 sourceCode
             );
 
@@ -100,16 +104,16 @@ const getExpressionSignature = (
         return `object:{${arrayJoin(propertyEntries, "|")}}`;
     }
 
-    if (expression.type === "TemplateLiteral") {
+    if (expression.type === AST_NODE_TYPES.TemplateLiteral) {
         return expression.expressions.length === 0
             ? `template:${arrayFirst(expression.quasis)?.value.cooked ?? ""}`
             : null;
     }
 
     if (
-        expression.type === "TSAsExpression" ||
-        expression.type === "TSSatisfiesExpression" ||
-        expression.type === "TSTypeAssertion"
+        expression.type === AST_NODE_TYPES.TSAsExpression ||
+        expression.type === AST_NODE_TYPES.TSSatisfiesExpression ||
+        expression.type === AST_NODE_TYPES.TSTypeAssertion
     ) {
         return getExpressionSignature(expression.expression, sourceCode);
     }
@@ -159,7 +163,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const seenSignatures = new Set<string>();
 
                     for (const headTagEntry of headTagArrayItems) {
-                        if (headTagEntry.type !== "ObjectExpression") {
+                        if (
+                            headTagEntry.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 

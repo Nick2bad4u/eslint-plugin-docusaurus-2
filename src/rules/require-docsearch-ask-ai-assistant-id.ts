@@ -2,12 +2,17 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-docsearch-ask-ai-assistant-id`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -44,7 +49,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         docsearchProperty ?? algoliaProperty;
 
                     if (
-                        searchConfigProperty?.value.type !== "ObjectExpression"
+                        searchConfigProperty?.value.type !==
+                        AST_NODE_TYPES.ObjectExpression
                     ) {
                         return;
                     }
@@ -77,7 +83,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    if (askAiExpression.type !== "ObjectExpression") {
+                    if (
+                        askAiExpression.type !== AST_NODE_TYPES.ObjectExpression
+                    ) {
                         return;
                     }
 
@@ -97,7 +105,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const assistantIdValue =
                         getStaticStringValueFromExpressionOrIdentifier(
-                            assistantIdProperty.value as TSESTree.Expression,
+                            getObjectPropertyValueExpression(
+                                assistantIdProperty
+                            ),
                             programNode
                         );
 

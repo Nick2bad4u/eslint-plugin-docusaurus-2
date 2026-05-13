@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-empty-footer-link-items`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
@@ -59,7 +63,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 (
                                     element
                                 ): element is TSESTree.ObjectExpression =>
-                                    element?.type === "ObjectExpression"
+                                    element?.type ===
+                                    AST_NODE_TYPES.ObjectExpression
                             );
                         const emptyFooterLinkItems = footerLinkItems.filter(
                             (footerLinkItem) =>

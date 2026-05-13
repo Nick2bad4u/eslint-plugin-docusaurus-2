@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-unknown-i18n-locale-configs`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayIncludes } from "ts-extras";
 
 import {
@@ -28,7 +31,7 @@ const getStaticStringArrayValues = (
     const values: string[] = [];
 
     for (const element of arrayExpression.elements) {
-        if (element === null || element.type === "SpreadElement") {
+        if (element === null || element.type === AST_NODE_TYPES.SpreadElement) {
             return null;
         }
 
@@ -123,7 +126,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     for (const property of localeConfigsObject.properties) {
-                        if (property.type !== "Property") {
+                        if (property.type !== AST_NODE_TYPES.Property) {
                             continue;
                         }
 

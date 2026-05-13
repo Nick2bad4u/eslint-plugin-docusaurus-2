@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-metadata`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     getArrayExpressionPropertyValueByName,
@@ -38,7 +42,7 @@ const hasPresentMetadataStringValue = (
         return staticValue.trim().length > 0;
     }
 
-    return expression.type !== "Literal";
+    return expression.type !== AST_NODE_TYPES.Literal;
 };
 
 /** Rule module for `validate-theme-config-metadata`. */
@@ -81,12 +85,16 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     for (const metadataElement of metadataArrayExpression.elements) {
                         if (
                             metadataElement === null ||
-                            metadataElement.type === "SpreadElement"
+                            metadataElement.type ===
+                                AST_NODE_TYPES.SpreadElement
                         ) {
                             continue;
                         }
 
-                        if (metadataElement.type !== "ObjectExpression") {
+                        if (
+                            metadataElement.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             context.report({
                                 messageId: "requireThemeConfigMetadataObject",
                                 node: metadataElement,

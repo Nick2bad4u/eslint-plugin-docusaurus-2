@@ -2,14 +2,18 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-empty-config-link-destinations`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { isPresent } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -37,7 +41,7 @@ const hasPresentDestination = (
         return staticValue.trim().length > 0;
     }
 
-    return expression.type !== "Literal";
+    return expression.type !== AST_NODE_TYPES.Literal;
 };
 
 /** Rule module for `no-empty-config-link-destinations`. */
@@ -81,7 +85,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         }
 
                         const propertyExpression =
-                            property.value as TSESTree.Expression;
+                            getObjectPropertyValueExpression(property);
                         const staticValue =
                             getStaticStringValueFromExpressionOrIdentifier(
                                 propertyExpression,

@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-navbar-doc-item-doc-id`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     getObjectPropertyValueByName,
@@ -34,7 +38,7 @@ const hasPresentStringField = (
         return staticValue.trim().length > 0;
     }
 
-    return expression.type !== "Literal";
+    return expression.type !== AST_NODE_TYPES.Literal;
 };
 
 /** Rule module for `require-navbar-doc-item-doc-id`. */

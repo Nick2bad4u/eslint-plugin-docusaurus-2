@@ -21,10 +21,10 @@ const expectedPresetDocs = [
     "strict.md",
 ] as const;
 const legacyBrandingTokens = [
+    "\u0074\u0073\u002D\u0065\u0078\u0074\u0072\u0061\u0073",
+    "\u0074\u0079\u0070\u0065\u002D\u0066\u0065\u0073\u0074",
     "\u0054\u0079\u0070\u0065\u0046\u0065\u0073\u0074",
     "\u0074\u0079\u0070\u0065\u0066\u0065\u0073\u0074",
-    "\u0074\u0079\u0070\u0065\u002D\u0066\u0065\u0073\u0074",
-    "\u0074\u0073\u002D\u0065\u0078\u0074\u0072\u0061\u0073",
 ] as const;
 
 const supportedRuleDocExtensions = [".md", ".mdx"] as const;

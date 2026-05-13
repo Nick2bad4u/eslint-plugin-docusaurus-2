@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-color-mode-switch-flags`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
@@ -10,6 +14,7 @@ import {
     getExpressionFromExpressionOrIdentifier,
     getObjectExpressionFromExpressionOrIdentifier,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticBooleanValueFromExpressionOrIdentifier,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
@@ -38,15 +43,16 @@ type MessageIds =
 const canAutofixStringExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    (expression.type === "Literal" && typeof expression.value === "string") ||
-    (expression.type === "TemplateLiteral" &&
+    (expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string") ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const getBooleanValueFromStaticString = (value: string): boolean | null => {
@@ -137,7 +143,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         }
 
                         const flagExpression =
-                            flagProperty.value as TSESTree.Expression;
+                            getObjectPropertyValueExpression(flagProperty);
                         const staticBooleanValue =
                             getStaticBooleanValueFromExpressionOrIdentifier(
                                 flagExpression,

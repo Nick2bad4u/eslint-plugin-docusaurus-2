@@ -2,14 +2,18 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-sidebar-item-key-for-duplicate-labels`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { safeCastTo } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getObjectPropertyName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusSidebarFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -43,13 +47,13 @@ const isSidebarItemsArrayExpression = (
 ): boolean => {
     const parentProperty = getParentNode(arrayExpression);
 
-    if (parentProperty?.type !== "Property") {
+    if (parentProperty?.type !== AST_NODE_TYPES.Property) {
         return false;
     }
 
     const propertyOwner = parentProperty.parent;
 
-    if (propertyOwner?.type !== "ObjectExpression") {
+    if (propertyOwner?.type !== AST_NODE_TYPES.ObjectExpression) {
         return false;
     }
 
@@ -65,7 +69,7 @@ const isSidebarItemsArrayExpression = (
 
     const ownerParent = getParentNode(propertyOwner);
 
-    return ownerParent?.type === "ArrayExpression"
+    return ownerParent?.type === AST_NODE_TYPES.ArrayExpression
         ? isSidebarItemsArrayExpression(ownerParent, rootObjectExpression)
         : false;
 };
@@ -77,7 +81,7 @@ const getSidebarLabeledItems = (
     const labeledItems: SidebarLabeledItem[] = [];
 
     for (const element of arrayExpression.elements) {
-        if (element?.type !== "ObjectExpression") {
+        if (element?.type !== AST_NODE_TYPES.ObjectExpression) {
             continue;
         }
 
@@ -87,7 +91,7 @@ const getSidebarLabeledItems = (
             continue;
         }
 
-        const labelExpression = labelProperty.value as TSESTree.Expression;
+        const labelExpression = getObjectPropertyValueExpression(labelProperty);
         const staticLabel = getStaticStringValueFromExpressionOrIdentifier(
             labelExpression,
             programNode
@@ -189,11 +193,17 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             }
 
                             for (const element of arrayExpression.elements) {
-                                if (element?.type === "ArrayExpression") {
+                                if (
+                                    element?.type ===
+                                    AST_NODE_TYPES.ArrayExpression
+                                ) {
                                     visitors.visitArrayExpression(element);
                                 }
 
-                                if (element?.type !== "ObjectExpression") {
+                                if (
+                                    element?.type !==
+                                    AST_NODE_TYPES.ObjectExpression
+                                ) {
                                     continue;
                                 }
 
@@ -202,20 +212,21 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         },
 
                         visitNode(node: Readonly<TSESTree.Node>): void {
-                            if (node.type === "ArrayExpression") {
+                            if (node.type === AST_NODE_TYPES.ArrayExpression) {
                                 visitors.visitArrayExpression(node);
 
                                 return;
                             }
 
-                            if (node.type !== "ObjectExpression") {
+                            if (node.type !== AST_NODE_TYPES.ObjectExpression) {
                                 return;
                             }
 
                             for (const property of node.properties) {
                                 if (
-                                    property.type === "Property" &&
-                                    property.value.type === "ArrayExpression"
+                                    property.type === AST_NODE_TYPES.Property &&
+                                    property.value.type ===
+                                        AST_NODE_TYPES.ArrayExpression
                                 ) {
                                     visitors.visitArrayExpression(
                                         property.value

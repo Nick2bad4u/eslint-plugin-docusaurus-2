@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-navbar-item-destinations`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -101,7 +104,7 @@ const collectNavbarItemsArrays = (
     options.arrays.push(options.arrayExpression);
 
     for (const itemElement of options.arrayExpression.elements) {
-        if (itemElement?.type !== "ObjectExpression") {
+        if (itemElement?.type !== AST_NODE_TYPES.ObjectExpression) {
             continue;
         }
 
@@ -204,7 +207,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     for (const navbarItemsArray of navbarItemsArrays) {
                         const navbarItems = navbarItemsArray.elements.filter(
                             (element): element is TSESTree.ObjectExpression =>
-                                element?.type === "ObjectExpression"
+                                element?.type ===
+                                AST_NODE_TYPES.ObjectExpression
                         );
                         const seenDestinations = new Set<string>();
 

@@ -22,30 +22,6 @@
 
 /* You can override the default Infima variables here. */
 
-@font-face {
-    font-family: "NerdFontSymbols Nerd Font Symbols";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src:
-        local("NerdFontSymbols Nerd Font Symbols"),
-        local("Symbols Nerd Font"),
-        url("https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@3.4.0/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf")
-            format("truetype");
-}
-
-@font-face {
-    font-family: "Symbols Nerd Font Mono";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src:
-        local("Symbols Nerd Font Mono"),
-        local("Symbols Nerd Font"),
-        url("https://cdn.jsdelivr.net/gh/ryanoasis/nerd-fonts@3.4.0/patched-fonts/NerdFontsSymbolsOnly/SymbolsNerdFont-Regular.ttf")
-            format("truetype");
-}
-
 :root {
     --ifm-color-primary: #25c2a0;
     --ifm-color-primary-dark: #21af90;

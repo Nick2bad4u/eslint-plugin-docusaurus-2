@@ -10,6 +10,7 @@ import {
     getObjectExpressionFromExpressionOrIdentifier,
     getObjectExpressionPropertyValueByName,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticBooleanValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -82,12 +83,16 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const disableSwitchValue =
                         getStaticBooleanValueFromExpressionOrIdentifier(
-                            disableSwitchProperty.value as TSESTree.Expression,
+                            getObjectPropertyValueExpression(
+                                disableSwitchProperty
+                            ),
                             programNode
                         );
                     const respectPrefersColorSchemeValue =
                         getStaticBooleanValueFromExpressionOrIdentifier(
-                            respectPrefersColorSchemeProperty.value as TSESTree.Expression,
+                            getObjectPropertyValueExpression(
+                                respectPrefersColorSchemeProperty
+                            ),
                             programNode
                         );
 

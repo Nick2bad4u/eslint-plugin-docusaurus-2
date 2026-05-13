@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-footer-link-item-destinations`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -131,7 +134,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                 (
                                     element
                                 ): element is TSESTree.ObjectExpression =>
-                                    element?.type === "ObjectExpression"
+                                    element?.type ===
+                                    AST_NODE_TYPES.ObjectExpression
                             );
                         const seenDestinations = new Set<string>();
 

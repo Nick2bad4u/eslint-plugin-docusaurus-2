@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-config-satisfies`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { isTypeScriptDocusaurusConfigFilePath } from "../_internal/docusaurus-config-ast.js";
 import { createImportedTypeReferenceMatcher } from "../_internal/imported-type-reference-matcher.js";
@@ -49,7 +53,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const exportDeclaration = node.declaration;
 
                     if (
-                        exportDeclaration.type !== "TSAsExpression" ||
+                        exportDeclaration.type !==
+                            AST_NODE_TYPES.TSAsExpression ||
                         !isConfigTypeReference(exportDeclaration.typeAnnotation)
                     ) {
                         return;
@@ -75,13 +80,13 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     node: Readonly<TSESTree.VariableDeclarator>
                 ) {
                     if (
-                        node.id.type !== "Identifier" ||
+                        node.id.type !== AST_NODE_TYPES.Identifier ||
                         node.id.typeAnnotation === undefined ||
                         node.init === null ||
                         !isConfigTypeReference(
                             node.id.typeAnnotation.typeAnnotation
                         ) ||
-                        node.init.type === "TSSatisfiesExpression"
+                        node.init.type === AST_NODE_TYPES.TSSatisfiesExpression
                     ) {
                         return;
                     }

@@ -8,6 +8,7 @@ import {
     findNestedObjectPropertyByNamePath,
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -17,7 +18,7 @@ const defaultOptions = [] as const;
 
 type MessageIds = "noSvgSocialCardImage";
 
-const svgExtensionPattern = /\.svg$/iu;
+const svgExtensionPattern = /\.svg$/iv;
 
 /** Rule module for `no-svg-social-card-image`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -38,18 +39,18 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const imageProperties = [
                         {
-                            property: findObjectPropertyByName(
-                                configObjectExpression,
-                                "image"
-                            ),
-                            propertyPath: "image",
-                        },
-                        {
                             property: findNestedObjectPropertyByNamePath(
                                 configObjectExpression,
                                 ["themeConfig", "image"]
                             ),
                             propertyPath: "themeConfig.image",
+                        },
+                        {
+                            property: findObjectPropertyByName(
+                                configObjectExpression,
+                                "image"
+                            ),
+                            propertyPath: "image",
                         },
                     ] as const;
 
@@ -62,7 +63,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         const imageValue =
                             getStaticStringValueFromExpressionOrIdentifier(
-                                imageProperty.value as TSESTree.Expression,
+                                getObjectPropertyValueExpression(imageProperty),
                                 programNode
                             );
 

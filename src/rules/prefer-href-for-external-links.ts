@@ -2,11 +2,16 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-href-for-external-links`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getObjectPropertyName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
     isExternalLinkLikeValue,
@@ -22,14 +27,14 @@ const getReplacementKeyText = (
     key: Readonly<TSESTree.Property["key"]>
 ): string => {
     if (
-        key.type === "Literal" &&
+        key.type === AST_NODE_TYPES.Literal &&
         typeof key.raw === "string" &&
         key.raw.startsWith("'")
     ) {
         return "'href'";
     }
 
-    if (key.type === "Literal") {
+    if (key.type === AST_NODE_TYPES.Literal) {
         return '"href"';
     }
 
@@ -54,14 +59,15 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 'Property[key.type="Identifier"][key.name="to"], Property[key.type="Literal"][key.value="to"]'(
                     node: TSESTree.Node
                 ) {
-                    if (node.type !== "Property") {
+                    if (node.type !== AST_NODE_TYPES.Property) {
                         return;
                     }
 
                     const parentObject = node.parent;
 
                     if (
-                        parentObject?.type !== "ObjectExpression" ||
+                        parentObject?.type !==
+                            AST_NODE_TYPES.ObjectExpression ||
                         !isLikelyDocusaurusConfigLinkItemObject(parentObject)
                     ) {
                         return;
@@ -74,7 +80,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const toValue = getStaticStringValue(
-                        node.value as TSESTree.Expression
+                        getObjectPropertyValueExpression(node)
                     );
 
                     if (toValue === null || !isExternalLinkLikeValue(toValue)) {

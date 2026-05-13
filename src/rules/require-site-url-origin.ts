@@ -2,13 +2,17 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-site-url-origin`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -35,15 +39,16 @@ type SiteUrlSuggestion = NonNullable<
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const canAutofixSiteUrlExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    (expression.type === "Literal" && typeof expression.value === "string") ||
-    (expression.type === "TemplateLiteral" &&
+    (expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string") ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const parseSiteUrlOrNull = (siteUrlValue: string): null | URL => {
@@ -112,7 +117,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const siteUrlExpression =
-                        siteUrlProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(siteUrlProperty);
                     const staticSiteUrlValue =
                         getStaticStringValueFromExpressionOrIdentifier(
                             siteUrlExpression,
@@ -168,7 +173,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const suggestions =
-                        siteUrlExpression.type === "Identifier"
+                        siteUrlExpression.type === AST_NODE_TYPES.Identifier
                             ? [
                                   createNormalizeSiteUrlSuggestion(
                                       siteUrlExpression,

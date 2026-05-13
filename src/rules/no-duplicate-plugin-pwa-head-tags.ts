@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-plugin-pwa-head-tags`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayJoin, setHas } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -35,7 +38,7 @@ const getHeadTagSignature = (
     const propertyEntries: string[] = [];
 
     for (const property of tagObjectExpression.properties) {
-        if (property.type !== "Property") {
+        if (property.type !== AST_NODE_TYPES.Property) {
             return null;
         }
 
@@ -108,7 +111,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         const seenSignatures = new Set<string>();
 
                         for (const headTagEntry of pwaHeadArrayItems) {
-                            if (headTagEntry.type !== "ObjectExpression") {
+                            if (
+                                headTagEntry.type !==
+                                AST_NODE_TYPES.ObjectExpression
+                            ) {
                                 continue;
                             }
 

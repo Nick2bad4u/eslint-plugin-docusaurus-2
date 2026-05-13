@@ -2,11 +2,16 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-base-url-slashes`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -44,15 +49,16 @@ const normalizeBaseUrlValue = (value: string): string => {
 const canAutofixBaseUrlExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    (expression.type === "Literal" && typeof expression.value === "string") ||
-    (expression.type === "TemplateLiteral" &&
+    (expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string") ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 /** Rule module for `require-base-url-slashes`. */
@@ -82,7 +88,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const baseUrlExpression =
-                        baseUrlProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(baseUrlProperty);
                     const staticBaseUrlValue =
                         getStaticStringValueFromExpressionOrIdentifier(
                             baseUrlExpression,

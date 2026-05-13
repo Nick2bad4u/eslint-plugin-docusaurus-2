@@ -2,12 +2,17 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-footer-link-column-items`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -37,7 +42,7 @@ const hasPresentFooterColumnTitle = (
         return staticValue.trim().length > 0;
     }
 
-    return expression.type !== "Literal";
+    return expression.type !== AST_NODE_TYPES.Literal;
 };
 
 /** Rule module for `require-footer-link-column-items`. */
@@ -89,11 +94,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         }
 
                         const itemsExpression =
-                            itemsProperty.value as TSESTree.Expression;
+                            getObjectPropertyValueExpression(itemsProperty);
 
                         if (
-                            itemsExpression.type === "ArrayExpression" ||
-                            itemsExpression.type === "Identifier"
+                            itemsExpression.type ===
+                                AST_NODE_TYPES.ArrayExpression ||
+                            itemsExpression.type === AST_NODE_TYPES.Identifier
                         ) {
                             continue;
                         }

@@ -1,10 +1,9 @@
-import type { TSESTree } from "@typescript-eslint/utils";
-
-import * as fs from "node:fs";
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 import { createRequire } from "node:module";
-import * as path from "node:path";
+import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { isDefined } from "ts-extras";
+import ts from "typescript";
 
 /**
  * @packageDocumentation
@@ -27,7 +26,7 @@ type ResolutionKind = "path" | "require-resolve";
 const existenceCache = new Map<string, boolean>();
 
 const isAbsoluteWindowsPath = (value: string): boolean =>
-    /^[A-Za-z]:[/\\]/u.test(value);
+    /^[A-Za-z]:(?:\/|\\\\)/v.test(value);
 
 const isPathLikeSpecifier = (value: string): boolean =>
     value.startsWith("./") ||
@@ -38,18 +37,18 @@ const isPathLikeSpecifier = (value: string): boolean =>
 const isRequireResolveCallExpression = (
     expression: Readonly<TSESTree.Expression>
 ): expression is TSESTree.CallExpression => {
-    if (expression.type !== "CallExpression") {
+    if (expression.type !== AST_NODE_TYPES.CallExpression) {
         return false;
     }
 
     const callee = expression.callee;
 
     return (
-        callee.type === "MemberExpression" &&
+        callee.type === AST_NODE_TYPES.MemberExpression &&
         !callee.computed &&
-        callee.object.type === "Identifier" &&
+        callee.object.type === AST_NODE_TYPES.Identifier &&
         callee.object.name === "require" &&
-        callee.property.type === "Identifier" &&
+        callee.property.type === AST_NODE_TYPES.Identifier &&
         callee.property.name === "resolve"
     );
 };
@@ -116,7 +115,10 @@ export const getStaticConfiguredPathResolution = (
 
     const [firstArgument] = resolvedExpression.arguments;
 
-    if (firstArgument === undefined || firstArgument.type === "SpreadElement") {
+    if (
+        firstArgument === undefined ||
+        firstArgument.type === AST_NODE_TYPES.SpreadElement
+    ) {
         return null;
     }
 
@@ -149,7 +151,7 @@ export const doesResolvedPathExist = (resolvedPath: string): boolean => {
         return cachedExists;
     }
 
-    const exists = fs.existsSync(normalizedPath);
+    const exists = ts.sys.fileExists(normalizedPath);
 
     existenceCache.set(normalizedPath, exists);
 

@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-balanced-footer-link-columns`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayJoin } from "ts-extras";
 
 import {
@@ -55,7 +58,8 @@ const getStaticFooterColumnLinkCounts = (
         if (
             itemsArrayExpression.elements.some(
                 (element) =>
-                    element === null || element.type === "SpreadElement"
+                    element === null ||
+                    element.type === AST_NODE_TYPES.SpreadElement
             )
         ) {
             return null;

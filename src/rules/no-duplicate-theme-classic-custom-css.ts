@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-theme-classic-custom-css`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst, isDefined, setHas } from "ts-extras";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
@@ -12,6 +15,7 @@ import {
     findObjectPropertyByName,
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
 import { findThemeClassicOptionsObjects } from "../_internal/theme-classic-config.js";
@@ -51,13 +55,18 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             "customCss"
                         );
 
-                        if (customCssExpression?.type !== "Property") {
+                        if (
+                            customCssExpression?.type !==
+                            AST_NODE_TYPES.Property
+                        ) {
                             continue;
                         }
 
                         const customCssArrayExpression =
                             getArrayExpressionFromExpressionOrIdentifier(
-                                customCssExpression.value as TSESTree.Expression,
+                                getObjectPropertyValueExpression(
+                                    customCssExpression
+                                ),
                                 programNode
                             );
 
@@ -73,7 +82,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         const seenResolvedPaths = new Set<string>();
 
                         for (const item of presentItems) {
-                            if (item.type === "SpreadElement") {
+                            if (item.type === AST_NODE_TYPES.SpreadElement) {
                                 continue;
                             }
 

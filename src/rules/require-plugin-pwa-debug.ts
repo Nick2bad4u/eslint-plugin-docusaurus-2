@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-plugin-pwa-debug`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst, isDefined, isEmpty, setHas } from "ts-extras";
 
 import {
@@ -12,6 +15,7 @@ import {
     getDefaultExportedObjectExpression,
     getExpressionFromExpressionOrIdentifier,
     getObjectExpressionFromExpressionOrIdentifier,
+    getObjectPropertyValueExpression,
     getStaticBooleanValueFromExpressionOrIdentifier,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
@@ -85,15 +89,15 @@ const normalizeRuleOption = (
 const unwrapTransparentExpression = (
     expression: Readonly<TSESTree.Expression>
 ): Readonly<TSESTree.Expression> => {
-    if (expression.type === "TSAsExpression") {
+    if (expression.type === AST_NODE_TYPES.TSAsExpression) {
         return unwrapTransparentExpression(expression.expression);
     }
 
-    if (expression.type === "TSSatisfiesExpression") {
+    if (expression.type === AST_NODE_TYPES.TSSatisfiesExpression) {
         return unwrapTransparentExpression(expression.expression);
     }
 
-    if (expression.type === "TSTypeAssertion") {
+    if (expression.type === AST_NODE_TYPES.TSTypeAssertion) {
         return unwrapTransparentExpression(expression.expression);
     }
 
@@ -105,7 +109,7 @@ const getMemberExpressionPropertyName = (
     programNode: Readonly<TSESTree.Program>
 ): null | string => {
     if (!memberExpression.computed) {
-        return memberExpression.property.type === "Identifier"
+        return memberExpression.property.type === AST_NODE_TYPES.Identifier
             ? memberExpression.property.name
             : null;
     }
@@ -133,20 +137,20 @@ const getProcessEnvVariableName = (
     const normalizedExpression =
         unwrapTransparentExpression(resolvedExpression);
 
-    if (normalizedExpression.type !== "MemberExpression") {
+    if (normalizedExpression.type !== AST_NODE_TYPES.MemberExpression) {
         return null;
     }
 
     const environmentObjectExpression = normalizedExpression.object;
 
-    if (environmentObjectExpression.type !== "MemberExpression") {
+    if (environmentObjectExpression.type !== AST_NODE_TYPES.MemberExpression) {
         return null;
     }
 
     const processIdentifier = environmentObjectExpression.object;
 
     if (
-        processIdentifier.type !== "Identifier" ||
+        processIdentifier.type !== AST_NODE_TYPES.Identifier ||
         !isGlobalIdentifierNamed(context, processIdentifier, "process")
     ) {
         return null;
@@ -189,7 +193,7 @@ const hasAllowedEnvironmentComparison = (
     const normalizedExpression =
         unwrapTransparentExpression(resolvedExpression);
 
-    if (normalizedExpression.type !== "BinaryExpression") {
+    if (normalizedExpression.type !== AST_NODE_TYPES.BinaryExpression) {
         return false;
     }
 
@@ -309,7 +313,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                     }
 
                     const debugValue =
-                        debugProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(debugProperty);
 
                     if (
                         hasAllowedDebugExpression(

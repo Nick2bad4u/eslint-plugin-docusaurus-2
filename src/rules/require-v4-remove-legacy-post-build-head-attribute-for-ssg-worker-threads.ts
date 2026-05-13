@@ -9,6 +9,7 @@ import {
     getDefaultExportedObjectExpression,
     getObjectExpressionFromExpressionOrIdentifier,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticBooleanValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -112,7 +113,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const requiredFlagEnabled =
                         requiredFlagProperty !== null &&
                         getStaticBooleanValueFromExpressionOrIdentifier(
-                            requiredFlagProperty.value as TSESTree.Expression,
+                            getObjectPropertyValueExpression(
+                                requiredFlagProperty
+                            ),
                             programNode
                         ) === true;
 

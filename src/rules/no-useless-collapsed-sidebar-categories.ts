@@ -2,11 +2,16 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-useless-collapsed-sidebar-categories`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
+    getObjectPropertyValueExpression,
     isDocusaurusSidebarCategoryObject,
     isDocusaurusSidebarFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -20,7 +25,8 @@ type MessageIds = "noUselessCollapsedSidebarCategory";
 const getBooleanLiteralValue = (
     expression: Readonly<TSESTree.Expression>
 ): boolean | undefined =>
-    expression.type === "Literal" && typeof expression.value === "boolean"
+    expression.type === AST_NODE_TYPES.Literal &&
+    typeof expression.value === "boolean"
         ? expression.value
         : undefined;
 
@@ -55,7 +61,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const collapsibleValue = getBooleanLiteralValue(
-                        collapsibleProperty.value as TSESTree.Expression
+                        getObjectPropertyValueExpression(collapsibleProperty)
                     );
 
                     if (collapsibleValue !== false) {

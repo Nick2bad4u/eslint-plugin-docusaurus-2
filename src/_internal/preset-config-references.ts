@@ -105,12 +105,12 @@ export const presetConfigMetadataByName: Readonly<
 
 /** Stable README legend/rendering order for preset icons. */
 export const presetConfigNamesByReadmeOrder: readonly PresetConfigName[] = [
-    "minimal",
+    "all",
     "config",
+    "experimental",
+    "minimal",
     "recommended",
     "strict",
-    "all",
-    "experimental",
 ] as const;
 
 const presetConfigNameLookup = Object.freeze(

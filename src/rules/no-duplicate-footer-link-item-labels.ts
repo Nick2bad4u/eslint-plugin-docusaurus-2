@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-footer-link-item-labels`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 import {
@@ -62,7 +65,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         const seenLabels = new Set<string>();
 
                         for (const itemElement of itemsArrayExpression.elements) {
-                            if (itemElement?.type !== "ObjectExpression") {
+                            if (
+                                itemElement?.type !==
+                                AST_NODE_TYPES.ObjectExpression
+                            ) {
                                 continue;
                             }
 

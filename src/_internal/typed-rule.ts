@@ -5,6 +5,7 @@
 import type ts from "typescript";
 
 import {
+    AST_NODE_TYPES,
     ESLintUtils,
     type TSESLint,
     type TSESTree,
@@ -33,10 +34,10 @@ export type TypedRuleContext = Readonly<
 /**
  * Parser services and type checker bundle used by typed rules.
  */
-export type TypedRuleServices = {
+export interface TypedRuleServices {
     checker: ts.TypeChecker;
     parserServices: ReturnType<typeof ESLintUtils.getParserServices>;
-};
+}
 
 type PluginRuleCreator = ReturnType<
     typeof ESLintUtils.RuleCreator<PluginRuleDocs>
@@ -54,14 +55,14 @@ type PluginRuleCreator = ReturnType<
  * cataloged `prefer-*` rules. Rule authors should not hand-author those fields
  * in individual rule modules.
  */
-type PluginRuleDocs = {
+interface PluginRuleDocs {
     configs?: AdditionalConfigName | readonly AdditionalConfigName[];
     presets?: PresetConfigName | readonly PresetConfigName[];
     recommended?: boolean;
     requiresTypeChecking?: boolean;
     ruleId?: string;
     ruleNumber?: number;
-};
+}
 
 /**
  * Rule-creator wrapper used by all plugin rules.
@@ -280,7 +281,7 @@ export const isGlobalIdentifierNamed = <
     identifierName: string
 ): expression is TSESTree.Identifier => {
     if (
-        expression.type !== "Identifier" ||
+        expression.type !== AST_NODE_TYPES.Identifier ||
         expression.name !== identifierName
     ) {
         return false;

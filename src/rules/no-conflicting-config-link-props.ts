@@ -7,6 +7,7 @@ import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
     findObjectPropertyByName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
     isExternalLinkLikeValue,
@@ -71,10 +72,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const hrefValue = getStaticStringValue(
-                        hrefProperty.value as TSESTree.Expression
+                        getObjectPropertyValueExpression(hrefProperty)
                     );
                     const toValue = getStaticStringValue(
-                        toProperty.value as TSESTree.Expression
+                        getObjectPropertyValueExpression(toProperty)
                     );
                     const redundantPropertyToRemove =
                         hrefValue === null || toValue === null

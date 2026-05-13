@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-pages-plugin-excludes`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import {
     arrayAt,
     arrayFirst,
@@ -20,6 +23,7 @@ import {
     getArrayExpressionPropertyValueByName,
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -31,12 +35,36 @@ const defaultOptions = [] as const;
 const requiredPageExcludePatterns = [
     "**/*.d.ts",
     "**/*.d.tsx",
-    "**/__tests__/**",
-    "**/*.test.{js,jsx,ts,tsx}",
     "**/*.spec.{js,jsx,ts,tsx}",
+    "**/*.test.{js,jsx,ts,tsx}",
+    "**/__tests__/**",
 ] as const;
 
 type MessageIds = "requirePagesPluginExcludes";
+
+const getPageExcludePatternFixPriority = (pattern: string): number => {
+    if (pattern === "**/*.d.ts") {
+        return 1;
+    }
+
+    if (pattern === "**/*.d.tsx") {
+        return 2;
+    }
+
+    if (pattern === "**/__tests__/**") {
+        return 3;
+    }
+
+    if (pattern === "**/*.test.{js,jsx,ts,tsx}") {
+        return 4;
+    }
+
+    if (pattern === "**/*.spec.{js,jsx,ts,tsx}") {
+        return 5;
+    }
+
+    return Number.MAX_SAFE_INTEGER;
+};
 
 const getStaticStringArrayValues = (
     arrayExpression: Readonly<TSESTree.ArrayExpression>
@@ -44,7 +72,10 @@ const getStaticStringArrayValues = (
     const values: string[] = [];
 
     for (const element of arrayExpression.elements) {
-        if (element?.type === "Literal" && typeof element.value === "string") {
+        if (
+            element?.type === AST_NODE_TYPES.Literal &&
+            typeof element.value === "string"
+        ) {
             values.push(element.value);
         }
     }
@@ -63,7 +94,13 @@ const getMissingPageExcludePatterns = (
 
 const createMissingPatternsText = (patterns: readonly string[]): string =>
     arrayJoin(
-        patterns.map((pattern) => JSON.stringify(pattern)),
+        patterns
+            .toSorted(
+                (leftPattern, rightPattern) =>
+                    getPageExcludePatternFixPriority(leftPattern) -
+                    getPageExcludePatternFixPriority(rightPattern)
+            )
+            .map((pattern) => JSON.stringify(pattern)),
         ", "
     );
 
@@ -157,7 +194,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             pathProperty === null
                                 ? "src/pages"
                                 : getStaticStringValue(
-                                      pathProperty.value as TSESTree.Expression
+                                      getObjectPropertyValueExpression(
+                                          pathProperty
+                                      )
                                   );
 
                         if (pathValue !== null && pathValue !== "src/pages") {

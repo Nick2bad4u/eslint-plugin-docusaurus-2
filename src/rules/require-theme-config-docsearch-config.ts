@@ -2,13 +2,17 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-theme-config-docsearch-config`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayJoin, isEmpty } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -29,12 +33,28 @@ const createThemeConfigSearchKeyLabel = (
     propertyName: SearchThemeConfigPropertyName
 ): string => `themeConfig.${propertyName}`;
 
+const getDocsearchOptionMessagePriority = (optionName: string): number => {
+    if (optionName === "appId") {
+        return 1;
+    }
+
+    if (optionName === "apiKey") {
+        return 2;
+    }
+
+    if (optionName === "indexName") {
+        return 3;
+    }
+
+    return Number.MAX_SAFE_INTEGER;
+};
+
 const hasValidRequiredOptionValue = (
     property: Readonly<TSESTree.Property>
 ): boolean => {
-    const propertyValue = property.value as TSESTree.Expression;
+    const propertyValue = getObjectPropertyValueExpression(property);
 
-    if (propertyValue.type === "Literal") {
+    if (propertyValue.type === AST_NODE_TYPES.Literal) {
         return (
             typeof propertyValue.value === "string" &&
             propertyValue.value.trim().length > 0
@@ -59,7 +79,11 @@ const getMissingRequiredDocsearchOptionNames = (
         }
     }
 
-    return missingOptionNames;
+    return missingOptionNames.toSorted(
+        (leftOptionName, rightOptionName) =>
+            getDocsearchOptionMessagePriority(leftOptionName) -
+            getDocsearchOptionMessagePriority(rightOptionName)
+    );
 };
 
 /** Rule module for `require-theme-config-docsearch-config`. */
@@ -96,7 +120,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         docsearchProperty ?? algoliaProperty;
 
                     if (
-                        searchConfigProperty?.value.type !== "ObjectExpression"
+                        searchConfigProperty?.value.type !==
+                        AST_NODE_TYPES.ObjectExpression
                     ) {
                         return;
                     }

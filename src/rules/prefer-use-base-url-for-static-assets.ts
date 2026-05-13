@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-use-base-url-for-static-assets`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { isDefined } from "ts-extras";
 
 import {
@@ -21,7 +24,7 @@ const defaultOptions = [] as const;
 
 const docusaurusUseBaseUrlModuleSource = "@docusaurus/useBaseUrl" as const;
 
-const assetPathPattern = /^\/(?:files?|img)\//u;
+const assetPathPattern = /^\/(?:files?|img)\//v;
 
 type MessageIds = "preferUseBaseUrlForStaticAssets" | "wrapWithUseBaseUrl";
 
@@ -45,7 +48,7 @@ const createUseBaseUrlWrappedAttributeValue = ({
     useBaseUrlLocalName: string;
 }>): string => {
     const quote =
-        attribute.value?.type === "Literal" &&
+        attribute.value?.type === AST_NODE_TYPES.Literal &&
         typeof attribute.value.raw === "string" &&
         attribute.value.raw.startsWith("'")
             ? "'"
@@ -94,7 +97,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
             return {
                 JSXOpeningElement(node: Readonly<TSESTree.JSXOpeningElement>) {
-                    for (const attributeName of ["src", "poster"] as const) {
+                    for (const attributeName of ["poster", "src"] as const) {
                         const attribute = getJsxAttributeByName(
                             node,
                             attributeName

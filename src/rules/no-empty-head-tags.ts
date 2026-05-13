@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-empty-head-tags`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
@@ -104,7 +108,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const emptyHeadTagEntries: TSESTree.ObjectExpression[] = [];
 
                     for (const headTagEntry of headTagItems) {
-                        if (headTagEntry.type !== "ObjectExpression") {
+                        if (
+                            headTagEntry.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 

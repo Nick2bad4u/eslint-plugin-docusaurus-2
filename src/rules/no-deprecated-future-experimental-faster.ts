@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-deprecated-future-experimental-faster`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
@@ -20,11 +24,11 @@ type MessageIds = "noDeprecatedFutureExperimentalFaster";
 const createReplacementPropertyKeyText = (
     property: Readonly<TSESTree.Property>
 ): null | string => {
-    if (property.key.type === "Identifier") {
+    if (property.key.type === AST_NODE_TYPES.Identifier) {
         return "faster";
     }
 
-    return property.key.type === "Literal" &&
+    return property.key.type === AST_NODE_TYPES.Literal &&
         typeof property.key.value === "string"
         ? JSON.stringify("faster")
         : null;

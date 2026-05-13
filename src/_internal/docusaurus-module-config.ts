@@ -1,5 +1,4 @@
-import type { TSESTree } from "@typescript-eslint/utils";
-
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 import { isPresent } from "ts-extras";
 
 /**
@@ -40,7 +39,7 @@ export const findTopLevelModuleConfigurationsByName = (
 
     for (const element of modulesArrayExpression.elements) {
         if (
-            element?.type === "Literal" &&
+            element?.type === AST_NODE_TYPES.Literal &&
             typeof element.value === "string" &&
             element.value === moduleName
         ) {
@@ -52,14 +51,14 @@ export const findTopLevelModuleConfigurationsByName = (
             continue;
         }
 
-        if (element?.type !== "ArrayExpression") {
+        if (element?.type !== AST_NODE_TYPES.ArrayExpression) {
             continue;
         }
 
         const [moduleSpecifier, moduleOptions] = element.elements;
 
         if (
-            moduleSpecifier?.type !== "Literal" ||
+            moduleSpecifier?.type !== AST_NODE_TYPES.Literal ||
             typeof moduleSpecifier.value !== "string" ||
             moduleSpecifier.value !== moduleName
         ) {
@@ -68,7 +67,7 @@ export const findTopLevelModuleConfigurationsByName = (
 
         if (
             !isPresent(moduleOptions) ||
-            moduleOptions.type === "SpreadElement"
+            moduleOptions.type === AST_NODE_TYPES.SpreadElement
         ) {
             moduleEntries.push({
                 node: element,
@@ -83,7 +82,7 @@ export const findTopLevelModuleConfigurationsByName = (
             optionsExpression: moduleOptions,
             optionsObject:
                 programNode === undefined
-                    ? moduleOptions.type === "ObjectExpression"
+                    ? moduleOptions.type === AST_NODE_TYPES.ObjectExpression
                         ? moduleOptions
                         : null
                     : getObjectExpressionFromExpressionOrIdentifier(
@@ -132,13 +131,13 @@ export const hasAnyTopLevelModuleConfigurationByName = (
 export const getTopLevelModuleConfigurationSpecifierNode = (
     entry: Readonly<DocusaurusTopLevelModuleConfigurationEntry>
 ): null | Readonly<TSESTree.Literal> => {
-    if (entry.node.type === "Literal") {
+    if (entry.node.type === AST_NODE_TYPES.Literal) {
         return entry.node;
     }
 
     const [moduleSpecifier] = entry.node.elements;
 
-    return moduleSpecifier?.type === "Literal" &&
+    return moduleSpecifier?.type === AST_NODE_TYPES.Literal &&
         typeof moduleSpecifier.value === "string"
         ? moduleSpecifier
         : null;

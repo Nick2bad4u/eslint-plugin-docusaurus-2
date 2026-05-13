@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-sidebar-category-label`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     getObjectPropertyValueByName,
@@ -33,7 +37,7 @@ const hasPresentCategoryLabel = (
         return staticValue.trim().length > 0;
     }
 
-    return labelExpression.type !== "Literal";
+    return labelExpression.type !== AST_NODE_TYPES.Literal;
 };
 
 /** Rule module for `require-sidebar-category-label`. */
@@ -47,7 +51,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             return {
                 ObjectExpression(node: Readonly<TSESTree.ObjectExpression>) {
                     if (
-                        node.parent?.type !== "ArrayExpression" ||
+                        node.parent?.type !== AST_NODE_TYPES.ArrayExpression ||
                         !isDocusaurusSidebarCategoryObject(node)
                     ) {
                         return;

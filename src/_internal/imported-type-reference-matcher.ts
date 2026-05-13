@@ -1,5 +1,4 @@
-import type { TSESTree } from "@typescript-eslint/utils";
-
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 type ImportedTypeReferenceMatcherOptions = Readonly<{
@@ -22,7 +21,7 @@ const getImportedTypeReferenceNames = (
 
     for (const statement of programNode.body) {
         if (
-            statement.type !== "ImportDeclaration" ||
+            statement.type !== AST_NODE_TYPES.ImportDeclaration ||
             statement.source.value !== options.importSource
         ) {
             continue;
@@ -30,14 +29,14 @@ const getImportedTypeReferenceNames = (
 
         for (const specifier of statement.specifiers) {
             if (
-                specifier.type === "ImportSpecifier" &&
-                specifier.imported.type === "Identifier" &&
+                specifier.type === AST_NODE_TYPES.ImportSpecifier &&
+                specifier.imported.type === AST_NODE_TYPES.Identifier &&
                 specifier.imported.name === options.typeName
             ) {
                 directTypeNames.add(specifier.local.name);
             }
 
-            if (specifier.type === "ImportNamespaceSpecifier") {
+            if (specifier.type === AST_NODE_TYPES.ImportNamespaceSpecifier) {
                 namespaceImportNames.add(specifier.local.name);
             }
         }
@@ -62,11 +61,11 @@ export const createImportedTypeReferenceMatcher = (
     return (
         typeNode: Readonly<TSESTree.TypeNode>
     ): typeNode is TSESTree.TSTypeReference => {
-        if (typeNode.type !== "TSTypeReference") {
+        if (typeNode.type !== AST_NODE_TYPES.TSTypeReference) {
             return false;
         }
 
-        if (typeNode.typeName.type === "Identifier") {
+        if (typeNode.typeName.type === AST_NODE_TYPES.Identifier) {
             return setHas(
                 importedTypeReferenceNames.directTypeNames,
                 typeNode.typeName.name
@@ -74,9 +73,9 @@ export const createImportedTypeReferenceMatcher = (
         }
 
         return (
-            typeNode.typeName.type === "TSQualifiedName" &&
-            typeNode.typeName.left.type === "Identifier" &&
-            typeNode.typeName.right.type === "Identifier" &&
+            typeNode.typeName.type === AST_NODE_TYPES.TSQualifiedName &&
+            typeNode.typeName.left.type === AST_NODE_TYPES.Identifier &&
+            typeNode.typeName.right.type === AST_NODE_TYPES.Identifier &&
             setHas(
                 importedTypeReferenceNames.namespaceImportNames,
                 typeNode.typeName.left.name

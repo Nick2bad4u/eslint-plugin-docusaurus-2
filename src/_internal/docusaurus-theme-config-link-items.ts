@@ -3,13 +3,14 @@
  * Shared helpers for identifying Docusaurus theme-config link items in navbar
  * and footer arrays.
  */
-import type { TSESTree } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getArrayExpressionPropertyValueByName,
     getObjectExpressionPropertyValueByName,
     getObjectPropertyName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
 } from "./docusaurus-config-ast.js";
 
@@ -22,7 +23,7 @@ const getEnclosingThemeConfigLinkContext = (
     let currentNode: Readonly<TSESTree.Node> | undefined = node.parent;
 
     while (currentNode !== undefined) {
-        if (currentNode.type === "Property") {
+        if (currentNode.type === AST_NODE_TYPES.Property) {
             const propertyName = getObjectPropertyName(currentNode);
 
             if (propertyName === "footer" || propertyName === "navbar") {
@@ -43,7 +44,7 @@ const getEnclosingThemeConfigLinkContext = (
 export const getDocusaurusThemeConfigArrayItemContext = (
     objectExpression: Readonly<TSESTree.ObjectExpression>
 ): DocusaurusThemeConfigLinkContext | null =>
-    objectExpression.parent?.type === "ArrayExpression"
+    objectExpression.parent?.type === AST_NODE_TYPES.ArrayExpression
         ? getEnclosingThemeConfigLinkContext(objectExpression)
         : null;
 
@@ -69,7 +70,7 @@ export const getDefaultDocusaurusThemeConfigLinkContext = (
 
     if (typeProperty !== null) {
         const typeValue = getStaticStringValue(
-            typeProperty.value as TSESTree.Expression
+            getObjectPropertyValueExpression(typeProperty)
         );
 
         if (typeValue !== "default") {
@@ -121,7 +122,7 @@ export const findDocusaurusFooterLinkColumnObjects = (
     const footerLinkColumns: TSESTree.ObjectExpression[] = [];
 
     for (const footerLinkElement of footerLinksArrayExpression.elements) {
-        if (footerLinkElement?.type !== "ObjectExpression") {
+        if (footerLinkElement?.type !== AST_NODE_TYPES.ObjectExpression) {
             continue;
         }
 

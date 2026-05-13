@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `prefer-head-tag-attributes-object`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst, arrayJoin, setHas } from "ts-extras";
 
 import {
@@ -31,7 +34,7 @@ const canAutofixHeadTagObject = (
 ): boolean =>
     headTagObject.properties.every(
         (property) =>
-            property.type === "Property" &&
+            property.type === AST_NODE_TYPES.Property &&
             !property.computed &&
             property.kind === "init"
     );
@@ -44,7 +47,7 @@ const createAttributesWrappedObjectText = (
     const attributePropertyTexts: string[] = [];
 
     for (const property of headTagObject.properties) {
-        if (property.type !== "Property") {
+        if (property.type !== AST_NODE_TYPES.Property) {
             continue;
         }
 
@@ -112,7 +115,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     for (const headTagEntry of headTagsArrayExpression.elements) {
-                        if (headTagEntry?.type !== "ObjectExpression") {
+                        if (
+                            headTagEntry?.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 
@@ -124,7 +130,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         const directAttributeProperties =
                             headTagEntry.properties.filter(
                                 (property): property is TSESTree.Property => {
-                                    if (property.type !== "Property") {
+                                    if (
+                                        property.type !==
+                                        AST_NODE_TYPES.Property
+                                    ) {
                                         return false;
                                     }
 

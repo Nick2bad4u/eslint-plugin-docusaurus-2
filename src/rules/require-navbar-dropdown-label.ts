@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-navbar-dropdown-label`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     getObjectPropertyValueByName,
@@ -47,7 +51,7 @@ const hasPresentNavbarDropdownLabel = (
         return staticValue.trim().length > 0;
     }
 
-    return labelExpression.type !== "Literal";
+    return labelExpression.type !== AST_NODE_TYPES.Literal;
 };
 
 /** Rule module for `require-navbar-dropdown-label`. */

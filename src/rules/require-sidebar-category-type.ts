@@ -2,12 +2,16 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-sidebar-category-type`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst } from "ts-extras";
 
 import {
     findObjectPropertyByName,
+    getObjectPropertyValueExpression,
     getStaticStringValue,
     isDocusaurusSidebarCategoryObject,
     isDocusaurusSidebarFilePath,
@@ -61,7 +65,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             return {
                 ObjectExpression(node: Readonly<TSESTree.ObjectExpression>) {
                     if (
-                        node.parent?.type !== "ArrayExpression" ||
+                        node.parent?.type !== AST_NODE_TYPES.ArrayExpression ||
                         !isDocusaurusSidebarCategoryObject(node)
                     ) {
                         return;
@@ -87,7 +91,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const typeValue = getStaticStringValue(
-                        typeProperty.value as TSESTree.Expression
+                        getObjectPropertyValueExpression(typeProperty)
                     );
 
                     if (typeValue === null || typeValue === "category") {

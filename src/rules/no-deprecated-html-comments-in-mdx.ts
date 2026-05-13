@@ -19,7 +19,7 @@ const defaultOptions = [] as const;
 
 type MessageIds = "noDeprecatedHtmlCommentsInMdx";
 
-const htmlCommentPattern = /<!--[\s\S]*?-->/gu;
+const htmlCommentPattern = /<!--[\s\S]*?-->/gv;
 
 const toJsxCommentReplacement = (commentText: string): string => {
     const innerText = commentText.slice(4, -3);

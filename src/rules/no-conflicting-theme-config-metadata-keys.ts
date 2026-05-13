@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-conflicting-theme-config-metadata-keys`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import { createRemoveCommaSeparatedItemsFixes } from "../_internal/comma-separated-fixes.js";
 import {
@@ -11,6 +15,7 @@ import {
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -67,7 +72,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     for (const metadataElement of metadataArrayExpression.elements) {
-                        if (metadataElement?.type !== "ObjectExpression") {
+                        if (
+                            metadataElement?.type !==
+                            AST_NODE_TYPES.ObjectExpression
+                        ) {
                             continue;
                         }
 
@@ -89,12 +97,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         const nameValue =
                             getStaticStringValueFromExpressionOrIdentifier(
-                                nameProperty.value as TSESTree.Expression,
+                                getObjectPropertyValueExpression(nameProperty),
                                 programNode
                             )?.trim() ?? null;
                         const propertyValue =
                             getStaticStringValueFromExpressionOrIdentifier(
-                                propertyProperty.value as TSESTree.Expression,
+                                getObjectPropertyValueExpression(
+                                    propertyProperty
+                                ),
                                 programNode
                             )?.trim() ?? null;
 

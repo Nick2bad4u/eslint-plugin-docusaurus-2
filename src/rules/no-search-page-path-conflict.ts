@@ -2,7 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-search-page-path-conflict`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
@@ -57,7 +61,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         if (
                             searchConfigProperty?.value.type !==
-                            "ObjectExpression"
+                            AST_NODE_TYPES.ObjectExpression
                         ) {
                             return null;
                         }

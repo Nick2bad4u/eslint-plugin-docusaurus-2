@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-plugin-pwa-head-theme-color`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { objectEntries } from "ts-extras";
 
 import {
@@ -28,7 +31,7 @@ const hasMatchingHeadTagEntry = (
     matcher: Readonly<Record<string, string>>
 ): boolean => {
     for (const element of pwaHeadArrayExpression.elements) {
-        if (element?.type !== "ObjectExpression") {
+        if (element?.type !== AST_NODE_TYPES.ObjectExpression) {
             continue;
         }
 

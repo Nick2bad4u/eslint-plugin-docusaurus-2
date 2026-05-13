@@ -2,12 +2,17 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-theme-config-image`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -65,7 +70,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const imageExpression =
-                        imageProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(imageProperty);
                     const imageValue =
                         getStaticStringValueFromExpressionOrIdentifier(
                             imageExpression,
@@ -85,7 +90,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    if (imageExpression.type !== "Literal") {
+                    if (imageExpression.type !== AST_NODE_TYPES.Literal) {
                         return;
                     }
 

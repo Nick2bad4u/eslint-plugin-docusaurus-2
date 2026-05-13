@@ -2,14 +2,18 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-trailing-slash-explicit`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayAt, arrayFirst } from "ts-extras";
 
 import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getExpressionFromExpressionOrIdentifier,
+    getObjectPropertyValueExpression,
     getStaticBooleanValueFromExpressionOrIdentifier,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
@@ -33,15 +37,16 @@ type TrailingSlashSuggestion = NonNullable<
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    expression.type === "Literal" ||
-    (expression.type === "TemplateLiteral" &&
+    expression.type === AST_NODE_TYPES.Literal ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const canAutofixTrailingSlashExpression = (
     expression: Readonly<TSESTree.Expression>
 ): boolean =>
-    (expression.type === "Literal" && typeof expression.value === "string") ||
-    (expression.type === "TemplateLiteral" &&
+    (expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string") ||
+    (expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0);
 
 const createInsertTrailingSlashFix = (
@@ -169,7 +174,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const trailingSlashExpression =
-                        trailingSlashProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(trailingSlashProperty);
                     const staticBooleanValue =
                         getStaticBooleanValueFromExpressionOrIdentifier(
                             trailingSlashExpression,

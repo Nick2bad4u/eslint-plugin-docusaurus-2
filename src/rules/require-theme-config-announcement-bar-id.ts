@@ -8,6 +8,7 @@ import {
     findObjectPropertyByName,
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticStringValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -70,7 +71,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const staticId =
                         getStaticStringValueFromExpressionOrIdentifier(
-                            idProperty.value as TSESTree.Expression,
+                            getObjectPropertyValueExpression(idProperty),
                             programNode
                         );
 

@@ -1,8 +1,8 @@
 import type { UnknownRecord } from "type-fest";
 
-import * as fs from "node:fs";
-import * as path from "node:path";
-import { objectKeys, setHas } from "ts-extras";
+import path from "node:path";
+import { isDefined, objectKeys, setHas } from "ts-extras";
+import ts from "typescript";
 
 /**
  * @packageDocumentation
@@ -55,9 +55,12 @@ const readResolvedPackageManifest = (
     packageJsonPath: string
 ): null | ResolvedPackageManifest => {
     try {
-        const packageJsonText = fs
-            .readFileSync(packageJsonPath)
-            .toString("utf8");
+        const packageJsonText = ts.sys.readFile(packageJsonPath);
+
+        if (!isDefined(packageJsonText)) {
+            return null;
+        }
+
         const parsedPackageJson = JSON.parse(packageJsonText) as unknown;
 
         if (!isRecord(parsedPackageJson)) {
@@ -79,7 +82,7 @@ const findNearestPackageJsonPath = (filePath: string): null | string => {
     while (true) {
         const packageJsonPath = path.join(currentDirectoryPath, "package.json");
 
-        if (fs.existsSync(packageJsonPath)) {
+        if (ts.sys.fileExists(packageJsonPath)) {
             return packageJsonPath;
         }
 

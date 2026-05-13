@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `require-site-config-fields`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { arrayFirst, isDefined, setHas } from "ts-extras";
 
 import {
@@ -75,7 +78,10 @@ const hasPresentBooleanValue = (
         return true;
     }
 
-    return expression.type !== "Literal" && expression.type !== "Identifier";
+    return (
+        expression.type !== AST_NODE_TYPES.Literal &&
+        expression.type !== AST_NODE_TYPES.Identifier
+    );
 };
 
 const hasPresentReportingSeverityValue = (
@@ -95,7 +101,7 @@ const hasPresentReportingSeverityValue = (
         return setHas(reportingSeverities, staticValue);
     }
 
-    return expression.type !== "Literal";
+    return expression.type !== AST_NODE_TYPES.Literal;
 };
 
 const hasPresentStringValue = (
@@ -115,7 +121,7 @@ const hasPresentStringValue = (
         return staticValue.trim().length > 0;
     }
 
-    return expression.type !== "Literal";
+    return expression.type !== AST_NODE_TYPES.Literal;
 };
 
 /** Rule module for `require-site-config-fields`. */

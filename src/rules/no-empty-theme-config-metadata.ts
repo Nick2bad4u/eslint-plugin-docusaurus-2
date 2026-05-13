@@ -10,6 +10,7 @@ import {
     getArrayExpressionFromExpressionOrIdentifier,
     getDefaultExportedObjectExpression,
     getObjectExpressionPropertyValueByName,
+    getObjectPropertyValueExpression,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
@@ -56,7 +57,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     }
 
                     const metadataExpression =
-                        metadataProperty.value as TSESTree.Expression;
+                        getObjectPropertyValueExpression(metadataProperty);
                     const metadataArrayExpression =
                         getArrayExpressionFromExpressionOrIdentifier(
                             metadataExpression,

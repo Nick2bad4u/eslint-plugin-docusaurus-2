@@ -1,4 +1,4 @@
-import type { TSESTree } from "@typescript-eslint/utils";
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 
 /**
  * @packageDocumentation
@@ -42,8 +42,8 @@ export const localSearchPluginModuleNames = [
 ] as const;
 /** Required key names for static Algolia/DocSearch config. */
 export const requiredDocsearchOptionNames = [
-    "appId",
     "apiKey",
+    "appId",
     "indexName",
 ] as const;
 /** Default search page path used by Algolia/DocSearch when unspecified. */
@@ -252,7 +252,7 @@ export const getConfiguredSearchPagePath = (
     );
     const searchConfigProperty = effectiveSearchConfigProperty?.property;
 
-    if (searchConfigProperty?.value.type !== "ObjectExpression") {
+    if (searchConfigProperty?.value.type !== AST_NODE_TYPES.ObjectExpression) {
         return null;
     }
 
@@ -295,7 +295,7 @@ export const isSearchPageExplicitlyDisabled = (
     );
     const searchConfigProperty = effectiveSearchConfigProperty?.property;
 
-    if (searchConfigProperty?.value.type !== "ObjectExpression") {
+    if (searchConfigProperty?.value.type !== AST_NODE_TYPES.ObjectExpression) {
         return false;
     }
 
@@ -306,7 +306,7 @@ export const isSearchPageExplicitlyDisabled = (
 
     return (
         searchPagePathExpression !== null &&
-        searchPagePathExpression.type === "Literal" &&
+        searchPagePathExpression.type === AST_NODE_TYPES.Literal &&
         searchPagePathExpression.value === false
     );
 };

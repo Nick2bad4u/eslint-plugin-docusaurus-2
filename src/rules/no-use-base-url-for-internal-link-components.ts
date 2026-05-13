@@ -2,8 +2,11 @@
  * @packageDocumentation
  * ESLint rule implementation for `no-use-base-url-for-internal-link-components`.
  */
-import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
-
+import {
+    AST_NODE_TYPES,
+    type TSESLint,
+    type TSESTree,
+} from "@typescript-eslint/utils";
 import { setHas } from "ts-extras";
 
 import {
@@ -30,16 +33,16 @@ const getUseBaseUrlWrappedInternalRoute = (
 ): null | string => {
     const attributeValue = attribute.value;
 
-    if (attributeValue?.type !== "JSXExpressionContainer") {
+    if (attributeValue?.type !== AST_NODE_TYPES.JSXExpressionContainer) {
         return null;
     }
 
     const expression = attributeValue.expression;
 
     if (
-        expression.type !== "CallExpression" ||
+        expression.type !== AST_NODE_TYPES.CallExpression ||
         expression.arguments.length !== 1 ||
-        expression.callee.type !== "Identifier" ||
+        expression.callee.type !== AST_NODE_TYPES.Identifier ||
         !setHas(useBaseUrlLocalNames, expression.callee.name)
     ) {
         return null;
@@ -47,7 +50,10 @@ const getUseBaseUrlWrappedInternalRoute = (
 
     const [firstArgument] = expression.arguments;
 
-    if (firstArgument === undefined || firstArgument.type === "SpreadElement") {
+    if (
+        firstArgument === undefined ||
+        firstArgument.type === AST_NODE_TYPES.SpreadElement
+    ) {
         return null;
     }
 
@@ -88,7 +94,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             return {
                 JSXOpeningElement(node: Readonly<TSESTree.JSXOpeningElement>) {
                     if (
-                        node.name.type !== "JSXIdentifier" ||
+                        node.name.type !== AST_NODE_TYPES.JSXIdentifier ||
                         !setHas(docusaurusLinkLocalNames, node.name.name)
                     ) {
                         return;

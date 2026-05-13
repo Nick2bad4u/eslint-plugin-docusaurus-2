@@ -9,6 +9,7 @@ import {
     getDefaultExportedObjectExpression,
     getObjectExpressionFromExpressionOrIdentifier,
     getObjectPropertyValueByName,
+    getObjectPropertyValueExpression,
     getStaticBooleanValueFromExpressionOrIdentifier,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
@@ -93,7 +94,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const rspackBundlerEnabled =
                         rspackBundlerProperty !== null &&
                         getStaticBooleanValueFromExpressionOrIdentifier(
-                            rspackBundlerProperty.value as TSESTree.Expression,
+                            getObjectPropertyValueExpression(
+                                rspackBundlerProperty
+                            ),
                             programNode
                         ) === true;
 

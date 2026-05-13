@@ -2,8 +2,7 @@
  * @packageDocumentation
  * Shared JSX/import helpers for Docusaurus component rules.
  */
-import type { TSESTree } from "@typescript-eslint/utils";
-
+import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 import { arrayFirst } from "ts-extras";
 
 /**
@@ -17,14 +16,14 @@ export const collectDefaultImportLocalNamesFromModule = (
 
     for (const statement of programNode.body) {
         if (
-            statement.type !== "ImportDeclaration" ||
+            statement.type !== AST_NODE_TYPES.ImportDeclaration ||
             statement.source.value !== sourceModuleName
         ) {
             continue;
         }
 
         for (const specifier of statement.specifiers) {
-            if (specifier.type === "ImportDefaultSpecifier") {
+            if (specifier.type === AST_NODE_TYPES.ImportDefaultSpecifier) {
                 localNames.add(specifier.local.name);
             }
         }
@@ -42,8 +41,8 @@ export const getJsxAttributeByName = (
 ): null | TSESTree.JSXAttribute => {
     for (const attribute of openingElement.attributes) {
         if (
-            attribute.type === "JSXAttribute" &&
-            attribute.name.type === "JSXIdentifier" &&
+            attribute.type === AST_NODE_TYPES.JSXAttribute &&
+            attribute.name.type === AST_NODE_TYPES.JSXIdentifier &&
             attribute.name.name === attributeName
         ) {
             return attribute;
@@ -65,23 +64,26 @@ export const getStaticStringValueFromJsxAttribute = (
         return null;
     }
 
-    if (attributeValue.type === "Literal") {
+    if (attributeValue.type === AST_NODE_TYPES.Literal) {
         return typeof attributeValue.value === "string"
             ? attributeValue.value
             : null;
     }
 
-    if (attributeValue.type !== "JSXExpressionContainer") {
+    if (attributeValue.type !== AST_NODE_TYPES.JSXExpressionContainer) {
         return null;
     }
 
     const expression = attributeValue.expression;
 
-    if (expression.type === "Literal" && typeof expression.value === "string") {
+    if (
+        expression.type === AST_NODE_TYPES.Literal &&
+        typeof expression.value === "string"
+    ) {
         return expression.value;
     }
 
-    return expression.type === "TemplateLiteral" &&
+    return expression.type === AST_NODE_TYPES.TemplateLiteral &&
         expression.expressions.length === 0
         ? (arrayFirst(expression.quasis)?.value.cooked ?? null)
         : null;
