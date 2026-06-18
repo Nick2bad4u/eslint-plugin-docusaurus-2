@@ -18,9 +18,9 @@ Docusaurus uses the announcement bar id to persist dismissal state reliably. Lea
 
 ```ts
 export default {
-    themeConfig: {
-        announcementBar: { content: "Hello" },
-    },
+ themeConfig: {
+  announcementBar: { content: "Hello" },
+ },
 };
 ```
 
@@ -28,12 +28,12 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        announcementBar: {
-            id: "site-wide-banner",
-            content: "Hello",
-        },
-    },
+ themeConfig: {
+  announcementBar: {
+   id: "site-wide-banner",
+   content: "Hello",
+  },
+ },
 };
 ```
 

@@ -31,16 +31,16 @@ This rule keeps the minimal Docusaurus metadata entry shape explicit and reviewa
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [
-            {
-                property: "og:site_name",
-            },
-            {
-                content: "eslint-plugin-docusaurus-2",
-            },
-        ],
-    },
+ themeConfig: {
+  metadata: [
+   {
+    property: "og:site_name",
+   },
+   {
+    content: "eslint-plugin-docusaurus-2",
+   },
+  ],
+ },
 };
 ```
 
@@ -48,18 +48,18 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [
-            {
-                property: "og:site_name",
-                content: "eslint-plugin-docusaurus-2",
-            },
-            {
-                name: "twitter:card",
-                content: "summary_large_image",
-            },
-        ],
-    },
+ themeConfig: {
+  metadata: [
+   {
+    property: "og:site_name",
+    content: "eslint-plugin-docusaurus-2",
+   },
+   {
+    name: "twitter:card",
+    content: "summary_large_image",
+   },
+  ],
+ },
 };
 ```
 
@@ -75,9 +75,9 @@ Metadata entries often need maintainer judgment about which exact tag name and c
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: ["og:site_name"],
-    },
+ themeConfig: {
+  metadata: ["og:site_name"],
+ },
 };
 ```
 
@@ -88,15 +88,15 @@ const metadataName = "og:site_name";
 const metadataContent = "eslint-plugin-docusaurus-2";
 
 export default {
-    themeConfig: {
-        metadata: [
-            {
-                property: metadataName,
-                content: metadataContent,
-            },
-            ...extraMetadata,
-        ],
-    },
+ themeConfig: {
+  metadata: [
+   {
+    property: metadataName,
+    content: metadataContent,
+   },
+   ...extraMetadata,
+  ],
+ },
 };
 ```
 

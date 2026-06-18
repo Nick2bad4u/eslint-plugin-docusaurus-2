@@ -33,10 +33,10 @@ If a project uses an SVG there:
 const socialCardImagePath = "img/logo.svg";
 
 export default {
-    image: socialCardImagePath,
-    themeConfig: {
-        image: "img/social-card.svg",
-    },
+ image: socialCardImagePath,
+ themeConfig: {
+  image: "img/social-card.svg",
+ },
 };
 ```
 
@@ -46,10 +46,10 @@ export default {
 const socialCardImagePath = "img/logo.png";
 
 export default {
-    image: socialCardImagePath,
-    themeConfig: {
-        image: "img/social-card.png",
-    },
+ image: socialCardImagePath,
+ themeConfig: {
+  image: "img/social-card.png",
+ },
 };
 ```
 
@@ -67,7 +67,7 @@ Changing a social-card image from SVG to PNG/JPG/WebP is a content decision, not
 const socialCardImagePath = "img/og-card.webp";
 
 export default {
-    image: socialCardImagePath,
+ image: socialCardImagePath,
 };
 ```
 

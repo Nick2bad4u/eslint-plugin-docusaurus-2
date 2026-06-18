@@ -30,15 +30,15 @@ Keeping both properties together is misleading because:
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            collapsible: false,
-            collapsed: true,
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   collapsible: false,
+   collapsed: true,
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -46,14 +46,14 @@ export default {
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            collapsible: false,
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   collapsible: false,
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -69,15 +69,15 @@ The autofix removes the useless `collapsed` property when the same category alre
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            collapsible: true,
-            collapsed: false,
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   collapsible: true,
+   collapsed: false,
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -85,14 +85,14 @@ export default {
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "API",
-            collapsible: false,
-            items: ["api/index"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "API",
+   collapsible: false,
+   items: ["api/index"],
+  },
+ ],
 };
 ```
 

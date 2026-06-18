@@ -29,16 +29,16 @@ Using `href` for external destinations keeps the config aligned with the documen
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "GitHub",
-                    to: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "GitHub",
+     to: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -46,16 +46,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "GitHub",
-                    href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "GitHub",
+     href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -69,21 +69,21 @@ This rule provides an autofix that replaces the external-destination key `to` wi
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Project",
-                    items: [
-                        {
-                            label: "NPM",
-                            to: "https://www.npmjs.com/package/eslint-plugin-docusaurus-2",
-                        },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Project",
+     items: [
+      {
+       label: "NPM",
+       to: "https://www.npmjs.com/package/eslint-plugin-docusaurus-2",
+      },
+     ],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -91,16 +91,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    to: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     to: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 

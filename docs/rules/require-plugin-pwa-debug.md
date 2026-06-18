@@ -31,27 +31,27 @@ Using an env-gated expression keeps the toggle controllable per environment with
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                pwaHead: [],
-            },
-        ],
-    ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    pwaHead: [],
+   },
+  ],
+ ],
 };
 ```
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                debug: false,
-            },
-        ],
-    ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    debug: false,
+   },
+  ],
+ ],
 };
 ```
 
@@ -59,27 +59,27 @@ export default {
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                debug: true,
-            },
-        ],
-    ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    debug: true,
+   },
+  ],
+ ],
 };
 ```
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                debug: process.env["DOCUSAURUS_PWA_DEBUG"] === "true",
-            },
-        ],
-    ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    debug: process.env["DOCUSAURUS_PWA_DEBUG"] === "true",
+   },
+  ],
+ ],
 };
 ```
 
@@ -93,10 +93,10 @@ If plugin options are dynamic and cannot be statically resolved to an object lit
 
 ```ts
 type Options = [
-        {
-                allowBooleanLiteralTrue?: boolean;
-                allowedEnvVarNames?: string[];
-        }?,
+ {
+  allowBooleanLiteralTrue?: boolean;
+  allowedEnvVarNames?: string[];
+ }?,
 ];
 ```
 

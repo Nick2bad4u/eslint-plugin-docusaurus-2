@@ -33,21 +33,21 @@ This rule keeps authored navbar dropdown objects structurally aligned with what 
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "dropdown",
-                    label: "Community",
-                },
-                {
-                    type: "dropdown",
-                    label: "Resources",
-                    items: "docs",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "dropdown",
+     label: "Community",
     },
+    {
+     type: "dropdown",
+     label: "Resources",
+     items: "docs",
+    },
+   ],
+  },
+ },
 };
 ```
 
@@ -55,17 +55,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "dropdown",
-                    label: "Community",
-                    items: [{ label: "Docs", to: "/docs/intro" }],
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "dropdown",
+     label: "Community",
+     items: [{ label: "Docs", to: "/docs/intro" }],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -83,17 +83,17 @@ Maintainers still need to decide which nested navbar items belong in the dropdow
 const dropdownItems = [{ label: "Docs", to: "/docs/intro" }];
 
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "dropdown",
-                    label: "Community",
-                    items: dropdownItems,
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "dropdown",
+     label: "Community",
+     items: dropdownItems,
     },
+   ],
+  },
+ },
 };
 ```
 

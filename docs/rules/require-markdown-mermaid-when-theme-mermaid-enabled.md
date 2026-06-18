@@ -39,7 +39,7 @@ flowchart TB
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-mermaid"],
+ themes: ["@docusaurus/theme-mermaid"],
 };
 ```
 
@@ -47,10 +47,10 @@ export default {
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-mermaid"],
-    markdown: {
-        mermaid: true,
-    },
+ themes: ["@docusaurus/theme-mermaid"],
+ markdown: {
+  mermaid: true,
+ },
 };
 ```
 
@@ -68,10 +68,10 @@ This rule autofixes the common literal-object cases it can rewrite safely:
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-mermaid"],
-    markdown: {
-        mermaid: false,
-    },
+ themes: ["@docusaurus/theme-mermaid"],
+ markdown: {
+  mermaid: false,
+ },
 };
 ```
 
@@ -79,10 +79,10 @@ export default {
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-mermaid"],
-    markdown: {
-        mermaid: true,
-    },
+ themes: ["@docusaurus/theme-mermaid"],
+ markdown: {
+  mermaid: true,
+ },
 };
 ```
 

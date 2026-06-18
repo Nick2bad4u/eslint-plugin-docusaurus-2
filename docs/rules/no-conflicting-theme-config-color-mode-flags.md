@@ -21,12 +21,12 @@ If the color mode switch is disabled, respecting the user's preferred color sche
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: {
-            disableSwitch: true,
-            respectPrefersColorScheme: true,
-        },
-    },
+ themeConfig: {
+  colorMode: {
+   disableSwitch: true,
+   respectPrefersColorScheme: true,
+  },
+ },
 };
 ```
 
@@ -34,12 +34,12 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: {
-            disableSwitch: true,
-            respectPrefersColorScheme: false,
-        },
-    },
+ themeConfig: {
+  colorMode: {
+   disableSwitch: true,
+   respectPrefersColorScheme: false,
+  },
+ },
 };
 ```
 

@@ -22,13 +22,13 @@ This rule reports when `baseUrlIssueBanner` is:
 
 ```ts
 export default {
-    baseUrl: "/docs/",
+ baseUrl: "/docs/",
 };
 ```
 
 ```ts
 export default {
-    baseUrlIssueBanner: false,
+ baseUrlIssueBanner: false,
 };
 ```
 
@@ -36,7 +36,7 @@ export default {
 
 ```ts
 export default {
-    baseUrlIssueBanner: true,
+ baseUrlIssueBanner: true,
 };
 ```
 

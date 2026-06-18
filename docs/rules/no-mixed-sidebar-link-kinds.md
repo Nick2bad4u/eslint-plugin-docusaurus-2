@@ -30,18 +30,18 @@ Mixing both styles in the same object makes the config ambiguous and can lead to
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                type: "generated-index",
-                id: "introduction",
-                title: "Guides",
-            },
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    type: "generated-index",
+    id: "introduction",
+    title: "Guides",
+   },
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -49,17 +49,17 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                type: "generated-index",
-                title: "Guides",
-            },
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    type: "generated-index",
+    title: "Guides",
+   },
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -78,19 +78,19 @@ When the link kind is implicit or otherwise ambiguous, the rule reports only.
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                type: "doc",
-                id: "introduction",
-                title: "Guides",
-                slug: "/guides",
-            },
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    type: "doc",
+    id: "introduction",
+    title: "Guides",
+    slug: "/guides",
+   },
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -98,17 +98,17 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                type: "doc",
-                id: "introduction",
-            },
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    type: "doc",
+    id: "introduction",
+   },
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 

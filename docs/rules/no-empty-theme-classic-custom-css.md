@@ -25,12 +25,14 @@ Removing empty entries keeps the classic theme config honest and easier to maint
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: { customCss: "" },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: { customCss: "" },
+   },
+  ],
+ ],
 };
 ```
 
@@ -38,12 +40,14 @@ export default {
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: { customCss: "./src/css/custom.css" },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: { customCss: "./src/css/custom.css" },
+   },
+  ],
+ ],
 };
 ```
 
@@ -60,14 +64,16 @@ This rule autofixes the simple literal cases it can safely prove:
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: {
-                customCss: ["./src/css/custom.css", "", "./src/css/extra.css"],
-            },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: {
+     customCss: ["./src/css/custom.css", "", "./src/css/extra.css"],
+    },
+   },
+  ],
+ ],
 };
 ```
 
@@ -75,14 +81,16 @@ export default {
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: {
-                customCss: ["./src/css/custom.css", "./src/css/extra.css"],
-            },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: {
+     customCss: ["./src/css/custom.css", "./src/css/extra.css"],
+    },
+   },
+  ],
+ ],
 };
 ```
 

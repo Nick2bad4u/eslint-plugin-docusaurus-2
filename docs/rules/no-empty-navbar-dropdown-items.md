@@ -21,11 +21,11 @@ Empty dropdowns add clutter to navigation and often indicate unfinished or copie
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ type: "dropdown", label: "Docs", items: [] }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ type: "dropdown", label: "Docs", items: [] }],
+  },
+ },
 };
 ```
 
@@ -33,17 +33,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "dropdown",
-                    label: "Docs",
-                    items: [{ label: "Overview", to: "/docs" }],
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "dropdown",
+     label: "Docs",
+     items: [{ label: "Overview", to: "/docs" }],
     },
+   ],
+  },
+ },
 };
 ```
 

@@ -28,17 +28,17 @@ Keeping both on the same item makes the config ambiguous and harder to review.
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    to: "/docs/intro",
-                    href: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     to: "/docs/intro",
+     href: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -46,16 +46,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    to: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     to: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -74,21 +74,21 @@ When both values differ, the rule reports only, because the intended destination
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Project",
-                    items: [
-                        {
-                            label: "GitHub",
-                            href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
-                        },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Project",
+     items: [
+      {
+       label: "GitHub",
+       href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
+      },
+     ],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -96,17 +96,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    to: "/docs/intro",
-                    href: "https://example.com/docs",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     to: "/docs/intro",
+     href: "https://example.com/docs",
     },
+   ],
+  },
+ },
 };
 ```
 

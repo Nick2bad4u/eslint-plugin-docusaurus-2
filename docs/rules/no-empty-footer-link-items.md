@@ -18,16 +18,16 @@ Empty footer link items add noise and usually come from unfinished or copied con
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [{}, { label: "Overview", to: "/docs" }],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [{}, { label: "Overview", to: "/docs" }],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -35,16 +35,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [{ label: "Overview", to: "/docs" }],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [{ label: "Overview", to: "/docs" }],
     },
+   ],
+  },
+ },
 };
 ```
 

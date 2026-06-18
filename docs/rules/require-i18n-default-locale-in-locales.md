@@ -21,10 +21,10 @@ Locale routing and fallback behavior assume the default locale is part of the su
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["fr"],
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["fr"],
+ },
 };
 ```
 
@@ -32,10 +32,10 @@ export default {
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["en", "fr"],
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["en", "fr"],
+ },
 };
 ```
 

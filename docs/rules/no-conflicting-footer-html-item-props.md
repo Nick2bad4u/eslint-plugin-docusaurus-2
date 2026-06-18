@@ -32,16 +32,16 @@ This rule keeps footer HTML pass-through items separate from standard footer lin
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    html: "<strong>Docs</strong>",
-                    href: "https://example.com",
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     html: "<strong>Docs</strong>",
+     href: "https://example.com",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -49,19 +49,19 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    html: "<strong>Docs</strong>",
-                },
-                {
-                    label: "Docs",
-                    href: "https://example.com",
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     html: "<strong>Docs</strong>",
     },
+    {
+     label: "Docs",
+     href: "https://example.com",
+    },
+   ],
+  },
+ },
 };
 ```
 

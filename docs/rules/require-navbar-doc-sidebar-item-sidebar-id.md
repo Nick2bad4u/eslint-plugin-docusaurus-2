@@ -31,16 +31,16 @@ When `sidebarId` is missing, the item no longer matches the documented navbar do
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "docSidebar",
-                    label: "API",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "docSidebar",
+     label: "API",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -48,17 +48,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "docSidebar",
-                    label: "API",
-                    sidebarId: "api",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "docSidebar",
+     label: "API",
+     sidebarId: "api",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -66,7 +66,7 @@ export default {
 
 This rule reports only. It does not autofix.
 
-Choosing the correct `sidebarId` depends on the repository’s sidebar layout and cannot be inferred safely from syntax alone.
+Choosing the correct `sidebarId` depends on the repository's sidebar layout and cannot be inferred safely from syntax alone.
 
 ## When not to use it
 

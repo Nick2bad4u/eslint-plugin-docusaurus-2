@@ -19,6 +19,13 @@ const config = [
             ...plugin.configs.all.rules,
         },
     },
+    {
+        files: [".github/workflows/auto-merge-dependabot-caller.yml"],
+        name: "Intentional reusable Dependabot workflow",
+        rules: {
+            "github-actions/no-external-job": "off",
+        },
+    },
     // Add repository-specific config entries below as needed.
 ];
 

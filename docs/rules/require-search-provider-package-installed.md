@@ -27,7 +27,7 @@ Otherwise the site config can appear valid while depending on transitive install
 
 ```ts
 export default {
-    plugins: ["@docsearch/docusaurus-adapter"],
+ plugins: ["@docsearch/docusaurus-adapter"],
 };
 ```
 
@@ -35,7 +35,7 @@ export default {
 
 ```ts
 export default {
-    themes: ["@easyops-cn/docusaurus-search-local"],
+ themes: ["@easyops-cn/docusaurus-search-local"],
 };
 ```
 
@@ -53,7 +53,7 @@ It does not add package-manager entries automatically.
 
 ```ts
 export default {
-    themes: ["docusaurus-plugin-search-local"],
+ themes: ["docusaurus-plugin-search-local"],
 };
 ```
 
@@ -61,7 +61,7 @@ export default {
 
 ```ts
 export default {
-    themes: ["@easyops-cn/docusaurus-search-local"],
+ themes: ["@easyops-cn/docusaurus-search-local"],
 };
 ```
 

@@ -29,17 +29,17 @@ That is a real config mismatch, not a style preference.
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            apiKey: "KEY",
-            appId: "APP",
-            indexName: "docs",
-            searchPagePath: false,
-        },
-        navbar: {
-            items: [{ to: "/search", label: "Search" }],
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   apiKey: "KEY",
+   appId: "APP",
+   indexName: "docs",
+   searchPagePath: false,
+  },
+  navbar: {
+   items: [{ to: "/search", label: "Search" }],
+  },
+ },
 };
 ```
 
@@ -47,17 +47,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            apiKey: "KEY",
-            appId: "APP",
-            indexName: "docs",
-            searchPagePath: false,
-        },
-        navbar: {
-            items: [{ to: "/docs", label: "Docs" }],
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   apiKey: "KEY",
+   appId: "APP",
+   indexName: "docs",
+   searchPagePath: false,
+  },
+  navbar: {
+   items: [{ to: "/docs", label: "Docs" }],
+  },
+ },
 };
 ```
 

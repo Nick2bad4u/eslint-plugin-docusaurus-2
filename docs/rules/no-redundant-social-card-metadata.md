@@ -34,15 +34,15 @@ Keeping manual entries for the same purpose:
 
 ```ts
 export default {
-    themeConfig: {
-        image: "img/social-card.png",
-        metadata: [
-            {
-                property: "og:image",
-                content: "https://example.com/img/social-card.png",
-            },
-        ],
-    },
+ themeConfig: {
+  image: "img/social-card.png",
+  metadata: [
+   {
+    property: "og:image",
+    content: "https://example.com/img/social-card.png",
+   },
+  ],
+ },
 };
 ```
 
@@ -50,10 +50,10 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        image: "img/social-card.png",
-        metadata: [],
-    },
+ themeConfig: {
+  image: "img/social-card.png",
+  metadata: [],
+ },
 };
 ```
 
@@ -69,15 +69,15 @@ It leaves unrelated metadata entries alone.
 
 ```ts
 export default {
-    themeConfig: {
-        image: "img/social-card.png",
-        metadata: [
-            {
-                property: "og:site_name",
-                content: "eslint-plugin-docusaurus-2",
-            },
-        ],
-    },
+ themeConfig: {
+  image: "img/social-card.png",
+  metadata: [
+   {
+    property: "og:site_name",
+    content: "eslint-plugin-docusaurus-2",
+   },
+  ],
+ },
 };
 ```
 
@@ -85,14 +85,14 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [
-            {
-                property: "og:image",
-                content: "https://example.com/img/social-card.png",
-            },
-        ],
-    },
+ themeConfig: {
+  metadata: [
+   {
+    property: "og:image",
+    content: "https://example.com/img/social-card.png",
+   },
+  ],
+ },
 };
 ```
 

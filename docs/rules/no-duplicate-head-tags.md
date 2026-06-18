@@ -18,16 +18,16 @@ Duplicate head tags create noisy document metadata, repeated preload/preconnect 
 
 ```ts
 export default {
-    headTags: [
-        {
-            tagName: "link",
-            attributes: { rel: "preconnect", href: "https://github.com" },
-        },
-        {
-            tagName: "link",
-            attributes: { rel: "preconnect", href: "https://github.com" },
-        },
-    ],
+ headTags: [
+  {
+   tagName: "link",
+   attributes: { rel: "preconnect", href: "https://github.com" },
+  },
+  {
+   tagName: "link",
+   attributes: { rel: "preconnect", href: "https://github.com" },
+  },
+ ],
 };
 ```
 
@@ -35,12 +35,12 @@ export default {
 
 ```ts
 export default {
-    headTags: [
-        {
-            tagName: "link",
-            attributes: { rel: "preconnect", href: "https://github.com" },
-        },
-    ],
+ headTags: [
+  {
+   tagName: "link",
+   attributes: { rel: "preconnect", href: "https://github.com" },
+  },
+ ],
 };
 ```
 

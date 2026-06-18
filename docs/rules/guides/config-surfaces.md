@@ -54,13 +54,13 @@ These are rules you enable one-by-one in your own config because they are adviso
 import docusaurus2 from "eslint-plugin-docusaurus-2";
 
 export default [
-    docusaurus2.configs.recommended,
-    docusaurus2.configs.content,
-    {
-        rules: {
-            "docusaurus-2/local-search-will-not-work-in-dev": "warn",
-        },
-    },
+ docusaurus2.configs.recommended,
+ docusaurus2.configs.content,
+ {
+  rules: {
+   "docusaurus-2/local-search-will-not-work-in-dev": "warn",
+  },
+ },
 ];
 ```
 

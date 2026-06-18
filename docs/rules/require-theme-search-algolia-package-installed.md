@@ -25,7 +25,7 @@ That keeps dependency ownership explicit and avoids config that only works becau
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-search-algolia"],
+ themes: ["@docusaurus/theme-search-algolia"],
 };
 ```
 
@@ -33,7 +33,7 @@ export default {
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-search-algolia"],
+ themes: ["@docusaurus/theme-search-algolia"],
 };
 ```
 

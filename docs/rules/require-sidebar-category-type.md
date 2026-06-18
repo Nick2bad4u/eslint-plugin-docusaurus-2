@@ -31,12 +31,12 @@ Making the category type explicit improves review clarity and reduces the chance
 
 ```ts
 export default {
-    docs: [
-        {
-            label: "Guides",
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   label: "Guides",
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -44,13 +44,13 @@ export default {
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -69,13 +69,13 @@ The rule intentionally ignores dynamic `type` expressions because it cannot prov
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "link",
-            label: "Guides",
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "link",
+   label: "Guides",
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -83,12 +83,12 @@ export default {
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "doc",
-            id: "introduction",
-        },
-    ],
+ docs: [
+  {
+   type: "doc",
+   id: "introduction",
+  },
+ ],
 };
 ```
 

@@ -30,12 +30,12 @@ That keeps regular Markdown files out of the stricter MDX parser unless you inte
 
 ```ts
 export default {
-    markdown: {
-        emoji: true,
-        hooks: {
-            onBrokenMarkdownLinks: "warn",
-        },
-    },
+ markdown: {
+  emoji: true,
+  hooks: {
+   onBrokenMarkdownLinks: "warn",
+  },
+ },
 };
 ```
 
@@ -43,13 +43,13 @@ export default {
 
 ```ts
 export default {
-    markdown: {
-        emoji: true,
-        format: "detect",
-        hooks: {
-            onBrokenMarkdownLinks: "warn",
-        },
-    },
+ markdown: {
+  emoji: true,
+  format: "detect",
+  hooks: {
+   onBrokenMarkdownLinks: "warn",
+  },
+ },
 };
 ```
 
@@ -68,9 +68,9 @@ If the `markdown` config or `format` value is dynamic and cannot be resolved sta
 
 ```ts
 export default {
-    markdown: {
-        format: "mdx",
-    },
+ markdown: {
+  format: "mdx",
+ },
 };
 ```
 
@@ -79,12 +79,12 @@ export default {
 ```ts
 const markdownFormat = "detect";
 const markdown = {
-    format: markdownFormat,
-    mermaid: true,
+ format: markdownFormat,
+ mermaid: true,
 };
 
 export default {
-    markdown,
+ markdown,
 };
 ```
 

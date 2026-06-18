@@ -22,20 +22,20 @@ When plugin-pwa is enabled but the theme-color tag is missing, the configuration
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                pwaHead: [
-                    {
-                        tagName: "link",
-                        rel: "manifest",
-                        href: "/manifest.json",
-                    },
-                ],
-            },
-        ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    pwaHead: [
+     {
+      tagName: "link",
+      rel: "manifest",
+      href: "/manifest.json",
+     },
     ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -43,20 +43,20 @@ export default {
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                pwaHead: [
-                    {
-                        tagName: "meta",
-                        name: "theme-color",
-                        content: "#25c2a0",
-                    },
-                ],
-            },
-        ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    pwaHead: [
+     {
+      tagName: "meta",
+      name: "theme-color",
+      content: "#25c2a0",
+     },
     ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -64,7 +64,7 @@ export default {
 
 This rule reports only. It does not autofix.
 
-The right theme color depends on the site’s branding and PWA design choices, so a fixer should not invent one.
+The right theme color depends on the site's branding and PWA design choices, so a fixer should not invent one.
 
 ## When not to use it
 

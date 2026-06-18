@@ -37,10 +37,10 @@ A Docusaurus site usually benefits more from an explicit `"warn"` or `"throw"` p
 
 ```ts
 const config = {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    onBrokenLinks: "ignore",
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ onBrokenLinks: "ignore",
 };
 
 export default config;
@@ -50,10 +50,10 @@ export default config;
 
 ```ts
 const config = {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    onBrokenLinks: "throw",
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ onBrokenLinks: "throw",
 };
 
 export default config;
@@ -79,14 +79,14 @@ That makes the site validation policy explicit again without inventing a custom 
 
 ```ts
 const config = {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    markdown: {
-        hooks: {
-            onBrokenMarkdownLinks: "ignore",
-        },
-    },
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ markdown: {
+  hooks: {
+   onBrokenMarkdownLinks: "ignore",
+  },
+ },
 };
 
 export default config;
@@ -96,14 +96,14 @@ export default config;
 
 ```ts
 const config = {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    markdown: {
-        hooks: {
-            onBrokenMarkdownLinks: "warn",
-        },
-    },
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ markdown: {
+  hooks: {
+   onBrokenMarkdownLinks: "warn",
+  },
+ },
 };
 
 export default config;

@@ -18,11 +18,11 @@ Empty destinations are almost always mistakes and make link objects misleading o
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Docs", href: "", to: "/docs/intro" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Docs", href: "", to: "/docs/intro" }],
+  },
+ },
 };
 ```
 
@@ -30,11 +30,11 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Docs", to: "/docs/intro" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Docs", to: "/docs/intro" }],
+  },
+ },
 };
 ```
 

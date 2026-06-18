@@ -33,11 +33,11 @@ This rule keeps the config honest and closer to the documented Docusaurus search
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+  },
+ },
 };
 ```
 
@@ -45,13 +45,13 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -67,13 +67,13 @@ It cannot safely invent or guess the missing Algolia credentials and index metad
 
 ```ts
 export default {
-    themeConfig: {
-        algolia: {
-            appId: "",
-            apiKey: true,
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  algolia: {
+   appId: "",
+   apiKey: true,
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -85,13 +85,13 @@ const apiKey = process.env["ALGOLIA_API_KEY"];
 const indexName = process.env["ALGOLIA_INDEX_NAME"];
 
 export default {
-    themeConfig: {
-        docsearch: {
-            appId,
-            apiKey,
-            indexName,
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId,
+   apiKey,
+   indexName,
+  },
+ },
 };
 ```
 

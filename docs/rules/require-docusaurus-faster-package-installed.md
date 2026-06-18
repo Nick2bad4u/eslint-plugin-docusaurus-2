@@ -31,9 +31,9 @@ Without that package declaration, the config can look valid in review while the 
 
 ```ts
 export default {
-    future: {
-        faster: true,
-    },
+ future: {
+  faster: true,
+ },
 };
 ```
 
@@ -41,9 +41,9 @@ export default {
 
 ```ts
 export default {
-    future: {
-        faster: true,
-    },
+ future: {
+  faster: true,
+ },
 };
 ```
 

@@ -18,19 +18,19 @@ Duplicate footer destinations usually come from copy/paste mistakes and make foo
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [
-                        { label: "Overview", to: "/docs" },
-                        { label: "Read the docs", to: "/docs" },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [
+      { label: "Overview", to: "/docs" },
+      { label: "Read the docs", to: "/docs" },
+     ],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -38,19 +38,19 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [
-                        { label: "Overview", to: "/docs" },
-                        { label: "Rules", to: "/rules" },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [
+      { label: "Overview", to: "/docs" },
+      { label: "Rules", to: "/rules" },
+     ],
     },
+   ],
+  },
+ },
 };
 ```
 

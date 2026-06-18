@@ -26,7 +26,7 @@ Requiring an explicit setup entry makes the plugin configuration intentional and
 
 ```ts
 export default {
-    plugins: ["@docusaurus/plugin-pwa"],
+ plugins: ["@docusaurus/plugin-pwa"],
 };
 ```
 
@@ -34,7 +34,7 @@ export default {
 
 ```ts
 export default {
-    plugins: [["@docusaurus/plugin-pwa", { debug: true }]],
+ plugins: [["@docusaurus/plugin-pwa", { debug: true }]],
 };
 ```
 
@@ -42,7 +42,7 @@ export default {
 
 This rule reports only. It does not autofix.
 
-The right PWA setup depends on the site’s manifest, head tags, and offline-mode strategy, so an automatic rewrite would be too speculative.
+The right PWA setup depends on the site's manifest, head tags, and offline-mode strategy, so an automatic rewrite would be too speculative.
 
 ## ESLint flat config example
 

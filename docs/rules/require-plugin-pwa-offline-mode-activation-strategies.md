@@ -33,27 +33,27 @@ PWA behavior changes across installation and runtime contexts. Explicit strategy
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                debug: true,
-            },
-        ],
-    ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    debug: true,
+   },
+  ],
+ ],
 };
 ```
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                offlineModeActivationStrategies: ["queryString"],
-            },
-        ],
-    ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    offlineModeActivationStrategies: ["queryString"],
+   },
+  ],
+ ],
 };
 ```
 
@@ -61,18 +61,18 @@ export default {
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                offlineModeActivationStrategies: [
-                    "appInstalled",
-                    "standalone",
-                    "queryString",
-                ],
-            },
-        ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    offlineModeActivationStrategies: [
+     "appInstalled",
+     "standalone",
+     "queryString",
     ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -86,9 +86,9 @@ If `offlineModeActivationStrategies` is dynamic and cannot be statically resolve
 
 ```ts
 type Options = [
-    {
-        requiredStrategies?: string[];
-    }?,
+ {
+  requiredStrategies?: string[];
+ }?,
 ];
 ```
 

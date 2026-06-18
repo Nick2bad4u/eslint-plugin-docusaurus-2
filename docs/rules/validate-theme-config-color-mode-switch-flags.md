@@ -21,9 +21,9 @@ Boolean flags are clearer and less error-prone than stringly-typed values in pla
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: { disableSwitch: "true" },
-    },
+ themeConfig: {
+  colorMode: { disableSwitch: "true" },
+ },
 };
 ```
 
@@ -31,9 +31,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: { disableSwitch: true },
-    },
+ themeConfig: {
+  colorMode: { disableSwitch: true },
+ },
 };
 ```
 

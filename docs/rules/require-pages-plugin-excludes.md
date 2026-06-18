@@ -39,17 +39,17 @@ When a config customizes `pages.include`, being explicit about `pages.exclude` b
 
 ```ts
 export default {
-    presets: [
-        [
-            "classic",
-            {
-                pages: {
-                    path: "src/pages",
-                    include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
-                },
-            },
-        ],
-    ],
+ presets: [
+  [
+   "classic",
+   {
+    pages: {
+     path: "src/pages",
+     include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
+    },
+   },
+  ],
+ ],
 };
 ```
 
@@ -57,24 +57,24 @@ export default {
 
 ```ts
 export default {
-    presets: [
-        [
-            "classic",
-            {
-                pages: {
-                    path: "src/pages",
-                    include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
-                    exclude: [
-                        "**/*.d.ts",
-                        "**/*.d.tsx",
-                        "**/__tests__/**",
-                        "**/*.test.{js,jsx,ts,tsx}",
-                        "**/*.spec.{js,jsx,ts,tsx}",
-                    ],
-                },
-            },
-        ],
-    ],
+ presets: [
+  [
+   "classic",
+   {
+    pages: {
+     path: "src/pages",
+     include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
+     exclude: [
+      "**/*.d.ts",
+      "**/*.d.tsx",
+      "**/__tests__/**",
+      "**/*.test.{js,jsx,ts,tsx}",
+      "**/*.spec.{js,jsx,ts,tsx}",
+     ],
+    },
+   },
+  ],
+ ],
 };
 ```
 
@@ -93,7 +93,7 @@ It will:
 
 ```ts
 export default {
-    presets: [["classic", { pages: {} }]],
+ presets: [["classic", { pages: {} }]],
 };
 ```
 
@@ -101,17 +101,17 @@ export default {
 
 ```ts
 export default {
-    presets: [
-        [
-            "classic",
-            {
-                pages: {
-                    include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
-                    exclude: ["**/*.d.ts"],
-                },
-            },
-        ],
-    ],
+ presets: [
+  [
+   "classic",
+   {
+    pages: {
+     include: ["**/*.{js,jsx,ts,tsx,md,mdx}"],
+     exclude: ["**/*.d.ts"],
+    },
+   },
+  ],
+ ],
 };
 ```
 

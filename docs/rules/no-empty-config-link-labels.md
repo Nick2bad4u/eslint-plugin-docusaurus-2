@@ -18,11 +18,11 @@ Empty link labels usually come from copy/paste or unfinished configuration and m
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "", to: "/docs/intro" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "", to: "/docs/intro" }],
+  },
+ },
 };
 ```
 
@@ -30,11 +30,11 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Docs", to: "/docs/intro" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Docs", to: "/docs/intro" }],
+  },
+ },
 };
 ```
 

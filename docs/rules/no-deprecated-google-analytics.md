@@ -34,7 +34,7 @@ Keeping the old plugin shape around is bad public config hygiene because it:
 
 ```ts
 export default {
-    plugins: ["@docusaurus/plugin-google-analytics"],
+ plugins: ["@docusaurus/plugin-google-analytics"],
 };
 ```
 
@@ -42,7 +42,7 @@ export default {
 
 ```ts
 export default {
-    plugins: ["@docusaurus/plugin-google-gtag"],
+ plugins: ["@docusaurus/plugin-google-gtag"],
 };
 ```
 
@@ -63,17 +63,17 @@ You still need to review whether the configured IDs and analytics setup are corr
 
 ```ts
 export default {
-    presets: [
-        [
-            "@docusaurus/preset-classic",
-            {
-                googleAnalytics: {
-                    trackingID: "UA-141789564-1",
-                    anonymizeIP: true,
-                },
-            },
-        ],
-    ],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    googleAnalytics: {
+     trackingID: "UA-141789564-1",
+     anonymizeIP: true,
+    },
+   },
+  ],
+ ],
 };
 ```
 
@@ -81,17 +81,17 @@ export default {
 
 ```ts
 export default {
-    presets: [
-        [
-            "@docusaurus/preset-classic",
-            {
-                gtag: {
-                    trackingID: "G-999X9XX9XX",
-                    anonymizeIP: true,
-                },
-            },
-        ],
-    ],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    gtag: {
+     trackingID: "G-999X9XX9XX",
+     anonymizeIP: true,
+    },
+   },
+  ],
+ ],
 };
 ```
 

@@ -32,7 +32,7 @@ flowchart LR
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-mermaid"],
+ themes: ["@docusaurus/theme-mermaid"],
 };
 ```
 
@@ -40,7 +40,7 @@ export default {
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-mermaid"],
+ themes: ["@docusaurus/theme-mermaid"],
 };
 ```
 

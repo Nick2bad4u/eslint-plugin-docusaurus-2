@@ -18,11 +18,11 @@ This rule reports `headTags` object entries whose `tagName` is missing or static
 
 ```ts
 export default {
-    headTags: [
-        {
-            attributes: { rel: "preconnect", href: "https://github.com" },
-        },
-    ],
+ headTags: [
+  {
+   attributes: { rel: "preconnect", href: "https://github.com" },
+  },
+ ],
 };
 ```
 
@@ -30,12 +30,12 @@ export default {
 
 ```ts
 export default {
-    headTags: [
-        {
-            tagName: "link",
-            attributes: { rel: "preconnect", href: "https://github.com" },
-        },
-    ],
+ headTags: [
+  {
+   tagName: "link",
+   attributes: { rel: "preconnect", href: "https://github.com" },
+  },
+ ],
 };
 ```
 

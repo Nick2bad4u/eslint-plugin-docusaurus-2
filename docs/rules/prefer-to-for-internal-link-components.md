@@ -21,7 +21,7 @@ This rule reports `@docusaurus/Link` components that use `href` for internal sit
 
 The Docusaurus client API explicitly recommends `Link` for internal navigation.
 
-For internal site routes, `to` is the right prop because it keeps Docusaurus client-side routing, preloading, and base URL behavior aligned with the framework’s intended navigation model.
+For internal site routes, `to` is the right prop because it keeps Docusaurus client-side routing, preloading, and base URL behavior aligned with the framework's intended navigation model.
 
 ## ❌ Incorrect
 
@@ -29,7 +29,7 @@ For internal site routes, `to` is the right prop because it keeps Docusaurus cli
 import Link from "@docusaurus/Link";
 
 export default function HomePage() {
-    return <Link href="/docs/intro">Docs</Link>;
+ return <Link href="/docs/intro">Docs</Link>;
 }
 ```
 
@@ -39,7 +39,7 @@ export default function HomePage() {
 import Link from "@docusaurus/Link";
 
 export default function HomePage() {
-    return <Link to="/docs/intro">Docs</Link>;
+ return <Link to="/docs/intro">Docs</Link>;
 }
 ```
 
@@ -61,7 +61,7 @@ The rule only acts when:
 import DocsLink from "@docusaurus/Link";
 
 export default function Hero() {
-    return <DocsLink href="/docs/rules/overview">Rules</DocsLink>;
+ return <DocsLink href="/docs/rules/overview">Rules</DocsLink>;
 }
 ```
 
@@ -71,7 +71,11 @@ export default function Hero() {
 import Link from "@docusaurus/Link";
 
 export default function GitHubLink() {
-    return <Link href="https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2">GitHub</Link>;
+ return (
+  <Link href="https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2">
+   GitHub
+  </Link>
+ );
 }
 ```
 

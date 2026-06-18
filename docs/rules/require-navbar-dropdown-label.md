@@ -28,16 +28,16 @@ Keeping dropdown labels explicit makes navbar intent easier to review and keeps 
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "dropdown",
-                    items: [{ label: "Docs", to: "/docs/intro" }],
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "dropdown",
+     items: [{ label: "Docs", to: "/docs/intro" }],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -45,17 +45,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "dropdown",
-                    label: "Community",
-                    items: [{ label: "Docs", to: "/docs/intro" }],
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "dropdown",
+     label: "Community",
+     items: [{ label: "Docs", to: "/docs/intro" }],
     },
+   ],
+  },
+ },
 };
 ```
 

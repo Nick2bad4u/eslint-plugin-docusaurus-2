@@ -37,7 +37,7 @@ Importing global styles directly into page and component source files makes styl
 import "./Hero.css";
 
 export default function Hero() {
-    return null;
+ return null;
 }
 ```
 
@@ -69,7 +69,7 @@ Converting a global stylesheet import into a CSS-module workflow usually require
 import "@site/src/css/custom.css";
 
 export default function HomePage() {
-    return null;
+ return null;
 }
 ```
 
@@ -77,16 +77,16 @@ export default function HomePage() {
 
 ```ts
 const config = {
-    presets: [
-        [
-            "classic",
-            {
-                theme: {
-                    customCss: "./src/css/custom.css",
-                },
-            },
-        ],
-    ],
+ presets: [
+  [
+   "classic",
+   {
+    theme: {
+     customCss: "./src/css/custom.css",
+    },
+   },
+  ],
+ ],
 };
 
 export default config;

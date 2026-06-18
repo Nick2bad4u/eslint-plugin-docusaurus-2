@@ -22,14 +22,14 @@ Those keys only make sense for locales that actually exist in `i18n.locales`. Ke
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["en", "fr"],
-        localeConfigs: {
-            en: { url: "https://en.example.com" },
-            de: { url: "https://de.example.com" },
-        },
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["en", "fr"],
+  localeConfigs: {
+   en: { url: "https://en.example.com" },
+   de: { url: "https://de.example.com" },
+  },
+ },
 };
 ```
 
@@ -37,14 +37,14 @@ export default {
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["en", "fr"],
-        localeConfigs: {
-            en: { url: "https://en.example.com" },
-            fr: { url: "https://fr.example.com" },
-        },
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["en", "fr"],
+  localeConfigs: {
+   en: { url: "https://en.example.com" },
+   fr: { url: "https://fr.example.com" },
+  },
+ },
 };
 ```
 

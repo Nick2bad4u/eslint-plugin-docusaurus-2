@@ -30,11 +30,11 @@ Keeping the theme config without the module makes the site config look enabled w
 
 ```ts
 export default {
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "bottom",
-        },
+  themeConfig: {
+    liveCodeBlock: {
+      playgroundPosition: "bottom",
     },
+  },
 };
 ```
 
@@ -42,12 +42,12 @@ export default {
 
 ```ts
 export default {
-    plugins: ["@docusaurus/theme-live-codeblock"],
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "bottom",
-        },
+  plugins: ["@docusaurus/theme-live-codeblock"],
+  themeConfig: {
+    liveCodeBlock: {
+      playgroundPosition: "bottom",
     },
+  },
 };
 ```
 
@@ -65,12 +65,12 @@ This rule provides a suggestion when it can safely add the theme module to a lit
 
 ```ts
 export default {
-    plugins: ["@easyops-cn/docusaurus-search-local"],
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "top",
-        },
+  plugins: ["@easyops-cn/docusaurus-search-local"],
+  themeConfig: {
+    liveCodeBlock: {
+      playgroundPosition: "top",
     },
+  },
 };
 ```
 
@@ -78,15 +78,12 @@ export default {
 
 ```ts
 export default {
-    plugins: [
-        "@easyops-cn/docusaurus-search-local",
-        "@docusaurus/theme-live-codeblock",
-    ],
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "top",
-        },
+  plugins: ["@easyops-cn/docusaurus-search-local", "@docusaurus/theme-live-codeblock"],
+  themeConfig: {
+    liveCodeBlock: {
+      playgroundPosition: "top",
     },
+  },
 };
 ```
 

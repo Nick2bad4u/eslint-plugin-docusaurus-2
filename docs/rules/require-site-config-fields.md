@@ -36,8 +36,8 @@ This rule is intentionally opinionated and is best suited to stricter repository
 
 ```ts
 export default {
-    title: "Docs",
-    url: "https://example.com",
+ title: "Docs",
+ url: "https://example.com",
 };
 ```
 
@@ -45,15 +45,15 @@ export default {
 
 ```ts
 export default {
-    baseUrl: "/docs/",
-    deploymentBranch: "gh-pages",
-    favicon: "/img/favicon.ico",
-    organizationName: "Nick2bad4u",
-    projectName: "eslint-plugin-docusaurus-2",
-    baseUrlIssueBanner: true,
-    onBrokenAnchors: "warn",
-    onBrokenLinks: "throw",
-    onDuplicateRoutes: "warn",
+ baseUrl: "/docs/",
+ deploymentBranch: "gh-pages",
+ favicon: "/img/favicon.ico",
+ organizationName: "Nick2bad4u",
+ projectName: "eslint-plugin-docusaurus-2",
+ baseUrlIssueBanner: true,
+ onBrokenAnchors: "warn",
+ onBrokenLinks: "throw",
+ onDuplicateRoutes: "warn",
 };
 ```
 
@@ -69,11 +69,11 @@ The defaults are intentionally opinionated for stricter repositories, but you ca
 
 ```ts
 type Options = [
-    {
-        requiredBooleanFields?: string[];
-        requiredReportingSeverityFields?: string[];
-        requiredStringFields?: string[];
-    },
+ {
+  requiredBooleanFields?: string[];
+  requiredReportingSeverityFields?: string[];
+  requiredStringFields?: string[];
+ },
 ];
 ```
 
@@ -81,22 +81,22 @@ type Options = [
 
 ```ts
 [
-    {
-        requiredBooleanFields: ["baseUrlIssueBanner"],
-        requiredReportingSeverityFields: [
-            "onBrokenAnchors",
-            "onBrokenLinks",
-            "onDuplicateRoutes",
-        ],
-        requiredStringFields: [
-            "baseUrl",
-            "deploymentBranch",
-            "favicon",
-            "organizationName",
-            "projectName",
-        ],
-    },
-]
+ {
+  requiredBooleanFields: ["baseUrlIssueBanner"],
+  requiredReportingSeverityFields: [
+   "onBrokenAnchors",
+   "onBrokenLinks",
+   "onDuplicateRoutes",
+  ],
+  requiredStringFields: [
+   "baseUrl",
+   "deploymentBranch",
+   "favicon",
+   "organizationName",
+   "projectName",
+  ],
+ },
+];
 ```
 
 ## ESLint flat config example

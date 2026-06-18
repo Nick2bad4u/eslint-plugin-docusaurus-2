@@ -29,15 +29,15 @@ When a Docusaurus config link item has a destination but no content, the config 
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    to: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     to: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -45,16 +45,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    to: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     to: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -70,15 +70,15 @@ Choosing the right visible content for a link is a UX and content decision, not 
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    html: "<strong>Docs</strong>",
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     html: "<strong>Docs</strong>",
     },
+   ],
+  },
+ },
 };
 ```
 

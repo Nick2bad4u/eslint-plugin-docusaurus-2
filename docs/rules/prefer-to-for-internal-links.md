@@ -32,16 +32,16 @@ Using `href` for internal routes makes config less idiomatic and can weaken rout
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    href: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     href: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -49,16 +49,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    to: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     to: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -74,21 +74,21 @@ If a config object mixes other specialized Docusaurus link fields, review the re
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [
-                        {
-                            label: "Rules overview",
-                            href: "/docs/rules/overview",
-                        },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [
+      {
+       label: "Rules overview",
+       href: "/docs/rules/overview",
+      },
+     ],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -96,16 +96,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "GitHub",
-                    href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "GitHub",
+     href: "https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2",
     },
+   ],
+  },
+ },
 };
 ```
 

@@ -18,15 +18,15 @@ Docusaurus metadata entries should describe either a `name`-based tag or a `prop
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [
-            {
-                name: "keywords",
-                property: "og:keywords",
-                content: "docs",
-            },
-        ],
-    },
+ themeConfig: {
+  metadata: [
+   {
+    name: "keywords",
+    property: "og:keywords",
+    content: "docs",
+   },
+  ],
+ },
 };
 ```
 
@@ -34,9 +34,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [{ name: "keywords", content: "docs" }],
-    },
+ themeConfig: {
+  metadata: [{ name: "keywords", content: "docs" }],
+ },
 };
 ```
 

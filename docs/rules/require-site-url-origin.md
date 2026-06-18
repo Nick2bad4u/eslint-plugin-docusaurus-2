@@ -23,13 +23,13 @@ Docusaurus treats `url` as the canonical site origin for generated metadata and 
 
 ```ts
 export default {
-    url: "http://example.com/docs/",
+ url: "http://example.com/docs/",
 };
 ```
 
 ```ts
 export default {
-    baseUrl: "/docs/",
+ baseUrl: "/docs/",
 };
 ```
 
@@ -37,13 +37,13 @@ export default {
 
 ```ts
 export default {
-    url: "https://example.com",
+ url: "https://example.com",
 };
 ```
 
 ```ts
 export default {
-    url: "http://localhost:3000",
+ url: "http://localhost:3000",
 };
 ```
 

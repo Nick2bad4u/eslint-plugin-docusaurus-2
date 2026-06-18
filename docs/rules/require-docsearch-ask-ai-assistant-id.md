@@ -28,14 +28,14 @@ If Ask AI is configured without that id, the config is incomplete and misleading
 
 ```ts
 export default {
-    themeConfig: {
-        algolia: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-            askAi: "",
-        },
-    },
+ themeConfig: {
+  algolia: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+   askAi: "",
+  },
+ },
 };
 ```
 
@@ -43,14 +43,14 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        algolia: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-            askAi: "assistant-id",
-        },
-    },
+ themeConfig: {
+  algolia: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+   askAi: "assistant-id",
+  },
+ },
 };
 ```
 
@@ -64,17 +64,17 @@ This rule reports only. It does not autofix, because it cannot guess the correct
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-            askAi: {
-                assistantId: "assistant-id",
-                suggestedQuestions: true,
-            },
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+   askAi: {
+    assistantId: "assistant-id",
+    suggestedQuestions: true,
+   },
+  },
+ },
 };
 ```
 

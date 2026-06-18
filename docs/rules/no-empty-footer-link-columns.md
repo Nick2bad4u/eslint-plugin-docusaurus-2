@@ -18,11 +18,11 @@ Empty footer columns take up space, add visual noise, and often indicate unfinis
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [{ title: "Docs", items: [] }],
-        },
-    },
+ themeConfig: {
+  footer: {
+   links: [{ title: "Docs", items: [] }],
+  },
+ },
 };
 ```
 
@@ -30,16 +30,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [{ label: "Overview", to: "/docs" }],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [{ label: "Overview", to: "/docs" }],
     },
+   ],
+  },
+ },
 };
 ```
 

@@ -28,10 +28,10 @@ Keeping a site-level default image in the config makes Open Graph and Twitter me
 
 ```ts
 export default {
-    title: "Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    themeConfig: {},
+ title: "Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ themeConfig: {},
 };
 ```
 
@@ -41,12 +41,12 @@ export default {
 const socialCardImagePath = "img/social-card.png";
 
 export default {
-    title: "Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    themeConfig: {
-        image: socialCardImagePath,
-    },
+ title: "Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ themeConfig: {
+  image: socialCardImagePath,
+ },
 };
 ```
 
@@ -62,9 +62,9 @@ Choosing the right social-card image is a content decision, not a safe text rewr
 
 ```ts
 export default {
-    themeConfig: {
-        image: process.env["DOCUSAURUS_SOCIAL_IMAGE"],
-    },
+ themeConfig: {
+  image: process.env["DOCUSAURUS_SOCIAL_IMAGE"],
+ },
 };
 ```
 

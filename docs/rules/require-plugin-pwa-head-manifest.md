@@ -26,20 +26,20 @@ When plugin-pwa is enabled but the manifest link is missing, the configuration n
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                pwaHead: [
-                    {
-                        tagName: "meta",
-                        name: "theme-color",
-                        content: "#25c2a0",
-                    },
-                ],
-            },
-        ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    pwaHead: [
+     {
+      tagName: "meta",
+      name: "theme-color",
+      content: "#25c2a0",
+     },
     ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -47,20 +47,20 @@ export default {
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                pwaHead: [
-                    {
-                        tagName: "link",
-                        rel: "manifest",
-                        href: "/manifest.json",
-                    },
-                ],
-            },
-        ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    pwaHead: [
+     {
+      tagName: "link",
+      rel: "manifest",
+      href: "/manifest.json",
+     },
     ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -68,7 +68,7 @@ export default {
 
 This rule reports only. It does not autofix.
 
-The right manifest URL depends on the site’s base path and PWA setup, so a fixer should not guess it.
+The right manifest URL depends on the site's base path and PWA setup, so a fixer should not guess it.
 
 ## When not to use it
 

@@ -18,13 +18,13 @@ Docusaurus `headTags` entries are easier to review and more portable when attrib
 
 ```ts
 export default {
-    headTags: [
-        {
-            tagName: "link",
-            rel: "preconnect",
-            href: "https://github.com",
-        },
-    ],
+ headTags: [
+  {
+   tagName: "link",
+   rel: "preconnect",
+   href: "https://github.com",
+  },
+ ],
 };
 ```
 
@@ -32,15 +32,15 @@ export default {
 
 ```ts
 export default {
-    headTags: [
-        {
-            tagName: "link",
-            attributes: {
-                rel: "preconnect",
-                href: "https://github.com",
-            },
-        },
-    ],
+ headTags: [
+  {
+   tagName: "link",
+   attributes: {
+    rel: "preconnect",
+    href: "https://github.com",
+   },
+  },
+ ],
 };
 ```
 

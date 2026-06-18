@@ -18,14 +18,14 @@ Duplicate footer column titles make footer navigation harder to scan and can hid
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                { title: "Docs", items: [] },
-                { title: "Docs", items: [] },
-            ],
-        },
-    },
+ themeConfig: {
+  footer: {
+   links: [
+    { title: "Docs", items: [] },
+    { title: "Docs", items: [] },
+   ],
+  },
+ },
 };
 ```
 
@@ -33,14 +33,14 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                { title: "Docs", items: [] },
-                { title: "Project", items: [] },
-            ],
-        },
-    },
+ themeConfig: {
+  footer: {
+   links: [
+    { title: "Docs", items: [] },
+    { title: "Project", items: [] },
+   ],
+  },
+ },
 };
 ```
 

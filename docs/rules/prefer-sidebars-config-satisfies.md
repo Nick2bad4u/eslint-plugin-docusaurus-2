@@ -36,7 +36,7 @@ Using `satisfies SidebarsConfig` instead of a direct annotation is useful becaus
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 const sidebars: SidebarsConfig = {
-    docs: ["introduction"],
+ docs: ["introduction"],
 };
 
 export default sidebars;
@@ -48,7 +48,7 @@ export default sidebars;
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 const sidebars = {
-    docs: ["introduction"],
+ docs: ["introduction"],
 } satisfies SidebarsConfig;
 
 export default sidebars;
@@ -68,7 +68,7 @@ The autofix rewrites those cases to `satisfies SidebarsConfig` while preserving 
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 export default {
-    docs: ["introduction"],
+ docs: ["introduction"],
 } as SidebarsConfig;
 ```
 
@@ -78,7 +78,7 @@ export default {
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
 export default {
-    docs: ["introduction"],
+ docs: ["introduction"],
 } satisfies SidebarsConfig;
 ```
 

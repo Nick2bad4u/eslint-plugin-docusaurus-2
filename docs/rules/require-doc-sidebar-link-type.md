@@ -39,16 +39,16 @@ When an `id`-based category link omits `type` or uses the wrong one:
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                id: "introduction",
-            },
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    id: "introduction",
+   },
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -56,17 +56,17 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                type: "doc",
-                id: "introduction",
-            },
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    type: "doc",
+    id: "introduction",
+   },
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -85,16 +85,16 @@ The rule intentionally ignores category-link objects that already look like `gen
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            label: "Guides",
-            items: ["introduction"],
-            link: {
-                type: "generated-index",
-                id: "introduction",
-            },
-        },
-    ],
+ docs: [
+  {
+   label: "Guides",
+   items: ["introduction"],
+   link: {
+    type: "generated-index",
+    id: "introduction",
+   },
+  },
+ ],
 };
 ```
 
@@ -102,16 +102,16 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            label: "API",
-            items: ["api/index"],
-            link: {
-                type: "generated-index",
-                title: "API",
-            },
-        },
-    ],
+ docs: [
+  {
+   label: "API",
+   items: ["api/index"],
+   link: {
+    type: "generated-index",
+    title: "API",
+   },
+  },
+ ],
 };
 ```
 

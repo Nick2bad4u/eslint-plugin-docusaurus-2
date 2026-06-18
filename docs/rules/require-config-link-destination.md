@@ -33,15 +33,15 @@ This rule keeps default theme-config link items aligned with the documented Docu
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -49,16 +49,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    label: "Docs",
-                    to: "/docs/intro",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     label: "Docs",
+     to: "/docs/intro",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -74,15 +74,15 @@ Link destinations are semantic choices, so automatically inventing `to` or `href
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    html: "<strong>Docs</strong>",
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     html: "<strong>Docs</strong>",
     },
+   ],
+  },
+ },
 };
 ```
 

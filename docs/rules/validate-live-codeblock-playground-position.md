@@ -27,11 +27,11 @@ Using another string leaves the config in an invalid or misleading state and mak
 
 ```ts
 export default {
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "side",
-        },
-    },
+ themeConfig: {
+  liveCodeBlock: {
+   playgroundPosition: "side",
+  },
+ },
 };
 ```
 
@@ -39,11 +39,11 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "bottom",
-        },
-    },
+ themeConfig: {
+  liveCodeBlock: {
+   playgroundPosition: "bottom",
+  },
+ },
 };
 ```
 
@@ -59,11 +59,11 @@ It does not guess which one you actually intended.
 
 ```ts
 export default {
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "",
-        },
-    },
+ themeConfig: {
+  liveCodeBlock: {
+   playgroundPosition: "",
+  },
+ },
 };
 ```
 
@@ -71,11 +71,11 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        liveCodeBlock: {
-            playgroundPosition: "top",
-        },
-    },
+ themeConfig: {
+  liveCodeBlock: {
+   playgroundPosition: "top",
+  },
+ },
 };
 ```
 

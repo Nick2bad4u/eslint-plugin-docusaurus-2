@@ -22,6 +22,8 @@
 
 /* You can override the default Infima variables here. */
 
+/* stylelint-disable css-performance-budget/no-giant-selector-lists -- Docusaurus generated sidebar category theming groups related selectors. */
+
 :root {
     --ifm-color-primary: #25c2a0;
     --ifm-color-primary-dark: #21af90;

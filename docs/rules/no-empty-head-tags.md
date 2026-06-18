@@ -22,13 +22,13 @@ Empty head-tag entries add noise to configuration and can hide copy/paste mistak
 
 ```ts
 export default {
-    headTags: [{ tagName: "meta" }],
+ headTags: [{ tagName: "meta" }],
 };
 ```
 
 ```ts
 export default {
-    headTags: [{ tagName: "meta", attributes: {} }],
+ headTags: [{ tagName: "meta", attributes: {} }],
 };
 ```
 
@@ -36,12 +36,12 @@ export default {
 
 ```ts
 export default {
-    headTags: [
-        {
-            tagName: "link",
-            attributes: { rel: "preconnect", href: "https://github.com" },
-        },
-    ],
+ headTags: [
+  {
+   tagName: "link",
+   attributes: { rel: "preconnect", href: "https://github.com" },
+  },
+ ],
 };
 ```
 

@@ -21,14 +21,14 @@ Duplicate navbar labels make navigation ambiguous and reduce discoverability. Ke
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                { label: "Docs", to: "/docs" },
-                { label: "Docs", to: "/rules" },
-            ],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [
+    { label: "Docs", to: "/docs" },
+    { label: "Docs", to: "/rules" },
+   ],
+  },
+ },
 };
 ```
 
@@ -36,14 +36,14 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                { label: "Docs", to: "/docs" },
-                { label: "Rules", to: "/rules" },
-            ],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [
+    { label: "Docs", to: "/docs" },
+    { label: "Rules", to: "/rules" },
+   ],
+  },
+ },
 };
 ```
 

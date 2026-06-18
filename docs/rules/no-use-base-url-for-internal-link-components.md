@@ -35,7 +35,7 @@ import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 export default function HomePage() {
-    return <Link to={useBaseUrl("/docs/intro")}>Docs</Link>;
+ return <Link to={useBaseUrl("/docs/intro")}>Docs</Link>;
 }
 ```
 
@@ -46,7 +46,7 @@ import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 export default function HomePage() {
-    return <Link to="/docs/intro">Docs</Link>;
+ return <Link to="/docs/intro">Docs</Link>;
 }
 ```
 
@@ -67,7 +67,7 @@ import DocsLink from "@docusaurus/Link";
 import baseUrlFor from "@docusaurus/useBaseUrl";
 
 export default function Hero() {
-    return <DocsLink href={baseUrlFor("/docs/rules/overview")}>Rules</DocsLink>;
+ return <DocsLink href={baseUrlFor("/docs/rules/overview")}>Rules</DocsLink>;
 }
 ```
 
@@ -78,7 +78,7 @@ import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 export default function Hero() {
-    return <Link href={useBaseUrl("https://example.com/logo.png")}>External</Link>;
+ return <Link href={useBaseUrl("https://example.com/logo.png")}>External</Link>;
 }
 ```
 

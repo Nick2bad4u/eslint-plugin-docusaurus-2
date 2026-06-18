@@ -29,7 +29,7 @@ Repeated `doc` assignments are risky because:
 
 ```ts
 const sidebars = {
-    docs: ["introduction", "introduction"],
+ docs: ["introduction", "introduction"],
 };
 ```
 
@@ -37,10 +37,7 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        "introduction",
-        { type: "ref", id: "introduction" },
-    ],
+ docs: ["introduction", { type: "ref", id: "introduction" }],
 };
 ```
 
@@ -56,10 +53,10 @@ The suggestion converts the repeated occurrence to `ref`, which matches Docusaur
 
 ```ts
 const sidebars = {
-    docs: [
-        { type: "doc", id: "introduction" },
-        { type: "doc", id: "introduction" },
-    ],
+ docs: [
+  { type: "doc", id: "introduction" },
+  { type: "doc", id: "introduction" },
+ ],
 };
 ```
 
@@ -67,10 +64,10 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        { type: "doc", id: "introduction" },
-        { type: "ref", id: "introduction" },
-    ],
+ docs: [
+  { type: "doc", id: "introduction" },
+  { type: "ref", id: "introduction" },
+ ],
 };
 ```
 

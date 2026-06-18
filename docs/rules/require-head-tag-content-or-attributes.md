@@ -18,13 +18,13 @@ A head-tag entry without attributes or inline content cannot contribute meaningf
 
 ```ts
 export default {
-    headTags: [{ tagName: "meta" }],
+ headTags: [{ tagName: "meta" }],
 };
 ```
 
 ```ts
 export default {
-    headTags: [{ tagName: "script", innerHTML: "" }],
+ headTags: [{ tagName: "script", innerHTML: "" }],
 };
 ```
 
@@ -32,12 +32,12 @@ export default {
 
 ```ts
 export default {
-    headTags: [
-        {
-            tagName: "meta",
-            attributes: { name: "theme-color", content: "#25c2a0" },
-        },
-    ],
+ headTags: [
+  {
+   tagName: "meta",
+   attributes: { name: "theme-color", content: "#25c2a0" },
+  },
+ ],
 };
 ```
 

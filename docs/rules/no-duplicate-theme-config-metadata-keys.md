@@ -18,12 +18,12 @@ Duplicate metadata keys make site metadata harder to audit and can produce redun
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [
-            { name: "keywords", content: "docs" },
-            { name: "keywords", content: "rules" },
-        ],
-    },
+ themeConfig: {
+  metadata: [
+   { name: "keywords", content: "docs" },
+   { name: "keywords", content: "rules" },
+  ],
+ },
 };
 ```
 
@@ -31,11 +31,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [
-            { name: "keywords", content: "docs, rules" },
-        ],
-    },
+ themeConfig: {
+  metadata: [{ name: "keywords", content: "docs, rules" }],
+ },
 };
 ```
 

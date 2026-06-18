@@ -18,10 +18,10 @@ Duplicate locale entries add noise and can hide real i18n configuration mistakes
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["en", "fr", "en"],
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["en", "fr", "en"],
+ },
 };
 ```
 
@@ -29,10 +29,10 @@ export default {
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["en", "fr"],
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["en", "fr"],
+ },
 };
 ```
 

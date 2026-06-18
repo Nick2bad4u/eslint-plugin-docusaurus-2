@@ -28,13 +28,13 @@ Docusaurus routing and static-asset resolution rely on a consistent `baseUrl` co
 
 ```ts
 export default {
-    baseUrl: "docs",
+ baseUrl: "docs",
 };
 ```
 
 ```ts
 export default {
-    baseUrl: "/docs",
+ baseUrl: "/docs",
 };
 ```
 
@@ -42,13 +42,13 @@ export default {
 
 ```ts
 export default {
-    baseUrl: "/docs/",
+ baseUrl: "/docs/",
 };
 ```
 
 ```ts
 export default {
-    baseUrl: "/",
+ baseUrl: "/",
 };
 ```
 

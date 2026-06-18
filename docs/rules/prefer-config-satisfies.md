@@ -36,9 +36,9 @@ Using `satisfies` instead of a direct annotation is useful because it:
 import type { Config } from "@docusaurus/types";
 
 const config: Config = {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
 };
 
 export default config;
@@ -50,9 +50,9 @@ export default config;
 import type { Config } from "@docusaurus/types";
 
 const config = {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
 } satisfies Config;
 
 export default config;
@@ -72,9 +72,9 @@ The autofix rewrites those cases to `satisfies Config` while preserving the exis
 import type { Config } from "@docusaurus/types";
 
 export default {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
 } as Config;
 ```
 
@@ -84,9 +84,9 @@ export default {
 import type { Config } from "@docusaurus/types";
 
 export default {
-    title: "My Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
+ title: "My Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
 } satisfies Config;
 ```
 

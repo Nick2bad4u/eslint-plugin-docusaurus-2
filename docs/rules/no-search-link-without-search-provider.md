@@ -30,11 +30,11 @@ If the config has no known search provider, that link is usually misleading or b
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Search", to: "/search" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Search", to: "/search" }],
+  },
+ },
 };
 ```
 
@@ -42,12 +42,12 @@ export default {
 
 ```ts
 export default {
-    themes: ["@easyops-cn/docusaurus-search-local"],
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Search", to: "/search" }],
-        },
-    },
+ themes: ["@easyops-cn/docusaurus-search-local"],
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Search", to: "/search" }],
+  },
+ },
 };
 ```
 
@@ -63,16 +63,16 @@ It does not automatically remove the link because some projects may intentionall
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Resources",
-                    items: [{ label: "Search", href: "/search" }],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Resources",
+     items: [{ label: "Search", href: "/search" }],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -80,16 +80,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-        navbar: {
-            items: [{ label: "Search", to: "/search" }],
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+  navbar: {
+   items: [{ label: "Search", to: "/search" }],
+  },
+ },
 };
 ```
 

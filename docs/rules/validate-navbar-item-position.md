@@ -21,21 +21,21 @@ Navbar item placement drives navigation layout. Canonical position values reduce
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Docs", to: "/docs", position: "Left" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Docs", to: "/docs", position: "Left" }],
+  },
+ },
 };
 ```
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Docs", to: "/docs", position: "center" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Docs", to: "/docs", position: "center" }],
+  },
+ },
 };
 ```
 
@@ -43,11 +43,11 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Docs", to: "/docs", position: "left" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Docs", to: "/docs", position: "left" }],
+  },
+ },
 };
 ```
 

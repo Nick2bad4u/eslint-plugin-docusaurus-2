@@ -32,13 +32,13 @@ Using the canonical key is better because it:
 
 ```ts
 export default {
-    themeConfig: {
-        algolia: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  algolia: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -46,13 +46,13 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -68,18 +68,18 @@ If both keys are already defined, the rule still reports the conflict but does *
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-        algolia: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+  algolia: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -87,13 +87,13 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 

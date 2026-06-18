@@ -21,13 +21,13 @@ This rule reports when `trailingSlash` is:
 
 ```ts
 export default {
-    baseUrl: "/docs/",
+ baseUrl: "/docs/",
 };
 ```
 
 ```ts
 export default {
-    trailingSlash: "false",
+ trailingSlash: "false",
 };
 ```
 
@@ -35,13 +35,13 @@ export default {
 
 ```ts
 export default {
-    trailingSlash: false,
+ trailingSlash: false,
 };
 ```
 
 ```ts
 export default {
-    trailingSlash: process.env["DOCUSAURUS_TRAILING_SLASH"] === "true",
+ trailingSlash: process.env["DOCUSAURUS_TRAILING_SLASH"] === "true",
 };
 ```
 

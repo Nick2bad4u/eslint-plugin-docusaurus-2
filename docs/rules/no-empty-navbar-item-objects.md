@@ -18,11 +18,11 @@ Empty navbar item objects add noise and usually come from unfinished or copied c
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{}, { label: "Docs", to: "/docs" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{}, { label: "Docs", to: "/docs" }],
+  },
+ },
 };
 ```
 
@@ -30,11 +30,11 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [{ label: "Docs", to: "/docs" }],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [{ label: "Docs", to: "/docs" }],
+  },
+ },
 };
 ```
 

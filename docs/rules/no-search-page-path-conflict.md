@@ -27,20 +27,22 @@ If it collides with another docs/blog/pages route root, the site config becomes 
 
 ```ts
 export default {
-    presets: [[
-        "classic",
-        {
-            docs: { routeBasePath: "docs" },
-        },
-    ]],
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-            searchPagePath: "docs",
-        },
-    },
+ presets: [
+  [
+   "classic",
+   {
+    docs: { routeBasePath: "docs" },
+   },
+  ],
+ ],
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+   searchPagePath: "docs",
+  },
+ },
 };
 ```
 
@@ -48,20 +50,22 @@ export default {
 
 ```ts
 export default {
-    presets: [[
-        "classic",
-        {
-            docs: { routeBasePath: "docs" },
-        },
-    ]],
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-            searchPagePath: "search",
-        },
-    },
+ presets: [
+  [
+   "classic",
+   {
+    docs: { routeBasePath: "docs" },
+   },
+  ],
+ ],
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+   searchPagePath: "search",
+  },
+ },
 };
 ```
 
@@ -77,14 +81,14 @@ It does not guess a replacement path for you.
 
 ```ts
 export default {
-    plugins: [["@docusaurus/plugin-content-docs", { routeBasePath: "search" }]],
-    themeConfig: {
-        algolia: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ plugins: [["@docusaurus/plugin-content-docs", { routeBasePath: "search" }]],
+ themeConfig: {
+  algolia: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -92,14 +96,14 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-            searchPagePath: false,
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+   searchPagePath: false,
+  },
+ },
 };
 ```
 

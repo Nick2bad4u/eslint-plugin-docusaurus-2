@@ -28,12 +28,12 @@ Keeping the deprecated experimental field around makes the config look newer tha
 
 ```ts
 export default {
-    future: {
-        experimental_storage: {
-            type: "localStorage",
-            namespace: true,
-        },
-    },
+ future: {
+  experimental_storage: {
+   type: "localStorage",
+   namespace: true,
+  },
+ },
 };
 ```
 
@@ -41,10 +41,10 @@ export default {
 
 ```ts
 export default {
-    storage: {
-        type: "localStorage",
-        namespace: true,
-    },
+ storage: {
+  type: "localStorage",
+  namespace: true,
+ },
 };
 ```
 

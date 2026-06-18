@@ -34,10 +34,10 @@ Using `markdown.hooks.onBrokenMarkdownLinks` keeps the config aligned with curre
 
 ```ts
 const config = {
-    title: "Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    onBrokenMarkdownLinks: "warn",
+ title: "Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ onBrokenMarkdownLinks: "warn",
 };
 
 export default config;
@@ -47,14 +47,14 @@ export default config;
 
 ```ts
 const config = {
-    title: "Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    markdown: {
-        hooks: {
-            onBrokenMarkdownLinks: "warn",
-        },
-    },
+ title: "Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ markdown: {
+  hooks: {
+   onBrokenMarkdownLinks: "warn",
+  },
+ },
 };
 
 export default config;
@@ -74,15 +74,15 @@ If the config already has a `markdown` object, the rule still reports the deprec
 
 ```ts
 export default {
-    title: "Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    onBrokenMarkdownLinks: "warn",
-    markdown: {
-        hooks: {
-            onBrokenMarkdownImages: "throw",
-        },
-    },
+ title: "Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ onBrokenMarkdownLinks: "warn",
+ markdown: {
+  hooks: {
+   onBrokenMarkdownImages: "throw",
+  },
+ },
 };
 ```
 
@@ -90,15 +90,15 @@ export default {
 
 ```ts
 export default {
-    title: "Docs",
-    url: "https://example.com",
-    baseUrl: "/docs/",
-    markdown: {
-        hooks: {
-            onBrokenMarkdownLinks: "warn",
-            onBrokenMarkdownImages: "throw",
-        },
-    },
+ title: "Docs",
+ url: "https://example.com",
+ baseUrl: "/docs/",
+ markdown: {
+  hooks: {
+   onBrokenMarkdownLinks: "warn",
+   onBrokenMarkdownImages: "throw",
+  },
+ },
 };
 ```
 

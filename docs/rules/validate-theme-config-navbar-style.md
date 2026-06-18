@@ -18,17 +18,17 @@ Navbar style values affect the public appearance of the site header and should s
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: { style: "Dark" },
-    },
+ themeConfig: {
+  navbar: { style: "Dark" },
+ },
 };
 ```
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: { style: "secondary" },
-    },
+ themeConfig: {
+  navbar: { style: "secondary" },
+ },
 };
 ```
 
@@ -36,17 +36,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: { style: "dark" },
-    },
+ themeConfig: {
+  navbar: { style: "dark" },
+ },
 };
 ```
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: { style: "primary" },
-    },
+ themeConfig: {
+  navbar: { style: "primary" },
+ },
 };
 ```
 

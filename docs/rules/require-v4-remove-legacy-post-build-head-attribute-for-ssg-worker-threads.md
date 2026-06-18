@@ -30,11 +30,11 @@ Leaving that v4 flag disabled makes the faster config internally inconsistent an
 
 ```ts
 export default {
-    future: {
-        faster: {
-            ssgWorkerThreads: true,
-        },
-    },
+ future: {
+  faster: {
+   ssgWorkerThreads: true,
+  },
+ },
 };
 ```
 
@@ -42,14 +42,14 @@ export default {
 
 ```ts
 export default {
-    future: {
-        v4: {
-            removeLegacyPostBuildHeadAttribute: true,
-        },
-        faster: {
-            ssgWorkerThreads: true,
-        },
-    },
+ future: {
+  v4: {
+   removeLegacyPostBuildHeadAttribute: true,
+  },
+  faster: {
+   ssgWorkerThreads: true,
+  },
+ },
 };
 ```
 

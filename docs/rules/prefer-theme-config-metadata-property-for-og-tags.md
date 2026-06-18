@@ -18,9 +18,9 @@ Open Graph metadata is conventionally emitted through `property`. Using the cano
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [{ name: "og:image", content: "https://example.com/card.png" }],
-    },
+ themeConfig: {
+  metadata: [{ name: "og:image", content: "https://example.com/card.png" }],
+ },
 };
 ```
 
@@ -28,9 +28,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [{ property: "og:image", content: "https://example.com/card.png" }],
-    },
+ themeConfig: {
+  metadata: [{ property: "og:image", content: "https://example.com/card.png" }],
+ },
 };
 ```
 

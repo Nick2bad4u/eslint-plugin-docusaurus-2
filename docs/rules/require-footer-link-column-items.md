@@ -33,19 +33,19 @@ When a column has a title but no `items` array, the config becomes misleading an
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                },
-                {
-                    title: "Community",
-                    items: "docs",
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
     },
+    {
+     title: "Community",
+     items: "docs",
+    },
+   ],
+  },
+ },
 };
 ```
 
@@ -53,16 +53,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [{ label: "Docs", to: "/docs/intro" }],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [{ label: "Docs", to: "/docs/intro" }],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -80,16 +80,16 @@ Maintainers still need to decide which footer links belong in the column.
 const footerItems = [{ label: "Docs", to: "/docs/intro" }];
 
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: footerItems,
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: footerItems,
     },
+   ],
+  },
+ },
 };
 ```
 

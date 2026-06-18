@@ -18,9 +18,9 @@ Boolean flags are clearer and less error-prone than stringly-typed values in pla
 
 ```ts
 export default {
-    themeConfig: {
-        announcementBar: { isCloseable: "true" },
-    },
+ themeConfig: {
+  announcementBar: { isCloseable: "true" },
+ },
 };
 ```
 
@@ -28,9 +28,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        announcementBar: { isCloseable: true },
-    },
+ themeConfig: {
+  announcementBar: { isCloseable: true },
+ },
 };
 ```
 

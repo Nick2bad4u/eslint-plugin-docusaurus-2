@@ -18,19 +18,19 @@ Duplicate footer labels make navigation sections harder to scan and reduce the v
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [
-                        { label: "Overview", to: "/docs" },
-                        { label: "Overview", to: "/rules" },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [
+      { label: "Overview", to: "/docs" },
+      { label: "Overview", to: "/rules" },
+     ],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -38,19 +38,19 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [
-                        { label: "Overview", to: "/docs" },
-                        { label: "Rules", to: "/rules" },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [
+      { label: "Overview", to: "/docs" },
+      { label: "Rules", to: "/rules" },
+     ],
     },
+   ],
+  },
+ },
 };
 ```
 

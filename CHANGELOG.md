@@ -1,14 +1,13 @@
 <!-- markdownlint-disable -->
 <!-- eslint-disable markdown/no-missing-label-refs -->
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
-
 [2fb9a36...755c771](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/compare/2fb9a36694fc74342f4b92ca27b69844868c3a39...755c77153b38f2085dec2e30b6a1d50647acf962)
-
 
 ### ✨ Features
 
@@ -21,20 +20,18 @@ All notable changes to this project will be documented in this file.
 - Enhanced search configuration handling with new utility functions to determine effective search properties.
 
 - Updated existing rules to utilize new search configuration utilities for improved accuracy.
-🧪 [test] Add tests for new ESLint rules
+  🧪 [test] Add tests for new ESLint rules
 
 - Created tests for `require-docsearch-theme-when-configured` to validate correct behavior when search configurations are present without required packages.
 
 - Added tests for `no-search-page-link-when-search-page-disabled` to ensure links to the search page are not allowed when search support is disabled.
-📝 [docs] Update documentation for new ESLint rules
+  📝 [docs] Update documentation for new ESLint rules
 
 - Documented the purpose and usage of the new ESLint rules in the relevant markdown files.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`d13acb0`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/d13acb06c3d2fdb4ff0ef528b623519f194ca28f) — ✨ [feat] (rules) Introduce additional config options and new rule for Mermaid ELK package
-
 
 - 🆕 Add support for additional opt-in config keys: `content` and `strict-mdx-upgrade`.
 
@@ -48,7 +45,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`92ef780`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/92ef780d2c464838ace12a7d222d098eed9d8423) — ✨ [feat] (rules) Introduce strict MDX upgrade rules for Docusaurus 3.10 migration
 
 - Add `no-deprecated-admonition-title-syntax` rule to enforce new admonition title format.
@@ -56,41 +52,39 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Implement `no-deprecated-heading-id-syntax` rule to replace deprecated heading ID syntax with comments.
 
 - Create `no-deprecated-html-comments-in-mdx` rule to disallow HTML comments in favor of JSX comments.
-✨ [feat] (parser) Add text content parser for Markdown/MDX
+  ✨ [feat] (parser) Add text content parser for Markdown/MDX
 
 - Implement `textContentParser` to parse raw text content for linting.
 
 - Create utility functions for text content analysis and range collection.
-🧪 [test] Add tests for new MDX upgrade rules
+  🧪 [test] Add tests for new MDX upgrade rules
 
 - Implement rule tests for `no-deprecated-admonition-title-syntax`, `no-deprecated-heading-id-syntax`, and `no-deprecated-html-comments-in-mdx`.
 
 - Create a dedicated RuleTester for raw Markdown/MDX text rules.
-📝 [docs] Update plugin configuration to include strict MDX upgrade
+  📝 [docs] Update plugin configuration to include strict MDX upgrade
 
 - Add `strict-mdx-upgrade` config to enforce new rules on `.mdx` files.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`ee6192b`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/ee6192b18058fe81cb07b755ed5c952b0e46d333) — ✨ [feat] Add new ESLint rules for Docusaurus configuration validation
 
 - Introduced `no-unknown-i18n-locale-configs` to disallow unknown locale configs in `i18n.localeConfigs`.
 
 - Implemented `require-docsearch-ask-ai-assistant-id` to ensure a non-empty Ask AI assistant ID is provided in the configuration.
-📝 [docs] Update documentation for new ESLint rules
+  📝 [docs] Update documentation for new ESLint rules
 
 - Added documentation for `no-unknown-i18n-locale-configs` and `require-docsearch-ask-ai-assistant-id`.
 
 - Updated getting started and overview documents to include new rules.
-🧪 [test] Add tests for new ESLint rules
+  🧪 [test] Add tests for new ESLint rules
 
 - Created test cases for `no-unknown-i18n-locale-configs` to validate locale configurations.
 
 - Developed test cases for `require-docsearch-ask-ai-assistant-id` to ensure proper validation of Ask AI configurations.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`10cba5d`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/10cba5ddb7ccdec8a00869ce5cd670ba72f47180) — ✨ [feat] Add new ESLint rules for Docusaurus configuration validation
 
@@ -103,7 +97,7 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Created `require-sidebar-item-key-for-duplicate-labels` to enforce unique keys for sidebar items with duplicate labels.
 
 - Added `require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads` to require a specific flag when using SSG worker threads.
-🧪 [test] Add tests for new ESLint rules
+  🧪 [test] Add tests for new ESLint rules
 
 - Created tests for `no-deprecated-future-experimental-storage` to validate rule functionality.
 
@@ -114,12 +108,11 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Added tests for `require-sidebar-item-key-for-duplicate-labels` to ensure key enforcement for duplicate labels.
 
 - Created tests for `require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads` to validate flag requirements.
-🧹 [chore] Update documentation and test file paths
+  🧹 [chore] Update documentation and test file paths
 
 - Adjusted test file paths for consistency and clarity.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`3a370be`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/3a370be5faad7005bbb13b74efbbc0a73e430635) — ✨ [feat] Add search-related rules for Docusaurus configuration
 
@@ -128,17 +121,16 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Added `no-search-link-without-search-provider` rule to prevent linking to the search page when no search provider is configured.
 
 - Implemented `no-search-page-path-conflict` rule to disallow conflicts between configured search page paths and existing route base paths.
-📝 [docs] Update documentation for new search rules
+  📝 [docs] Update documentation for new search rules
 
 - Updated overview and presets documentation to include new search-related rules.
 
 - Enhanced rule matrix to reflect the addition of new rules.
-🧪 [test] Add tests for new search rules
+  🧪 [test] Add tests for new search rules
 
 - Created test cases for `local-search-will-not-work-in-dev`, `no-search-link-without-search-provider`, and `no-search-page-path-conflict` rules to ensure proper functionality.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`80856eb`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/80856eb41da4dc485eabe7bfff322af63577ad2e) — ✨ [feat] Update preset documentation links and icons
 
@@ -150,20 +142,18 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`232f1d9`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/232f1d94789d9113e93677f2d6d7e9af3d9740ce) — ✨ [feat] Implement ESLint rules for Docusaurus configuration
 
 - Introduced `require-head-tag-attributes-when-no-inner-html` rule to enforce meaningful attributes for head tags without innerHTML.
 
 - Added `require-head-tag-content-or-attributes` rule to ensure head tags provide either attributes or non-empty innerHTML.
-🧪 [test] Add tests for new ESLint rules
+  🧪 [test] Add tests for new ESLint rules
 
 - Created tests for `require-head-tag-attributes-when-no-inner-html` to validate correct behavior.
 
 - Developed tests for `require-head-tag-content-or-attributes` to ensure compliance with the new rule.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`18e1dcc`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/18e1dcc58896dae81d88f2a69548ab3d6bfb05cd) — ✨ [feat] Add navbar validation rules
 
@@ -172,19 +162,18 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Implement `validate-navbar-item-position` rule to enforce canonical position values ("left" or "right") for navbar items.
 
 - Add autofix capabilities for both rules to normalize values and suggest corrections.
-📝 [docs] Update documentation for new rules
+  📝 [docs] Update documentation for new rules
 
 - Document `no-duplicate-navbar-item-labels` and `validate-navbar-item-position` in relevant markdown files.
 
 - Update rule overview and presets to include new rules.
-🧪 [test] Add tests for new navbar validation rules
+  🧪 [test] Add tests for new navbar validation rules
 
 - Create comprehensive test cases for `no-duplicate-navbar-item-labels` to cover various scenarios.
 
 - Implement tests for `validate-navbar-item-position` to ensure correct behavior for valid and invalid position values.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`81d19a4`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/81d19a4d0ab30ace2eda27f779099a8ad35ffdcc) — ✨ [feat] (rules) Add ESLint rule to require `theme-color` meta tag in PWA head
 
@@ -216,7 +205,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`a6c9093`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/a6c9093f30e9d8cf139ed7abccc588fa69b43f29) — ✨ [feat] Add new rules for PWA setup and site config fields
 
 - Introduced `require-plugin-pwa-setup` rule to enforce explicit configuration of `@docusaurus/plugin-pwa` in the Docusaurus config.
@@ -231,7 +219,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`f57b36c`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/f57b36cd393ca9e9a91ccb47af74edce28690afc) — ✨ [feat] Add new ESLint rules for Docusaurus configuration
 
 - Introduced `no-mixed-sidebar-link-kinds` to prevent mixing `doc` and `generated-index` link types in sidebar configurations.
@@ -243,7 +230,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Enhanced tests for both new rules to ensure proper functionality and coverage.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`7dc8463`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/7dc846310ba1a641265078ea2cf8e6830bdca720) — ✨ [feat] Add new linting rules and corresponding tests
 
@@ -269,7 +255,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`e6cfea5`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/e6cfea587dbc203a9d2b4de0d69c63ee99ae964b) — ✨ [feat] Add new ESLint rules for Docusaurus plugin
 
 - Introduced `prefer-sidebars-config-satisfies` to enforce the use of `satisfies SidebarsConfig` in sidebar files for better TypeScript validation.
@@ -284,7 +269,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`48d2199`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/48d21996a90b0477bc6e12bcbf255453f5149227) — ✨ [feat] (rules) Introduce new ESLint rules for Docusaurus 2 plugin
 
 - 🎨 Add `no-ignored-site-validations` rule to enforce validation settings
@@ -298,7 +282,7 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - 🎨 Add `prefer-to-for-internal-links` rule to standardize internal link syntax
 
 - 🎨 Add `require-generated-index-link-type` rule to ensure correct link types in sidebars
-🧪 [test] Enhance test coverage for new rules
+  🧪 [test] Enhance test coverage for new rules
 
 - 🧪 Add tests for `no-ignored-site-validations` rule
 
@@ -311,18 +295,15 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - 🧪 Add tests for `prefer-to-for-internal-links` rule
 
 - 🧪 Add tests for `require-generated-index-link-type` rule
-📝 [docs] Update README and documentation for new rules
+  📝 [docs] Update README and documentation for new rules
 
 - 📝 Sync rules table in README to include new rules
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 🛡️ Security
 
 - [`36f4ae6`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/36f4ae6dff3303bfd9976e76946afeca681e7e41) — 🔧 [chore] Update dependencies in package.json
-
 
 - ⬆️ Upgrade @typescript-eslint packages to version 8.58.1 for improved TypeScript support.
 
@@ -350,18 +331,13 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 🛠️ Other Changes
 
 - [`2fb9a36`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/2fb9a36694fc74342f4b92ca27b69844868c3a39) — Initial commit
 
-
-
 ### 🚜 Refactor
 
 - [`fc50ddd`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/fc50ddd0388080b409df0d5ab4ce6165e4c5b76c) — 🚜 [refactor] Clean up preset configuration and type checking logic
-
 
 - 🧹 Removed `requiresTypeChecking` from preset metadata as it is no longer necessary.
 
@@ -373,19 +349,15 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 📝 Documentation
 
 - [`e948d39`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/e948d3972cce929df86187dd202f555dcbddaeb2) — 📝 [docs] Update README and SonarCloud configuration
-
 
 - Update README badges to include npm metrics and latest GitHub release.
 
 - Modify SonarCloud exclusions to include .github directory for cleaner analysis.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`f41b2ec`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/f41b2ec89eed71114f1897d3f26d47a2fbc591b0) — 📝 [docs] Update README with installation instructions and usage examples
 
@@ -397,20 +369,15 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 🎨 Styling
 
 - [`b11e26e`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/b11e26e243054fa318b8a6e41600e9edcee84252) — 🎨 [style] Improve CSS formatting for heroPanelMark animation
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 🧪 Testing
 
 - [`87df20f`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/87df20f222218240283fb407f80ab6c1befa4dd0) — 🧪 [test] Add rule tests for Docusaurus theme configurations
-
 
 - ✨ [feat] Implement `no-duplicate-theme-classic-custom-css` rule tests to prevent duplicate custom CSS entries in theme configurations.
 
@@ -442,7 +409,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`c005413`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/c0054134c25676b42256944cd3c7161d97a4a4d4) — 🧪 [test] Add comprehensive rule tests for Docusaurus configuration validation
 
 - ✨ [feat] Introduce `no-empty-config-link-destinations` rule tests to ensure link destinations are not empty in navbar items.
@@ -459,7 +425,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - 🧪 [test] Add type assertions for plugin public types to ensure correct type usage in tests.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`7a5f7f0`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/7a5f7f07fe3fb29156969164a0e6b0866844d387) — 🧪 [test] Add rule tests for Docusaurus configuration validation
 
@@ -489,7 +454,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`f308d95`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/f308d959e3671fa0eec0027d1b88db9bc7bcdec0) — 🧪 [test] Add rule tests for Docusaurus configuration validation
 
 - ✨ [feat] Implement `require-base-url-issue-banner-enabled` rule to enforce `baseUrlIssueBanner` to be true in Docusaurus config.
@@ -502,9 +466,7 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`4c02e99`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/4c02e9956a80ff288662ec84ce7ef90f3020f88d) — 🧪 [test] Add rule tests for Docusaurus configuration validation
-
 
 - ✨ [feat] Implement `no-conflicting-footer-html-item-props` rule tests to ensure no conflicting properties in footer links.
 
@@ -530,8 +492,6 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
 ### 🧹 Chores
 
 - [`27d4871`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/27d487101dbbe39d624e2e39862b99b71399c6b0) — 🔥 [remove] (docusaurus-site-contract) Remove docusaurus-site-contract package and related files
@@ -539,17 +499,16 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 - Deleted the manifest.template.json, tsconfig.json, and various script files related to the docusaurus-site-contract package.
 
 - This cleanup removes unused code and files, streamlining the repository.
-🚜 [refactor] (local-search) Simplify local-search rule presets
+  🚜 [refactor] (local-search) Simplify local-search rule presets
 
 - Updated the local-search-will-not-work-in-dev rule to only include the "experimental" preset, reducing complexity.
-🧪 [test] (docs-integrity) Enhance rule documentation integrity checks
+  🧪 [test] (docs-integrity) Enhance rule documentation integrity checks
 
 - Introduced support for multiple documentation file extensions (.md, .mdx) in the docs-integrity tests.
 
 - Added functions to check for supported rule documentation extensions and resolve rule documentation paths dynamically.
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`32cbd53`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/32cbd53da373c304885b7d889fd51842af59fe84) — 🧹 [chore] Remove `recommended-type-checked` preset
 
@@ -563,21 +522,19 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
 - [`4f583d1`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/4f583d1c21258265ee3a9e02b198ae7e1c7f8197) — 🧹 [chore] Clean up empty code change sections in commit history
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
-
 
 - [`78c4f78`](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/commit/78c4f78e7f4eada5333d5f79e27b0fbc2124e6df) — 🔥 [delete] Remove obsolete test files for rule metadata and reporting policy
 
 - Deleted `rule-metadata-snapshots.test.ts` to clean up unused snapshot tests.
 
 - Removed `rule-reporting-policy-contract.test.ts` to eliminate redundant contract tests.
-⚡️ [build] Update TypeScript configuration for plugin resolution
+  ⚡️ [build] Update TypeScript configuration for plugin resolution
 
 - Added path mapping for `eslint-plugin-docusaurus-2` in `tsconfig.json`.
-🚜 [refactor] Update Vite configuration for new plugin naming
+  🚜 [refactor] Update Vite configuration for new plugin naming
 
 - Changed environment variable for hanging process reporter in `vite.config.ts`.
 
@@ -585,13 +542,11 @@ Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
 Signed-off-by: Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com>
 
-
-
-
-
-
 ## Contributors
+
 Thanks to all the [contributors](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/graphs/contributors) for their hard work!
+
 ## License
+
 This project is licensed under the [MIT License](https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/blob/main/LICENSE)
-*This changelog was automatically generated with [git-cliff](https://github.com/orhun/git-cliff).*
+_This changelog was automatically generated with [git-cliff](https://github.com/orhun/git-cliff)._

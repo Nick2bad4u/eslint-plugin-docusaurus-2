@@ -22,18 +22,18 @@ If two sidebar items in the same items array reuse the same label, explicit keys
 
 ```ts
 export default {
-    sidebar: [
-        {
-            type: "category",
-            label: "API",
-            items: ["intro"],
-        },
-        {
-            type: "category",
-            label: "API",
-            items: ["reference"],
-        },
-    ],
+ sidebar: [
+  {
+   type: "category",
+   label: "API",
+   items: ["intro"],
+  },
+  {
+   type: "category",
+   label: "API",
+   items: ["reference"],
+  },
+ ],
 };
 ```
 
@@ -41,20 +41,20 @@ export default {
 
 ```ts
 export default {
-    sidebar: [
-        {
-            type: "category",
-            label: "API",
-            key: "api-feature-1",
-            items: ["intro"],
-        },
-        {
-            type: "category",
-            label: "API",
-            key: "api-feature-2",
-            items: ["reference"],
-        },
-    ],
+ sidebar: [
+  {
+   type: "category",
+   label: "API",
+   key: "api-feature-1",
+   items: ["intro"],
+  },
+  {
+   type: "category",
+   label: "API",
+   key: "api-feature-2",
+   items: ["reference"],
+  },
+ ],
 };
 ```
 

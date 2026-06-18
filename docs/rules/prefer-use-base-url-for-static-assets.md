@@ -30,7 +30,7 @@ The Docusaurus client API docs recommend `useBaseUrl` for baseUrl-aware asset pa
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 export default function HomePage() {
-    return <img src="/img/logo.png" alt="Logo" />;
+ return <img src="/img/logo.png" alt="Logo" />;
 }
 ```
 
@@ -40,7 +40,7 @@ export default function HomePage() {
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 export default function HomePage() {
-    return <img src={useBaseUrl("/img/logo.png")} alt="Logo" />;
+ return <img src={useBaseUrl("/img/logo.png")} alt="Logo" />;
 }
 ```
 
@@ -58,7 +58,7 @@ When no such import exists yet, it reports only. Adding the import automatically
 
 ```tsx
 export default function Hero() {
-    return <img src="https://example.com/logo.png" alt="Logo" />;
+ return <img src="https://example.com/logo.png" alt="Logo" />;
 }
 ```
 
@@ -68,7 +68,7 @@ export default function Hero() {
 import logoUrl from "@site/static/img/logo.png";
 
 export default function Hero() {
-    return <img src={logoUrl} alt="Logo" />;
+ return <img src={logoUrl} alt="Logo" />;
 }
 ```
 

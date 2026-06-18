@@ -22,17 +22,17 @@ Color mode defaults affect first-load UX and should be explicit and predictable 
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: {},
-    },
+ themeConfig: {
+  colorMode: {},
+ },
 };
 ```
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: { defaultMode: "Dark" },
-    },
+ themeConfig: {
+  colorMode: { defaultMode: "Dark" },
+ },
 };
 ```
 
@@ -40,9 +40,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: { defaultMode: "dark" },
-    },
+ themeConfig: {
+  colorMode: { defaultMode: "dark" },
+ },
 };
 ```
 

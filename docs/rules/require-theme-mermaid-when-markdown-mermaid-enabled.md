@@ -41,9 +41,9 @@ flowchart LR
 
 ```ts
 export default {
-    markdown: {
-        mermaid: true,
-    },
+ markdown: {
+  mermaid: true,
+ },
 };
 ```
 
@@ -51,10 +51,10 @@ export default {
 
 ```ts
 export default {
-    themes: ["@docusaurus/theme-mermaid"],
-    markdown: {
-        mermaid: true,
-    },
+ themes: ["@docusaurus/theme-mermaid"],
+ markdown: {
+  mermaid: true,
+ },
 };
 ```
 
@@ -68,10 +68,10 @@ This rule provides a suggestion when it can safely add `@docusaurus/theme-mermai
 
 ```ts
 export default {
-    themes: ["@easyops-cn/docusaurus-search-local"],
-    markdown: {
-        mermaid: true,
-    },
+ themes: ["@easyops-cn/docusaurus-search-local"],
+ markdown: {
+  mermaid: true,
+ },
 };
 ```
 
@@ -79,13 +79,10 @@ export default {
 
 ```ts
 export default {
-    themes: [
-        "@easyops-cn/docusaurus-search-local",
-        "@docusaurus/theme-mermaid",
-    ],
-    markdown: {
-        mermaid: true,
-    },
+ themes: ["@easyops-cn/docusaurus-search-local", "@docusaurus/theme-mermaid"],
+ markdown: {
+  mermaid: true,
+ },
 };
 ```
 

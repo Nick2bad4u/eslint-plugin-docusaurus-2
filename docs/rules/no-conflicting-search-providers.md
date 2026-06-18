@@ -35,14 +35,14 @@ Combining a local-search plugin with Algolia/DocSearch config usually means the 
 
 ```ts
 export default {
-    plugins: ["@easyops-cn/docusaurus-search-local"],
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ plugins: ["@easyops-cn/docusaurus-search-local"],
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -50,7 +50,7 @@ export default {
 
 ```ts
 export default {
-    plugins: ["@easyops-cn/docusaurus-search-local"],
+ plugins: ["@easyops-cn/docusaurus-search-local"],
 };
 ```
 
@@ -66,14 +66,14 @@ It does not try to remove one provider automatically because that would be a pro
 
 ```ts
 export default {
-    plugins: [["@cmfcmf/docusaurus-search-local", { indexDocs: true }]],
-    themeConfig: {
-        algolia: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ plugins: [["@cmfcmf/docusaurus-search-local", { indexDocs: true }]],
+ themeConfig: {
+  algolia: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -81,13 +81,13 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            appId: "APP",
-            apiKey: "KEY",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   appId: "APP",
+   apiKey: "KEY",
+   indexName: "docs",
+  },
+ },
 };
 ```
 

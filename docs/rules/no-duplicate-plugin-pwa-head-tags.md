@@ -18,25 +18,25 @@ Duplicate head-tag entries make PWA config harder to audit and can produce redun
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                pwaHead: [
-                    {
-                        tagName: "link",
-                        rel: "manifest",
-                        href: "/manifest.json",
-                    },
-                    {
-                        tagName: "link",
-                        rel: "manifest",
-                        href: "/manifest.json",
-                    },
-                ],
-            },
-        ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    pwaHead: [
+     {
+      tagName: "link",
+      rel: "manifest",
+      href: "/manifest.json",
+     },
+     {
+      tagName: "link",
+      rel: "manifest",
+      href: "/manifest.json",
+     },
     ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -44,25 +44,25 @@ export default {
 
 ```ts
 export default {
-    plugins: [
-        [
-            "@docusaurus/plugin-pwa",
-            {
-                pwaHead: [
-                    {
-                        tagName: "link",
-                        rel: "manifest",
-                        href: "/manifest.json",
-                    },
-                    {
-                        tagName: "meta",
-                        name: "theme-color",
-                        content: "#25c2a0",
-                    },
-                ],
-            },
-        ],
+ plugins: [
+  [
+   "@docusaurus/plugin-pwa",
+   {
+    pwaHead: [
+     {
+      tagName: "link",
+      rel: "manifest",
+      href: "/manifest.json",
+     },
+     {
+      tagName: "meta",
+      name: "theme-color",
+      content: "#25c2a0",
+     },
     ],
+   },
+  ],
+ ],
 };
 ```
 

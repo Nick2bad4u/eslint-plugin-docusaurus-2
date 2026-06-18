@@ -30,11 +30,11 @@ Enabling persistent cache without the bundler makes the config internally incons
 
 ```ts
 export default {
-    future: {
-        faster: {
-            rspackPersistentCache: true,
-        },
-    },
+ future: {
+  faster: {
+   rspackPersistentCache: true,
+  },
+ },
 };
 ```
 
@@ -42,12 +42,12 @@ export default {
 
 ```ts
 export default {
-    future: {
-        faster: {
-            rspackBundler: true,
-            rspackPersistentCache: true,
-        },
-    },
+ future: {
+  faster: {
+   rspackBundler: true,
+   rspackPersistentCache: true,
+  },
+ },
 };
 ```
 

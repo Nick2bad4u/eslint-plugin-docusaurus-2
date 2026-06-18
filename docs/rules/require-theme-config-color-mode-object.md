@@ -18,7 +18,7 @@ Color mode behavior affects first-load UX, switching behavior, and user preferen
 
 ```ts
 export default {
-    themeConfig: {},
+ themeConfig: {},
 };
 ```
 
@@ -26,9 +26,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        colorMode: { defaultMode: "dark" },
-    },
+ themeConfig: {
+  colorMode: { defaultMode: "dark" },
+ },
 };
 ```
 

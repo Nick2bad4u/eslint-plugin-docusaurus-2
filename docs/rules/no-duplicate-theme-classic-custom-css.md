@@ -25,14 +25,16 @@ Duplicate entries make it harder to review the theme surface and suggest configu
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: {
-                customCss: ["./src/css/custom.css", "./src/css/custom.css"],
-            },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: {
+     customCss: ["./src/css/custom.css", "./src/css/custom.css"],
+    },
+   },
+  ],
+ ],
 };
 ```
 
@@ -40,14 +42,16 @@ export default {
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: {
-                customCss: ["./src/css/custom.css", "./src/css/extra.css"],
-            },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: {
+     customCss: ["./src/css/custom.css", "./src/css/extra.css"],
+    },
+   },
+  ],
+ ],
 };
 ```
 
@@ -61,15 +65,17 @@ This rule autofixes duplicate array entries by removing later duplicates and kee
 
 ```ts
 export default {
-    themes: [[
-        "@docusaurus/theme-classic",
-        {
-            customCss: [
-                require.resolve("./src/css/custom.css"),
-                "./src/css/custom.css",
-            ],
-        },
-    ]],
+ themes: [
+  [
+   "@docusaurus/theme-classic",
+   {
+    customCss: [
+     require.resolve("./src/css/custom.css"),
+     "./src/css/custom.css",
+    ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -77,12 +83,14 @@ export default {
 
 ```ts
 export default {
-    themes: [[
-        "@docusaurus/theme-classic",
-        {
-            customCss: [require.resolve("./src/css/custom.css")],
-        },
-    ]],
+ themes: [
+  [
+   "@docusaurus/theme-classic",
+   {
+    customCss: [require.resolve("./src/css/custom.css")],
+   },
+  ],
+ ],
 };
 ```
 

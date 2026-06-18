@@ -24,10 +24,7 @@ If you also want docs-content rules, add the opt-in content config separately:
 ```ts
 import docusaurus2 from "eslint-plugin-docusaurus-2";
 
-export default [
-    docusaurus2.configs.recommended,
-    docusaurus2.configs.content,
-];
+export default [docusaurus2.configs.recommended, docusaurus2.configs.content];
 ```
 
 ## What the presets provide today
@@ -83,22 +80,22 @@ import tsParser from "@typescript-eslint/parser";
 import docusaurus2 from "eslint-plugin-docusaurus-2";
 
 export default [
-    {
-        files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
-        languageOptions: {
-            parser: tsParser,
-            parserOptions: {
-                ecmaVersion: "latest",
-                sourceType: "module",
-            },
-        },
-        plugins: {
-            "docusaurus-2": docusaurus2,
-        },
-        rules: {
-            ...docusaurus2.configs.recommended.rules,
-        },
-    },
+ {
+  files: ["**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}"],
+  languageOptions: {
+   parser: tsParser,
+   parserOptions: {
+    ecmaVersion: "latest",
+    sourceType: "module",
+   },
+  },
+  plugins: {
+   "docusaurus-2": docusaurus2,
+  },
+  rules: {
+   ...docusaurus2.configs.recommended.rules,
+  },
+ },
 ];
 ```
 

@@ -18,9 +18,11 @@ Twitter/X metadata is conventionally emitted through `name`. Using the canonical
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [{ property: "twitter:image", content: "https://example.com/card.png" }],
-    },
+ themeConfig: {
+  metadata: [
+   { property: "twitter:image", content: "https://example.com/card.png" },
+  ],
+ },
 };
 ```
 
@@ -28,9 +30,11 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [{ name: "twitter:image", content: "https://example.com/card.png" }],
-    },
+ themeConfig: {
+  metadata: [
+   { name: "twitter:image", content: "https://example.com/card.png" },
+  ],
+ },
 };
 ```
 

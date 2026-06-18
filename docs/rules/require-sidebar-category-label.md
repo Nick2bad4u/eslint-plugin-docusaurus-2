@@ -31,12 +31,12 @@ The shorthand category syntax already encodes the label in the object key, so th
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -44,13 +44,13 @@ export default {
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -58,7 +58,7 @@ export default {
 
 This rule reports only. It does not autofix.
 
-Choosing the right category label is a content decision that depends on the sidebar’s information architecture.
+Choosing the right category label is a content decision that depends on the sidebar's information architecture.
 
 ## Additional examples
 
@@ -66,11 +66,11 @@ Choosing the right category label is a content decision that depends on the side
 
 ```ts
 export default {
-    docs: [
-        {
-            Guides: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   Guides: ["introduction"],
+  },
+ ],
 };
 ```
 

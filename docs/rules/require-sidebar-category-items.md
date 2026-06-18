@@ -28,12 +28,12 @@ This rule keeps longhand category objects aligned with the documented sidebar sc
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+  },
+ ],
 };
 ```
 
@@ -41,13 +41,13 @@ export default {
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            items: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   items: ["introduction"],
+  },
+ ],
 };
 ```
 
@@ -63,25 +63,25 @@ If a category should exist, the maintainer still has to decide which child items
 
 ```ts
 export default {
-    docs: [
-        {
-            Guides: ["introduction"],
-        },
-    ],
+ docs: [
+  {
+   Guides: ["introduction"],
+  },
+ ],
 };
 ```
 
-### ✅ Correct — an empty `items` array is outside this rule’s scope
+### ✅ Correct — an empty `items` array is outside this rule's scope
 
 ```ts
 export default {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            items: [],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   items: [],
+  },
+ ],
 };
 ```
 

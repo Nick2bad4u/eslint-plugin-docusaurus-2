@@ -28,15 +28,15 @@ When a column has an `items` array but no title, the footer structure becomes ha
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    items: [{ label: "Docs", to: "/docs/intro" }],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     items: [{ label: "Docs", to: "/docs/intro" }],
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -44,16 +44,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [{ label: "Docs", to: "/docs/intro" }],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [{ label: "Docs", to: "/docs/intro" }],
     },
+   ],
+  },
+ },
 };
 ```
 

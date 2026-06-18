@@ -32,17 +32,17 @@ Docusaurus sidebar `link` objects are schema-sensitive.
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                title: "Guides",
-                description: "Browse the guides.",
-            },
-            items: ["intro"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    title: "Guides",
+    description: "Browse the guides.",
+   },
+   items: ["intro"],
+  },
+ ],
 };
 ```
 
@@ -50,18 +50,18 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Guides",
-            link: {
-                type: "generated-index",
-                title: "Guides",
-                description: "Browse the guides.",
-            },
-            items: ["intro"],
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Guides",
+   link: {
+    type: "generated-index",
+    title: "Guides",
+    description: "Browse the guides.",
+   },
+   items: ["intro"],
+  },
+ ],
 };
 ```
 
@@ -80,17 +80,17 @@ Review the result if the original object mixed category-link strategies in a non
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            label: "Rules",
-            items: ["overview"],
-            link: {
-                type: "doc",
-                slug: "/rules",
-                title: "Rules",
-            },
-        },
-    ],
+ docs: [
+  {
+   label: "Rules",
+   items: ["overview"],
+   link: {
+    type: "doc",
+    slug: "/rules",
+    title: "Rules",
+   },
+  },
+ ],
 };
 ```
 
@@ -98,17 +98,17 @@ const sidebars = {
 
 ```ts
 const sidebars = {
-    docs: [
-        {
-            type: "category",
-            label: "Docs",
-            items: ["intro"],
-            link: {
-                type: "doc",
-                id: "intro",
-            },
-        },
-    ],
+ docs: [
+  {
+   type: "category",
+   label: "Docs",
+   items: ["intro"],
+   link: {
+    type: "doc",
+    id: "intro",
+   },
+  },
+ ],
 };
 ```
 

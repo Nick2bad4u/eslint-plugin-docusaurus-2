@@ -25,12 +25,14 @@ A missing file path leaves the classic theme config looking complete while point
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: { customCss: "./src/css/missing.css" },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: { customCss: "./src/css/missing.css" },
+   },
+  ],
+ ],
 };
 ```
 
@@ -38,12 +40,14 @@ export default {
 
 ```ts
 export default {
-    presets: [[
-        "@docusaurus/preset-classic",
-        {
-            theme: { customCss: "./src/css/custom.css" },
-        },
-    ]],
+ presets: [
+  [
+   "@docusaurus/preset-classic",
+   {
+    theme: { customCss: "./src/css/custom.css" },
+   },
+  ],
+ ],
 };
 ```
 
@@ -59,15 +63,17 @@ It does not try to invent replacement stylesheet paths or remove missing entries
 
 ```ts
 export default {
-    themes: [[
-        "@docusaurus/theme-classic",
-        {
-            customCss: [
-                require.resolve("./src/css/custom.css"),
-                "./src/css/missing.css",
-            ],
-        },
-    ]],
+ themes: [
+  [
+   "@docusaurus/theme-classic",
+   {
+    customCss: [
+     require.resolve("./src/css/custom.css"),
+     "./src/css/missing.css",
+    ],
+   },
+  ],
+ ],
 };
 ```
 
@@ -75,12 +81,14 @@ export default {
 
 ```ts
 export default {
-    themes: [[
-        "@docusaurus/theme-classic",
-        {
-            customCss: [require.resolve("./src/css/custom.css")],
-        },
-    ]],
+ themes: [
+  [
+   "@docusaurus/theme-classic",
+   {
+    customCss: [require.resolve("./src/css/custom.css")],
+   },
+  ],
+ ],
 };
 ```
 

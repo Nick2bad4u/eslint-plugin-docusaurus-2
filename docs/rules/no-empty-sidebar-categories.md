@@ -18,7 +18,7 @@ Empty sidebar categories create navigation noise and usually indicate unfinished
 
 ```ts
 export default {
-    docsSidebar: [{ type: "category", label: "Docs", items: [] }],
+ docsSidebar: [{ type: "category", label: "Docs", items: [] }],
 };
 ```
 
@@ -26,7 +26,7 @@ export default {
 
 ```ts
 export default {
-    docsSidebar: [{ type: "category", label: "Docs", items: ["intro"] }],
+ docsSidebar: [{ type: "category", label: "Docs", items: ["intro"] }],
 };
 ```
 

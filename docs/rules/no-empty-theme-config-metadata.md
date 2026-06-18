@@ -18,9 +18,9 @@ An empty metadata array adds noise without contributing any head metadata and of
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [],
-    },
+ themeConfig: {
+  metadata: [],
+ },
 };
 ```
 
@@ -28,9 +28,9 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        metadata: [{ name: "keywords", content: "docs" }],
-    },
+ themeConfig: {
+  metadata: [{ name: "keywords", content: "docs" }],
+ },
 };
 ```
 

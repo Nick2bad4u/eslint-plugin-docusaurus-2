@@ -21,14 +21,14 @@ Duplicate navbar destinations usually come from copy/paste mistakes and make nav
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                { label: "Docs", to: "/docs" },
-                { label: "Read the docs", to: "/docs" },
-            ],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [
+    { label: "Docs", to: "/docs" },
+    { label: "Read the docs", to: "/docs" },
+   ],
+  },
+ },
 };
 ```
 
@@ -36,14 +36,14 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                { label: "Docs", to: "/docs" },
-                { label: "Rules", to: "/rules" },
-            ],
-        },
-    },
+ themeConfig: {
+  navbar: {
+   items: [
+    { label: "Docs", to: "/docs" },
+    { label: "Rules", to: "/rules" },
+   ],
+  },
+ },
 };
 ```
 

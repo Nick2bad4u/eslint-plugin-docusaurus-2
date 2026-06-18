@@ -33,7 +33,11 @@ Using `href` for external targets makes reviews easier and keeps Link usage cons
 import Link from "@docusaurus/Link";
 
 export default function GitHubLink() {
-    return <Link to="https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2">GitHub</Link>;
+ return (
+  <Link to="https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2">
+   GitHub
+  </Link>
+ );
 }
 ```
 
@@ -43,7 +47,11 @@ export default function GitHubLink() {
 import Link from "@docusaurus/Link";
 
 export default function GitHubLink() {
-    return <Link href="https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2">GitHub</Link>;
+ return (
+  <Link href="https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2">
+   GitHub
+  </Link>
+ );
 }
 ```
 
@@ -67,7 +75,7 @@ Dynamic expressions are intentionally ignored to keep reporting accurate.
 import DocsLink from "@docusaurus/Link";
 
 export default function ContactLink() {
-    return <DocsLink to={"mailto:hello@example.com"}>Email</DocsLink>;
+ return <DocsLink to={"mailto:hello@example.com"}>Email</DocsLink>;
 }
 ```
 
@@ -77,7 +85,7 @@ export default function ContactLink() {
 import Link from "@docusaurus/Link";
 
 export default function HomePage() {
-    return <Link to="/docs/intro">Docs</Link>;
+ return <Link to="/docs/intro">Docs</Link>;
 }
 ```
 

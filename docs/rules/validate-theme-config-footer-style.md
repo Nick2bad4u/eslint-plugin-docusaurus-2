@@ -18,17 +18,17 @@ Footer style values affect the public appearance of the site footer and should s
 
 ```ts
 export default {
-    themeConfig: {
-        footer: { style: "Light" },
-    },
+ themeConfig: {
+  footer: { style: "Light" },
+ },
 };
 ```
 
 ```ts
 export default {
-    themeConfig: {
-        footer: { style: "primary" },
-    },
+ themeConfig: {
+  footer: { style: "primary" },
+ },
 };
 ```
 
@@ -36,17 +36,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: { style: "light" },
-    },
+ themeConfig: {
+  footer: { style: "light" },
+ },
 };
 ```
 
 ```ts
 export default {
-    themeConfig: {
-        footer: { style: "dark" },
-    },
+ themeConfig: {
+  footer: { style: "dark" },
+ },
 };
 ```
 

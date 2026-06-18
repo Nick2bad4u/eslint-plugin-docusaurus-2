@@ -28,40 +28,40 @@ Because that is style-policy rather than universal correctness, this rule only s
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [
-                        { label: "Intro", to: "/docs/intro" },
-                        { label: "Guides", to: "/docs/guides" },
-                        { label: "API", to: "/docs/api" },
-                        { label: "FAQ", to: "/docs/faq" },
-                        { label: "Changelog", to: "/docs/changelog" },
-                    ],
-                },
-                {
-                    title: "Community",
-                    items: [
-                        { label: "GitHub", href: "https://github.com" },
-                        { label: "Discord", href: "https://discord.com" },
-                        { label: "X", href: "https://x.com" },
-                        { label: "Bluesky", href: "https://bsky.app" },
-                    ],
-                },
-                {
-                    title: "More",
-                    items: [
-                        { label: "Blog", to: "/blog" },
-                        { label: "Releases", to: "/releases" },
-                        { label: "Roadmap", to: "/roadmap" },
-                        { label: "Sponsors", to: "/sponsors" },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [
+      { label: "Intro", to: "/docs/intro" },
+      { label: "Guides", to: "/docs/guides" },
+      { label: "API", to: "/docs/api" },
+      { label: "FAQ", to: "/docs/faq" },
+      { label: "Changelog", to: "/docs/changelog" },
+     ],
     },
+    {
+     title: "Community",
+     items: [
+      { label: "GitHub", href: "https://github.com" },
+      { label: "Discord", href: "https://discord.com" },
+      { label: "X", href: "https://x.com" },
+      { label: "Bluesky", href: "https://bsky.app" },
+     ],
+    },
+    {
+     title: "More",
+     items: [
+      { label: "Blog", to: "/blog" },
+      { label: "Releases", to: "/releases" },
+      { label: "Roadmap", to: "/roadmap" },
+      { label: "Sponsors", to: "/sponsors" },
+     ],
+    },
+   ],
+  },
+ },
 };
 ```
 
@@ -69,39 +69,39 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        footer: {
-            links: [
-                {
-                    title: "Docs",
-                    items: [
-                        { label: "Intro", to: "/docs/intro" },
-                        { label: "Guides", to: "/docs/guides" },
-                        { label: "API", to: "/docs/api" },
-                        { label: "FAQ", to: "/docs/faq" },
-                    ],
-                },
-                {
-                    title: "Community",
-                    items: [
-                        { label: "GitHub", href: "https://github.com" },
-                        { label: "Discord", href: "https://discord.com" },
-                        { label: "X", href: "https://x.com" },
-                        { label: "Bluesky", href: "https://bsky.app" },
-                    ],
-                },
-                {
-                    title: "More",
-                    items: [
-                        { label: "Blog", to: "/blog" },
-                        { label: "Releases", to: "/releases" },
-                        { label: "Roadmap", to: "/roadmap" },
-                        { label: "Sponsors", to: "/sponsors" },
-                    ],
-                },
-            ],
-        },
+ themeConfig: {
+  footer: {
+   links: [
+    {
+     title: "Docs",
+     items: [
+      { label: "Intro", to: "/docs/intro" },
+      { label: "Guides", to: "/docs/guides" },
+      { label: "API", to: "/docs/api" },
+      { label: "FAQ", to: "/docs/faq" },
+     ],
     },
+    {
+     title: "Community",
+     items: [
+      { label: "GitHub", href: "https://github.com" },
+      { label: "Discord", href: "https://discord.com" },
+      { label: "X", href: "https://x.com" },
+      { label: "Bluesky", href: "https://bsky.app" },
+     ],
+    },
+    {
+     title: "More",
+     items: [
+      { label: "Blog", to: "/blog" },
+      { label: "Releases", to: "/releases" },
+      { label: "Roadmap", to: "/roadmap" },
+      { label: "Sponsors", to: "/sponsors" },
+     ],
+    },
+   ],
+  },
+ },
 };
 ```
 

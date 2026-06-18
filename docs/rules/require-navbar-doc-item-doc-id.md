@@ -31,16 +31,16 @@ When `docId` is missing, the item no longer matches the documented navbar doc-li
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "doc",
-                    label: "Docs",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "doc",
+     label: "Docs",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -48,17 +48,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "doc",
-                    label: "Docs",
-                    docId: "introduction",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "doc",
+     label: "Docs",
+     docId: "introduction",
     },
+   ],
+  },
+ },
 };
 ```
 

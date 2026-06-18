@@ -30,13 +30,13 @@ If a project uses `themeConfig.docsearch` or `themeConfig.algolia` without eithe
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            apiKey: "KEY",
-            appId: "APP",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   apiKey: "KEY",
+   appId: "APP",
+   indexName: "docs",
+  },
+ },
 };
 ```
 
@@ -46,13 +46,13 @@ Without either `@docusaurus/theme-search-algolia` or `@docusaurus/preset-classic
 
 ```ts
 export default {
-    themeConfig: {
-        docsearch: {
-            apiKey: "KEY",
-            appId: "APP",
-            indexName: "docs",
-        },
-    },
+ themeConfig: {
+  docsearch: {
+   apiKey: "KEY",
+   appId: "APP",
+   indexName: "docs",
+  },
+ },
 };
 ```
 

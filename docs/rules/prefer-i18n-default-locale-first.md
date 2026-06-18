@@ -18,10 +18,10 @@ Putting `defaultLocale` first makes locale-priority intent immediately visible a
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["fr", "en"],
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["fr", "en"],
+ },
 };
 ```
 
@@ -29,10 +29,10 @@ export default {
 
 ```ts
 export default {
-    i18n: {
-        defaultLocale: "en",
-        locales: ["en", "fr"],
-    },
+ i18n: {
+  defaultLocale: "en",
+  locales: ["en", "fr"],
+ },
 };
 ```
 

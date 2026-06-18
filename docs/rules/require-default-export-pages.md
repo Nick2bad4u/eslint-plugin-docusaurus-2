@@ -36,7 +36,7 @@ This rule makes that contract explicit.
 
 ```ts
 export const metadata = {
-    title: "Support",
+ title: "Support",
 };
 ```
 
@@ -44,7 +44,7 @@ export const metadata = {
 
 ```ts
 export default function SupportPage() {
-    return null;
+ return null;
 }
 ```
 
@@ -64,7 +64,7 @@ The correct fix depends on intent:
 
 ```ts
 export default {
-    route: "/support",
+ route: "/support",
 };
 ```
 

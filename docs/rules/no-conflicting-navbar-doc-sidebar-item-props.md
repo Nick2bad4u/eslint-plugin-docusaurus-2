@@ -33,19 +33,19 @@ When they also declare `to`, `href`, or `html`, the object becomes ambiguous bec
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "docSidebar",
-                    label: "API",
-                    sidebarId: "api",
-                    to: "/docs/api",
-                    href: "https://example.com",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "docSidebar",
+     label: "API",
+     sidebarId: "api",
+     to: "/docs/api",
+     href: "https://example.com",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -53,17 +53,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "docSidebar",
-                    label: "API",
-                    sidebarId: "api",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "docSidebar",
+     label: "API",
+     sidebarId: "api",
     },
+   ],
+  },
+ },
 };
 ```
 

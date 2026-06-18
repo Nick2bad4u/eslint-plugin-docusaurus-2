@@ -28,9 +28,9 @@ Keeping the deprecated name around makes your config harder to upgrade and hides
 
 ```ts
 export default {
-    future: {
-        experimental_faster: true,
-    },
+ future: {
+  experimental_faster: true,
+ },
 };
 ```
 
@@ -38,9 +38,9 @@ export default {
 
 ```ts
 export default {
-    future: {
-        faster: true,
-    },
+ future: {
+  faster: true,
+ },
 };
 ```
 

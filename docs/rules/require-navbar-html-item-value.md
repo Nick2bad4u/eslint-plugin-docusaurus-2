@@ -31,15 +31,15 @@ When `value` is missing, the item no longer matches the documented navbar HTML i
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "html",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "html",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -47,16 +47,16 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "html",
-                    value: "<button>Docs</button>",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "html",
+     value: "<button>Docs</button>",
     },
+   ],
+  },
+ },
 };
 ```
 

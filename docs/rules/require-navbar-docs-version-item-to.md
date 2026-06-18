@@ -31,16 +31,16 @@ When `to` is missing, the item no longer matches the documented docs-version nav
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "docsVersion",
-                    label: "Version",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "docsVersion",
+     label: "Version",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -48,17 +48,17 @@ export default {
 
 ```ts
 export default {
-    themeConfig: {
-        navbar: {
-            items: [
-                {
-                    type: "docsVersion",
-                    label: "Version",
-                    to: "/docs/versions",
-                },
-            ],
-        },
+ themeConfig: {
+  navbar: {
+   items: [
+    {
+     type: "docsVersion",
+     label: "Version",
+     to: "/docs/versions",
     },
+   ],
+  },
+ },
 };
 ```
 
@@ -66,7 +66,7 @@ export default {
 
 This rule reports only. It does not autofix.
 
-Choosing the correct `to` destination depends on the site’s versioning structure and cannot be inferred safely from syntax alone.
+Choosing the correct `to` destination depends on the site's versioning structure and cannot be inferred safely from syntax alone.
 
 ## When not to use it
 
