@@ -21,10 +21,68 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 
+type FooterLinkItemLabelContext = TSESLint.RuleContext<
+    MessageIds,
+    typeof defaultOptions
+>;
+
 type MessageIds = "noDuplicateFooterLinkItemLabels";
 
 const normalizeLabelForComparison = (label: string): string =>
     label.trim().toLowerCase();
+
+const reportDuplicateFooterLinkItemLabels = (
+    options: Readonly<{
+        context: Readonly<FooterLinkItemLabelContext>;
+        itemsArrayExpression: Readonly<TSESTree.ArrayExpression>;
+        programNode: Readonly<TSESTree.Program>;
+    }>
+): void => {
+    const seenLabels = new Set<string>();
+
+    for (const itemElement of options.itemsArrayExpression.elements) {
+        if (itemElement?.type !== AST_NODE_TYPES.ObjectExpression) {
+            continue;
+        }
+
+        const labelExpression = getObjectPropertyValueByName(
+            itemElement,
+            "label"
+        );
+
+        if (labelExpression === null) {
+            continue;
+        }
+
+        const staticLabel = getStaticStringValueFromExpressionOrIdentifier(
+            labelExpression,
+            options.programNode
+        );
+
+        if (staticLabel === null) {
+            continue;
+        }
+
+        const normalizedLabel = normalizeLabelForComparison(staticLabel);
+
+        if (normalizedLabel.length === 0) {
+            continue;
+        }
+
+        if (setHas(seenLabels, normalizedLabel)) {
+            options.context.report({
+                data: {
+                    label: staticLabel.trim(),
+                },
+                messageId: "noDuplicateFooterLinkItemLabels",
+                node: labelExpression,
+            });
+            continue;
+        }
+
+        seenLabels.add(normalizedLabel);
+    }
+};
 
 /** Rule module for `no-duplicate-footer-link-item-labels`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -62,57 +120,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        const seenLabels = new Set<string>();
-
-                        for (const itemElement of itemsArrayExpression.elements) {
-                            if (
-                                itemElement?.type !==
-                                AST_NODE_TYPES.ObjectExpression
-                            ) {
-                                continue;
-                            }
-
-                            const labelExpression =
-                                getObjectPropertyValueByName(
-                                    itemElement,
-                                    "label"
-                                );
-
-                            if (labelExpression === null) {
-                                continue;
-                            }
-
-                            const staticLabel =
-                                getStaticStringValueFromExpressionOrIdentifier(
-                                    labelExpression,
-                                    programNode
-                                );
-
-                            if (staticLabel === null) {
-                                continue;
-                            }
-
-                            const normalizedLabel =
-                                normalizeLabelForComparison(staticLabel);
-
-                            if (normalizedLabel.length === 0) {
-                                continue;
-                            }
-
-                            if (setHas(seenLabels, normalizedLabel)) {
-                                context.report({
-                                    data: {
-                                        label: staticLabel.trim(),
-                                    },
-                                    messageId:
-                                        "noDuplicateFooterLinkItemLabels",
-                                    node: labelExpression,
-                                });
-                                continue;
-                            }
-
-                            seenLabels.add(normalizedLabel);
-                        }
+                        reportDuplicateFooterLinkItemLabels({
+                            context,
+                            itemsArrayExpression,
+                            programNode,
+                        });
                     }
                 },
             };

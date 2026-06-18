@@ -29,6 +29,11 @@ const booleanColorModeFieldNames = [
     "respectPrefersColorScheme",
 ] as const;
 
+type ColorModeFlagContext = TSESLint.RuleContext<
+    MessageIds,
+    typeof defaultOptions
+>;
+
 type ColorModeFlagSuggestion = NonNullable<
     Parameters<
         TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
@@ -88,6 +93,96 @@ const createSetColorModeFlagSuggestion = (
     messageId: options.messageId,
 });
 
+const isStaticBooleanValue = (
+    value: boolean | null | undefined
+): value is boolean => value === true || value === false;
+
+const shouldIgnoreNonBooleanFlagExpression = (
+    expression: null | Readonly<TSESTree.Expression>
+): boolean => expression === null || !isStaticLiteralLikeExpression(expression);
+
+const reportColorModeFlagIfNeeded = (
+    options: Readonly<{
+        context: Readonly<ColorModeFlagContext>;
+        flagName: (typeof booleanColorModeFieldNames)[number];
+        flagProperty: Readonly<TSESTree.Property>;
+        programNode: Readonly<TSESTree.Program>;
+    }>
+): void => {
+    const flagExpression = getObjectPropertyValueExpression(
+        options.flagProperty
+    );
+    const staticBooleanValue = getStaticBooleanValueFromExpressionOrIdentifier(
+        flagExpression,
+        options.programNode
+    );
+
+    if (isStaticBooleanValue(staticBooleanValue)) {
+        return;
+    }
+
+    const staticStringValue = getStaticStringValueFromExpressionOrIdentifier(
+        flagExpression,
+        options.programNode
+    );
+    const booleanValueFromStaticString =
+        staticStringValue === null
+            ? null
+            : getBooleanValueFromStaticString(staticStringValue);
+    const resolvedFlagExpression = getExpressionFromExpressionOrIdentifier(
+        flagExpression,
+        options.programNode
+    );
+
+    if (
+        booleanValueFromStaticString !== null &&
+        canAutofixStringExpression(flagExpression)
+    ) {
+        reportWithOptionalFix({
+            context: options.context,
+            data: { flagName: options.flagName },
+            fix: (fixer) =>
+                fixer.replaceText(
+                    flagExpression,
+                    String(booleanValueFromStaticString)
+                ),
+            messageId: "validateColorModeFlag",
+            node: flagExpression,
+        });
+
+        return;
+    }
+
+    if (
+        booleanValueFromStaticString === null &&
+        shouldIgnoreNonBooleanFlagExpression(resolvedFlagExpression)
+    ) {
+        return;
+    }
+
+    options.context.report({
+        data: { flagName: options.flagName },
+        messageId: "validateColorModeFlag",
+        node: flagExpression,
+        suggest: [
+            createSetColorModeFlagSuggestion({
+                expression: flagExpression,
+                flagName: options.flagName,
+                messageId: "setColorModeFlagFalse",
+                property: options.flagProperty,
+                value: false,
+            }),
+            createSetColorModeFlagSuggestion({
+                expression: flagExpression,
+                flagName: options.flagName,
+                messageId: "setColorModeFlagTrue",
+                property: options.flagProperty,
+                value: true,
+            }),
+        ],
+    });
+};
+
 /** Rule module for `validate-theme-config-color-mode-switch-flags`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
@@ -142,83 +237,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        const flagExpression =
-                            getObjectPropertyValueExpression(flagProperty);
-                        const staticBooleanValue =
-                            getStaticBooleanValueFromExpressionOrIdentifier(
-                                flagExpression,
-                                programNode
-                            );
-
-                        if (
-                            staticBooleanValue === true ||
-                            staticBooleanValue === false
-                        ) {
-                            continue;
-                        }
-
-                        const staticStringValue =
-                            getStaticStringValueFromExpressionOrIdentifier(
-                                flagExpression,
-                                programNode
-                            );
-                        const booleanValueFromStaticString =
-                            staticStringValue === null
-                                ? null
-                                : getBooleanValueFromStaticString(
-                                      staticStringValue
-                                  );
-                        const resolvedFlagExpression =
-                            getExpressionFromExpressionOrIdentifier(
-                                flagExpression,
-                                programNode
-                            );
-
-                        if (booleanValueFromStaticString !== null) {
-                            if (canAutofixStringExpression(flagExpression)) {
-                                reportWithOptionalFix({
-                                    context,
-                                    data: { flagName },
-                                    fix: (fixer) =>
-                                        fixer.replaceText(
-                                            flagExpression,
-                                            String(booleanValueFromStaticString)
-                                        ),
-                                    messageId: "validateColorModeFlag",
-                                    node: flagExpression,
-                                });
-
-                                continue;
-                            }
-                        } else if (
-                            resolvedFlagExpression === null ||
-                            !isStaticLiteralLikeExpression(
-                                resolvedFlagExpression
-                            )
-                        ) {
-                            continue;
-                        }
-
-                        context.report({
-                            data: { flagName },
-                            messageId: "validateColorModeFlag",
-                            node: flagExpression,
-                            suggest: [
-                                createSetColorModeFlagSuggestion({
-                                    expression: flagExpression,
-                                    flagName,
-                                    messageId: "setColorModeFlagFalse",
-                                    property: flagProperty,
-                                    value: false,
-                                }),
-                                createSetColorModeFlagSuggestion({
-                                    expression: flagExpression,
-                                    flagName,
-                                    messageId: "setColorModeFlagTrue",
-                                    property: flagProperty,
-                                    value: true,
-                                }),
-                            ],
+                        reportColorModeFlagIfNeeded({
+                            context,
+                            flagName,
+                            flagProperty,
+                            programNode,
                         });
                     }
                 },

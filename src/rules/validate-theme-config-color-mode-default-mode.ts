@@ -26,6 +26,11 @@ const defaultOptions = [] as const;
 
 const validDefaultModes = new Set(["dark", "light"]);
 
+type ColorModeDefaultModeContext = TSESLint.RuleContext<
+    MessageIds,
+    typeof defaultOptions
+>;
+
 type ColorModeDefaultModeSuggestion = NonNullable<
     Parameters<
         TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
@@ -117,6 +122,47 @@ const createSetDefaultModeSuggestion = (
     messageId: options.messageId,
 });
 
+const reportNormalizedDefaultModeIfNeeded = (
+    options: Readonly<{
+        context: Readonly<ColorModeDefaultModeContext>;
+        defaultModeExpression: Readonly<TSESTree.Expression>;
+        staticDefaultMode: null | string;
+    }>
+): boolean => {
+    if (options.staticDefaultMode === null) {
+        return false;
+    }
+
+    const normalizedDefaultMode = options.staticDefaultMode
+        .trim()
+        .toLowerCase();
+
+    if (!setHas(validDefaultModes, normalizedDefaultMode)) {
+        return false;
+    }
+
+    if (options.staticDefaultMode === normalizedDefaultMode) {
+        return true;
+    }
+
+    if (!canAutofixStringExpression(options.defaultModeExpression)) {
+        return false;
+    }
+
+    reportWithOptionalFix({
+        context: options.context,
+        fix: (fixer) =>
+            fixer.replaceText(
+                options.defaultModeExpression,
+                JSON.stringify(normalizedDefaultMode)
+            ),
+        messageId: "requireColorModeDefaultMode",
+        node: options.defaultModeExpression,
+    });
+
+    return true;
+};
+
 /** Rule module for `validate-theme-config-color-mode-default-mode`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
@@ -198,41 +244,18 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             programNode
                         );
 
-                    if (staticDefaultMode !== null) {
-                        const normalizedDefaultMode = staticDefaultMode
-                            .trim()
-                            .toLowerCase();
+                    if (
+                        reportNormalizedDefaultModeIfNeeded({
+                            context,
+                            defaultModeExpression,
+                            staticDefaultMode,
+                        })
+                    ) {
+                        return;
+                    }
 
-                        if (setHas(validDefaultModes, normalizedDefaultMode)) {
-                            if (
-                                staticDefaultMode === normalizedDefaultMode ||
-                                !canAutofixStringExpression(
-                                    defaultModeExpression
-                                )
-                            ) {
-                                if (
-                                    staticDefaultMode === normalizedDefaultMode
-                                ) {
-                                    return;
-                                }
-                            } else {
-                                reportWithOptionalFix({
-                                    context,
-                                    fix: (fixer) =>
-                                        fixer.replaceText(
-                                            defaultModeExpression,
-                                            JSON.stringify(
-                                                normalizedDefaultMode
-                                            )
-                                        ),
-                                    messageId: "requireColorModeDefaultMode",
-                                    node: defaultModeExpression,
-                                });
-
-                                return;
-                            }
-                        }
-                    } else if (
+                    if (
+                        staticDefaultMode === null &&
                         !isStaticLiteralLikeExpression(defaultModeExpression)
                     ) {
                         return;

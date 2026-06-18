@@ -28,6 +28,11 @@ type MessageIds =
     | "setNavbarStylePrimary"
     | "validateThemeConfigNavbarStyle";
 
+type NavbarStyleContext = TSESLint.RuleContext<
+    MessageIds,
+    typeof defaultOptions
+>;
+
 type NavbarStyleSuggestion = NonNullable<
     Parameters<
         TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
@@ -69,6 +74,45 @@ const createSetNavbarStyleSuggestion = (
               ),
     messageId: options.messageId,
 });
+
+const reportNormalizedNavbarStyleIfNeeded = (
+    options: Readonly<{
+        context: Readonly<NavbarStyleContext>;
+        staticStyle: null | string;
+        styleExpression: Readonly<TSESTree.Expression>;
+    }>
+): boolean => {
+    if (options.staticStyle === null) {
+        return false;
+    }
+
+    const normalizedStyle = options.staticStyle.trim().toLowerCase();
+
+    if (!setHas(validNavbarStyles, normalizedStyle)) {
+        return false;
+    }
+
+    if (options.staticStyle === normalizedStyle) {
+        return true;
+    }
+
+    if (!canAutofixStringExpression(options.styleExpression)) {
+        return false;
+    }
+
+    reportWithOptionalFix({
+        context: options.context,
+        fix: (fixer) =>
+            fixer.replaceText(
+                options.styleExpression,
+                JSON.stringify(normalizedStyle)
+            ),
+        messageId: "validateThemeConfigNavbarStyle",
+        node: options.styleExpression,
+    });
+
+    return true;
+};
 
 /** Rule module for `validate-theme-config-navbar-style`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -123,35 +167,18 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             programNode
                         );
 
-                    if (staticStyle !== null) {
-                        const normalizedStyle = staticStyle
-                            .trim()
-                            .toLowerCase();
+                    if (
+                        reportNormalizedNavbarStyleIfNeeded({
+                            context,
+                            staticStyle,
+                            styleExpression,
+                        })
+                    ) {
+                        return;
+                    }
 
-                        if (setHas(validNavbarStyles, normalizedStyle)) {
-                            if (
-                                staticStyle === normalizedStyle ||
-                                !canAutofixStringExpression(styleExpression)
-                            ) {
-                                if (staticStyle === normalizedStyle) {
-                                    return;
-                                }
-                            } else {
-                                reportWithOptionalFix({
-                                    context,
-                                    fix: (fixer) =>
-                                        fixer.replaceText(
-                                            styleExpression,
-                                            JSON.stringify(normalizedStyle)
-                                        ),
-                                    messageId: "validateThemeConfigNavbarStyle",
-                                    node: styleExpression,
-                                });
-
-                                return;
-                            }
-                        }
-                    } else if (
+                    if (
+                        staticStyle === null &&
                         !isStaticLiteralLikeExpression(styleExpression)
                     ) {
                         return;

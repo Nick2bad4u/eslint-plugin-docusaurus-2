@@ -32,6 +32,60 @@ const isPresentArrayElement = (
 const normalizeMetadataKey = (value: string): string =>
     value.trim().toLowerCase();
 
+const collectDuplicateMetadataEntries = (
+    metadataArrayItems: readonly Readonly<
+        TSESTree.Expression | TSESTree.SpreadElement
+    >[],
+    programNode: Readonly<TSESTree.Program>
+): readonly TSESTree.ObjectExpression[] => {
+    const seenMetadataKeys = new Set<string>();
+    const duplicateMetadataEntries: TSESTree.ObjectExpression[] = [];
+
+    for (const metadataElement of metadataArrayItems) {
+        if (metadataElement.type !== AST_NODE_TYPES.ObjectExpression) {
+            continue;
+        }
+
+        const nameExpression = getObjectPropertyValueByName(
+            metadataElement,
+            "name"
+        );
+        const propertyExpression = getObjectPropertyValueByName(
+            metadataElement,
+            "property"
+        );
+        const metadataKeyExpression = nameExpression ?? propertyExpression;
+
+        if (metadataKeyExpression === null) {
+            continue;
+        }
+
+        const metadataKeyValue = getStaticStringValueFromExpressionOrIdentifier(
+            metadataKeyExpression,
+            programNode
+        );
+
+        if (metadataKeyValue === null) {
+            continue;
+        }
+
+        const normalizedMetadataKey = normalizeMetadataKey(metadataKeyValue);
+
+        if (normalizedMetadataKey.length === 0) {
+            continue;
+        }
+
+        if (setHas(seenMetadataKeys, normalizedMetadataKey)) {
+            duplicateMetadataEntries.push(metadataElement);
+            continue;
+        }
+
+        seenMetadataKeys.add(normalizedMetadataKey);
+    }
+
+    return duplicateMetadataEntries;
+};
+
 /** Rule module for `no-duplicate-theme-config-metadata-keys`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
@@ -79,57 +133,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         metadataArrayExpression.elements.filter(
                             isPresentArrayElement
                         );
-                    const seenMetadataKeys = new Set<string>();
-                    const duplicateMetadataEntries: TSESTree.ObjectExpression[] =
-                        [];
-
-                    for (const metadataElement of metadataArrayItems) {
-                        if (
-                            metadataElement.type !==
-                            AST_NODE_TYPES.ObjectExpression
-                        ) {
-                            continue;
-                        }
-
-                        const nameExpression = getObjectPropertyValueByName(
-                            metadataElement,
-                            "name"
+                    const duplicateMetadataEntries =
+                        collectDuplicateMetadataEntries(
+                            metadataArrayItems,
+                            programNode
                         );
-                        const propertyExpression = getObjectPropertyValueByName(
-                            metadataElement,
-                            "property"
-                        );
-                        const metadataKeyExpression =
-                            nameExpression ?? propertyExpression;
-
-                        if (metadataKeyExpression === null) {
-                            continue;
-                        }
-
-                        const metadataKeyValue =
-                            getStaticStringValueFromExpressionOrIdentifier(
-                                metadataKeyExpression,
-                                programNode
-                            );
-
-                        if (metadataKeyValue === null) {
-                            continue;
-                        }
-
-                        const normalizedMetadataKey =
-                            normalizeMetadataKey(metadataKeyValue);
-
-                        if (normalizedMetadataKey.length === 0) {
-                            continue;
-                        }
-
-                        if (setHas(seenMetadataKeys, normalizedMetadataKey)) {
-                            duplicateMetadataEntries.push(metadataElement);
-                            continue;
-                        }
-
-                        seenMetadataKeys.add(normalizedMetadataKey);
-                    }
 
                     if (duplicateMetadataEntries.length === 0) {
                         return;

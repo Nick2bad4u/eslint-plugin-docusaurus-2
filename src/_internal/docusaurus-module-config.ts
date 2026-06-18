@@ -18,6 +18,29 @@ export type DocusaurusTopLevelModuleArrayPropertyName = "plugins" | "themes";
 export type DocusaurusTopLevelModuleConfigurationEntry =
     DocusaurusPluginConfigurationEntry;
 
+const isMatchingModuleSpecifier = (
+    moduleSpecifier:
+        | Readonly<TSESTree.ArrayExpression["elements"][number]>
+        | undefined,
+    moduleName: string
+): moduleSpecifier is TSESTree.Literal =>
+    moduleSpecifier?.type === AST_NODE_TYPES.Literal &&
+    typeof moduleSpecifier.value === "string" &&
+    moduleSpecifier.value === moduleName;
+
+const getModuleOptionsObject = (
+    moduleOptions: Readonly<TSESTree.Expression>,
+    programNode?: Readonly<TSESTree.Program>
+): null | Readonly<TSESTree.ObjectExpression> =>
+    programNode === undefined
+        ? moduleOptions.type === AST_NODE_TYPES.ObjectExpression
+            ? moduleOptions
+            : null
+        : getObjectExpressionFromExpressionOrIdentifier(
+              moduleOptions,
+              programNode
+          );
+
 /** Find all module configurations declared under one top-level array. */
 export const findTopLevelModuleConfigurationsByName = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
@@ -57,11 +80,7 @@ export const findTopLevelModuleConfigurationsByName = (
 
         const [moduleSpecifier, moduleOptions] = element.elements;
 
-        if (
-            moduleSpecifier?.type !== AST_NODE_TYPES.Literal ||
-            typeof moduleSpecifier.value !== "string" ||
-            moduleSpecifier.value !== moduleName
-        ) {
+        if (!isMatchingModuleSpecifier(moduleSpecifier, moduleName)) {
             continue;
         }
 
@@ -80,15 +99,7 @@ export const findTopLevelModuleConfigurationsByName = (
         moduleEntries.push({
             node: element,
             optionsExpression: moduleOptions,
-            optionsObject:
-                programNode === undefined
-                    ? moduleOptions.type === AST_NODE_TYPES.ObjectExpression
-                        ? moduleOptions
-                        : null
-                    : getObjectExpressionFromExpressionOrIdentifier(
-                          moduleOptions,
-                          programNode
-                      ),
+            optionsObject: getModuleOptionsObject(moduleOptions, programNode),
         });
     }
 

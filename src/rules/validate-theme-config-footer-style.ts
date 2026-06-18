@@ -23,6 +23,11 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 const validFooterStyles = new Set(["dark", "light"]);
 
+type FooterStyleContext = TSESLint.RuleContext<
+    MessageIds,
+    typeof defaultOptions
+>;
+
 type FooterStyleSuggestion = NonNullable<
     Parameters<
         TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
@@ -69,6 +74,45 @@ const createSetFooterStyleSuggestion = (
               ),
     messageId: options.messageId,
 });
+
+const reportNormalizedFooterStyleIfNeeded = (
+    options: Readonly<{
+        context: Readonly<FooterStyleContext>;
+        staticStyle: null | string;
+        styleExpression: Readonly<TSESTree.Expression>;
+    }>
+): boolean => {
+    if (options.staticStyle === null) {
+        return false;
+    }
+
+    const normalizedStyle = options.staticStyle.trim().toLowerCase();
+
+    if (!setHas(validFooterStyles, normalizedStyle)) {
+        return false;
+    }
+
+    if (options.staticStyle === normalizedStyle) {
+        return true;
+    }
+
+    if (!canAutofixStringExpression(options.styleExpression)) {
+        return false;
+    }
+
+    reportWithOptionalFix({
+        context: options.context,
+        fix: (fixer) =>
+            fixer.replaceText(
+                options.styleExpression,
+                JSON.stringify(normalizedStyle)
+            ),
+        messageId: "validateThemeConfigFooterStyle",
+        node: options.styleExpression,
+    });
+
+    return true;
+};
 
 /** Rule module for `validate-theme-config-footer-style`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -123,35 +167,18 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             programNode
                         );
 
-                    if (staticStyle !== null) {
-                        const normalizedStyle = staticStyle
-                            .trim()
-                            .toLowerCase();
+                    if (
+                        reportNormalizedFooterStyleIfNeeded({
+                            context,
+                            staticStyle,
+                            styleExpression,
+                        })
+                    ) {
+                        return;
+                    }
 
-                        if (setHas(validFooterStyles, normalizedStyle)) {
-                            if (
-                                staticStyle === normalizedStyle ||
-                                !canAutofixStringExpression(styleExpression)
-                            ) {
-                                if (staticStyle === normalizedStyle) {
-                                    return;
-                                }
-                            } else {
-                                reportWithOptionalFix({
-                                    context,
-                                    fix: (fixer) =>
-                                        fixer.replaceText(
-                                            styleExpression,
-                                            JSON.stringify(normalizedStyle)
-                                        ),
-                                    messageId: "validateThemeConfigFooterStyle",
-                                    node: styleExpression,
-                                });
-
-                                return;
-                            }
-                        }
-                    } else if (
+                    if (
+                        staticStyle === null &&
                         !isStaticLiteralLikeExpression(styleExpression)
                     ) {
                         return;
