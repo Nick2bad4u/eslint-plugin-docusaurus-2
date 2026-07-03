@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-footer-style`.
@@ -28,11 +30,13 @@ type FooterStyleContext = TSESLint.RuleContext<
     typeof defaultOptions
 >;
 
-type FooterStyleSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type FooterStyleSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 type MessageIds =
     | "setFooterStyleDark"

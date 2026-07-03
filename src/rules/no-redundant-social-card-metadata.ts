@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-redundant-social-card-metadata`.
@@ -27,7 +29,7 @@ type MessageIds = "noRedundantSocialCardMetadata";
 const socialCardMetadataNames = new Set(["og:image", "twitter:image"]);
 
 const isPresentArrayElement = (
-    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
+    element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
 /** Rule module for `no-redundant-social-card-metadata`. */

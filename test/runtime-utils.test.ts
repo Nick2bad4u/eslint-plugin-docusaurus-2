@@ -21,8 +21,8 @@ describe("runtime-utils", () => {
 
         const objectValue = { a: 1, b: 2 };
 
-        expect(objectHasIn(objectValue, "toString")).toBeTruthy();
-        expect(objectHasIn(objectValue, "a")).toBeTruthy();
-        expect(objectHasIn(null, "a")).toBeFalsy();
+        expect(objectHasIn(objectValue, "toString")).toBe(true);
+        expect(objectHasIn(objectValue, "a")).toBe(true);
+        expect(objectHasIn(null, "a")).toBe(false);
     });
 });

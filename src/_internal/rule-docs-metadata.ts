@@ -275,7 +275,7 @@ const getRuleDocsContract = (
         );
     }
 
-    const normalizedRecommended = requireBoolean(
+    const isNormalizedRecommended = requireBoolean(
         ruleName,
         recommended,
         "recommended"
@@ -318,8 +318,8 @@ const getRuleDocsContract = (
         configs: normalizedConfigNames,
         description: normalizedDescription,
         presets: normalizedPresetNames,
-        recommended: normalizedRecommended,
-        ...(isDefined(requiresTypeChecking) ? { requiresTypeChecking } : {}),
+        recommended: isNormalizedRecommended,
+        ...(isDefined(requiresTypeChecking) && { requiresTypeChecking }),
         ruleId,
         ruleNumber: normalizedRuleNumber,
         url: normalizedUrl,

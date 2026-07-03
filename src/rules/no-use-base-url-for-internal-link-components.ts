@@ -127,15 +127,14 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         reportWithOptionalFix({
                             context,
-                            fix(fixer) {
-                                return fixer.replaceText(
+                            fix: (fixer) =>
+                                fixer.replaceText(
                                     toAttributeValue,
                                     createJsxStringLiteralText(
                                         toRouteValue,
                                         '"'
                                     )
-                                );
-                            },
+                                ),
                             messageId: "noUseBaseUrlForInternalLinkComponent",
                             node: toAttributeName,
                         });
@@ -158,18 +157,13 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return [
-                                fixer.replaceText(hrefAttributeName, "to"),
-                                fixer.replaceText(
-                                    hrefAttributeValue,
-                                    createJsxStringLiteralText(
-                                        hrefRouteValue,
-                                        '"'
-                                    )
-                                ),
-                            ];
-                        },
+                        fix: (fixer) => [
+                            fixer.replaceText(hrefAttributeName, "to"),
+                            fixer.replaceText(
+                                hrefAttributeValue,
+                                createJsxStringLiteralText(hrefRouteValue, '"')
+                            ),
+                        ],
                         messageId: "noUseBaseUrlForInternalLinkComponent",
                         node: hrefAttributeName,
                     });

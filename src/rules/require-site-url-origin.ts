@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `require-site-url-origin`.
@@ -30,11 +32,13 @@ const localhostHostNames = new Set([
 
 type MessageIds = "normalizeSiteUrlOrigin" | "requireSiteUrlOrigin";
 
-type SiteUrlSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type SiteUrlSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>
@@ -185,11 +189,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     context.report({
                         messageId: "requireSiteUrlOrigin",
                         node: siteUrlExpression,
-                        ...(suggestions === undefined
-                            ? {}
-                            : {
-                                  suggest: suggestions,
-                              }),
+                        ...(suggestions !== undefined && {
+                            suggest: suggestions,
+                        }),
                     });
                 },
             };

@@ -97,6 +97,6 @@ describe("rule-catalog", () => {
 
     it("reports valid baseline catalog integrity", () => {
         expect.hasAssertions();
-        expect(validateRuleCatalogIntegrity()).toBeTruthy();
+        expect(validateRuleCatalogIntegrity()).toBe(true);
     });
 });

@@ -99,12 +99,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     if (typeProperty === null) {
                         reportWithOptionalFix({
                             context,
-                            fix(fixer) {
-                                return createInsertDocTypeFix(
-                                    fixer,
-                                    linkObject
-                                );
-                            },
+                            fix: (fixer) =>
+                                createInsertDocTypeFix(fixer, linkObject),
                             messageId: "requireDocLinkType",
                             node: node.key,
                         });
@@ -122,12 +118,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return fixer.replaceText(
-                                typeProperty.value,
-                                '"doc"'
-                            );
-                        },
+                        fix: (fixer) =>
+                            fixer.replaceText(typeProperty.value, '"doc"'),
                         messageId: "preferDocLinkType",
                         node: typeProperty.value,
                     });

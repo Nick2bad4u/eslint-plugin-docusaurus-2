@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `prefer-use-base-url-for-static-assets`.
@@ -28,11 +30,13 @@ const assetPathPattern = /^\/(?:files?|img)\//v;
 
 type MessageIds = "preferUseBaseUrlForStaticAssets" | "wrapWithUseBaseUrl";
 
-type StaticAssetSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type StaticAssetSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const isDocusaurusSiteComponentOrPageFilePath = (filePath: string): boolean =>
     isDocusaurusSiteComponentFilePath(filePath) ||
@@ -136,11 +140,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         context.report({
                             messageId: "preferUseBaseUrlForStaticAssets",
                             node: attribute.name,
-                            ...(isDefined(suggestions)
-                                ? {
-                                      suggest: suggestions,
-                                  }
-                                : {}),
+                            ...(isDefined(suggestions) && {
+                                suggest: suggestions,
+                            }),
                         });
                     }
                 },

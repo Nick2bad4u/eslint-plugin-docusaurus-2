@@ -3,6 +3,7 @@
  * ESLint rule implementation for `require-theme-mermaid-when-markdown-mermaid-enabled`.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { ArrayElement } from "type-fest";
 
 import { arrayAt, arrayFirst, isPresent } from "ts-extras";
 
@@ -25,11 +26,13 @@ const themeMermaidModuleName = "@docusaurus/theme-mermaid" as const;
 type MessageIds =
     | "addThemeMermaidToThemes"
     | "requireThemeMermaidWhenMarkdownMermaidEnabled";
-type RuleSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type RuleSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const createAppendModuleEntryFix = (
     fixer: Readonly<TSESLint.RuleFixer>,
@@ -63,7 +66,7 @@ const createInsertTopLevelArrayPropertyFix = (
 
     return createInsertObjectPropertyFix({
         fixer,
-        indentation: "    ",
+        indentation: " ".repeat(4),
         objectExpression: configObjectExpression,
         propertyText,
         sourceCode,

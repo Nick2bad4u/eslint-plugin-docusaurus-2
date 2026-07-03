@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `validate-navbar-item-position`.
@@ -26,11 +28,13 @@ type MessageIds =
     | "setNavbarItemPositionRight"
     | "validateNavbarItemPosition";
 
-type NavbarPositionSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type NavbarPositionSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>

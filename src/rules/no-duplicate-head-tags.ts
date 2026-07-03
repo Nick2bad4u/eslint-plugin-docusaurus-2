@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-head-tags`.
@@ -26,7 +28,7 @@ const defaultOptions = [] as const;
 type MessageIds = "noDuplicateHeadTags";
 
 const isPresentArrayElement = (
-    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
+    element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
 const getExpressionSignature = (

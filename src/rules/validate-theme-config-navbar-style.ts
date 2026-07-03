@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-navbar-style`.
@@ -33,11 +35,13 @@ type NavbarStyleContext = TSESLint.RuleContext<
     typeof defaultOptions
 >;
 
-type NavbarStyleSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type NavbarStyleSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const canAutofixStringExpression = (
     expression: Readonly<TSESTree.Expression>

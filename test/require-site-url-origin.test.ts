@@ -64,7 +64,7 @@ ruleTester.run(
             },
             {
                 code: [
-                    'const siteUrl = "http://example.com/docs/";',
+                    'const siteUrl = "https://example.com/docs/";',
                     "",
                     "export default {",
                     "    url: siteUrl,",
@@ -77,7 +77,7 @@ ruleTester.run(
                             {
                                 messageId: "normalizeSiteUrlOrigin",
                                 output: [
-                                    'const siteUrl = "http://example.com/docs/";',
+                                    'const siteUrl = "https://example.com/docs/";',
                                     "",
                                     "export default {",
                                     '    url: "https://example.com",',
@@ -136,7 +136,7 @@ ruleTester.run(
             {
                 code: [
                     "export default {",
-                    '    url: "http://example.com/docs/",',
+                    '    url: "https://example.com/docs/",',
                     "};",
                 ].join("\n"),
                 filename: "src/config.ts",

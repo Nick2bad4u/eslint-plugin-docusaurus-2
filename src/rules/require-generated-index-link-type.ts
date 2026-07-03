@@ -125,12 +125,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     if (typeProperty === null) {
                         reportWithOptionalFix({
                             context,
-                            fix(fixer) {
-                                return createInsertGeneratedIndexTypeFix(
+                            fix: (fixer) =>
+                                createInsertGeneratedIndexTypeFix(
                                     fixer,
                                     linkObject
-                                );
-                            },
+                                ),
                             messageId: "requireGeneratedIndexType",
                             node: node.key,
                         });
@@ -148,12 +147,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return fixer.replaceText(
+                        fix: (fixer) =>
+                            fixer.replaceText(
                                 typeProperty.value,
                                 '"generated-index"'
-                            );
-                        },
+                            ),
                         messageId: "preferGeneratedIndexType",
                         node: typeProperty.value,
                     });

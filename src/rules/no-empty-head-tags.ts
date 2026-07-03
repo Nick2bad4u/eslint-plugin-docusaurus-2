@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-empty-head-tags`.
@@ -25,7 +27,7 @@ const defaultOptions = [] as const;
 type MessageIds = "noEmptyHeadTags";
 
 const isPresentArrayElement = (
-    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
+    element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
 const hasMeaningfulStaticAttributes = (

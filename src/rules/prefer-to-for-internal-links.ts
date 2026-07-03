@@ -92,12 +92,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return fixer.replaceText(
+                        fix: (fixer) =>
+                            fixer.replaceText(
                                 node.key,
                                 getReplacementKeyText(node.key)
-                            );
-                        },
+                            ),
                         messageId: "preferToForInternalLinks",
                         node: node.key,
                     });

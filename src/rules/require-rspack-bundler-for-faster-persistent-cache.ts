@@ -91,7 +91,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         fasterObject,
                         "rspackBundler"
                     );
-                    const rspackBundlerEnabled =
+                    const isRspackBundlerEnabled =
                         rspackBundlerProperty !== null &&
                         getStaticBooleanValueFromExpressionOrIdentifier(
                             getObjectPropertyValueExpression(
@@ -100,7 +100,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             programNode
                         ) === true;
 
-                    if (rspackBundlerEnabled) {
+                    if (isRspackBundlerEnabled) {
                         return;
                     }
 
@@ -109,7 +109,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             rspackBundlerProperty === null
                                 ? createInsertObjectPropertyFix({
                                       fixer,
-                                      indentation: "            ",
+                                      indentation: " ".repeat(12),
                                       objectExpression: fasterObject,
                                       propertyText: "rspackBundler: true",
                                       sourceCode: context.sourceCode,

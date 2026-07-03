@@ -1,3 +1,5 @@
+import type { ArrayElement, ArrayValues } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-color-mode-switch-flags`.
@@ -34,11 +36,13 @@ type ColorModeFlagContext = TSESLint.RuleContext<
     typeof defaultOptions
 >;
 
-type ColorModeFlagSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type ColorModeFlagSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 type MessageIds =
     | "setColorModeFlagFalse"
@@ -104,7 +108,7 @@ const shouldIgnoreNonBooleanFlagExpression = (
 const reportColorModeFlagIfNeeded = (
     options: Readonly<{
         context: Readonly<ColorModeFlagContext>;
-        flagName: (typeof booleanColorModeFieldNames)[number];
+        flagName: ArrayValues<typeof booleanColorModeFieldNames>;
         flagProperty: Readonly<TSESTree.Property>;
         programNode: Readonly<TSESTree.Program>;
     }>

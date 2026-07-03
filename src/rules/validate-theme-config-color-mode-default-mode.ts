@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `validate-theme-config-color-mode-default-mode`.
@@ -31,11 +33,13 @@ type ColorModeDefaultModeContext = TSESLint.RuleContext<
     typeof defaultOptions
 >;
 
-type ColorModeDefaultModeSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type ColorModeDefaultModeSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 type MessageIds =
     | "requireColorModeDefaultMode"

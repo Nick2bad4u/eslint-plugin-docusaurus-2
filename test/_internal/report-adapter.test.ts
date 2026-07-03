@@ -46,7 +46,7 @@ describe(omitAutofixFromReportDescriptor, () => {
         const result = omitAutofixFromReportDescriptor(descriptor);
 
         expect(result).not.toBe(descriptor);
-        expect("fix" in result).toBeFalsy();
+        expect("fix" in result).toBe(false);
         expect(result.suggest).toHaveLength(1);
     });
 
@@ -61,8 +61,8 @@ describe(omitAutofixFromReportDescriptor, () => {
 
         const result = omitAutofixFromReportDescriptor(descriptor);
 
-        expect(Object.hasOwn(descriptor, "fix")).toBeTruthy();
-        expect(Object.hasOwn(result, "fix")).toBeFalsy();
+        expect(Object.hasOwn(descriptor, "fix")).toBe(true);
+        expect(Object.hasOwn(result, "fix")).toBe(false);
     });
 
     it("preserves non-function fix values", () => {

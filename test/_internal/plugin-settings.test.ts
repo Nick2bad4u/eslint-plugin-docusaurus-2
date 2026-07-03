@@ -53,8 +53,8 @@ describe(registerProgramSettingsForContext, () => {
 
         const parsedSettings = registerProgramSettingsForContext(context);
 
-        expect(parsedSettings.disableAllAutofixes).toBeFalsy();
-        expect(Object.isFrozen(parsedSettings)).toBeTruthy();
+        expect(parsedSettings.disableAllAutofixes).toBe(false);
+        expect(Object.isFrozen(parsedSettings)).toBe(true);
     });
 
     it("reads disableAllAutofixes from the docusaurus-2 settings key", () => {
@@ -72,7 +72,7 @@ describe(registerProgramSettingsForContext, () => {
 
         const parsedSettings = registerProgramSettingsForContext(context);
 
-        expect(parsedSettings.disableAllAutofixes).toBeTruthy();
+        expect(parsedSettings.disableAllAutofixes).toBe(true);
     });
 
     it("reuses cached settings for the same program", () => {
@@ -100,7 +100,7 @@ describe(registerProgramSettingsForContext, () => {
         const secondSettings = registerProgramSettingsForContext(secondContext);
 
         expect(secondSettings).toBe(firstSettings);
-        expect(secondSettings.disableAllAutofixes).toBeTruthy();
+        expect(secondSettings.disableAllAutofixes).toBe(true);
     });
 
     it("treats invalid plugin settings as disabled", () => {
@@ -116,6 +116,6 @@ describe(registerProgramSettingsForContext, () => {
 
         const parsedSettings = registerProgramSettingsForContext(context);
 
-        expect(parsedSettings.disableAllAutofixes).toBeFalsy();
+        expect(parsedSettings.disableAllAutofixes).toBe(false);
     });
 });

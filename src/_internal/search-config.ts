@@ -1,3 +1,5 @@
+import type { ArrayValues } from "type-fest";
+
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 
 /**
@@ -69,8 +71,9 @@ export type EffectiveSearchThemeConfigProperty = Readonly<{
     property: Readonly<TSESTree.Property>;
 }>;
 /** Union of supported community local-search module names. */
-export type LocalSearchPluginModuleName =
-    (typeof localSearchPluginModuleNames)[number];
+export type LocalSearchPluginModuleName = ArrayValues<
+    typeof localSearchPluginModuleNames
+>;
 /** Named configured plugin/theme entry returned by shared search helpers. */
 export type NamedPluginConfigurationEntry<PluginName extends string = string> =
     Readonly<{

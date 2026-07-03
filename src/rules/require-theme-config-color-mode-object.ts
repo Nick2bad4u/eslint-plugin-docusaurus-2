@@ -3,6 +3,7 @@
  * ESLint rule implementation for `require-theme-config-color-mode-object`.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { ArrayElement } from "type-fest";
 
 import { arrayFirst } from "ts-extras";
 
@@ -15,11 +16,13 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 
-type ColorModeObjectSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type ColorModeObjectSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 type MessageIds =
     | "insertColorModeDark"

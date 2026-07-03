@@ -146,11 +146,11 @@ describe("config-paths", () => {
             doesResolvedPathExist(
                 repoPath("docs", "docusaurus", "src", "css", "custom.css")
             )
-        ).toBeTruthy();
+        ).toBe(true);
         expect(
             doesResolvedPathExist(
                 repoPath("docs", "docusaurus", "src", "css", "missing.css")
             )
-        ).toBeFalsy();
+        ).toBe(false);
     });
 });

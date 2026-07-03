@@ -3,6 +3,8 @@
  * Shared preset/config reference constants and type guards.
  */
 
+import type { ArrayValues } from "type-fest";
+
 import { objectFromEntries, objectHasOwn } from "ts-extras";
 
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
@@ -28,7 +30,7 @@ export type AdditionalConfigMetadata = Readonly<{
 }>;
 
 /** Additional opt-in config key type exposed through `plugin.configs`. */
-export type AdditionalConfigName = (typeof additionalConfigNames)[number];
+export type AdditionalConfigName = ArrayValues<typeof additionalConfigNames>;
 
 /** Metadata contract shared across preset wiring, docs, and README rendering. */
 export type PresetConfigMetadata = Readonly<{
@@ -39,7 +41,7 @@ export type PresetConfigMetadata = Readonly<{
 }>;
 
 /** Canonical flat-config preset key type exposed through `plugin.configs`. */
-export type PresetConfigName = (typeof presetConfigNames)[number];
+export type PresetConfigName = ArrayValues<typeof presetConfigNames>;
 
 /** Canonical metadata for every exported opt-in config key. */
 export const additionalConfigMetadataByName: Readonly<

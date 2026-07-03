@@ -39,7 +39,7 @@ const createInsertMarkdownFormatFix = (
 
     return createInsertObjectPropertyFix({
         fixer,
-        indentation: "        ",
+        indentation: " ".repeat(8),
         objectExpression: markdownObjectExpression,
         propertyText: `format: "${detectMarkdownFormat}"`,
         sourceCode,

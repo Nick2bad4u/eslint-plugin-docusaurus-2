@@ -118,7 +118,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                           ),
                                           createInsertObjectPropertyFix({
                                               fixer,
-                                              indentation: "    ",
+                                              indentation: " ".repeat(4),
                                               objectExpression:
                                                   configObjectExpression,
                                               propertyText,

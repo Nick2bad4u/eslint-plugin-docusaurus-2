@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-plugin-pwa-head-tags`.
@@ -28,7 +30,7 @@ const pluginPwaModuleName = "@docusaurus/plugin-pwa" as const;
 type MessageIds = "noDuplicatePluginPwaHeadTags";
 
 const isPresentArrayElement = (
-    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
+    element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
 const getHeadTagSignature = (

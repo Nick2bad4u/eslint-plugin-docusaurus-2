@@ -32,7 +32,7 @@ const createInsertTopLevelMarkdownFix = (
 
     return createInsertObjectPropertyFix({
         fixer,
-        indentation: "    ",
+        indentation: " ".repeat(4),
         objectExpression: configObjectExpression,
         propertyText,
         sourceCode,
@@ -53,7 +53,7 @@ const createInsertMarkdownMermaidFix = (
 
     return createInsertObjectPropertyFix({
         fixer,
-        indentation: "        ",
+        indentation: " ".repeat(8),
         objectExpression: markdownObject,
         propertyText,
         sourceCode,

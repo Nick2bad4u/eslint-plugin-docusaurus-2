@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-deprecated-google-analytics`.
@@ -28,11 +30,13 @@ type MessageIds =
     | "noDeprecatedGoogleAnalytics"
     | "renamePluginToGoogleGtag"
     | "renamePresetOptionToGtag";
-type RuleSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type RuleSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const createPropertyKeyReplacementText = (
     property: Readonly<TSESTree.Property>,

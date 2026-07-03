@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `require-head-tag-tag-name`.
@@ -23,11 +25,13 @@ const defaultOptions = [] as const;
 
 type HeadTagName = "link" | "meta" | "script";
 
-type HeadTagSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type HeadTagSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 type HeadTagSuggestionMessageId =
     | "setHeadTagTagNameLink"
     | "setHeadTagTagNameMeta"

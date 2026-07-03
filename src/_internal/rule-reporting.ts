@@ -77,8 +77,8 @@ export const reportWithOptionalFix = <
     node: TSESTree.Node;
 }>): void => {
     const descriptor: ReportDescriptor<MessageIds, Options> = {
-        ...(data === undefined ? {} : { data }),
-        ...(fix === null ? {} : { fix }),
+        ...(data !== undefined && { data }),
+        ...(fix !== null && { fix }),
         messageId,
         node,
     };
@@ -148,7 +148,7 @@ export const reportResolvedAutofixOrSuggestionOutcome = <
         reportWithPluginPolicy({
             context,
             descriptor: {
-                ...(data === undefined ? {} : { data }),
+                ...(data !== undefined && { data }),
                 messageId,
                 node,
                 suggest: [

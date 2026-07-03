@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-navbar-item-destinations`.
@@ -27,11 +29,13 @@ type MessageIds =
     | "noDuplicateNavbarItemDestinations"
     | "removeDuplicateNavbarItem";
 
-type NavbarDestinationSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type NavbarDestinationSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const normalizeDestination = (destination: string): string =>
     destination.trim();

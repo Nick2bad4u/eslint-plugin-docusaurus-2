@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-theme-config-metadata-keys`.
@@ -26,7 +28,7 @@ const defaultOptions = [] as const;
 type MessageIds = "noDuplicateThemeConfigMetadataKeys";
 
 const isPresentArrayElement = (
-    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
+    element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
 const normalizeMetadataKey = (value: string): string =>

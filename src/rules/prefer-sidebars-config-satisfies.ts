@@ -62,16 +62,15 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return fixer.replaceText(
+                        fix: (fixer) =>
+                            fixer.replaceText(
                                 exportDeclaration,
                                 createSatisfiesReplacement(
                                     context,
                                     exportDeclaration.expression,
                                     exportDeclaration.typeAnnotation
                                 )
-                            );
-                        },
+                            ),
                         messageId: "preferSidebarsConfigSatisfies",
                         node: exportDeclaration.typeAnnotation,
                     });
@@ -96,18 +95,16 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return [
-                                fixer.remove(typeAnnotation),
-                                fixer.insertTextAfter(
-                                    initializer,
-                                    createSatisfiesText(
-                                        context,
-                                        typeAnnotation.typeAnnotation
-                                    )
-                                ),
-                            ];
-                        },
+                        fix: (fixer) => [
+                            fixer.remove(typeAnnotation),
+                            fixer.insertTextAfter(
+                                initializer,
+                                createSatisfiesText(
+                                    context,
+                                    typeAnnotation.typeAnnotation
+                                )
+                            ),
+                        ],
                         messageId: "preferSidebarsConfigSatisfies",
                         node: typeAnnotation,
                     });

@@ -151,9 +151,9 @@ export const doesResolvedPathExist = (resolvedPath: string): boolean => {
         return cachedExists;
     }
 
-    const exists = ts.sys.fileExists(normalizedPath);
+    const isExists = ts.sys.fileExists(normalizedPath);
 
-    existenceCache.set(normalizedPath, exists);
+    existenceCache.set(normalizedPath, isExists);
 
-    return exists;
+    return isExists;
 };

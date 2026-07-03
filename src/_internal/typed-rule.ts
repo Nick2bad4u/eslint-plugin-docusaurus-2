@@ -129,9 +129,9 @@ export const createTypedRule: PluginRuleCreator = (ruleDefinition) => {
         },
         meta: {
             ...createdRule.meta,
-            ...(isDefined(metaDefaultOptions)
-                ? { defaultOptions: metaDefaultOptions }
-                : {}),
+            ...(isDefined(metaDefaultOptions) && {
+                defaultOptions: metaDefaultOptions,
+            }),
             docs: docsWithCatalog,
         },
         name: ruleDefinition.name,

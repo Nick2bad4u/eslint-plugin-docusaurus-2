@@ -104,14 +104,13 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                     validationSetting.defaultSeverity,
                                 settingName: validationSetting.settingName,
                             },
-                            fix(fixer) {
-                                return fixer.replaceText(
+                            fix: (fixer) =>
+                                fixer.replaceText(
                                     property.value,
                                     JSON.stringify(
                                         validationSetting.defaultSeverity
                                     )
-                                );
-                            },
+                                ),
                             messageId: "avoidIgnoredValidation",
                             node: property.value,
                         });

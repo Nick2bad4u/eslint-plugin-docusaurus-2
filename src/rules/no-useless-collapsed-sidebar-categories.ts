@@ -70,8 +70,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return createRemoveCommaSeparatedItemsFixes(
+                        fix: (fixer) =>
+                            createRemoveCommaSeparatedItemsFixes(
                                 fixer,
                                 context.sourceCode,
                                 {
@@ -79,8 +79,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                     items: node.properties,
                                     itemsToRemove: [collapsedProperty],
                                 }
-                            );
-                        },
+                            ),
                         messageId: "noUselessCollapsedSidebarCategory",
                         node: collapsedProperty.key,
                     });

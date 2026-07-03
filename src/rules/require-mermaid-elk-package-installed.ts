@@ -70,8 +70,8 @@ const usesMermaidElkLayout = (blockContent: string): boolean => {
 /** Rule module for `require-mermaid-elk-package-installed`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
-        create(context) {
-            return {
+        create: (context) =>
+            ({
                 Program(): void {
                     const text = context.sourceCode.getText();
                     const locator = createTextSourceLocator(text);
@@ -103,8 +103,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         });
                     }
                 },
-            } satisfies TSESLint.RuleListener;
-        },
+            }) satisfies TSESLint.RuleListener,
         defaultOptions,
         meta: {
             deprecated: false,

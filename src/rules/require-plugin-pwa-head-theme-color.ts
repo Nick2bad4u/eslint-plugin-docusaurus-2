@@ -35,7 +35,7 @@ const hasMatchingHeadTagEntry = (
             continue;
         }
 
-        const matchesEntry = objectEntries(matcher).every(
+        const isMatchesEntry = objectEntries(matcher).every(
             ([propertyName, expectedValue]) => {
                 const propertyValue = getObjectPropertyValueByName(
                     element,
@@ -52,7 +52,7 @@ const hasMatchingHeadTagEntry = (
             }
         );
 
-        if (matchesEntry) {
+        if (isMatchesEntry) {
             return true;
         }
     }

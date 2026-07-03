@@ -66,9 +66,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return fixer.replaceText(hrefAttribute.name, "to");
-                        },
+                        fix: (fixer) =>
+                            fixer.replaceText(hrefAttribute.name, "to"),
                         messageId: "preferToForInternalLinkComponent",
                         node: hrefAttribute.name,
                     });

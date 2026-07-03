@@ -21,10 +21,10 @@ const expectedPresetDocs = [
     "strict.md",
 ] as const;
 const legacyBrandingTokens = [
-    "\u0074\u0073\u002D\u0065\u0078\u0074\u0072\u0061\u0073",
-    "\u0074\u0079\u0070\u0065\u002D\u0066\u0065\u0073\u0074",
-    "\u0054\u0079\u0070\u0065\u0046\u0065\u0073\u0074",
-    "\u0074\u0079\u0070\u0065\u0066\u0065\u0073\u0074",
+    "\u{74}\u{73}\u{2D}\u{65}\u{78}\u{74}\u{72}\u{61}\u{73}",
+    "\u{74}\u{79}\u{70}\u{65}\u{2D}\u{66}\u{65}\u{73}\u{74}",
+    "\u{54}\u{79}\u{70}\u{65}\u{46}\u{65}\u{73}\u{74}",
+    "\u{74}\u{79}\u{70}\u{65}\u{66}\u{65}\u{73}\u{74}",
 ] as const;
 
 const supportedRuleDocExtensions = [".md", ".mdx"] as const;
@@ -124,7 +124,7 @@ describe("docs/rules integrity", () => {
 
             expect(
                 legacyBrandingTokens.some((token) => markdown.includes(token))
-            ).toBeFalsy();
+            ).toBe(false);
         }
     });
 });

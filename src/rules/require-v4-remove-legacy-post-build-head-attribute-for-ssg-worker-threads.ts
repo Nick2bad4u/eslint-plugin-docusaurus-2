@@ -110,7 +110,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                   v4Object,
                                   requiredV4FlagName
                               );
-                    const requiredFlagEnabled =
+                    const isRequiredFlagEnabled =
                         requiredFlagProperty !== null &&
                         getStaticBooleanValueFromExpressionOrIdentifier(
                             getObjectPropertyValueExpression(
@@ -119,7 +119,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             programNode
                         ) === true;
 
-                    if (requiredFlagEnabled) {
+                    if (isRequiredFlagEnabled) {
                         return;
                     }
 
@@ -128,7 +128,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             if (v4Object === null) {
                                 return createInsertObjectPropertyFix({
                                     fixer,
-                                    indentation: "        ",
+                                    indentation: " ".repeat(8),
                                     objectExpression: futureObject,
                                     propertyText: `v4: { ${requiredV4FlagName}: true }`,
                                     sourceCode: context.sourceCode,
@@ -138,7 +138,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             return requiredFlagProperty === null
                                 ? createInsertObjectPropertyFix({
                                       fixer,
-                                      indentation: "            ",
+                                      indentation: " ".repeat(12),
                                       objectExpression: v4Object,
                                       propertyText: `${requiredV4FlagName}: true`,
                                       sourceCode: context.sourceCode,

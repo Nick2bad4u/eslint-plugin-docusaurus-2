@@ -39,18 +39,14 @@ const createTextProgramAst = (code: string): TSESTree.Program => {
 
 /** Minimal parser object for text-based Markdown/MDX upgrade rules. */
 const textContentParser: TextContentParser = {
-    parse(code) {
-        return createTextProgramAst(code);
-    },
-    parseForESLint(code) {
-        return {
-            ast: createTextProgramAst(code),
-            services: {},
-            visitorKeys: {
-                Program: [],
-            },
-        };
-    },
+    parse: (code) => createTextProgramAst(code),
+    parseForESLint: (code) => ({
+        ast: createTextProgramAst(code),
+        services: {},
+        visitorKeys: {
+            Program: [],
+        },
+    }),
 };
 
 export default textContentParser;

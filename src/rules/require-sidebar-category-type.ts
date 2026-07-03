@@ -76,13 +76,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     if (typeProperty === null) {
                         reportWithOptionalFix({
                             context,
-                            fix(fixer) {
-                                return createInsertCategoryTypeFix(
+                            fix: (fixer) =>
+                                createInsertCategoryTypeFix(
                                     fixer,
                                     context.sourceCode,
                                     node
-                                );
-                            },
+                                ),
                             messageId: "requireSidebarCategoryType",
                             node,
                         });
@@ -100,12 +99,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     reportWithOptionalFix({
                         context,
-                        fix(fixer) {
-                            return fixer.replaceText(
-                                typeProperty.value,
-                                '"category"'
-                            );
-                        },
+                        fix: (fixer) =>
+                            fixer.replaceText(typeProperty.value, '"category"'),
                         messageId: "preferSidebarCategoryType",
                         node: typeProperty.value,
                     });

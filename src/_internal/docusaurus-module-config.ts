@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 import { AST_NODE_TYPES, type TSESTree } from "@typescript-eslint/utils";
 import { isPresent } from "ts-extras";
 
@@ -20,7 +22,7 @@ export type DocusaurusTopLevelModuleConfigurationEntry =
 
 const isMatchingModuleSpecifier = (
     moduleSpecifier:
-        | Readonly<TSESTree.ArrayExpression["elements"][number]>
+        | Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
         | undefined,
     moduleName: string
 ): moduleSpecifier is TSESTree.Literal =>

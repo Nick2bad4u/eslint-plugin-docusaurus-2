@@ -4,13 +4,19 @@ import type { ESLint, Linter } from "eslint";
  * @packageDocumentation
  * Public plugin entrypoint for eslint-plugin-docusaurus-2 exports and preset wiring.
  */
-import type { Except } from "type-fest";
+import type { ArrayValues, Except } from "type-fest";
 
 import typeScriptParser from "@typescript-eslint/parser";
-import { isDefined, isEmpty, objectEntries, safeCastTo } from "ts-extras";
+import {
+    isDefined,
+    isEmpty,
+    keyIn,
+    objectEntries,
+    safeCastTo,
+} from "ts-extras";
 
 import type { AdditionalConfigName } from "./_internal/preset-config-references.js";
-import type { UnknownArray } from "./_internal/types.js";
+import type { UnknownArray, UnknownRecord } from "./_internal/types.js";
 
 import packageJson from "../package.json" with { type: "json" };
 import {
@@ -48,7 +54,7 @@ type Docusaurus2ConfigName =
     | Docusaurus2PresetConfigName;
 
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
-type Docusaurus2PresetConfigName = (typeof presetConfigNames)[number];
+type Docusaurus2PresetConfigName = ArrayValues<typeof presetConfigNames>;
 
 /** Internal alias for flat config objects handled by preset builders. */
 type FlatConfig = Linter.Config;
@@ -68,7 +74,13 @@ const getPackageVersion = (pkg: unknown): string => {
         return "0.0.0";
     }
 
-    const version = Reflect.get(pkg, "version");
+    const pkgRecord = pkg as UnknownRecord;
+
+    if (!keyIn(pkgRecord, "version")) {
+        return "0.0.0";
+    }
+
+    const { version } = pkgRecord;
 
     return typeof version === "string" ? version : "0.0.0";
 };

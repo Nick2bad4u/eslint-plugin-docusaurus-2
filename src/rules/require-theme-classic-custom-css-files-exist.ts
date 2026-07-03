@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `require-theme-classic-custom-css-files-exist`.
@@ -26,7 +28,7 @@ const defaultOptions = [] as const;
 type MessageIds = "requireThemeClassicCustomCssFilesExist";
 
 const isPresentArrayElement = (
-    element: Readonly<TSESTree.ArrayExpression["elements"][number]>
+    element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
 /** Rule module for `require-theme-classic-custom-css-files-exist`. */

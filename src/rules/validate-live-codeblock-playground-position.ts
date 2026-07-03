@@ -3,6 +3,7 @@
  * ESLint rule implementation for `validate-live-codeblock-playground-position`.
  */
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
+import type { ArrayElement, ArrayValues } from "type-fest";
 
 import { arrayIncludes } from "ts-extras";
 
@@ -22,12 +23,14 @@ type MessageIds =
     | "setPlaygroundPositionBottom"
     | "setPlaygroundPositionTop"
     | "validateLiveCodeblockPlaygroundPosition";
-type PlaygroundPosition = (typeof validPlaygroundPositions)[number];
-type RuleSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type PlaygroundPosition = ArrayValues<typeof validPlaygroundPositions>;
+type RuleSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const createSetPlaygroundPositionSuggestion = (
     options: Readonly<{

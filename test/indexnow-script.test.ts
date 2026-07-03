@@ -250,7 +250,7 @@ describe("indexnow script helpers", () => {
                 403,
                 '{"errorCode":"SiteVerificationNotCompleted","message":"Site Verification is not completed."}'
             )
-        ).toBeTruthy();
+        ).toBe(true);
     });
 
     it("does not mark unrelated IndexNow failures as retryable", () => {
@@ -260,9 +260,9 @@ describe("indexnow script helpers", () => {
                 403,
                 '{"errorCode":"Forbidden","message":"Some other failure."}'
             )
-        ).toBeFalsy();
+        ).toBe(false);
         expect(
             isIndexNowVerificationPendingResponse(422, "unprocessable entity")
-        ).toBeFalsy();
+        ).toBe(false);
     });
 });

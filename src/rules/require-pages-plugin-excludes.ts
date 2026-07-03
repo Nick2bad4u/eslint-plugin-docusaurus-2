@@ -228,8 +228,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                     ", "
                                 ),
                             },
-                            fix(fixer) {
-                                return excludeArrayExpression === null
+                            fix: (fixer) =>
+                                excludeArrayExpression === null
                                     ? createInsertExcludePropertyFix(
                                           fixer,
                                           pagesOptionsObject,
@@ -239,8 +239,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                                           fixer,
                                           excludeArrayExpression,
                                           missingPatterns
-                                      );
-                            },
+                                      ),
                             messageId: "requirePagesPluginExcludes",
                             node: includeArrayExpression,
                         });

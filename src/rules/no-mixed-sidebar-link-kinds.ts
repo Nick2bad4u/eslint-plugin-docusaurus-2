@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-mixed-sidebar-link-kinds`.
@@ -36,11 +38,13 @@ type MessageIds =
     | "removeDocIdFromGeneratedIndexLink"
     | "removeGeneratedIndexMetadataFromDocLink";
 
-type MixedSidebarLinkKindSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type MixedSidebarLinkKindSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 /** Rule module for `no-mixed-sidebar-link-kinds`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -153,11 +157,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     context.report({
                         messageId: "noMixedSidebarLinkKinds",
                         node: idProperty.key,
-                        ...(suggestions === undefined
-                            ? {}
-                            : {
-                                  suggest: suggestions,
-                              }),
+                        ...(suggestions !== undefined && {
+                            suggest: suggestions,
+                        }),
                     });
                 },
             };

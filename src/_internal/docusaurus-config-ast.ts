@@ -77,12 +77,12 @@ const hasPathSegmentSequence = (
         startIndex <= pathSegments.length - segmentSequence.length;
         startIndex += 1
     ) {
-        const matchesSequence = segmentSequence.every(
+        const isMatchesSequence = segmentSequence.every(
             (segment, sequenceIndex) =>
                 pathSegments[startIndex + sequenceIndex] === segment
         );
 
-        if (matchesSequence) {
+        if (isMatchesSequence) {
             return true;
         }
     }

@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `no-duplicate-sidebar-doc-ids`.
@@ -28,11 +30,13 @@ type DocOccurrence = Readonly<{
     typeProperty?: Readonly<TSESTree.Property>;
 }>;
 
-type DuplicateSidebarDocSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type DuplicateSidebarDocSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 type MessageIds = "duplicateSidebarDocId" | "preferRefForDuplicateSidebarDocId";
 

@@ -1,3 +1,5 @@
+import type { ArrayElement } from "type-fest";
+
 /**
  * @packageDocumentation
  * ESLint rule implementation for `require-trailing-slash-explicit`.
@@ -28,11 +30,13 @@ type MessageIds =
     | "setTrailingSlashFalse"
     | "setTrailingSlashTrue";
 
-type TrailingSlashSuggestion = NonNullable<
-    Parameters<
-        TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
-    >[0]["suggest"]
->[number];
+type TrailingSlashSuggestion = ArrayElement<
+    NonNullable<
+        Parameters<
+            TSESLint.RuleContext<MessageIds, typeof defaultOptions>["report"]
+        >[0]["suggest"]
+    >
+>;
 
 const isStaticLiteralLikeExpression = (
     expression: Readonly<TSESTree.Expression>

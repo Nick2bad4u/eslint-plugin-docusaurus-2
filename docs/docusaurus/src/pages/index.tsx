@@ -1,29 +1,29 @@
 import Head from "@docusaurus/Head";
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
-import Layout from "@theme/Layout";
 import Heading from "@theme/Heading";
+import Layout from "@theme/Layout";
 
 import GitHubStats from "../components/GitHubStats";
 import styles from "./index.module.css";
 
-type HomeCard = {
+interface HeroBadge {
+    readonly description: string;
+    readonly icon: string;
+    readonly label: string;
+}
+
+interface HeroStat {
+    readonly description: string;
+    readonly title: string;
+}
+
+interface HomeCard {
     readonly description: string;
     readonly icon: string;
     readonly title: string;
     readonly to: string;
-};
-
-type HeroBadge = {
-    readonly description: string;
-    readonly icon: string;
-    readonly label: string;
-};
-
-type HeroStat = {
-    readonly description: string;
-    readonly title: string;
-};
+}
 
 const heroBadges = [
     {
@@ -126,8 +126,8 @@ export default function Home() {
 
     return (
         <Layout
-            title="ESLint plugin for Docusaurus sites"
             description="Documentation for eslint-plugin-docusaurus-2."
+            title="ESLint plugin for Docusaurus sites"
         >
             <Head>
                 <meta
@@ -177,10 +177,10 @@ export default function Home() {
                             <div className={getStyleClassName("heroBadgeRow")}>
                                 {heroBadges.map((badge) => (
                                     <div
-                                        key={badge.label}
                                         className={getStyleClassName(
                                             "heroBadge"
                                         )}
+                                        key={badge.label}
                                     >
                                         <p
                                             className={getStyleClassName(
@@ -214,10 +214,10 @@ export default function Home() {
                             <div className={getStyleClassName("heroStats")}>
                                 {heroStats.map((stat) => (
                                     <div
-                                        key={stat.title}
                                         className={getStyleClassName(
                                             "heroStatCard"
                                         )}
+                                        key={stat.title}
                                     >
                                         <p
                                             className={getStyleClassName(
@@ -295,8 +295,8 @@ export default function Home() {
                     <div className={getStyleClassName("cardGrid")}>
                         {homeCards.map((card) => (
                             <article
-                                key={card.title}
                                 className={getStyleClassName("card")}
+                                key={card.title}
                             >
                                 <div
                                     className={getStyleClassName("cardHeader")}
@@ -354,8 +354,8 @@ export default function Home() {
                     <div className={getStyleClassName("cardGrid")}>
                         {ruleFamilyCards.map((card) => (
                             <article
-                                key={card.title}
                                 className={getStyleClassName("card")}
+                                key={card.title}
                             >
                                 <div
                                     className={getStyleClassName("cardHeader")}

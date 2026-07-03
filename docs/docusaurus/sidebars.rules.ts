@@ -1,6 +1,6 @@
 import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
-import { ruleCatalogEntries } from "../../src/_internal/rule-catalog";
+import { ruleCatalogEntries } from "../../src/_internal/rule-catalog.js";
 
 const presetDocs = [
     {

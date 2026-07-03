@@ -16,9 +16,7 @@ import {
 const createRuleModule = (
     docs: Readonly<Record<string, unknown>> & TSESLint.RuleMetaDataDocs
 ): TSESLint.RuleModule<string, readonly []> => ({
-    create() {
-        return {};
-    },
+    create: () => ({}),
     defaultOptions: [],
     meta: {
         docs,
