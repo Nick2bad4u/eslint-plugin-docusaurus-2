@@ -33,8 +33,7 @@ type FooterDestinationSuggestion = ArrayElement<
 >;
 
 type MessageIds =
-    | "noDuplicateFooterLinkItemDestinations"
-    | "removeDuplicateFooterLinkItem";
+    "noDuplicateFooterLinkItemDestinations" | "removeDuplicateFooterLinkItem";
 
 const normalizeDestination = (destination: string): string =>
     destination.trim();

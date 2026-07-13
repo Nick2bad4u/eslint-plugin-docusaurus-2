@@ -25,8 +25,7 @@ export type AdditionalConfigMetadata = Readonly<{
     description: string;
     icon: string;
     reference:
-        | `docusaurus2.configs.${string}`
-        | `docusaurus2.configs["${string}"]`;
+        `docusaurus2.configs.${string}` | `docusaurus2.configs["${string}"]`;
 }>;
 
 /** Additional opt-in config key type exposed through `plugin.configs`. */

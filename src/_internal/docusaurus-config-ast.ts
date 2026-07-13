@@ -638,7 +638,10 @@ export const getStaticStringValueFromExpressionOrIdentifier = (
 export const getStaticBooleanValueFromExpressionOrIdentifier = (
     expression: Readonly<TSESTree.Expression>,
     programNode: Readonly<TSESTree.Program>
-): boolean | null | undefined => {
+):
+    | boolean
+    | null
+    | undefined => {
     const unwrappedExpression = unwrapTransparentExpression(expression);
 
     if (

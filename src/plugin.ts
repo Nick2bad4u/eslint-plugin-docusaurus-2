@@ -50,8 +50,7 @@ type Docusaurus2AdditionalConfigName = AdditionalConfigName;
 
 /** Canonical flat-config keys exposed through `plugin.configs`. */
 type Docusaurus2ConfigName =
-    | Docusaurus2AdditionalConfigName
-    | Docusaurus2PresetConfigName;
+    Docusaurus2AdditionalConfigName | Docusaurus2PresetConfigName;
 
 /** Canonical flat-config preset keys exposed through `plugin.configs`. */
 type Docusaurus2PresetConfigName = ArrayValues<typeof presetConfigNames>;

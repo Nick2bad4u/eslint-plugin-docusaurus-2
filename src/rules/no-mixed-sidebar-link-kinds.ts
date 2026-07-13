@@ -114,8 +114,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             )
                             .filter(isPresent);
                     const suggestions:
-                        | readonly MixedSidebarLinkKindSuggestion[]
-                        | undefined =
+                        readonly MixedSidebarLinkKindSuggestion[] | undefined =
                         typeValue === "generated-index"
                             ? [
                                   {

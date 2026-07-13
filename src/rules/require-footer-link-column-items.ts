@@ -22,8 +22,7 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 
 type MessageIds =
-    | "requireFooterLinkColumnItems"
-    | "requireFooterLinkColumnItemsArray";
+    "requireFooterLinkColumnItems" | "requireFooterLinkColumnItemsArray";
 
 const hasPresentFooterColumnTitle = (
     expression: null | Readonly<TSESTree.Expression>,

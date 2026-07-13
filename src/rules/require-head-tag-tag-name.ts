@@ -23,7 +23,10 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 
-type HeadTagName = "link" | "meta" | "script";
+type HeadTagName =
+    | "link"
+    | "meta"
+    | "script";
 
 type HeadTagSuggestion = ArrayElement<
     NonNullable<

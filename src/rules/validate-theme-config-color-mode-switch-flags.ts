@@ -98,7 +98,10 @@ const createSetColorModeFlagSuggestion = (
 });
 
 const isStaticBooleanValue = (
-    value: boolean | null | undefined
+    value:
+        | boolean
+        | null
+        | undefined
 ): value is boolean => value === true || value === false;
 
 const shouldIgnoreNonBooleanFlagExpression = (

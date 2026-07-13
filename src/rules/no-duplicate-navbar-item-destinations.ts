@@ -26,8 +26,7 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 
 type MessageIds =
-    | "noDuplicateNavbarItemDestinations"
-    | "removeDuplicateNavbarItem";
+    "noDuplicateNavbarItemDestinations" | "removeDuplicateNavbarItem";
 
 type NavbarDestinationSuggestion = ArrayElement<
     NonNullable<

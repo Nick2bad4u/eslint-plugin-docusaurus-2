@@ -24,8 +24,7 @@ const defaultOptions = [] as const;
 const themeMermaidModuleName = "@docusaurus/theme-mermaid" as const;
 
 type MessageIds =
-    | "addThemeMermaidToThemes"
-    | "requireThemeMermaidWhenMarkdownMermaidEnabled";
+    "addThemeMermaidToThemes" | "requireThemeMermaidWhenMarkdownMermaidEnabled";
 type RuleSuggestion = ArrayElement<
     NonNullable<
         Parameters<

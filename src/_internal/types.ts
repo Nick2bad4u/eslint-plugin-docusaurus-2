@@ -17,7 +17,10 @@ export interface JsonObject {
 export type JsonPrimitive = TypeFestJsonPrimitive;
 
 /** Recursive JSON-compatible value union. */
-export type JsonValue = JsonObject | JsonPrimitive | readonly JsonValue[];
+export type JsonValue =
+    | JsonObject
+    | JsonPrimitive
+    | readonly JsonValue[];
 
 /** Readonly array of unknown values. */
 export type UnknownArray = TypeFestUnknownArray;

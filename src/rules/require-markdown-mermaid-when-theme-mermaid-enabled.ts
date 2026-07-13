@@ -66,7 +66,10 @@ const getMarkdownMermaidFix = (
     markdownExpression: null | Readonly<TSESTree.Expression>,
     markdownObject: null | Readonly<TSESTree.ObjectExpression>,
     mermaidExpression: null | Readonly<TSESTree.Expression>,
-    mermaidEnabled: boolean | null | undefined
+    mermaidEnabled:
+        | boolean
+        | null
+        | undefined
 ): ((fixer: Readonly<TSESLint.RuleFixer>) => TSESLint.RuleFix) | null => {
     if (markdownExpression === null) {
         return (fixer) =>

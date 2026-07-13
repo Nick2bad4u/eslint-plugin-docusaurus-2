@@ -105,8 +105,7 @@ const createSetDefaultModeSuggestion = (
         defaultModeExpression: null | Readonly<TSESTree.Expression>;
         defaultModeProperty: null | Readonly<TSESTree.Property>;
         messageId:
-            | "setColorModeDefaultModeDark"
-            | "setColorModeDefaultModeLight";
+            "setColorModeDefaultModeDark" | "setColorModeDefaultModeLight";
     }>
 ): ColorModeDefaultModeSuggestion => ({
     fix: (fixer) =>

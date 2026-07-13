@@ -21,8 +21,7 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 
 type MessageIds =
-    | "requireNavbarDropdownItems"
-    | "requireNavbarDropdownItemsArray";
+    "requireNavbarDropdownItems" | "requireNavbarDropdownItemsArray";
 
 const getNavbarDropdownItemsProblemMessageId = (
     objectExpression: Readonly<TSESTree.ObjectExpression>

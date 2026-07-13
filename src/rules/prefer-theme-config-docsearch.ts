@@ -22,8 +22,7 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 const defaultOptions = [] as const;
 
 type MessageIds =
-    | "noConflictingThemeConfigSearchKeys"
-    | "preferThemeConfigDocsearch";
+    "noConflictingThemeConfigSearchKeys" | "preferThemeConfigDocsearch";
 
 const createPropertyKeyReplacementText = (
     property: Readonly<TSESTree.Property>,

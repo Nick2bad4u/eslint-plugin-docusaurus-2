@@ -76,6 +76,8 @@ const config = [
             "unicorn/no-non-function-verb-prefix": "off",
             "unicorn/no-unnecessary-global-this": "off",
             "unicorn/no-unreadable-new-expression": "off",
+            // Scroll progress requires continuous layout-derived updates rather than visibility changes.
+            "unicorn/prefer-observer-apis": "off",
             "unicorn/prefer-short-arrow-method": "off",
             "unicorn/prefer-temporal": "off",
         },

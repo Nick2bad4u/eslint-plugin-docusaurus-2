@@ -23,12 +23,7 @@ import { fileURLToPath } from "node:url";
  */
 
 /**
- * @typedef {"all"
- *     | "config"
- *     | "experimental"
- *     | "minimal"
- *     | "recommended"
- *     | "strict"} PresetName
+ * @typedef {"all" | "config" | "experimental" | "minimal" | "recommended" | "strict"} PresetName
  */
 
 /**
