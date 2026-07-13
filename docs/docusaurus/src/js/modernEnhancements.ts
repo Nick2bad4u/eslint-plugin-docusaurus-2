@@ -575,7 +575,7 @@ function setSidebarLeadingToken(
     );
 }
 
-if (globalThis !== undefined && document !== undefined) {
+if (typeof document !== "undefined") {
     initializeEnhancements();
     const browserGlobal = globalThis as typeof globalThis & {
         initializeAdvancedFeatures: typeof initializeAdvancedFeatures;
