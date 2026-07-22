@@ -33,7 +33,9 @@ const isMessageProperty = (
     const { key } = property;
 
     return (
-        (key.type === AST_NODE_TYPES.Identifier && key.name === "message") ||
+        (!property.computed &&
+            key.type === AST_NODE_TYPES.Identifier &&
+            key.name === "message") ||
         (key.type === AST_NODE_TYPES.Literal && key.value === "message")
     );
 };

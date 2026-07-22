@@ -41,7 +41,6 @@ const dependencies = [
 const devDependencies = [
     "@arethetypeswrong/cli",
     "@csstools/stylelint-formatter-github",
-    "@docusaurus/eslint-plugin",
     "@double-great/remark-lint-alt-text",
     "@double-great/stylelint-a11y",
     "@eslint-community/eslint-plugin-eslint-comments",

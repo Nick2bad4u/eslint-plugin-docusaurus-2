@@ -6,6 +6,14 @@ import { createRuleTester, getPluginRule } from "./_internal/ruleTester";
 
 const ruleTester = createRuleTester();
 const testFilename = "test.tsx";
+const headingNames = [
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+] as const;
 
 ruleTester.run(
     "prefer-docusaurus-heading",
@@ -19,6 +27,10 @@ ruleTester.run(
                 ].join("\n"),
                 errors: [
                     {
+                        column: 15,
+                        endColumn: 17,
+                        endLine: 2,
+                        line: 2,
                         messageId: "preferDocusaurusHeading",
                         suggestions: [
                             {
@@ -33,6 +45,16 @@ ruleTester.run(
                 ],
                 filename: testFilename,
             },
+            ...headingNames.map((headingName) => ({
+                code: `<${headingName}>heading</${headingName}>`,
+                errors: [
+                    {
+                        messageId: "preferDocusaurusHeading" as const,
+                        suggestions: [],
+                    },
+                ],
+                filename: testFilename,
+            })),
             {
                 code: [
                     'import ThemeHeading from "@theme/Heading";',
@@ -94,7 +116,12 @@ ruleTester.run(
                     "    return <h2>Overview</h2>;",
                     "}",
                 ].join("\n"),
-                errors: [{ messageId: "preferDocusaurusHeading" }],
+                errors: [
+                    {
+                        messageId: "preferDocusaurusHeading",
+                        suggestions: [],
+                    },
+                ],
                 filename: testFilename,
             },
             {
@@ -102,17 +129,43 @@ ruleTester.run(
                     'import Heading from "@theme/Heading";',
                     'const view = <h2 as="h3">Overview</h2>;',
                 ].join("\n"),
-                errors: [{ messageId: "preferDocusaurusHeading" }],
+                errors: [
+                    {
+                        messageId: "preferDocusaurusHeading",
+                        suggestions: [],
+                    },
+                ],
+                filename: testFilename,
+            },
+            {
+                code: [
+                    'import Heading from "@theme/Heading";',
+                    "const view = <h2 {...props}>Overview</h2>;",
+                ].join("\n"),
+                errors: [
+                    {
+                        messageId: "preferDocusaurusHeading",
+                        suggestions: [],
+                    },
+                ],
                 filename: testFilename,
             },
         ],
         valid: [
+            ...headingNames.map((headingName) => ({
+                code: `<Heading as="${headingName}">Heading</Heading>`,
+                filename: testFilename,
+            })),
             {
                 code: '<Heading as="h1">Heading</Heading>',
                 filename: testFilename,
             },
             {
                 code: '<Theme.Heading as="h2">Heading</Theme.Heading>',
+                filename: testFilename,
+            },
+            {
+                code: '<html:h2 data-level="2">Heading</html:h2>',
                 filename: testFilename,
             },
             {

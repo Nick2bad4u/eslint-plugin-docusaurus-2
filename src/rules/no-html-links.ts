@@ -71,6 +71,12 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
             }
 
             const hrefAttribute = getJsxAttributeByName(node, "href");
+            const hrefAttributeCount = node.attributes.filter(
+                (attribute) =>
+                    attribute.type === AST_NODE_TYPES.JSXAttribute &&
+                    attribute.name.type === AST_NODE_TYPES.JSXIdentifier &&
+                    attribute.name.name === "href"
+            ).length;
             const hrefValue =
                 hrefAttribute === null
                     ? null
@@ -110,6 +116,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
             const canSuggest =
                 isDefined(linkTagName) &&
                 hrefAttribute !== null &&
+                hrefAttributeCount === 1 &&
                 !hasAmbiguousAttributes;
             const suggestions = canSuggest
                 ? [

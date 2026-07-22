@@ -6,6 +6,7 @@ import { createRuleTester, getPluginRule } from "./_internal/ruleTester";
 
 const ruleTester = createRuleTester();
 const testFilename = "test.tsx";
+const dynamicSectionInterpolation = ["$", "{section}"].join("");
 
 ruleTester.run("no-html-links", getPluginRule("no-html-links"), {
     invalid: [
@@ -16,6 +17,10 @@ ruleTester.run("no-html-links", getPluginRule("no-html-links"), {
             ].join("\n"),
             errors: [
                 {
+                    column: 15,
+                    endColumn: 16,
+                    endLine: 2,
+                    line: 2,
                     messageId: "preferDocusaurusLink",
                     suggestions: [
                         {
@@ -74,7 +79,12 @@ ruleTester.run("no-html-links", getPluginRule("no-html-links"), {
         },
         {
             code: 'const view = <a href="/docs">Docs</a>;',
-            errors: [{ messageId: "preferDocusaurusLink" }],
+            errors: [
+                {
+                    messageId: "preferDocusaurusLink",
+                    suggestions: [],
+                },
+            ],
             filename: testFilename,
         },
         {
@@ -84,7 +94,12 @@ ruleTester.run("no-html-links", getPluginRule("no-html-links"), {
                 '    return <a href="/docs">Docs</a>;',
                 "}",
             ].join("\n"),
-            errors: [{ messageId: "preferDocusaurusLink" }],
+            errors: [
+                {
+                    messageId: "preferDocusaurusLink",
+                    suggestions: [],
+                },
+            ],
             filename: testFilename,
         },
         {
@@ -92,7 +107,12 @@ ruleTester.run("no-html-links", getPluginRule("no-html-links"), {
                 'import Link from "@docusaurus/Link";',
                 'const view = <a href="/docs" to="/other">Docs</a>;',
             ].join("\n"),
-            errors: [{ messageId: "preferDocusaurusLink" }],
+            errors: [
+                {
+                    messageId: "preferDocusaurusLink",
+                    suggestions: [],
+                },
+            ],
             filename: testFilename,
         },
         {
@@ -100,6 +120,63 @@ ruleTester.run("no-html-links", getPluginRule("no-html-links"), {
             errors: [{ messageId: "preferDocusaurusLink" }],
             filename: testFilename,
             options: [{ ignoreFullyResolved: true }],
+        },
+        {
+            code: '<a href="https://example.com/docs" target="_blank">Docs</a>;',
+            errors: [{ messageId: "preferDocusaurusLink" }],
+            filename: testFilename,
+        },
+        {
+            code: '<a href="https://example.com/docs" target="_blank" rel="noopener noreferrer">Docs</a>;',
+            errors: [{ messageId: "preferDocusaurusLink" }],
+            filename: testFilename,
+        },
+        {
+            code: '<a href="tel:123456789">Call</a>;',
+            errors: [{ messageId: "preferDocusaurusLink" }],
+            filename: testFilename,
+        },
+        {
+            code: "<a href={``}>Empty</a>;",
+            errors: [{ messageId: "preferDocusaurusLink" }],
+            filename: testFilename,
+        },
+        {
+            code: "<a href={`https://example.com/docs`}>Docs</a>;",
+            errors: [{ messageId: "preferDocusaurusLink" }],
+            filename: testFilename,
+        },
+        {
+            code: `<a href={\`https://example.com/${dynamicSectionInterpolation}\`}>Docs</a>;`,
+            errors: [{ messageId: "preferDocusaurusLink" }],
+            filename: testFilename,
+            options: [{ ignoreFullyResolved: true }],
+        },
+        {
+            code: [
+                'import Link from "@docusaurus/Link";',
+                'const view = <a href="/docs" {...props}>Docs</a>;',
+            ].join("\n"),
+            errors: [
+                {
+                    messageId: "preferDocusaurusLink",
+                    suggestions: [],
+                },
+            ],
+            filename: testFilename,
+        },
+        {
+            code: [
+                'import Link from "@docusaurus/Link";',
+                'const view = <a href="/docs" href="/other">Docs</a>;',
+            ].join("\n"),
+            errors: [
+                {
+                    messageId: "preferDocusaurusLink",
+                    suggestions: [],
+                },
+            ],
+            filename: testFilename,
         },
     ],
     valid: [
@@ -112,7 +189,25 @@ ruleTester.run("no-html-links", getPluginRule("no-html-links"), {
             filename: testFilename,
         },
         {
+            code: '<svg:a href="/docs">Docs</svg:a>',
+            filename: testFilename,
+        },
+        {
+            code: '<Link to="https://example.com/docs">Docs</Link>',
+            filename: testFilename,
+        },
+        {
             code: '<a href="https://example.com/docs">Docs</a>',
+            filename: testFilename,
+            options: [{ ignoreFullyResolved: true }],
+        },
+        {
+            code: "<a href={`https://example.com/docs`}>Docs</a>",
+            filename: testFilename,
+            options: [{ ignoreFullyResolved: true }],
+        },
+        {
+            code: '<a href="mailto:docs@example.com">Email</a>',
             filename: testFilename,
             options: [{ ignoreFullyResolved: true }],
         },

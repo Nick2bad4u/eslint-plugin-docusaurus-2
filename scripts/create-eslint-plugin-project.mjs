@@ -24,7 +24,6 @@ const prodDeps = [
 const devDeps = [
     "@arethetypeswrong/cli@latest",
     "@csstools/stylelint-formatter-github@latest",
-    "@docusaurus/eslint-plugin@latest",
     "@double-great/remark-lint-alt-text@latest",
     "@double-great/stylelint-a11y@latest",
     "@eslint-community/eslint-plugin-eslint-comments@latest",
