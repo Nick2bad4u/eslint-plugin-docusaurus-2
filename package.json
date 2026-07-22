@@ -52,7 +52,8 @@
     "files": [
         "dist",
         "docs/rules/**",
-        "CHANGELOG.md"
+        "CHANGELOG.md",
+        "THIRD_PARTY_NOTICES.md"
     ],
     "workspaces": [
         "docs/docusaurus"
@@ -240,7 +241,7 @@
         "del-cli": "^7.0.0",
         "detect-secrets": "^1.0.6",
         "eslint": "^10.7.0",
-        "eslint-config-nick2bad4u": "^5.0.0",
+        "eslint-config-nick2bad4u": "^10.0.0",
         "eslint-formatter-unix": "^9.0.1",
         "eslint-rule-benchmark": "^0.8.0",
         "fast-check": "^4.9.0",

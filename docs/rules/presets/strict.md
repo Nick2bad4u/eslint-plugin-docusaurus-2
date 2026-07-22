@@ -35,7 +35,10 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 - [`no-redundant-social-card-metadata`](../no-redundant-social-card-metadata.md)
 - [`no-svg-social-card-image`](../no-svg-social-card-image.md)
 - [`no-use-base-url-for-internal-link-components`](../no-use-base-url-for-internal-link-components.md)
+- [`no-html-links`](../no-html-links.md)
+- [`no-untranslated-text`](../no-untranslated-text.md)
 - [`prefer-css-modules-in-site-src`](../prefer-css-modules-in-site-src.md)
+- [`prefer-docusaurus-heading`](../prefer-docusaurus-heading.md)
 - [`prefer-head-tag-attributes-object`](../prefer-head-tag-attributes-object.md)
 - [`prefer-i18n-default-locale-first`](../prefer-i18n-default-locale-first.md)
 - [`prefer-theme-config-metadata-name-for-twitter-tags`](../prefer-theme-config-metadata-name-for-twitter-tags.md)
@@ -63,6 +66,7 @@ description: Strict preset for eslint-plugin-docusaurus-2.
 - [`require-trailing-slash-explicit`](../require-trailing-slash-explicit.md)
 - [`require-theme-config-image`](../require-theme-config-image.md)
 - [`validate-navbar-item-position`](../validate-navbar-item-position.md)
+- [`string-literal-i18n-messages`](../string-literal-i18n-messages.md)
 
 The recommended link-semantics rules also remain enabled here, so `strict` covers both config/sidebar correctness and component-level routing conventions.
 

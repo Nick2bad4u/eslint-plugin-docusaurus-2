@@ -27,7 +27,7 @@ import { fileURLToPath } from "node:url";
  */
 
 /**
- * @typedef {"content" | "strict-mdx-upgrade"} AdditionalConfigName
+ * @typedef {"content" | "i18n" | "strict-mdx-upgrade"} AdditionalConfigName
  */
 
 const rulesSectionHeading = "## Rules";
@@ -101,6 +101,10 @@ const additionalConfigMetadataByName = {
     content: {
         icon: "📝",
         reference: "docusaurus2.configs.content",
+    },
+    i18n: {
+        icon: "🌐",
+        reference: "docusaurus2.configs.i18n",
     },
     "strict-mdx-upgrade": {
         icon: "🧭",
@@ -403,7 +407,7 @@ export const generateReadmeRulesSectionFromRules = (rules) => {
         "",
         "### Opt-in rules",
         "",
-        "These rules are intentionally outside the six preset tiers. Some are available through opt-in content configs; others are direct rule opt-ins only.",
+        "These rules are intentionally outside the six preset tiers. Some are available through opt-in configs; others are direct rule opt-ins only.",
         "",
         "- `Config surface` legend:",
         ...createAdditionalConfigLegendLines(),

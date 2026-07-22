@@ -282,8 +282,8 @@ const getRuleDocsContract = (
     );
 
     if (
-        isDefined(requiresTypeChecking) &&
-        typeof requiresTypeChecking !== "boolean"
+        typeof requiresTypeChecking !== "boolean" &&
+        isDefined(requiresTypeChecking)
     ) {
         throw new TypeError(
             `Rule '${ruleName}' must declare boolean docs.requiresTypeChecking.`

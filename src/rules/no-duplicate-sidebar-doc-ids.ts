@@ -74,9 +74,9 @@ const collectExplicitDocOccurrence = (
     const idProperty = findObjectPropertyByName(expression, "id");
 
     if (
-        getParentPropertyName(expression) === "link" ||
         typeProperty === null ||
         idProperty === null ||
+        getParentPropertyName(expression) === "link" ||
         getStaticStringValue(getObjectPropertyValueExpression(typeProperty)) !==
             "doc"
     ) {

@@ -150,6 +150,10 @@ const allRuleNames = [
     "validate-theme-config-footer-style",
     "validate-theme-config-metadata",
     "validate-theme-config-navbar-style",
+    "no-html-links",
+    "no-untranslated-text",
+    "prefer-docusaurus-heading",
+    "string-literal-i18n-messages",
 ] as const satisfies readonly string[];
 
 /** Preserve legacy rule-number assignments that are already documented/public. */

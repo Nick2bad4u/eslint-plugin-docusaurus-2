@@ -194,6 +194,7 @@ const deriveAdditionalConfigRuleNamesByConfig = (): Readonly<
     const ruleNamesByConfig: Record<Docusaurus2AdditionalConfigName, string[]> =
         {
             content: [],
+            i18n: [],
             "strict-mdx-upgrade": [],
         };
 
@@ -216,9 +217,10 @@ const deriveAdditionalConfigRuleNamesByConfig = (): Readonly<
     }
 
     return Object.freeze({
-        content: dedupeRuleNames(ruleNamesByConfig.content ?? []),
+        content: dedupeRuleNames(ruleNamesByConfig.content),
+        i18n: dedupeRuleNames(ruleNamesByConfig.i18n),
         "strict-mdx-upgrade": dedupeRuleNames(
-            ruleNamesByConfig["strict-mdx-upgrade"] ?? []
+            ruleNamesByConfig["strict-mdx-upgrade"]
         ),
     });
 };
@@ -323,8 +325,16 @@ const createConfigsDefinition = (): Record<
     configs.content = createTextContentConfig({
         files: ["**/*.{md,mdx}"],
         name: "docusaurus-2:content",
-        ruleNames: additionalConfigRuleNamesByConfig.content ?? [],
+        ruleNames: additionalConfigRuleNamesByConfig.content,
     });
+
+    configs.i18n = withDocusaurusPlugin(
+        {
+            name: "docusaurus-2:i18n",
+            rules: errorRulesFor(additionalConfigRuleNamesByConfig.i18n),
+        },
+        pluginForConfigs
+    );
 
     return configs;
 };

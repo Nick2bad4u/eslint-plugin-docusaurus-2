@@ -11,7 +11,7 @@ description: Default preset for eslint-plugin-docusaurus-2.
 
 It includes the same parser and plugin registration behavior as `minimal`, plus
 the stable default rollout of broadly applicable Docusaurus config, navbar,
-footer, sidebar, and theme-metadata rules.
+footer, sidebar, theme-metadata, Docusaurus link/heading, and static translation-message rules.
 
 Use the generated [preset matrix](./index.md) as the source of
 truth for the exact current rule membership.

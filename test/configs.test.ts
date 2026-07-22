@@ -7,7 +7,11 @@ import { describe, expect, it } from "vitest";
 import { presetConfigNames } from "../src/_internal/preset-config-references";
 import docusaurus2Plugin from "../src/plugin";
 
-const additionalConfigNames = ["content", "strict-mdx-upgrade"] as const;
+const additionalConfigNames = [
+    "content",
+    "i18n",
+    "strict-mdx-upgrade",
+] as const;
 
 type RuleDocsWithPresets = Readonly<{
     presets?: readonly string[] | string;
@@ -136,6 +140,26 @@ describe("docusaurus-2 plugin configs", () => {
         ]);
     });
 
+    it("exposes a dedicated i18n config for both translation rules", () => {
+        expect.hasAssertions();
+
+        const config = docusaurus2Plugin.configs.i18n;
+
+        expect(config.files).toStrictEqual([
+            "**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}",
+        ]);
+        expect(config.plugins).toHaveProperty("docusaurus-2");
+        expect(config.languageOptions?.["parser"]).toBeDefined();
+        expect(
+            Object.keys(config.rules).toSorted((left, right) =>
+                left.localeCompare(right)
+            )
+        ).toStrictEqual([
+            "docusaurus-2/no-untranslated-text",
+            "docusaurus-2/string-literal-i18n-messages",
+        ]);
+    });
+
     it("keeps languageOptions isolated across presets", () => {
         expect.hasAssertions();
 
@@ -194,5 +218,53 @@ describe("docusaurus-2 plugin configs", () => {
                 (left, right) => left.localeCompare(right)
             )
         ).toStrictEqual(expectedExperimentalRuleIds);
+    });
+
+    it("places the owned Docusaurus rules in their intended presets", () => {
+        expect.hasAssertions();
+
+        const allOwnedRuleIds = [
+            "docusaurus-2/no-html-links",
+            "docusaurus-2/no-untranslated-text",
+            "docusaurus-2/prefer-docusaurus-heading",
+            "docusaurus-2/string-literal-i18n-messages",
+        ] as const;
+        const recommendedRuleIds = [
+            "docusaurus-2/no-html-links",
+            "docusaurus-2/prefer-docusaurus-heading",
+            "docusaurus-2/string-literal-i18n-messages",
+        ] as const;
+
+        for (const ruleId of allOwnedRuleIds) {
+            expect(docusaurus2Plugin.configs.strict.rules).toHaveProperty(
+                ruleId,
+                "error"
+            );
+            expect(docusaurus2Plugin.configs.all.rules).toHaveProperty(
+                ruleId,
+                "error"
+            );
+            expect(docusaurus2Plugin.configs.experimental.rules).toHaveProperty(
+                ruleId,
+                "error"
+            );
+            expect(docusaurus2Plugin.configs.minimal.rules).not.toHaveProperty(
+                ruleId
+            );
+            expect(docusaurus2Plugin.configs.config.rules).not.toHaveProperty(
+                ruleId
+            );
+        }
+
+        for (const ruleId of recommendedRuleIds) {
+            expect(docusaurus2Plugin.configs.recommended.rules).toHaveProperty(
+                ruleId,
+                "error"
+            );
+        }
+
+        expect(docusaurus2Plugin.configs.recommended.rules).not.toHaveProperty(
+            "docusaurus-2/no-untranslated-text"
+        );
     });
 });

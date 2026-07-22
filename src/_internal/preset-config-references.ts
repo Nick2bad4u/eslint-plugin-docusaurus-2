@@ -18,7 +18,11 @@ export const presetConfigNames = [
 ] as const;
 
 /** Additional opt-in config keys exposed outside the preset ladder. */
-export const additionalConfigNames = ["content", "strict-mdx-upgrade"] as const;
+export const additionalConfigNames = [
+    "content",
+    "i18n",
+    "strict-mdx-upgrade",
+] as const;
 
 /** Metadata contract for non-preset opt-in config surfaces. */
 export type AdditionalConfigMetadata = Readonly<{
@@ -51,6 +55,12 @@ export const additionalConfigMetadataByName: Readonly<
             "Opt-in content-aware docs rules for Markdown and MDX files.",
         icon: "📝",
         reference: "docusaurus2.configs.content",
+    },
+    i18n: {
+        description:
+            "Opt-in JSX translation enforcement for Docusaurus source files.",
+        icon: "🌐",
+        reference: "docusaurus2.configs.i18n",
     },
     "strict-mdx-upgrade": {
         description:
@@ -112,7 +122,7 @@ export const presetConfigNamesByReadmeOrder: readonly PresetConfigName[] = [
     "minimal",
     "recommended",
     "strict",
-] as const;
+];
 
 const presetConfigNameLookup = Object.freeze(
     objectFromEntries(

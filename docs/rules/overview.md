@@ -20,13 +20,14 @@ This repository is being built to enforce Docusaurus-specific best practices suc
 
 The runtime, docs site, tests, and preset infrastructure have been re-identified for [`eslint-plugin-docusaurus-2`](https://www.npmjs.com/package/eslint-plugin-docusaurus-2).
 
-The plugin now ships a stable namespace, a preset ladder, opt-in content configs, and a focused rule catalog that currently covers:
+The plugin now ships a stable namespace, a preset ladder, opt-in configs, and a focused rule catalog that currently covers:
 
 - config and `themeConfig` validation
 - search, analytics, and package-ownership checks
 - sidebar, i18n, and navigation integrity
 - PWA, faster, and release-upgrade migration rules
 - page-module and site-architecture rules in the broader tiers
+- Docusaurus link, heading, and translation API usage
 - Markdown / MDX migration and content-aware rules through opt-in content configs
 
 Use these source-of-truth docs instead of a hand-maintained full rule inventory here:
@@ -60,11 +61,12 @@ export default [docusaurus2.configs.recommended];
 | [🟣 `docusaurus2.configs.all`](./presets/all.md)                   | Every stable rule once the rule catalog grows.            |
 | [🧪 `docusaurus2.configs.experimental`](./presets/experimental.md) | Future experimental rules and rollout candidates.         |
 
-The plugin also exports opt-in content configs outside the preset ladder:
+The plugin also exports opt-in configs outside the preset ladder:
 
 | Config                                      | Purpose                                                     |
 | ------------------------------------------- | ----------------------------------------------------------- |
 | `docusaurus2.configs.content`               | Enable content-aware docs rules for `*.md` and `*.mdx`.     |
+| `docusaurus2.configs.i18n`                  | Enable both JSX translation rules.                          |
 | `docusaurus2.configs["strict-mdx-upgrade"]` | Enable only the Docusaurus 3.10 strict-MDX migration rules. |
 
 ## Current rule areas
@@ -95,6 +97,8 @@ The plugin also exports opt-in content configs outside the preset ladder:
 - Docusaurus navbar special-item schema hygiene and conflict cleanup
 - Docusaurus Link component prop hygiene
 - Docusaurus `useBaseUrl` link-wrapper hygiene
+- Docusaurus intrinsic anchor and heading migration hygiene
+- Docusaurus JSX translation and static-message hygiene
 - Docusaurus mixed sidebar link-kind hygiene
 - Docusaurus sidebar generated-index hygiene
 - Docusaurus duplicate sidebar doc-association hygiene

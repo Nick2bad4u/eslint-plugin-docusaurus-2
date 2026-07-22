@@ -101,6 +101,21 @@ const config = [
         rules: {
             "@typescript-eslint/restrict-template-expressions": "off",
             complexity: "off",
+            "eslint-plugin/meta-property-ordering": [
+                "error",
+                [
+                    "defaultOptions",
+                    "deprecated",
+                    "docs",
+                    "fixable",
+                    "hasSuggestions",
+                    "languages",
+                    "messages",
+                    "replacedBy",
+                    "schema",
+                    "type",
+                ],
+            ],
             "import-x/max-dependencies": "off",
             "unicorn/consistent-boolean-name": "off",
             "unicorn/import-style": "off",

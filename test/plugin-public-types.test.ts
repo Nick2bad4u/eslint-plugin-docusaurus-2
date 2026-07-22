@@ -48,6 +48,8 @@ describe("plugin public types", () => {
             pluginContract.configs.experimental;
         const contentConfig: Docusaurus2Plugin["configs"]["content"] =
             pluginContract.configs.content;
+        const i18nConfig: Docusaurus2Plugin["configs"]["i18n"] =
+            pluginContract.configs.i18n;
         const strictMdxUpgradeConfig: Docusaurus2Plugin["configs"]["strict-mdx-upgrade"] =
             pluginContract.configs["strict-mdx-upgrade"];
 
@@ -56,6 +58,7 @@ describe("plugin public types", () => {
         expect(allConfig).toBeDefined();
         expect(experimentalConfig).toBeDefined();
         expect(contentConfig).toBeDefined();
+        expect(i18nConfig).toBeDefined();
         expect(strictMdxUpgradeConfig).toBeDefined();
 
         expect(pluginContract.meta.name).toBeTypeOf("string");

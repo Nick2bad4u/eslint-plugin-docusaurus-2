@@ -1,6 +1,6 @@
 # config-surfaces
 
-Understand the three public rollout layers exposed by `eslint-plugin-docusaurus-2`.
+Understand the public rollout layers exposed by `eslint-plugin-docusaurus-2`.
 
 ## Preset ladder
 
@@ -15,9 +15,18 @@ The six presets are the default rollout ladder for JavaScript and TypeScript sou
 
 Use these when you want Docusaurus config, theme, sidebar, routing, and package-ownership rules on the normal source-code surface.
 
-## Opt-in content configs
+## Opt-in configs
 
-The plugin also exports content-aware configs outside the preset ladder.
+The plugin also exports focused configs outside the preset ladder.
+
+### 🌐 `docusaurus2.configs.i18n`
+
+Use this JavaScript/TypeScript config to enable both owned Docusaurus translation rules:
+
+- `no-untranslated-text`
+- `string-literal-i18n-messages`
+
+This is useful when `recommended` should retain its lower-noise translation policy but a specific site wants complete JSX translation enforcement.
 
 ### 📝 `docusaurus2.configs.content`
 
@@ -45,7 +54,7 @@ These are rules you enable one-by-one in your own config because they are adviso
 - The main preset matrix shows rules that belong to one or more of the six preset tiers.
 - The generated **Opt-in rules** table shows rules outside that preset ladder.
 - In that opt-in table:
-  - a config surface such as `docusaurus2.configs.content` means the rule is available through an opt-in config
+  - a config surface such as `docusaurus2.configs.i18n` means the rule is available through an opt-in config
   - `direct rule opt-in only` means you enable the rule explicitly in `rules`
 
 ## Example
@@ -55,6 +64,7 @@ import docusaurus2 from "eslint-plugin-docusaurus-2";
 
 export default [
  docusaurus2.configs.recommended,
+ docusaurus2.configs.i18n,
  docusaurus2.configs.content,
  {
   rules: {

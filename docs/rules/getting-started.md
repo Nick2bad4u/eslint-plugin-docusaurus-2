@@ -37,12 +37,13 @@ Every preset already gives you a stable plugin contract:
 - `sourceType: "module"`
 - plugin registration under `"docusaurus-2"`
 
-The plugin also exposes two non-preset content configs:
+The plugin also exposes three non-preset configs:
 
 - `docusaurus2.configs.content` for `*.md` and `*.mdx`
+- `docusaurus2.configs.i18n` for both JSX translation rules
 - `docusaurus2.configs["strict-mdx-upgrade"]` for `*.mdx` only
 
-Those use the plugin's text-content parser so content migration and docs-content rules stay opt-in instead of being mixed into the normal JS/TS preset ladder.
+The content configs use the plugin's text-content parser. The `i18n` config uses the normal TypeScript parser and can be composed with `recommended` when both translation rules are wanted without the full strict preset.
 
 `strict-mdx-upgrade` is intentionally scoped to the **Docusaurus 3.10 MDX syntax migration** rules only.
 The earlier 3.8 and 3.9 release-upgrade rules stay in the normal config-level preset ladder.
@@ -53,7 +54,7 @@ The 3.8 and 3.9 upgrade rules remain normal config-level rules in the regular pr
 Instead of hand-maintaining a long rule inventory here, use these source-of-truth surfaces:
 
 - [Preset matrix](./presets/index.md) for rules that belong to the preset ladder
-- [Config Surfaces](./guides/config-surfaces.md) for opt-in content configs and direct rule opt-ins
+- [Config Surfaces](./guides/config-surfaces.md) for opt-in configs and direct rule opt-ins
 
 At a high level, the current rule catalog covers these families:
 
@@ -63,6 +64,7 @@ At a high level, the current rule catalog covers these families:
 - theme package ownership and classic-theme stylesheet checks
 - PWA, faster, and release-upgrade migration rules
 - opt-in Markdown / MDX migration and content-aware rules
+- owned Docusaurus link, heading, and translation API rules
 
 ## Choosing a preset
 

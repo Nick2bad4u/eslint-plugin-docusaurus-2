@@ -31,6 +31,7 @@ Today it contains the current full stable rule catalog:
 - [`no-duplicate-navbar-item-destinations`](../no-duplicate-navbar-item-destinations.md)
 - [`no-duplicate-i18n-locales`](../no-duplicate-i18n-locales.md)
 - [`no-unknown-i18n-locale-configs`](../no-unknown-i18n-locale-configs.md)
+- [`no-untranslated-text`](../no-untranslated-text.md)
 - [`no-duplicate-navbar-item-labels`](../no-duplicate-navbar-item-labels.md)
 - [`no-duplicate-plugin-pwa-head-tags`](../no-duplicate-plugin-pwa-head-tags.md)
 - [`no-duplicate-theme-classic-custom-css`](../no-duplicate-theme-classic-custom-css.md)
@@ -44,6 +45,7 @@ Today it contains the current full stable rule catalog:
 - [`no-empty-theme-classic-custom-css`](../no-empty-theme-classic-custom-css.md)
 - [`no-conflicting-footer-html-item-props`](../no-conflicting-footer-html-item-props.md)
 - [`no-ignored-site-validations`](../no-ignored-site-validations.md)
+- [`no-html-links`](../no-html-links.md)
 - [`no-mixed-sidebar-link-kinds`](../no-mixed-sidebar-link-kinds.md)
 - [`no-page-css-module-imports-in-components`](../no-page-css-module-imports-in-components.md)
 - [`no-redundant-social-card-metadata`](../no-redundant-social-card-metadata.md)
@@ -52,6 +54,7 @@ Today it contains the current full stable rule catalog:
 - [`no-useless-collapsed-sidebar-categories`](../no-useless-collapsed-sidebar-categories.md)
 - [`prefer-config-satisfies`](../prefer-config-satisfies.md)
 - [`prefer-css-modules-in-site-src`](../prefer-css-modules-in-site-src.md)
+- [`prefer-docusaurus-heading`](../prefer-docusaurus-heading.md)
 - [`prefer-href-for-external-link-components`](../prefer-href-for-external-link-components.md)
 - [`prefer-href-for-external-links`](../prefer-href-for-external-links.md)
 - [`prefer-head-tag-attributes-object`](../prefer-head-tag-attributes-object.md)
@@ -117,6 +120,7 @@ Today it contains the current full stable rule catalog:
 - [`require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads`](../require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads.md)
 - [`validate-live-codeblock-playground-position`](../validate-live-codeblock-playground-position.md)
 - [`validate-theme-config-metadata`](../validate-theme-config-metadata.md)
+- [`string-literal-i18n-messages`](../string-literal-i18n-messages.md)
 
 That means `all` includes the broadly applicable config/sidebar rules plus the stricter Docusaurus page-module and site-source CSS architecture rules.
 

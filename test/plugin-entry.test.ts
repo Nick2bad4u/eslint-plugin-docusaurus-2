@@ -21,6 +21,7 @@ const expectedConfigRegistryShape = expect.objectContaining(
         [
             ...presetConfigNames,
             "content",
+            "i18n",
             "strict-mdx-upgrade",
         ].map((configName) => [configName, expect.any(Object)])
     )

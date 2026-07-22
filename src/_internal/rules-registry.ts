@@ -44,6 +44,7 @@ import * as noEmptyNavbarItemObjectsRuleModule from "../rules/no-empty-navbar-it
 import * as noEmptySidebarCategoriesRuleModule from "../rules/no-empty-sidebar-categories.js";
 import * as noEmptyThemeClassicCustomCssRuleModule from "../rules/no-empty-theme-classic-custom-css.js";
 import * as noEmptyThemeConfigMetadataRuleModule from "../rules/no-empty-theme-config-metadata.js";
+import * as noHtmlLinksRuleModule from "../rules/no-html-links.js";
 import * as noIgnoredSiteValidationsRuleModule from "../rules/no-ignored-site-validations.js";
 import * as noMixedSidebarLinkKindsRuleModule from "../rules/no-mixed-sidebar-link-kinds.js";
 import * as noPageCssModuleImportsInComponentsRuleModule from "../rules/no-page-css-module-imports-in-components.js";
@@ -53,10 +54,12 @@ import * as noSearchPageLinkWhenSearchPageDisabledRuleModule from "../rules/no-s
 import * as noSearchPagePathConflictRuleModule from "../rules/no-search-page-path-conflict.js";
 import * as noSvgSocialCardImageRuleModule from "../rules/no-svg-social-card-image.js";
 import * as noUnknownI18nLocaleConfigsRuleModule from "../rules/no-unknown-i18n-locale-configs.js";
+import * as noUntranslatedTextRuleModule from "../rules/no-untranslated-text.js";
 import * as noUseBaseUrlForInternalLinkComponentsRuleModule from "../rules/no-use-base-url-for-internal-link-components.js";
 import * as noUselessCollapsedSidebarCategoriesRuleModule from "../rules/no-useless-collapsed-sidebar-categories.js";
 import * as preferConfigSatisfiesRuleModule from "../rules/prefer-config-satisfies.js";
 import * as preferCssModulesInSiteSrcRuleModule from "../rules/prefer-css-modules-in-site-src.js";
+import * as preferDocusaurusHeadingRuleModule from "../rules/prefer-docusaurus-heading.js";
 import * as preferHeadTagAttributesObjectRuleModule from "../rules/prefer-head-tag-attributes-object.js";
 import * as preferHrefForExternalLinkComponentsRuleModule from "../rules/prefer-href-for-external-link-components.js";
 import * as preferHrefForExternalLinksRuleModule from "../rules/prefer-href-for-external-links.js";
@@ -121,6 +124,7 @@ import * as requireThemeMermaidWhenMarkdownMermaidEnabledRuleModule from "../rul
 import * as requireThemeSearchAlgoliaPackageInstalledRuleModule from "../rules/require-theme-search-algolia-package-installed.js";
 import * as requireTrailingSlashExplicitRuleModule from "../rules/require-trailing-slash-explicit.js";
 import * as requireV4RemoveLegacyPostBuildHeadAttributeForSsgWorkerThreadsRuleModule from "../rules/require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads.js";
+import * as stringLiteralI18nMessagesRuleModule from "../rules/string-literal-i18n-messages.js";
 import * as validateLiveCodeblockPlaygroundPositionRuleModule from "../rules/validate-live-codeblock-playground-position.js";
 import * as validateNavbarItemPositionRuleModule from "../rules/validate-navbar-item-position.js";
 import * as validateThemeConfigAnnouncementBarIsCloseableRuleModule from "../rules/validate-theme-config-announcement-bar-is-closeable.js";
@@ -202,6 +206,7 @@ const docusaurusRuleRegistry = {
         noEmptyThemeClassicCustomCssRuleModule.default,
     "no-empty-theme-config-metadata":
         noEmptyThemeConfigMetadataRuleModule.default,
+    "no-html-links": noHtmlLinksRuleModule.default,
     "no-ignored-site-validations": noIgnoredSiteValidationsRuleModule.default,
     "no-mixed-sidebar-link-kinds": noMixedSidebarLinkKindsRuleModule.default,
     "no-page-css-module-imports-in-components":
@@ -216,6 +221,7 @@ const docusaurusRuleRegistry = {
     "no-svg-social-card-image": noSvgSocialCardImageRuleModule.default,
     "no-unknown-i18n-locale-configs":
         noUnknownI18nLocaleConfigsRuleModule.default,
+    "no-untranslated-text": noUntranslatedTextRuleModule.default,
     "no-use-base-url-for-internal-link-components":
         noUseBaseUrlForInternalLinkComponentsRuleModule.default,
     "no-useless-collapsed-sidebar-categories":
@@ -223,6 +229,7 @@ const docusaurusRuleRegistry = {
     "prefer-config-satisfies": preferConfigSatisfiesRuleModule.default,
     "prefer-css-modules-in-site-src":
         preferCssModulesInSiteSrcRuleModule.default,
+    "prefer-docusaurus-heading": preferDocusaurusHeadingRuleModule.default,
     "prefer-head-tag-attributes-object":
         preferHeadTagAttributesObjectRuleModule.default,
     "prefer-href-for-external-link-components":
@@ -341,6 +348,7 @@ const docusaurusRuleRegistry = {
         requireTrailingSlashExplicitRuleModule.default,
     "require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads":
         requireV4RemoveLegacyPostBuildHeadAttributeForSsgWorkerThreadsRuleModule.default,
+    "string-literal-i18n-messages": stringLiteralI18nMessagesRuleModule.default,
     "validate-live-codeblock-playground-position":
         validateLiveCodeblockPlaygroundPositionRuleModule.default,
     "validate-navbar-item-position":

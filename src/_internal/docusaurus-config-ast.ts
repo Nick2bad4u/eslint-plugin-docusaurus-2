@@ -798,14 +798,13 @@ export const findClassicPresetOptionsObjects = (
         const [presetSpecifier, presetOptions] = element.elements;
 
         if (
+            !isPresent(presetOptions) ||
             presetSpecifier?.type !== AST_NODE_TYPES.Literal ||
             typeof presetSpecifier.value !== "string" ||
             !setHas(
                 docusaurusClassicPresetModuleNames,
                 presetSpecifier.value
             ) ||
-            presetOptions === undefined ||
-            presetOptions === null ||
             presetOptions.type === AST_NODE_TYPES.SpreadElement
         ) {
             continue;

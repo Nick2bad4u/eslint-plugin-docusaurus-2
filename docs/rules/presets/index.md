@@ -18,9 +18,10 @@ description: Preset reference for eslint-plugin-docusaurus-2.
 
 Use the matrix below to quickly compare rule coverage and pick the strictness tier that fits your docs repository.
 
-The plugin also exports opt-in content configs outside this preset ladder:
+The plugin also exports opt-in configs outside this preset ladder:
 
 - `docusaurus2.configs.content`
+- `docusaurus2.configs.i18n`
 - `docusaurus2.configs["strict-mdx-upgrade"]`
 
 ## Rule matrix
@@ -77,6 +78,7 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`no-empty-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-sidebar-categories)                                                                                             |  🔧   | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                   |
 | [`no-empty-theme-classic-custom-css`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-theme-classic-custom-css)                                                                                 |  🔧   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-empty-theme-config-metadata`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-theme-config-metadata)                                                                                       |  🔧   | [🔵](./config.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                        |
+| [`no-html-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-html-links)                                                                                                                         |  💡   | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                   |
 | [`no-ignored-site-validations`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations)                                                                                             |  🔧   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-mixed-sidebar-link-kinds`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-mixed-sidebar-link-kinds)                                                                                             |  💡   | [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                                          |
 | [`no-page-css-module-imports-in-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components)                                                                   |   —   | [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                                          |
@@ -86,10 +88,12 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`no-search-page-path-conflict`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-search-page-path-conflict)                                                                                           |   —   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-svg-social-card-image`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-svg-social-card-image)                                                                                                   |   —   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`no-unknown-i18n-locale-configs`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-unknown-i18n-locale-configs)                                                                                       |   —   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
+| [`no-untranslated-text`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-untranslated-text)                                                                                                           |   —   | [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                                          |
 | [`no-use-base-url-for-internal-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-use-base-url-for-internal-link-components)                                                           |  🔧   | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                   |
 | [`no-useless-collapsed-sidebar-categories`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-useless-collapsed-sidebar-categories)                                                                     |  🔧   | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                   |
 | [`prefer-config-satisfies`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies)                                                                                                     |  🔧   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`prefer-css-modules-in-site-src`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src)                                                                                       |   —   | [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                                          |
+| [`prefer-docusaurus-heading`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-docusaurus-heading)                                                                                                 |  💡   | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                   |
 | [`prefer-head-tag-attributes-object`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-head-tag-attributes-object)                                                                                 |  🔧   | [🔵](./config.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                        |
 | [`prefer-href-for-external-link-components`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-link-components)                                                                   |  🔧   | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                   |
 | [`prefer-href-for-external-links`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-links)                                                                                       |  🔧   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
@@ -153,6 +157,7 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 | [`require-theme-search-algolia-package-installed`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-search-algolia-package-installed)                                                       |   —   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`require-trailing-slash-explicit`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-trailing-slash-explicit)                                                                                     | 🔧 💡 | [🔵](./config.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                        |
 | [`require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads) |  🔧   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
+| [`string-literal-i18n-messages`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/string-literal-i18n-messages)                                                                                           |   —   | [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                   |
 | [`validate-live-codeblock-playground-position`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-live-codeblock-playground-position)                                                             |  💡   | [🔵](./config.md) [🟡](./recommended.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md) |
 | [`validate-navbar-item-position`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-navbar-item-position)                                                                                         | 🔧 💡 | [🔵](./config.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                        |
 | [`validate-theme-config-announcement-bar-is-closeable`](https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-theme-config-announcement-bar-is-closeable)                                             | 🔧 💡 | [🔵](./config.md) [🔴](./strict.md) [🟣](./all.md) [🧪](./experimental.md)                        |
@@ -164,10 +169,11 @@ The public preset surface is stable, and the rule catalog is intentionally focus
 
 ### Opt-in rules
 
-These rules are intentionally outside the preset ladder. Some are enabled through opt-in content configs; others are direct rule opt-ins only.
+These rules are intentionally outside the preset ladder. Some are enabled through opt-in configs; others are direct rule opt-ins only.
 
 - `Config surface` legend:
   - [📝](../guides/config-surfaces.md) — [`docusaurus2.configs.content`](../guides/config-surfaces.md)
+  - [🌐](../guides/config-surfaces.md) — [`docusaurus2.configs.i18n`](../guides/config-surfaces.md)
   - [🧭](../guides/config-surfaces.md) — [`docusaurus2.configs["strict-mdx-upgrade"]`](../guides/config-surfaces.md)
 
 | Rule                                                                                                                                                | Fix | Config surface                                                                                                                                                                                                  |

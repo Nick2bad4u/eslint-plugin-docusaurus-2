@@ -39,9 +39,29 @@ export interface TypedRuleServices {
     parserServices: ReturnType<typeof ESLintUtils.getParserServices>;
 }
 
-type PluginRuleCreator = ReturnType<
-    typeof ESLintUtils.RuleCreator<PluginRuleDocs>
->;
+/**
+ * Generic creator contract that preserves authored options and message IDs.
+ */
+type PluginRuleCreator = <
+    Options extends Readonly<UnknownArray>,
+    MessageIds extends string,
+>(
+    ruleDefinition: PluginRuleDefinition<Options, MessageIds>
+) => TSESLint.RuleModule<MessageIds, Options, PluginRuleDocs>;
+
+/** Plugin rule definition accepted by `createTypedRule`. */
+type PluginRuleDefinition<
+    Options extends Readonly<UnknownArray>,
+    MessageIds extends string,
+> = Readonly<{
+    create: (
+        context: Readonly<TSESLint.RuleContext<MessageIds, Options>>,
+        optionsWithDefault: Readonly<Options>
+    ) => TSESLint.RuleListener;
+    defaultOptions?: Readonly<Options>;
+    meta: PluginRuleMetadata<MessageIds, Options>;
+    name: string;
+}>;
 
 /**
  * Plugin-specific metadata extensions for `meta.docs`.
@@ -63,6 +83,27 @@ interface PluginRuleDocs {
     ruleId?: string;
     ruleNumber?: number;
 }
+
+/** ESLint language identifier accepted by `meta.languages`. */
+type PluginRuleLanguage = "*" | `${string}/${string}`;
+
+/**
+ * Rule metadata supported by this plugin's ESLint runtime.
+ *
+ * @remarks
+ * ESLint 10 supports `meta.languages`, but the currently installed
+ * `@typescript-eslint/utils` metadata type does not expose it yet. Keeping the
+ * compatibility extension here preserves contextual typing for rule authors
+ * without casting rule definitions or weakening the public rule-module type.
+ */
+type PluginRuleMetadata<
+    MessageIds extends string,
+    Options extends Readonly<UnknownArray>,
+> = Readonly<{
+    docs: PluginRuleDocs & TSESLint.RuleMetaDataDocs;
+    languages?: readonly PluginRuleLanguage[];
+}> &
+    TSESLint.RuleMetaData<MessageIds, PluginRuleDocs, Options>;
 
 /**
  * Rule-creator wrapper used by all plugin rules.
@@ -99,7 +140,7 @@ export const createTypedRule: PluginRuleCreator = (ruleDefinition) => {
         );
     }
 
-    if (ruleDefinition.name.startsWith("prefer-") && catalogEntry === null) {
+    if (catalogEntry === null && ruleDefinition.name.startsWith("prefer-")) {
         throw new TypeError(
             `Rule '${ruleDefinition.name}' is missing from the stable rule catalog.`
         );

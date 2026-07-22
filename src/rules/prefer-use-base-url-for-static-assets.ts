@@ -123,8 +123,8 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                         const attributeValue = attribute.value;
                         const suggestions =
-                            !isDefined(useBaseUrlLocalName) ||
-                            attributeValue === null
+                            attributeValue === null ||
+                            !isDefined(useBaseUrlLocalName)
                                 ? undefined
                                 : [
                                       createUseBaseUrlSuggestion({

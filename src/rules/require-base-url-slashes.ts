@@ -25,7 +25,7 @@ type MessageIds = "requireBaseUrlSlashes";
 const normalizeBaseUrlValue = (value: string): string => {
     const trimmedValue = value.trim();
 
-    if (trimmedValue.length === 0 || trimmedValue === "/") {
+    if (trimmedValue === "/" || trimmedValue.length === 0) {
         return "/";
     }
 
