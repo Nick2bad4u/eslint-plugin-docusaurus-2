@@ -1,0 +1,29 @@
+toml-version = "v1.0.0"
+
+[files]
+respect-ignore-files = true
+
+[format.rules]
+array-bracket-space-width = 0
+array-comma-space-width = 1
+date-time-delimiter = "T"
+group-blank-lines-limit = 1
+indent-style = "space"
+indent-sub-tables = false
+indent-table-key-value-pairs = false
+indent-width = 2
+inline-table-brace-space-width = 1
+inline-table-comma-space-width = 1
+key-value-equals-sign-alignment = false
+key-value-equals-sign-space-width = 1
+line-ending = "lf"
+line-width = 80
+string-quote-style = "double"
+table-blank-lines = 1
+trailing-comment-alignment = false
+trailing-comment-space-width = 2
+
+[lint.rules]
+dotted-keys-out-of-order = "warn"
+key-empty = "warn"
+tables-out-of-order = "warn"
