@@ -49,6 +49,10 @@
     },
     "main": "./dist/plugin.cjs",
     "types": "./dist/plugin.d.ts",
+    "directories": {
+        "doc": "docs",
+        "test": "test"
+    },
     "files": [
         "dist",
         "docs/rules/**",
@@ -313,9 +317,5 @@
     "publishConfig": {
         "provenance": true,
         "registry": "https://registry.npmjs.org/"
-    },
-    "directories": {
-        "doc": "docs",
-        "test": "test"
     }
 }
