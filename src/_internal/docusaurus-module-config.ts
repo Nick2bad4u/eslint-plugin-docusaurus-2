@@ -33,15 +33,18 @@ const isMatchingModuleSpecifier = (
 const getModuleOptionsObject = (
     moduleOptions: Readonly<TSESTree.Expression>,
     programNode?: Readonly<TSESTree.Program>
-): null | Readonly<TSESTree.ObjectExpression> =>
-    programNode === undefined
-        ? moduleOptions.type === AST_NODE_TYPES.ObjectExpression
+): null | Readonly<TSESTree.ObjectExpression> => {
+    if (programNode === undefined) {
+        return moduleOptions.type === AST_NODE_TYPES.ObjectExpression
             ? moduleOptions
-            : null
-        : getObjectExpressionFromExpressionOrIdentifier(
-              moduleOptions,
-              programNode
-          );
+            : null;
+    }
+
+    return getObjectExpressionFromExpressionOrIdentifier(
+        moduleOptions,
+        programNode
+    );
+};
 
 /** Find all module configurations declared under one top-level array. */
 export const findTopLevelModuleConfigurationsByName = (

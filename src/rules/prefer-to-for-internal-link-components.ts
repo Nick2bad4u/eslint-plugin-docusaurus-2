@@ -91,6 +91,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-to-for-internal-link-components",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferToForInternalLinkComponent:
                     "Use `to` instead of `href` for internal `@docusaurus/Link` destinations so client-side routing and baseUrl handling stay intact.",

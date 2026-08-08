@@ -81,6 +81,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-setup",
             },
+            languages: ["js/js"],
             messages: {
                 requirePluginPwaSetup:
                     "Configure `@docusaurus/plugin-pwa` in the top-level `plugins` array with an explicit setup entry instead of omitting it or relying on a bare string plugin declaration.",

@@ -89,6 +89,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-search-providers",
             },
+            languages: ["js/js"],
             messages: {
                 noConflictingSearchProviders:
                     "Do not configure the local-search plugin `{{ pluginName }}` together with `{{ searchConfigKey }}`. Pick one search provider so the site does not ship conflicting search integrations.",

@@ -128,6 +128,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-items",
             },
+            languages: ["js/js"],
             messages: {
                 requireFooterLinkColumnItems:
                     "Docusaurus footer link columns should include an `items` array.",

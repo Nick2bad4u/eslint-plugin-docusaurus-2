@@ -11,43 +11,43 @@ const withTranslateImport = (code: string): string =>
     `${translateImport}\nconst view = ${code};`;
 
 const upstreamStaticTranslateCases = [
-    "<Translate>text</Translate>",
-    "<Translate> text </Translate>",
     '<Translate>"text"</Translate>',
     "<Translate>'text'</Translate>",
     "<Translate>`text`</Translate>",
+    "<Translate>text</Translate>",
+    "<Translate> text </Translate>",
     '<Translate>{"text"}</Translate>',
     "<Translate>{'text'}</Translate>",
     "<Translate>{`text`}</Translate>",
 ] as const;
 
 const upstreamIgnoredValidCases = [
+    "<Component>· — ×</Component>",
+    "<Component>· ·</Component>",
     "<Component>·</Component>",
     "<Component>· </Component>",
     "<Component> · </Component>",
-    "<Component>· ·</Component>",
-    "<Component>· — ×</Component>",
-    '<Component>{"·"}</Component>',
     "<Component>{'·'}</Component>",
+    '<Component>{"·"}</Component>',
     "<Component>{`·`}</Component>",
 ] as const;
 
 const upstreamInvalidTextCases = [
-    "<Component> text </Component>",
+    "<>text</>",
     '<Component>"text"</Component>',
     "<Component>'text'</Component>",
     "<Component>`text`</Component>",
+    "<Component> text </Component>",
     '<Component>{"text"}</Component>',
     "<Component>{'text'}</Component>",
     "<Component>{`text`}</Component>",
-    "<>text</>",
 ] as const;
 
 const upstreamIgnoredInvalidCases = [
     "<Component>··</Component>",
     "<Component> ·· </Component>",
-    '<Component>"·"</Component>',
     "<Component>'·'</Component>",
+    '<Component>"·"</Component>',
     "<Component>`·`</Component>",
 ] as const;
 

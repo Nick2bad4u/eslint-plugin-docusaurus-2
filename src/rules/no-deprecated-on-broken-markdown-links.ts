@@ -101,6 +101,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-on-broken-markdown-links",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDeprecatedOnBrokenMarkdownLinks:
                     "Move the deprecated top-level `onBrokenMarkdownLinks` setting to `markdown.hooks.onBrokenMarkdownLinks`. Docusaurus v3.9 deprecated the top-level property.",

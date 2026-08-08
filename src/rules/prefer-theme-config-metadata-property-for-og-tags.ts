@@ -158,6 +158,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-theme-config-metadata-property-for-og-tags",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferThemeConfigMetadataPropertyForOgTags:
                     "Use `property` instead of `name` for Open Graph metadata entries such as `og:*`.",

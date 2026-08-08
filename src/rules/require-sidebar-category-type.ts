@@ -65,7 +65,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             return {
                 ObjectExpression(node: Readonly<TSESTree.ObjectExpression>) {
                     if (
-                        node.parent?.type !== AST_NODE_TYPES.ArrayExpression ||
+                        node.parent.type !== AST_NODE_TYPES.ArrayExpression ||
                         !isDocusaurusSidebarCategoryObject(node)
                     ) {
                         return;
@@ -124,6 +124,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-type",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferSidebarCategoryType:
                     'This sidebar item should use `type: "category"` because it has category-shaped fields such as `items`.',

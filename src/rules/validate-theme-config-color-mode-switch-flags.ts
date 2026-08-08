@@ -272,6 +272,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 setColorModeFlagFalse: "Set this color-mode flag to `false`.",
                 setColorModeFlagTrue: "Set this color-mode flag to `true`.",

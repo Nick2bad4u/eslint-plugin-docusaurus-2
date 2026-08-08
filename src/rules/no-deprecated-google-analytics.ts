@@ -186,6 +186,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-google-analytics",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 noDeprecatedGoogleAnalytics:
                     "`@docusaurus/plugin-google-analytics` and the classic-preset `googleAnalytics` option are deprecated and no longer useful after the Universal Analytics shutdown. Migrate to `@docusaurus/plugin-google-gtag` or the classic-preset `gtag` option instead.",

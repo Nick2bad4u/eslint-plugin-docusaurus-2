@@ -102,6 +102,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-announcement-bar-id",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeConfigAnnouncementBarId:
                     "Configure `themeConfig.announcementBar.id` with a non-empty string so Docusaurus can persist dismissal state reliably.",

@@ -108,6 +108,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-sidebar-item-sidebar-id",
             },
+            languages: ["js/js"],
             messages: {
                 requireNavbarDocSidebarItemSidebarId:
                     'Docusaurus navbar items with `type: "docSidebar"` should include a non-empty `sidebarId`.',

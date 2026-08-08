@@ -128,6 +128,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-sidebars-config-satisfies",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferSidebarsConfigSatisfies:
                     "Prefer `satisfies SidebarsConfig` in Docusaurus sidebar files so TypeScript validates the sidebar shape without widening literal values.",

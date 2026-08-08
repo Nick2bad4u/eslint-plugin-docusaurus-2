@@ -151,6 +151,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-future-experimental-storage",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDeprecatedFutureExperimentalStorage:
                     "Move deprecated `future.experimental_storage` config to the stable top-level `storage` field introduced in Docusaurus 3.10.",

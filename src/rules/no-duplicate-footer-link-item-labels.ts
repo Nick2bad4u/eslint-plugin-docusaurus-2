@@ -145,6 +145,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-labels",
             },
+            languages: ["js/js"],
             messages: {
                 noDuplicateFooterLinkItemLabels:
                     "Avoid duplicate footer link item labels in the same column; found repeated label {{ label }}.",

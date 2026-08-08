@@ -362,10 +362,7 @@ export const getObjectPropertyName = (
         return property.key.name;
     }
 
-    if (
-        property.key.type === AST_NODE_TYPES.Literal &&
-        typeof property.key.value === "string"
-    ) {
+    if (typeof property.key.value === "string") {
         return property.key.value;
     }
 

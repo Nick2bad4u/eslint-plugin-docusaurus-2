@@ -31,6 +31,48 @@ const isPresentArrayElement = (
     element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
+type CustomCssDuplicateAnalysis = Readonly<{
+    duplicateItems: readonly TSESTree.Expression[];
+    presentItems: readonly (TSESTree.Expression | TSESTree.SpreadElement)[];
+}>;
+
+const analyzeCustomCssEntries = (
+    customCssArrayExpression: Readonly<TSESTree.ArrayExpression>,
+    programNode: Readonly<TSESTree.Program>,
+    filename: string
+): CustomCssDuplicateAnalysis => {
+    const presentItems = customCssArrayExpression.elements.filter(
+        isPresentArrayElement
+    );
+    const duplicateItems: TSESTree.Expression[] = [];
+    const seenResolvedPaths = new Set<string>();
+
+    for (const item of presentItems) {
+        if (item.type === AST_NODE_TYPES.SpreadElement) {
+            continue;
+        }
+
+        const pathResolution = getStaticConfiguredPathResolution(
+            item,
+            programNode,
+            filename
+        );
+
+        if (pathResolution === null) {
+            continue;
+        }
+
+        if (setHas(seenResolvedPaths, pathResolution.resolvedPath)) {
+            duplicateItems.push(item);
+            continue;
+        }
+
+        seenResolvedPaths.add(pathResolution.resolvedPath);
+    }
+
+    return { duplicateItems, presentItems };
+};
+
 /** Rule module for `no-duplicate-theme-classic-custom-css`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
@@ -76,42 +118,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             continue;
                         }
 
-                        const presentItems =
-                            customCssArrayExpression.elements.filter(
-                                isPresentArrayElement
+                        const { duplicateItems, presentItems } =
+                            analyzeCustomCssEntries(
+                                customCssArrayExpression,
+                                programNode,
+                                context.filename
                             );
-                        const duplicateItems: TSESTree.Expression[] = [];
-                        const seenResolvedPaths = new Set<string>();
-
-                        for (const item of presentItems) {
-                            if (item.type === AST_NODE_TYPES.SpreadElement) {
-                                continue;
-                            }
-
-                            const pathResolution =
-                                getStaticConfiguredPathResolution(
-                                    item,
-                                    programNode,
-                                    context.filename
-                                );
-
-                            if (pathResolution === null) {
-                                continue;
-                            }
-
-                            if (
-                                setHas(
-                                    seenResolvedPaths,
-                                    pathResolution.resolvedPath
-                                )
-                            ) {
-                                duplicateItems.push(item);
-
-                                continue;
-                            }
-
-                            seenResolvedPaths.add(pathResolution.resolvedPath);
-                        }
 
                         if (duplicateItems.length === 0) {
                             continue;
@@ -159,6 +171,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-theme-classic-custom-css",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDuplicateThemeClassicCustomCss:
                     "Remove duplicate `customCss` entries that resolve to the same classic theme stylesheet path.",

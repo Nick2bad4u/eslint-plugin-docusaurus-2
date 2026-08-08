@@ -138,7 +138,6 @@ const devDeps = [
     "eslint-plugin-yml@latest",
     "fast-check@latest",
     "git-cliff@latest",
-    "gitleaks-secret-scanner@latest",
     "globals@latest",
     "htmlhint@latest",
     "jscpd@latest",

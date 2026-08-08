@@ -68,6 +68,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-css-modules-in-site-src",
             },
+            languages: ["js/js"],
             messages: {
                 preferCssModules:
                     "Prefer CSS Modules for `{{ importSource }}` in Docusaurus component/page files. Load truly global styles through `theme.customCss` or a client module instead.",

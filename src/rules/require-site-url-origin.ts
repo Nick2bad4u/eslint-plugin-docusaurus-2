@@ -214,6 +214,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 normalizeSiteUrlOrigin:
                     "Replace with a normalized absolute site origin URL.",

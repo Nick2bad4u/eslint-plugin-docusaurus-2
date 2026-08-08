@@ -304,6 +304,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 requireTrailingSlashExplicit:
                     "Configure top-level `trailingSlash` explicitly as a boolean (`true` or `false`) in Docusaurus config.",

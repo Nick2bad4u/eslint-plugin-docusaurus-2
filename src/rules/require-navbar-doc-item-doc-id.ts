@@ -108,6 +108,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-doc-item-doc-id",
             },
+            languages: ["js/js"],
             messages: {
                 requireNavbarDocItemDocId:
                     'Docusaurus navbar items with `type: "doc"` should include a non-empty `docId`.',

@@ -61,6 +61,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-page-css-module-imports-in-components",
             },
+            languages: ["js/js"],
             messages: {
                 noPageCssModuleImportsInComponents:
                     "Do not import page-scoped stylesheet `{{ importSource }}` from a reusable Docusaurus component. Move shared styles into the component's own module or a shared styles module instead.",

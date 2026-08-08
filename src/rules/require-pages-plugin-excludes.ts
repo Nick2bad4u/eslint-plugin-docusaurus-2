@@ -262,6 +262,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-pages-plugin-excludes",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requirePagesPluginExcludes:
                     "When `pages.include` is customized, also configure `pages.exclude` so declarations and test helpers under `src/pages` do not become routes. Missing patterns: {{ missingPatterns }}.",

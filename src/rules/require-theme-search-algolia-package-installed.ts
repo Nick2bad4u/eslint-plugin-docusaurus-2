@@ -83,6 +83,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-search-algolia-package-installed",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeSearchAlgoliaPackageInstalled:
                     "`@docusaurus/theme-search-algolia` is configured directly in this Docusaurus site config but neither `@docusaurus/theme-search-algolia` nor `@docusaurus/preset-classic` is declared in the nearest `package.json` dependency fields.",

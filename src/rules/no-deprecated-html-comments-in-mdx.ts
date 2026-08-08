@@ -98,6 +98,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-html-comments-in-mdx",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDeprecatedHtmlCommentsInMdx:
                     "Docusaurus 3.10 strict MDX prefers JSX comments (`{/* ... */}`) instead of deprecated HTML comments (`<!-- ... -->`) in `.mdx` files.",

@@ -97,7 +97,7 @@ const findNearestPackageJsonPath = (filePath: string): null | string => {
 };
 
 /** Find and cache the nearest package manifest for a config file path. */
-export const getNearestPackageManifest = (
+const getNearestPackageManifest = (
     filePath: string
 ): null | ResolvedPackageManifest => {
     const packageJsonPath = findNearestPackageJsonPath(filePath);

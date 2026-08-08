@@ -51,7 +51,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             return {
                 ObjectExpression(node: Readonly<TSESTree.ObjectExpression>) {
                     if (
-                        node.parent?.type !== AST_NODE_TYPES.ArrayExpression ||
+                        node.parent.type !== AST_NODE_TYPES.ArrayExpression ||
                         !isDocusaurusSidebarCategoryObject(node)
                     ) {
                         return;
@@ -94,6 +94,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-label",
             },
+            languages: ["js/js"],
             messages: {
                 requireSidebarCategoryLabel:
                     "Explicit Docusaurus sidebar category objects should include a non-empty `label`.",

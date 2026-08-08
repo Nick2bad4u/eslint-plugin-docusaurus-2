@@ -172,6 +172,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-metadata-keys",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 noConflictingThemeConfigMetadataKeys:
                     "Each `themeConfig.metadata` entry should use either `name` or `property`, not both.",

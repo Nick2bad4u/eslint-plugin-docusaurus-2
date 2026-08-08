@@ -100,6 +100,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-default-export-pages",
             },
+            languages: ["js/js"],
             messages: {
                 invalidDefaultExport:
                     "Docusaurus page modules should default-export a React page component. Export a component instead of a non-component value, or move the file out of `src/pages`.",

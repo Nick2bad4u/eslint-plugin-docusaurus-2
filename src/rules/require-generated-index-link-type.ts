@@ -100,8 +100,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const parentObject = node.parent;
 
                     if (
-                        parentObject?.type !==
-                            AST_NODE_TYPES.ObjectExpression ||
+                        parentObject.type !== AST_NODE_TYPES.ObjectExpression ||
                         !isSidebarCategoryObject(parentObject)
                     ) {
                         return;
@@ -175,6 +174,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-generated-index-link-type",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferGeneratedIndexType:
                     'This sidebar `link.type` should be `"generated-index"` because the same object uses generated-index metadata.',

@@ -148,6 +148,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-admonition-title-syntax",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDeprecatedAdmonitionTitleSyntax:
                     "Docusaurus 3.10 strict MDX prefers admonition titles written as `:::type[Title]` instead of deprecated `:::type Title` syntax.",

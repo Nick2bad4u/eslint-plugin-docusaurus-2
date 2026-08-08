@@ -268,6 +268,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-destinations",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 noDuplicateNavbarItemDestinations:
                     "Avoid duplicate navbar item destinations in the same menu array; found repeated destination {{ destination }}.",

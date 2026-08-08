@@ -116,6 +116,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-mermaid-elk-package-installed",
             },
+            languages: ["js/js"],
             messages: {
                 requireMermaidElkPackageInstalled:
                     "Mermaid ELK layouts require the `@mermaid-js/layout-elk` package to be declared in the nearest package.json.",

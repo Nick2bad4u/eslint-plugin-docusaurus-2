@@ -111,6 +111,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-navbar-doc-item-props",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noConflictingNavbarDocItemProps:
                     'Docusaurus navbar items with `type: "doc"` should not mix in direct-link props such as `to`, `href`, or `html`. Keep the `docId`-based shape only.',

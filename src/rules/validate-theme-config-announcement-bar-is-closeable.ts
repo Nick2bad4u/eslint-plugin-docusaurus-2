@@ -165,24 +165,28 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             programNode
                         );
 
-                    if (booleanValueFromStaticString !== null) {
-                        if (canAutofixStringExpression(isCloseableExpression)) {
-                            reportWithOptionalFix({
-                                context,
-                                fix: (fixer) =>
-                                    fixer.replaceText(
-                                        isCloseableExpression,
-                                        String(booleanValueFromStaticString)
-                                    ),
-                                messageId: "validateAnnouncementBarIsCloseable",
-                                node: isCloseableExpression,
-                            });
+                    if (
+                        booleanValueFromStaticString !== null &&
+                        canAutofixStringExpression(isCloseableExpression)
+                    ) {
+                        reportWithOptionalFix({
+                            context,
+                            fix: (fixer) =>
+                                fixer.replaceText(
+                                    isCloseableExpression,
+                                    String(booleanValueFromStaticString)
+                                ),
+                            messageId: "validateAnnouncementBarIsCloseable",
+                            node: isCloseableExpression,
+                        });
 
-                            return;
-                        }
-                    } else if (
-                        resolvedExpression === null ||
-                        !isStaticLiteralLikeExpression(resolvedExpression)
+                        return;
+                    }
+
+                    if (
+                        booleanValueFromStaticString === null &&
+                        (resolvedExpression === null ||
+                            !isStaticLiteralLikeExpression(resolvedExpression))
                     ) {
                         return;
                     }
@@ -226,6 +230,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 setAnnouncementBarCloseableFalse:
                     "Set `themeConfig.announcementBar.isCloseable` to `false`.",

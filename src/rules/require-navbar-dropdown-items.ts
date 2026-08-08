@@ -97,6 +97,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-dropdown-items",
             },
+            languages: ["js/js"],
             messages: {
                 requireNavbarDropdownItems:
                     "Docusaurus navbar dropdown items should include an `items` array.",

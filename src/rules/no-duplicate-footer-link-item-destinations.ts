@@ -196,6 +196,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-link-item-destinations",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 noDuplicateFooterLinkItemDestinations:
                     "Avoid duplicate footer link destinations in the same column; found repeated destination {{ destination }}.",

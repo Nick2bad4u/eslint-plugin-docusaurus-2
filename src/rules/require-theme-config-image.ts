@@ -117,6 +117,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-image",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeConfigImage:
                     "Configure `themeConfig.image` with a non-empty social-card image path so Docusaurus can provide a default Open Graph and Twitter image.",

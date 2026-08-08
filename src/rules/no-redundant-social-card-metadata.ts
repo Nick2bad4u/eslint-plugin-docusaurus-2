@@ -152,6 +152,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-redundant-social-card-metadata",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noRedundantSocialCardMetadata:
                     "Remove manual `{{ metadataName }}` metadata when `themeConfig.image` is already configured. Docusaurus already uses that image for social-card metadata.",

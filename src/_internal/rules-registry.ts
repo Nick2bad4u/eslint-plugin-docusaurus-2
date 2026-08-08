@@ -370,5 +370,3 @@ const docusaurusRuleRegistry = {
 /** Exported typed view consumed by the plugin entrypoint. */
 export const docusaurusRules: Readonly<Record<string, RuleWithDocs>> =
     docusaurusRuleRegistry;
-
-export default docusaurusRules;

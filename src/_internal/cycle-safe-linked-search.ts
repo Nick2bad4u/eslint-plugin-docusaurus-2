@@ -73,37 +73,3 @@ export const resolveFirstValueInLinkedStructure = <Node, Value>({
         found: false,
     };
 };
-
-/**
- * Check whether any node in a linked structure satisfies a predicate.
- *
- * @param options - Linked-structure traversal options.
- *
- *   - `startNode`: Initial node to inspect.
- *   - `getNextNode`: Function that returns the next node in the chain.
- *   - `isMatch`: Predicate used to test each visited node.
- *
- * @returns `true` when any visited node matches; otherwise `false`.
- */
-export const isAnyLinkedStructureNodeMatching = <Node>({
-    getNextNode,
-    isMatch,
-    startNode,
-}: Readonly<{
-    getNextNode: (node: Node) => Node | null;
-    isMatch: (node: Node) => boolean;
-    startNode: Node | null;
-}>): boolean =>
-    resolveFirstValueInLinkedStructure({
-        getNextNode,
-        resolveValue: (node): LinkedStructureLookupResult<boolean> =>
-            isMatch(node)
-                ? {
-                      found: true,
-                      value: true,
-                  }
-                : {
-                      found: false,
-                  },
-        startNode,
-    }).found;

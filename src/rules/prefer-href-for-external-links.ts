@@ -66,8 +66,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const parentObject = node.parent;
 
                     if (
-                        parentObject?.type !==
-                            AST_NODE_TYPES.ObjectExpression ||
+                        parentObject.type !== AST_NODE_TYPES.ObjectExpression ||
                         !isLikelyDocusaurusConfigLinkItemObject(parentObject)
                     ) {
                         return;
@@ -118,6 +117,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-links",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferHrefForExternalLinks:
                     "Use `href` instead of `to` for external Docusaurus config links so the config matches the documented theme link semantics.",

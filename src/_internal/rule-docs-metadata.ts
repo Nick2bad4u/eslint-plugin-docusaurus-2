@@ -53,8 +53,8 @@ type RuleMap<RuleName extends string = string> = Readonly<
 
 const RULE_ID_PREFIX = "R" as const;
 const RULE_ID_LENGTH = 4 as const;
-const RULE_ID_DIGIT_START_INDEX = 1 as const;
-const RULE_ID_DIGIT_END_INDEX = 4 as const;
+const RULE_ID_DIGIT_START_INDEX = 1;
+const RULE_ID_DIGIT_END_INDEX = 4;
 const ASCII_ZERO_CODE_POINT = 48 as const;
 const ASCII_NINE_CODE_POINT = 57 as const;
 
@@ -71,11 +71,8 @@ const isRuleIdInCanonicalFormat = (value: string): boolean => {
     ) {
         const codePoint = value.codePointAt(index);
 
-        if (!isDefined(codePoint)) {
-            return false;
-        }
-
         if (
+            !isDefined(codePoint) ||
             codePoint < ASCII_ZERO_CODE_POINT ||
             codePoint > ASCII_NINE_CODE_POINT
         ) {
@@ -334,7 +331,7 @@ export const deriveRuleDocsMetadataByName = <RuleName extends string>(
 
     for (const ruleName of objectKeys(rules) as RuleName[]) {
         const rule = rules[ruleName];
-        const ruleDocsContract = getRuleDocsContract(ruleName, rule.meta?.docs);
+        const ruleDocsContract = getRuleDocsContract(ruleName, rule.meta.docs);
         const presetNames = normalizePresetNames(
             ruleName,
             ruleDocsContract.presets

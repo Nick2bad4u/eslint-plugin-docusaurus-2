@@ -102,6 +102,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-search-page-link-when-search-page-disabled",
             },
+            languages: ["js/js"],
             messages: {
                 noSearchPageLinkWhenSearchPageDisabled:
                     "Do not link to `/search` from theme-config navbar or footer items when `searchPagePath` is explicitly disabled with `false`.",

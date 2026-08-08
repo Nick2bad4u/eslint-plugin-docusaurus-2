@@ -85,7 +85,7 @@ const normalizeRequiredStrategies = (
 const normalizeRuleOption = (
     option: PwaOfflineModeActivationStrategiesRuleOption
 ): ResolvedPwaOfflineModeActivationStrategiesRuleOption => ({
-    requiredStrategies: normalizeRequiredStrategies(option?.requiredStrategies),
+    requiredStrategies: normalizeRequiredStrategies(option.requiredStrategies),
 });
 
 const getStaticStringArrayValues = (
@@ -260,6 +260,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
             recommended: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-offline-mode-activation-strategies",
         },
+        languages: ["js/js"],
         messages: {
             requirePluginPwaOfflineModeActivationStrategies:
                 "When `@docusaurus/plugin-pwa` is configured, `offlineModeActivationStrategies` should include {{ missingStrategies }}.",

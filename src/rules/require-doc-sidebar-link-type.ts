@@ -69,8 +69,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const parentObject = node.parent;
 
                     if (
-                        parentObject?.type !==
-                            AST_NODE_TYPES.ObjectExpression ||
+                        parentObject.type !== AST_NODE_TYPES.ObjectExpression ||
                         !isDocusaurusSidebarCategoryObject(parentObject)
                     ) {
                         return;
@@ -143,6 +142,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-doc-sidebar-link-type",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferDocLinkType:
                     'This sidebar category `link.type` should be `"doc"` because the same object uses `id`.',

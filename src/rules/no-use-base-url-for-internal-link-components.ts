@@ -187,6 +187,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-use-base-url-for-internal-link-components",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noUseBaseUrlForInternalLinkComponent:
                     "Do not wrap internal `@docusaurus/Link` destinations with `useBaseUrl(...)`. Docusaurus already handles baseUrl for those links.",

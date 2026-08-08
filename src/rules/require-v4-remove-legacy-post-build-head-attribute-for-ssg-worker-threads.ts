@@ -173,6 +173,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-v4-remove-legacy-post-build-head-attribute-for-ssg-worker-threads",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requireV4RemoveLegacyPostBuildHeadAttributeForSsgWorkerThreads:
                     "Enable `future.v4.removeLegacyPostBuildHeadAttribute: true` when using Docusaurus Faster `ssgWorkerThreads`.",

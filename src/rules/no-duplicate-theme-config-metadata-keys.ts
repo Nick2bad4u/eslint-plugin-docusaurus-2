@@ -182,6 +182,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-theme-config-metadata-keys",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDuplicateThemeConfigMetadataKeys:
                     "Remove duplicate `themeConfig.metadata` entries that repeat an earlier `name` or `property` key.",

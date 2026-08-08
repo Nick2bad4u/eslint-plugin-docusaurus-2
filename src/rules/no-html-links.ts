@@ -18,7 +18,7 @@ import {
 import {
     collectModuleImportBindings,
     combineImportBindings,
-    getVisibleImportLocalNameAtNode,
+    getVisibleDefaultImportJsxTagNameAtNode,
 } from "../_internal/module-import-bindings.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
@@ -91,21 +91,12 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
                 return;
             }
 
-            const directLinkLocalName = getVisibleImportLocalNameAtNode(
+            const linkTagName = getVisibleDefaultImportJsxTagNameAtNode(
                 context,
                 node,
-                linkBindings
-            );
-            const namespaceLinkLocalName = getVisibleImportLocalNameAtNode(
-                context,
-                node,
+                linkBindings,
                 moduleBindings.namespaceBindings
             );
-            const linkTagName = isDefined(directLinkLocalName)
-                ? directLinkLocalName
-                : isDefined(namespaceLinkLocalName)
-                  ? `${namespaceLinkLocalName}.default`
-                  : undefined;
             const parent = node.parent;
             const hasAmbiguousAttributes =
                 getJsxAttributeByName(node, "to") !== null ||

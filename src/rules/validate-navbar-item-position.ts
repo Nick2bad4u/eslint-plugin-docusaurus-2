@@ -225,6 +225,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 setNavbarItemPositionLeft:
                     "Set navbar item `position` to `left`.",

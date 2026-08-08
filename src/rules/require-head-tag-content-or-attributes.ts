@@ -151,6 +151,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-content-or-attributes",
             },
+            languages: ["js/js"],
             messages: {
                 requireHeadTagContentOrAttributes:
                     "Top-level `headTags` entries should provide either meaningful `attributes` or non-empty `innerHTML` content.",

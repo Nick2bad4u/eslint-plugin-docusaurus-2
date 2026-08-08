@@ -66,6 +66,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-content-props",
             },
+            languages: ["js/js"],
             messages: {
                 noConflictingConfigLinkContentProps:
                     "Do not declare both `label` and `html` on the same Docusaurus theme-config link item. Choose one visible-content prop shape.",

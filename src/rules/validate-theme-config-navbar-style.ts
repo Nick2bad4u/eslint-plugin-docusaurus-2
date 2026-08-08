@@ -227,6 +227,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 setNavbarStyleDark:
                     'Set `themeConfig.navbar.style` to `"dark"`.',

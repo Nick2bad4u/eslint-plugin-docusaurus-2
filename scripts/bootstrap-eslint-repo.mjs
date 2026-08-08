@@ -155,7 +155,6 @@ const devDependencies = [
     "eslint-plugin-yml",
     "fast-check",
     "git-cliff",
-    "gitleaks-secret-scanner",
     "globals",
     "htmlhint",
     "jscpd",

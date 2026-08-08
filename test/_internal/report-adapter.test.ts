@@ -100,7 +100,7 @@ describe(createReportWithoutAutofixes, () => {
             ],
         });
 
-        expect(reportSpy).toHaveBeenCalledOnce();
+        expect(reportSpy).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
 
         const [reportedDescriptor] = reportSpy.mock.calls[0] as [Descriptor];
 

@@ -182,6 +182,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-balanced-footer-link-columns",
             },
+            languages: ["js/js"],
             messages: {
                 requireBalancedFooterLinkColumns:
                     "Balance footer link columns so each column contains the same number of links. Found column counts {{ counts }}.",

@@ -140,6 +140,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-docsearch-ask-ai-assistant-id",
             },
+            languages: ["js/js"],
             messages: {
                 requireDocsearchAskAiAssistantId:
                     "Ask AI config should provide a non-empty assistant id, either as a string value or as `askAi.assistantId`.",
