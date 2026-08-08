@@ -2,7 +2,6 @@
 import process from "node:process";
 
 import { ESLint } from "eslint";
-import pc from "picocolors";
 
 const pluginSpecifier =
     process.env["DOCUSAURUS2_COMPAT_PLUGIN_SPECIFIER"] ?? "../plugin.mjs";
@@ -60,9 +59,7 @@ const assertEslintMajor = (expectedMajor) => {
         );
     }
 
-    console.log(
-        `${pc.green("✓")} ESLint runtime ${pc.bold(runtimeVersion)} detected.`
-    );
+    console.log(`ESLint runtime ${runtimeVersion} detected.`);
 };
 
 /**
@@ -135,14 +132,14 @@ const runScenario = async () => {
     }
 
     console.log(
-        `${pc.green("✓")} Recommended preset loaded under ESLint ${pc.bold(ESLint.version)} with ${pc.bold(String(lintResults[0]?.messages.length ?? 0))} message(s).`
+        `Recommended preset loaded under ESLint ${ESLint.version} with ${String(lintResults[0]?.messages.length ?? 0)} message(s).`
     );
 };
 
-console.log(pc.bold(pc.cyan("Running ESLint 9 compatibility smoke checks...")));
+console.log("Running ESLint 9 compatibility smoke checks...");
 
 const expectedEslintMajor = parseExpectedEslintMajor(process.argv.slice(2));
 assertEslintMajor(expectedEslintMajor);
 await runScenario();
 
-console.log(pc.bold(pc.green("ESLint compatibility smoke checks passed.")));
+console.log("ESLint compatibility smoke checks passed.");
