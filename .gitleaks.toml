@@ -9,3 +9,9 @@ paths = [
   '''^docs/docusaurus/docs/typedoc\.json$''',
   '''^docs/typedoc\.json$''',
 ]
+
+[[allowlists]]
+description = "Ignore ignored, ephemeral verification artifacts"
+paths = [
+  '''^temp/''',
+]
