@@ -88,5 +88,5 @@ Do not use this rule if your project intentionally treats root-absolute asset pa
 
 ## Further reading
 
-- [Docusaurus client API: `useBaseUrl`](https://docusaurus.io/docs/docusaurus-core#usebaseurl)
+- [Docusaurus client API: `useBaseUrl`](https://docusaurus.io/docs/docusaurus-core#useBaseUrl)
 - [Docusaurus creating pages guide](https://docusaurus.io/docs/creating-pages)

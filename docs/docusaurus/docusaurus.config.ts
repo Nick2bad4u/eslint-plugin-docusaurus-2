@@ -33,12 +33,8 @@ const modernEnhancementsClientModule = fileURLToPath(
     new URL("src/js/modernEnhancements.ts", import.meta.url)
 );
 
-/** PWA theme-color meta value for Chromium-based browsers. */
-const pwaThemeColor = "#25c2a0";
-/** Windows tile color for pinned-site metadata. */
-const pwaTileColor = "#25c2a0";
-/** Safari pinned-tab mask icon color. */
-const pwaMaskIconColor = "#25c2a0";
+/** Shared site accent color for PWA and pinned-site metadata. */
+const siteAccentColor = "#25c2a0";
 /** Footer copyright HTML used by the site theme config. */
 const footerCopyright =
     `© ${new Date().getFullYear()} ` +
@@ -103,9 +99,11 @@ const suppressKnownWebpackWarningsPlugin: PluginModule = () => ({
                  * site-level problem.
                  */
                 (warning: unknown) => {
-                    const warningRecord = warning as
-                        Readonly<Record<string, unknown>> | undefined;
-                    const warningMessage = warningRecord?.["message"];
+                    if (typeof warning !== "object" || warning === null) {
+                        return false;
+                    }
+
+                    const warningMessage = Reflect.get(warning, "message");
 
                     return (
                         typeof warningMessage === "string" &&
@@ -191,7 +189,7 @@ const config = {
                 "@type": "WebSite",
                 description: siteDescription,
                 image: socialCardImageUrl,
-                name: "eslint-plugin-docusaurus-2",
+                name: projectName,
                 publisher: {
                     "@type": "Person",
                     name: "Nick2bad4u",
@@ -242,7 +240,7 @@ const config = {
                         tagName: "link",
                     },
                     {
-                        content: pwaThemeColor,
+                        content: siteAccentColor,
                         name: "theme-color",
                         tagName: "meta",
                     },
@@ -262,7 +260,7 @@ const config = {
                         tagName: "link",
                     },
                     {
-                        color: pwaMaskIconColor,
+                        color: siteAccentColor,
                         href: `${baseUrl}img/docusaurus.svg`,
                         rel: "mask-icon",
                         tagName: "link",
@@ -273,7 +271,7 @@ const config = {
                         tagName: "meta",
                     },
                     {
-                        content: pwaTileColor,
+                        content: siteAccentColor,
                         name: "msapplication-TileColor",
                         tagName: "meta",
                     },
@@ -298,17 +296,15 @@ const config = {
             "classic",
             {
                 blog: {
-                    blogDescription:
-                        "Updates, architecture notes, and practical guidance for eslint-plugin-docusaurus-2 maintainers and users.",
+                    blogDescription: `Updates, architecture notes, and practical guidance for ${projectName} maintainers and users.`,
                     blogSidebarCount: "ALL",
-                    blogTitle: "eslint-plugin-docusaurus-2 Blog",
+                    blogTitle: `${projectName} Blog`,
                     editUrl: `https://github.com/${organizationName}/${projectName}/blob/main/docs/docusaurus/`,
                     feedOptions: {
-                        copyright: `Copyright © ${new Date().getFullYear()} eslint-plugin-docusaurus-2`,
-                        description:
-                            "Updates, architecture notes, and practical guidance for eslint-plugin-docusaurus-2 maintainers and users.",
+                        copyright: `Copyright © ${new Date().getFullYear()} ${projectName}`,
+                        description: `Updates, architecture notes, and practical guidance for ${projectName} maintainers and users.`,
                         language: "en",
-                        title: "eslint-plugin-docusaurus-2 Blog",
+                        title: `${projectName} Blog`,
                         type: ["rss", "atom"],
                         xslt: true,
                     },
@@ -471,7 +467,7 @@ const config = {
                 },
             ],
             logo: {
-                alt: "eslint-plugin-docusaurus-2 logo",
+                alt: `${projectName} logo`,
                 height: 72,
                 href: `https://github.com/${organizationName}/${projectName}`,
                 src: "img/docusaurus-72x72.png",
@@ -494,7 +490,7 @@ const config = {
                 name: "twitter:card",
             },
             {
-                content: "eslint-plugin-docusaurus-2",
+                content: projectName,
                 property: "og:site_name",
             },
         ],
@@ -631,14 +627,14 @@ const config = {
                 },
             ],
             logo: {
-                alt: "eslint-plugin-docusaurus-2 logo",
+                alt: `${projectName} logo`,
                 height: 32,
                 href: baseUrl,
                 src: "img/docusaurus.svg",
                 width: 32,
             },
             style: "dark",
-            title: "eslint-plugin-docusaurus-2",
+            title: projectName,
         },
         prism: {
             additionalLanguages: [
@@ -698,7 +694,7 @@ const config = {
             },
         ],
     ],
-    title: "eslint-plugin-docusaurus-2",
+    title: projectName,
     trailingSlash: true,
     url: siteOrigin,
 } satisfies Config;

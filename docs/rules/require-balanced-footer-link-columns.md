@@ -127,4 +127,4 @@ Do not use this rule if you intentionally allow uneven footer column lengths or 
 
 ## Further reading
 
-- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer)
+- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer-1)

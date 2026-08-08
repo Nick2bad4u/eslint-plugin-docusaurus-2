@@ -66,4 +66,4 @@ Do not use this rule if your footer intentionally repeats labels in a column for
 
 ## Further reading
 
-- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer)
+- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer-1)

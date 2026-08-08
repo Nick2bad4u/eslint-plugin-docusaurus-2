@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 import Head from "@docusaurus/Head";
 import Link from "@docusaurus/Link";
 import useBaseUrl from "@docusaurus/useBaseUrl";
@@ -120,7 +122,7 @@ const getStyleClassName = (className: string): string =>
     styles[className] ?? "";
 
 /** Homepage component for the eslint-plugin-docusaurus-2 documentation site. */
-export default function Home() {
+export default function Home(): ReactElement {
     const heroArtUrl = useBaseUrl("/img/docusaurus.svg");
     const heroMarkUrl = useBaseUrl("/img/docusaurus_speed.svg");
 

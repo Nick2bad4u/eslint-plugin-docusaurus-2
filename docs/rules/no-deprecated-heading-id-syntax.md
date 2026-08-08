@@ -57,4 +57,4 @@ Do not use this rule if your migration plan still depends on the legacy syntax, 
 ## Further reading
 
 - [Docusaurus 3.10 release notes: Strict Heading IDs](https://docusaurus.io/blog/releases/3.10)
-- [Docusaurus `write-heading-ids` CLI](https://docusaurus.io/docs/3.10.0/cli#docusaurus-write-heading-ids-sitedir)
+- [Docusaurus `write-heading-ids` CLI](https://docusaurus.io/docs/cli#docusaurus-write-heading-ids-sitedir)

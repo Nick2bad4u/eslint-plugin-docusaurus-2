@@ -1,29 +1,19 @@
-https://github.com/timostamm/protobuf-ts/tree/HEAD/packages/plugin-framework
-https://github.com/owner/repo.git
-https://github.com/netlify/cli/blob/main/CHANGELOG.md
-file:///*
-data:*
-https://github.com/*
-github/CHANGELOG.md
-(.*/)?CHANGELOG\\.md
-.github/workflows/*
-electron-app/package-lock.json
-electron-app/package.jsonjson
-CHANGELOG.md
-.github/CHANGELOG.md
-config/tools/.markdown-link-check.json
-electron-app/.markdown-link-check.json
-https://uptime-watcher.typpi.online/
-https://opencollective.com/*
-https://buymeacoffee.com/frsource
-https://ko-fi.com/rebeccastevens
-https://search.maven.org/solrsearch/select
-https://www.npmjs.com/package/*
-https://playwright.dev/*
-https://models.github.ai/inference
-https://www.conventionalcommits.org
-https://vitest.dev
-https://vendor.com/vex.json
-https://biomejs.dev/schemas/latest/schema.json
-https://nick2bad4u/
-https://localhost/
+# Non-navigational configuration endpoints and test fixtures.
+^https://search\.maven\.org/solrsearch/select$
+^https://vendor\.com/vex\.json$
+^https://dashboard\.stryker-mutator\.io/api/reports$
+^https://grype\.anchore\.io/databases$
+
+# URL prefixes intentionally present in template literals or constants.
+^https://nick2bad4u\.github\.io/$
+^https://nick2bad4u\.github\.io/eslint-plugin-docusaurus-2/docs/rules/$
+
+# Exact parser and XML-namespace fixtures that are not browsable links.
+^https://nick2bad4u\.github\.io/eslint-plugin-docusaurus-2\?ref=main#docs$
+^http://www\.sitemaps\.org/schemas/sitemap/0\.9$
+
+# All Contributors emits pseudo-anchors for contribution types without URLs.
+^file:///.*/(?:README|CONTRIBUTORS)\.md#(?:a11y|question|audio|blog|business|content|data|design|eventOrganizing|example|financial|fundingFinding|ideas|infra|maintenance|mentoring|platform|plugin|projectManagement|promotion|research|security|talk|tool|translation|tutorial|userTesting|video)-[^/]+$
+
+# Deliberately invalid URL fixture.
+^https://nick2bad4u/$

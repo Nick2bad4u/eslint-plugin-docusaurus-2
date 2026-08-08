@@ -22,19 +22,19 @@ It ships focused Docusaurus-specific rules and Flat Config presets for teams tha
 
 ## Table of contents
 
-1. [Installation](#installation)
-2. [Compatibility](#compatibility)
-3. [Quick start](#quick-start)
-4. [Presets](#presets)
-5. [Additional opt-in configs](#additional-opt-in-configs)
-6. [Parser setup behavior](#parser-setup-behavior)
-7. [Plugin settings](#plugin-settings)
-8. [Rules](#rules)
-9. [Documentation](#documentation)
-10. [Roadmap direction](#roadmap-direction)
-11. [Contributing](#contributing)
-12. [License](#license)
-13. [Contributors ✨](#contributors-)
+- [Installation](#installation)
+- [Compatibility](#compatibility)
+- [Quick start](#quick-start)
+- [Presets](#presets)
+- [Additional opt-in configs](#additional-opt-in-configs)
+- [Parser setup behavior](#parser-setup-behavior)
+- [Plugin settings](#plugin-settings)
+- [Rules](#rules)
+- [Documentation](#documentation)
+- [Roadmap direction](#roadmap-direction)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contributors ✨](#contributors-)
 
 ## Installation
 
@@ -318,7 +318,7 @@ These rules are intentionally outside the six preset tiers. Some are available t
 - Rules overview: [`docs/rules/overview.md`](./docs/rules/overview.md)
 - Getting started: [`docs/rules/getting-started.md`](./docs/rules/getting-started.md)
 - Preset reference: [`docs/rules/presets/index.md`](./docs/rules/presets/index.md)
-- Docusaurus site app: [`docs/docusaurus/`](./docs/docusaurus/)
+- Docusaurus site app: [`docs/docusaurus/package.json`](./docs/docusaurus/package.json)
 
 ## Roadmap direction
 
@@ -345,7 +345,7 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/reference/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 

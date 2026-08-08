@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 import RuleLiveDemo from "./RuleLiveDemo";
 
 const localSearchRuntimeHintCode = `function LocalSearchRuntimeHint() {
@@ -83,16 +85,16 @@ const liveCodeBlockConfigDemoCode = `function LiveCodeBlockConfigDemo() {
 render(<LiveCodeBlockConfigDemo />);`;
 
 /** Live demo for the live code block configuration rule. */
-export function LiveCodeBlockConfigDemo() {
+export function LiveCodeBlockConfigDemo(): ReactElement {
     return <RuleLiveDemo code={liveCodeBlockConfigDemoCode} />;
 }
 
 /** Live demo for the live code block package requirement rule. */
-export function LiveCodeBlockPackageDemo() {
+export function LiveCodeBlockPackageDemo(): ReactElement {
     return <RuleLiveDemo code={liveCodeBlockPackageDemoCode} />;
 }
 
 /** Live demo for the local-search runtime hint rule. */
-export function LocalSearchRuntimeHintDemo() {
+export function LocalSearchRuntimeHintDemo(): ReactElement {
     return <RuleLiveDemo code={localSearchRuntimeHintCode} />;
 }

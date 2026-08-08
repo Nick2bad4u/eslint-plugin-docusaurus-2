@@ -51,4 +51,4 @@ Do not use this rule if empty destination strings are intentionally used as plac
 ## Further reading
 
 - [Docusaurus navbar items](https://docusaurus.io/docs/api/themes/configuration#navbar-items)
-- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer)
+- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer-1)
