@@ -4,11 +4,12 @@
  */
 
 import madge from "madge";
+import { createMadgeConfig } from "madge-config-nick2bad4u";
 import { resolve } from "node:path";
 
 const sourceRootPath = resolve(process.cwd(), "src");
 const excludedPathPattern = String.raw`(?:^|/|\\)(test|dist|node_modules|cache|\.cache|coverage|build|eslint-inspector|temp|\.docusaurus)(?:$|/|\\)|\.css$`;
-const madgeOptions = {
+const sharedMadgeOptions = createMadgeConfig({
     fileExtensions: [
         "ts",
         "tsx",
@@ -21,6 +22,12 @@ const madgeOptions = {
     ],
     excludeRegExp: [new RegExp(excludedPathPattern, "u")],
     tsConfig: resolve(process.cwd(), "tsconfig.json"),
+});
+const madgeOptions = {
+    ...sharedMadgeOptions,
+    // Madge's legacy DefinitelyTyped contract requires a mutable array even
+    // though it only reads this shared, immutable configuration.
+    fileExtensions: [...sharedMadgeOptions.fileExtensions],
 };
 
 const requestedMode = process.argv[2];
