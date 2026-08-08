@@ -5,6 +5,11 @@
 import { createRuleTester, getPluginRule } from "./_internal/ruleTester";
 
 const ruleTester = createRuleTester();
+const dynamicTemplateHeadTag = [
+    "        { tagName: `",
+    "$",
+    "{tagName}` },",
+].join("");
 
 ruleTester.run(
     "no-duplicate-head-tags",
@@ -159,8 +164,8 @@ ruleTester.run(
                     'const tagName = "meta";',
                     "export default {",
                     "    headTags: [",
-                    "        { tagName: `${tagName}` },",
-                    "        { tagName: `${tagName}` },",
+                    dynamicTemplateHeadTag,
+                    dynamicTemplateHeadTag,
                     "    ],",
                     "};",
                 ].join("\n"),
