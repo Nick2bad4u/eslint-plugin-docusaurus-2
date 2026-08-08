@@ -18,7 +18,8 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 const validPlaygroundPositions = ["bottom", "top"] as const;
-const validPlaygroundPositionSet: ReadonlySet<string> = new Set(
+type PlaygroundPosition = ArrayValues<typeof validPlaygroundPositions>;
+const validPlaygroundPositionSet: ReadonlySet<PlaygroundPosition> = new Set(
     validPlaygroundPositions
 );
 
@@ -26,7 +27,6 @@ type MessageIds =
     | "setPlaygroundPositionBottom"
     | "setPlaygroundPositionTop"
     | "validateLiveCodeblockPlaygroundPosition";
-type PlaygroundPosition = ArrayValues<typeof validPlaygroundPositions>;
 type RuleSuggestion = ArrayElement<
     NonNullable<
         Parameters<
