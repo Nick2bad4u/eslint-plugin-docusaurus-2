@@ -306,6 +306,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-tag-name",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 requireHeadTagTagName:
                     "Top-level `headTags` entries should declare a non-empty `tagName` so Docusaurus can emit the intended tag.",

@@ -85,6 +85,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-docsearch-theme-when-configured",
             },
+            languages: ["js/js"],
             messages: {
                 requireDocsearchThemeWhenConfigured:
                     "{{ searchConfigKey }} is configured, but neither `@docusaurus/theme-search-algolia` nor `@docusaurus/preset-classic` is declared in the nearest `package.json` dependency fields.",

@@ -191,6 +191,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-markdown-mermaid-when-theme-mermaid-enabled",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requireMarkdownMermaidWhenThemeMermaidEnabled:
                     "When `@docusaurus/theme-mermaid` is configured, set `markdown.mermaid` to `true` so Mermaid code blocks work.",

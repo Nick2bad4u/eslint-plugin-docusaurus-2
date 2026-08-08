@@ -143,6 +143,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-rspack-bundler-for-faster-persistent-cache",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requireRspackBundlerForFasterPersistentCache:
                     "Enable `rspackBundler: true` when using Docusaurus Faster `rspackPersistentCache`.",

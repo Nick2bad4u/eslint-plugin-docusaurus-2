@@ -160,6 +160,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-theme-config-metadata-name-for-twitter-tags",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferThemeConfigMetadataNameForTwitterTags:
                     "Use `name` instead of `property` for Twitter metadata entries such as `twitter:*`.",

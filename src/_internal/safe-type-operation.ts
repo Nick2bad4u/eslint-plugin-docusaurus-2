@@ -4,19 +4,6 @@
  */
 
 /**
- * Counter contract used by test-time debug instrumentation.
- */
-export type SafeTypeOperationCounter<Reason extends string> = Readonly<{
-    getSnapshot: () => ReadonlyMap<Reason, number>;
-    onFailure: (
-        failure: Readonly<{
-            error: unknown;
-            reason: Reason;
-        }>
-    ) => void;
-}>;
-
-/**
  * Failure payload emitted when a safe typed operation throws.
  */
 export type SafeTypeOperationFailure<Reason extends string> = Readonly<{
@@ -212,30 +199,4 @@ export const safeTypeOperation = <Result, Reason extends string>({
             ok: false,
         };
     }
-};
-
-/**
- * Build a lightweight reason counter for debugging operation failures in tests.
- *
- * @param reasonsForTypeInference - Optional typed reason literals used to infer
- *   the `Reason` generic without requiring explicit type parameters.
- */
-export const createSafeTypeOperationCounter = <Reason extends string = never>(
-    reasonsForTypeInference: readonly Reason[] = []
-): SafeTypeOperationCounter<Reason> => {
-    const counts = new Map<Reason, number>();
-
-    for (const reason of reasonsForTypeInference) {
-        counts.set(reason, counts.get(reason) ?? 0);
-    }
-
-    const onFailure: SafeTypeOperationFailureObserver<Reason> = (failure) => {
-        const previousCount = counts.get(failure.reason) ?? 0;
-        counts.set(failure.reason, previousCount + 1);
-    };
-
-    return {
-        getSnapshot: (): ReadonlyMap<Reason, number> => new Map(counts),
-        onFailure,
-    };
 };

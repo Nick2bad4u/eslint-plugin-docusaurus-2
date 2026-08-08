@@ -24,14 +24,6 @@ export const additionalConfigNames = [
     "strict-mdx-upgrade",
 ] as const;
 
-/** Metadata contract for non-preset opt-in config surfaces. */
-export type AdditionalConfigMetadata = Readonly<{
-    description: string;
-    icon: string;
-    reference:
-        `docusaurus2.configs.${string}` | `docusaurus2.configs["${string}"]`;
-}>;
-
 /** Additional opt-in config key type exposed through `plugin.configs`. */
 export type AdditionalConfigName = ArrayValues<typeof additionalConfigNames>;
 
@@ -45,30 +37,6 @@ export type PresetConfigMetadata = Readonly<{
 
 /** Canonical flat-config preset key type exposed through `plugin.configs`. */
 export type PresetConfigName = ArrayValues<typeof presetConfigNames>;
-
-/** Canonical metadata for every exported opt-in config key. */
-export const additionalConfigMetadataByName: Readonly<
-    Record<AdditionalConfigName, AdditionalConfigMetadata>
-> = {
-    content: {
-        description:
-            "Opt-in content-aware docs rules for Markdown and MDX files.",
-        icon: "📝",
-        reference: "docusaurus2.configs.content",
-    },
-    i18n: {
-        description:
-            "Opt-in JSX translation enforcement for Docusaurus source files.",
-        icon: "🌐",
-        reference: "docusaurus2.configs.i18n",
-    },
-    "strict-mdx-upgrade": {
-        description:
-            "Opt-in Docusaurus 3.10 strict-MDX migration rules for `.mdx` only.",
-        icon: "🧭",
-        reference: 'docusaurus2.configs["strict-mdx-upgrade"]',
-    },
-};
 
 /** Canonical metadata for every exported preset key. */
 export const presetConfigMetadataByName: Readonly<
@@ -113,16 +81,6 @@ export const presetConfigMetadataByName: Readonly<
         readmeOrder: 4,
     },
 };
-
-/** Stable README legend/rendering order for preset icons. */
-export const presetConfigNamesByReadmeOrder: readonly PresetConfigName[] = [
-    "all",
-    "config",
-    "experimental",
-    "minimal",
-    "recommended",
-    "strict",
-];
 
 const presetConfigNameLookup = Object.freeze(
     objectFromEntries(

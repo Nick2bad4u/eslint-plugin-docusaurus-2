@@ -129,6 +129,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-config-satisfies",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferConfigSatisfies:
                     "Prefer `satisfies Config` in Docusaurus config files so TypeScript validates the config shape without widening literal values.",

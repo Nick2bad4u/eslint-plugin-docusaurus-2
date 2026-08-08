@@ -165,7 +165,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         const parentArray = emptyDropdownEntry.parent;
 
                         if (
-                            parentArray?.type !== AST_NODE_TYPES.ArrayExpression
+                            parentArray.type !== AST_NODE_TYPES.ArrayExpression
                         ) {
                             continue;
                         }
@@ -220,6 +220,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-navbar-dropdown-items",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noEmptyNavbarDropdownItems:
                     "Remove empty navbar dropdown items whose `items` arrays do not contain any entries.",

@@ -305,6 +305,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 requireColorModeDefaultMode:
                     'Configure `themeConfig.colorMode.defaultMode` as `"light"` or `"dark"` when `colorMode` is authored statically.',

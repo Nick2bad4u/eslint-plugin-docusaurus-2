@@ -105,6 +105,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-navbar-docs-version-item-to",
             },
+            languages: ["js/js"],
             messages: {
                 requireNavbarDocsVersionItemTo:
                     'Docusaurus navbar items with `type: "docsVersion"` should include a non-empty `to` field.',

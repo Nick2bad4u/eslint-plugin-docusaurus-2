@@ -23,6 +23,8 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 
+type AddDocOccurrence = (occurrence: DocOccurrence) => void;
+
 type DocOccurrence = Readonly<{
     docId: string;
     node: Readonly<TSESTree.Expression | TSESTree.Property>;
@@ -109,7 +111,7 @@ const isSidebarItemsArrayExpression = (
 
     const propertyOwner = parentProperty.parent;
 
-    if (propertyOwner?.type !== AST_NODE_TYPES.ObjectExpression) {
+    if (propertyOwner.type !== AST_NODE_TYPES.ObjectExpression) {
         return false;
     }
 
@@ -130,65 +132,104 @@ const isSidebarItemsArrayExpression = (
         : false;
 };
 
+function visitSidebarArrayExpression(
+    expression: Readonly<TSESTree.ArrayExpression>,
+    rootObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    addOccurrence: AddDocOccurrence
+): void {
+    const acceptsShorthandDocIds = isSidebarItemsArrayExpression(
+        expression,
+        rootObjectExpression
+    );
+
+    for (const element of expression.elements) {
+        if (element === null) {
+            continue;
+        }
+
+        if (
+            acceptsShorthandDocIds &&
+            element.type === AST_NODE_TYPES.Literal &&
+            typeof element.value === "string"
+        ) {
+            addOccurrence({
+                docId: element.value,
+                node: element,
+                occurrenceKind: "shorthand",
+            });
+            continue;
+        }
+
+        if (element.type !== AST_NODE_TYPES.SpreadElement) {
+            visitSidebarExpression(
+                element,
+                rootObjectExpression,
+                addOccurrence
+            );
+        }
+    }
+}
+
+function visitSidebarExpression(
+    expression: Readonly<TSESTree.Expression>,
+    rootObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    addOccurrence: AddDocOccurrence
+): void {
+    if (expression.type === AST_NODE_TYPES.ArrayExpression) {
+        visitSidebarArrayExpression(
+            expression,
+            rootObjectExpression,
+            addOccurrence
+        );
+        return;
+    }
+
+    if (expression.type === AST_NODE_TYPES.ObjectExpression) {
+        visitSidebarObjectExpression(
+            expression,
+            rootObjectExpression,
+            addOccurrence
+        );
+    }
+}
+
+function visitSidebarObjectExpression(
+    expression: Readonly<TSESTree.ObjectExpression>,
+    rootObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    addOccurrence: AddDocOccurrence
+): void {
+    const explicitDocOccurrence = collectExplicitDocOccurrence(expression);
+
+    if (explicitDocOccurrence !== null) {
+        addOccurrence(explicitDocOccurrence);
+    }
+
+    for (const property of expression.properties) {
+        if (property.type !== AST_NODE_TYPES.Property) {
+            continue;
+        }
+
+        visitSidebarExpression(
+            getObjectPropertyValueExpression(property),
+            rootObjectExpression,
+            addOccurrence
+        );
+    }
+}
+
 const collectDuplicateSidebarDocOccurrences = (
     rootObjectExpression: Readonly<TSESTree.ObjectExpression>
 ): readonly DocOccurrence[] => {
     const occurrences: DocOccurrence[] = [];
-
-    const visitExpression = (
-        expression: Readonly<TSESTree.Expression>
-    ): void => {
-        if (expression.type === AST_NODE_TYPES.ArrayExpression) {
-            for (const element of expression.elements) {
-                if (element === null) {
-                    continue;
-                }
-
-                if (
-                    element.type === AST_NODE_TYPES.Literal &&
-                    typeof element.value === "string" &&
-                    isSidebarItemsArrayExpression(
-                        expression,
-                        rootObjectExpression
-                    )
-                ) {
-                    occurrences.push({
-                        docId: element.value,
-                        node: element,
-                        occurrenceKind: "shorthand",
-                    });
-
-                    continue;
-                }
-
-                if (element.type !== AST_NODE_TYPES.SpreadElement) {
-                    visitExpression(element);
-                }
-            }
-
-            return;
-        }
-
-        if (expression.type !== AST_NODE_TYPES.ObjectExpression) {
-            return;
-        }
-
-        const explicitDocOccurrence = collectExplicitDocOccurrence(expression);
-
-        if (explicitDocOccurrence !== null) {
-            occurrences.push(explicitDocOccurrence);
-        }
-
-        for (const property of expression.properties) {
-            if (property.type !== AST_NODE_TYPES.Property) {
-                continue;
-            }
-
-            visitExpression(getObjectPropertyValueExpression(property));
-        }
+    const addOccurrence: AddDocOccurrence = (occurrence) => {
+        occurrences.push(occurrence);
     };
 
-    visitExpression(rootObjectExpression);
+    visitSidebarExpression(
+        rootObjectExpression,
+        rootObjectExpression,
+        addOccurrence
+    );
 
     return occurrences;
 };
@@ -325,6 +366,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-sidebar-doc-ids",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 duplicateSidebarDocId:
                     "Doc `{{ docId }}` is already assigned earlier in this sidebars file. Docusaurus recommends using `ref` instead of assigning the same doc to multiple sidebars.",

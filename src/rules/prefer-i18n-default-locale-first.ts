@@ -254,6 +254,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 moveDefaultLocaleFirst:
                     "Replace with a locales array that puts `defaultLocale` first.",

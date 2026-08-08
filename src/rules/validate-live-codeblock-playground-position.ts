@@ -5,7 +5,7 @@
 import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 import type { ArrayElement, ArrayValues } from "type-fest";
 
-import { arrayIncludes } from "ts-extras";
+import { setHas } from "ts-extras";
 
 import {
     getDefaultExportedObjectExpression,
@@ -18,6 +18,9 @@ import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
 const validPlaygroundPositions = ["bottom", "top"] as const;
+const validPlaygroundPositionSet: ReadonlySet<string> = new Set(
+    validPlaygroundPositions
+);
 
 type MessageIds =
     | "setPlaygroundPositionBottom"
@@ -31,6 +34,9 @@ type RuleSuggestion = ArrayElement<
         >[0]["suggest"]
     >
 >;
+
+const isPlaygroundPosition = (value: string): value is PlaygroundPosition =>
+    setHas(validPlaygroundPositionSet, value);
 
 const createSetPlaygroundPositionSuggestion = (
     options: Readonly<{
@@ -117,12 +123,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                         return;
                     }
 
-                    if (
-                        arrayIncludes(
-                            validPlaygroundPositions,
-                            playgroundPosition as PlaygroundPosition
-                        )
-                    ) {
+                    if (isPlaygroundPosition(playgroundPosition)) {
                         return;
                     }
 
@@ -163,6 +164,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/validate-live-codeblock-playground-position",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 setPlaygroundPositionBottom:
                     'Set `themeConfig.liveCodeBlock.playgroundPosition` to `"bottom"`.',

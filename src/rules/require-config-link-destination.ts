@@ -117,6 +117,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-config-link-destination",
             },
+            languages: ["js/js"],
             messages: {
                 requireConfigLinkDestination:
                     "Docusaurus theme-config link items should include a destination through `to` or `href`. Footer HTML pass-through items may use `html` instead.",

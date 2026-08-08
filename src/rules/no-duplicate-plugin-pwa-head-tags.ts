@@ -33,6 +33,8 @@ const isPresentArrayElement = (
     element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
+type PwaHeadArrayItem = TSESTree.Expression | TSESTree.SpreadElement;
+
 const getHeadTagSignature = (
     tagObjectExpression: Readonly<TSESTree.ObjectExpression>,
     sourceCode: Readonly<TSESLint.SourceCode>
@@ -62,6 +64,35 @@ const getHeadTagSignature = (
     propertyEntries.sort((left, right) => left.localeCompare(right));
 
     return arrayJoin(propertyEntries, "|");
+};
+
+const findDuplicateHeadTagEntries = (
+    pwaHeadArrayItems: readonly Readonly<PwaHeadArrayItem>[],
+    sourceCode: Readonly<TSESLint.SourceCode>
+): readonly TSESTree.ObjectExpression[] => {
+    const duplicateTagEntries: TSESTree.ObjectExpression[] = [];
+    const seenSignatures = new Set<string>();
+
+    for (const headTagEntry of pwaHeadArrayItems) {
+        if (headTagEntry.type !== AST_NODE_TYPES.ObjectExpression) {
+            continue;
+        }
+
+        const entrySignature = getHeadTagSignature(headTagEntry, sourceCode);
+
+        if (entrySignature === null) {
+            continue;
+        }
+
+        if (setHas(seenSignatures, entrySignature)) {
+            duplicateTagEntries.push(headTagEntry);
+            continue;
+        }
+
+        seenSignatures.add(entrySignature);
+    }
+
+    return duplicateTagEntries;
 };
 
 /** Rule module for `no-duplicate-plugin-pwa-head-tags`. */
@@ -108,35 +139,10 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                             pwaHeadArrayExpression.elements.filter(
                                 isPresentArrayElement
                             );
-                        const duplicateTagEntries: TSESTree.ObjectExpression[] =
-                            [];
-                        const seenSignatures = new Set<string>();
-
-                        for (const headTagEntry of pwaHeadArrayItems) {
-                            if (
-                                headTagEntry.type !==
-                                AST_NODE_TYPES.ObjectExpression
-                            ) {
-                                continue;
-                            }
-
-                            const entrySignature = getHeadTagSignature(
-                                headTagEntry,
-                                context.sourceCode
-                            );
-
-                            if (entrySignature === null) {
-                                continue;
-                            }
-
-                            if (setHas(seenSignatures, entrySignature)) {
-                                duplicateTagEntries.push(headTagEntry);
-
-                                continue;
-                            }
-
-                            seenSignatures.add(entrySignature);
-                        }
+                        const duplicateTagEntries = findDuplicateHeadTagEntries(
+                            pwaHeadArrayItems,
+                            context.sourceCode
+                        );
 
                         if (duplicateTagEntries.length === 0) {
                             continue;
@@ -178,6 +184,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-plugin-pwa-head-tags",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDuplicatePluginPwaHeadTags:
                     "Remove duplicate `@docusaurus/plugin-pwa` `pwaHead` entries that repeat an earlier tag definition.",

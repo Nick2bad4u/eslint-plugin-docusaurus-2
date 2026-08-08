@@ -129,6 +129,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-config-link-props",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noConflictingConfigLinkProps:
                     "Do not declare both `to` and `href` on the same Docusaurus config link item. Keep only the single destination prop that matches the link kind.",

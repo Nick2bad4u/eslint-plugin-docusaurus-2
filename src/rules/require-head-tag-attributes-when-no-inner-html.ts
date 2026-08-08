@@ -152,6 +152,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-head-tag-attributes-when-no-inner-html",
             },
+            languages: ["js/js"],
             messages: {
                 requireHeadTagAttributesWhenNoInnerHtml:
                     "Top-level `headTags` entries without `innerHTML` should provide meaningful `attributes`.",

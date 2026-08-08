@@ -103,6 +103,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-useless-collapsed-sidebar-categories",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noUselessCollapsedSidebarCategory:
                     "Do not set `collapsed` when `collapsible: false` is already present. Docusaurus ignores `collapsed` in that configuration.",

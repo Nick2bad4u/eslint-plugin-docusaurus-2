@@ -118,6 +118,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-future-experimental-faster",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDeprecatedFutureExperimentalFaster:
                     "Rename deprecated `future.experimental_faster` to stable `future.faster` introduced in Docusaurus 3.10.",

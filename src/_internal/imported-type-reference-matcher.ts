@@ -75,7 +75,6 @@ export const createImportedTypeReferenceMatcher = (
         return (
             typeNode.typeName.type === AST_NODE_TYPES.TSQualifiedName &&
             typeNode.typeName.left.type === AST_NODE_TYPES.Identifier &&
-            typeNode.typeName.right.type === AST_NODE_TYPES.Identifier &&
             setHas(
                 importedTypeReferenceNames.namespaceImportNames,
                 typeNode.typeName.left.name

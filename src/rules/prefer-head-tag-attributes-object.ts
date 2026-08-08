@@ -203,6 +203,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-head-tag-attributes-object",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferHeadTagAttributesObject:
                     "Move head-tag attribute fields into an `attributes` object so the top-level `headTags` entry matches Docusaurus' expected shape.",

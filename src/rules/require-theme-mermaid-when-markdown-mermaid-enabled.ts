@@ -211,6 +211,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-mermaid-when-markdown-mermaid-enabled",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 addThemeMermaidToThemes:
                     "Add `@docusaurus/theme-mermaid` to the top-level `themes` array.",

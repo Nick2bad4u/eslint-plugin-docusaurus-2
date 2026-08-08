@@ -202,6 +202,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-live-codeblock-when-live-codeblock-configured",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 addThemeLiveCodeblockToPlugins:
                     "Add `@docusaurus/theme-live-codeblock` to the top-level `plugins` array.",

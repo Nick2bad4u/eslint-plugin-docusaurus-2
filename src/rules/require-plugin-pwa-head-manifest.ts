@@ -148,6 +148,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-head-manifest",
             },
+            languages: ["js/js"],
             messages: {
                 requirePluginPwaHeadManifest:
                     'When `@docusaurus/plugin-pwa` is configured, its `pwaHead` should include a manifest link tag (`{ tagName: "link", rel: "manifest", href: ... }`).',

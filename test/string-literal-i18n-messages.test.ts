@@ -11,11 +11,11 @@ const translateImports =
 const dynamicNameInterpolation = ["$", "{name}"].join("");
 const dynamicTextInterpolation = ["$", "{text}"].join("");
 const upstreamStaticTranslateCases = [
-    "<Translate>text</Translate>",
-    "<Translate> text </Translate>",
     '<Translate>"text"</Translate>',
     "<Translate>'text'</Translate>",
     "<Translate>`text`</Translate>",
+    "<Translate>text</Translate>",
+    "<Translate> text </Translate>",
     '<Translate>{"text"}</Translate>',
     "<Translate>{'text'}</Translate>",
     "<Translate>{`text`}</Translate>",

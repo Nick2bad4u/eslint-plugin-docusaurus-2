@@ -82,8 +82,8 @@ const normalizeAllowedEnvVarNames = (
 const normalizeRuleOption = (
     option: PwaDebugRuleOption
 ): ResolvedPwaDebugRuleOption => ({
-    allowBooleanLiteralTrue: option?.allowBooleanLiteralTrue ?? true,
-    allowedEnvVarNames: normalizeAllowedEnvVarNames(option?.allowedEnvVarNames),
+    allowBooleanLiteralTrue: option.allowBooleanLiteralTrue ?? true,
+    allowedEnvVarNames: normalizeAllowedEnvVarNames(option.allowedEnvVarNames),
 });
 
 const unwrapTransparentExpression = (
@@ -359,6 +359,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
             recommended: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-debug",
         },
+        languages: ["js/js"],
         messages: {
             requirePluginPwaDebug:
                 'When `@docusaurus/plugin-pwa` uses object options, configure `debug` as `true` or an env-flag expression like `process.env["{{ envVarName }}"] === "true"`.',

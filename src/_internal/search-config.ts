@@ -49,16 +49,36 @@ export const requiredDocsearchOptionNames = [
     "indexName",
 ] as const;
 /** Default search page path used by Algolia/DocSearch when unspecified. */
-export const defaultSearchPagePath = "search" as const;
+const defaultSearchPagePath = "search" as const;
 /** Canonical module name for the Docusaurus blog content plugin. */
-export const pluginContentBlogModuleName =
-    "@docusaurus/plugin-content-blog" as const;
+const pluginContentBlogModuleName = "@docusaurus/plugin-content-blog" as const;
 /** Canonical module name for the Docusaurus docs content plugin. */
-export const pluginContentDocsModuleName =
-    "@docusaurus/plugin-content-docs" as const;
+const pluginContentDocsModuleName = "@docusaurus/plugin-content-docs" as const;
 /** Canonical module name for the Docusaurus pages content plugin. */
-export const pluginContentPagesModuleName =
+const pluginContentPagesModuleName =
     "@docusaurus/plugin-content-pages" as const;
+const classicPresetRouteDefinitions = [
+    {
+        defaultRouteBasePath: "",
+        optionsPropertyName: "pages",
+        owner: "classic preset pages",
+    },
+    {
+        defaultRouteBasePath: "blog",
+        optionsPropertyName: "blog",
+        owner: "classic preset blog",
+    },
+    {
+        defaultRouteBasePath: "docs",
+        optionsPropertyName: "docs",
+        owner: "classic preset docs",
+    },
+] as const;
+const contentPluginRouteDefinitions = [
+    [pluginContentBlogModuleName, "plugin-content-blog"],
+    [pluginContentDocsModuleName, "plugin-content-docs"],
+    [pluginContentPagesModuleName, "plugin-content-pages"],
+] as const;
 
 /** Kinds of search provider configuration recognized by this plugin. */
 export type ConfiguredSearchProviderKind =
@@ -195,7 +215,7 @@ export const getPluginConfigurationSpecifierNode = (
     getTopLevelModuleConfigurationSpecifierNode(entry);
 
 /** Normalize a Docusaurus route-like path for safe equality checks. */
-export const normalizeRoutePath = (value: string): string => {
+const normalizeRoutePath = (value: string): string => {
     let normalizedValue = value;
 
     while (normalizedValue.startsWith("/")) {
@@ -314,8 +334,25 @@ export const isSearchPageExplicitlyDisabled = (
     );
 };
 
-/** Collect route-base-path values that can conflict with a search page path. */
-export const getSearchPagePathConflictCandidates = (
+const getConfiguredRouteBasePath = (
+    optionsObject: Readonly<TSESTree.ObjectExpression>,
+    defaultRouteBasePath: null | string,
+    programNode: Readonly<TSESTree.Program>
+): null | string => {
+    const routeBasePathExpression = getObjectPropertyValueByName(
+        optionsObject,
+        "routeBasePath"
+    );
+
+    return routeBasePathExpression === null
+        ? defaultRouteBasePath
+        : getStaticStringValueFromExpressionOrIdentifier(
+              routeBasePathExpression,
+              programNode
+          );
+};
+
+const getClassicPresetConflictCandidates = (
     configObjectExpression: Readonly<TSESTree.ObjectExpression>,
     programNode: Readonly<TSESTree.Program>
 ): readonly SearchPagePathConflictCandidate[] => {
@@ -325,88 +362,44 @@ export const getSearchPagePathConflictCandidates = (
         configObjectExpression,
         programNode
     )) {
-        const docsOptionsObject = getObjectExpressionPropertyValueByName(
-            presetOptionsObject,
-            "docs"
-        );
-        const blogOptionsObject = getObjectExpressionPropertyValueByName(
-            presetOptionsObject,
-            "blog"
-        );
-        const pagesOptionsObject = getObjectExpressionPropertyValueByName(
-            presetOptionsObject,
-            "pages"
-        );
-
-        if (docsOptionsObject !== null) {
-            const routeBasePathExpression = getObjectPropertyValueByName(
-                docsOptionsObject,
-                "routeBasePath"
+        for (const definition of classicPresetRouteDefinitions) {
+            const optionsObject = getObjectExpressionPropertyValueByName(
+                presetOptionsObject,
+                definition.optionsPropertyName
             );
-            const routeBasePath =
-                routeBasePathExpression === null
-                    ? "docs"
-                    : getStaticStringValueFromExpressionOrIdentifier(
-                          routeBasePathExpression,
-                          programNode
-                      );
 
-            if (routeBasePath !== null) {
-                conflictCandidates.push({
-                    owner: "classic preset docs",
-                    routeBasePath: normalizeRoutePath(routeBasePath),
-                });
+            if (optionsObject === null) {
+                continue;
             }
-        }
 
-        if (blogOptionsObject !== null) {
-            const routeBasePathExpression = getObjectPropertyValueByName(
-                blogOptionsObject,
-                "routeBasePath"
+            const routeBasePath = getConfiguredRouteBasePath(
+                optionsObject,
+                definition.defaultRouteBasePath,
+                programNode
             );
-            const routeBasePath =
-                routeBasePathExpression === null
-                    ? "blog"
-                    : getStaticStringValueFromExpressionOrIdentifier(
-                          routeBasePathExpression,
-                          programNode
-                      );
 
             if (routeBasePath !== null) {
                 conflictCandidates.push({
-                    owner: "classic preset blog",
-                    routeBasePath: normalizeRoutePath(routeBasePath),
-                });
-            }
-        }
-
-        if (pagesOptionsObject !== null) {
-            const routeBasePathExpression = getObjectPropertyValueByName(
-                pagesOptionsObject,
-                "routeBasePath"
-            );
-            const routeBasePath =
-                routeBasePathExpression === null
-                    ? ""
-                    : getStaticStringValueFromExpressionOrIdentifier(
-                          routeBasePathExpression,
-                          programNode
-                      );
-
-            if (routeBasePath !== null) {
-                conflictCandidates.push({
-                    owner: "classic preset pages",
+                    owner: definition.owner,
                     routeBasePath: normalizeRoutePath(routeBasePath),
                 });
             }
         }
     }
 
-    for (const [pluginModuleName, ownerPrefix] of [
-        [pluginContentBlogModuleName, "plugin-content-blog"],
-        [pluginContentDocsModuleName, "plugin-content-docs"],
-        [pluginContentPagesModuleName, "plugin-content-pages"],
-    ] as const) {
+    return conflictCandidates;
+};
+
+const getContentPluginConflictCandidates = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode: Readonly<TSESTree.Program>
+): readonly SearchPagePathConflictCandidate[] => {
+    const conflictCandidates: SearchPagePathConflictCandidate[] = [];
+
+    for (const [
+        pluginModuleName,
+        ownerPrefix,
+    ] of contentPluginRouteDefinitions) {
         let pluginIndex = 0;
 
         for (const pluginOptionsObject of findPluginOptionsObjectsByName(
@@ -415,17 +408,11 @@ export const getSearchPagePathConflictCandidates = (
             programNode
         )) {
             pluginIndex += 1;
-            const routeBasePathExpression = getObjectPropertyValueByName(
+            const routeBasePath = getConfiguredRouteBasePath(
                 pluginOptionsObject,
-                "routeBasePath"
+                null,
+                programNode
             );
-            const routeBasePath =
-                routeBasePathExpression === null
-                    ? null
-                    : getStaticStringValueFromExpressionOrIdentifier(
-                          routeBasePathExpression,
-                          programNode
-                      );
 
             if (routeBasePath === null) {
                 continue;
@@ -440,3 +427,12 @@ export const getSearchPagePathConflictCandidates = (
 
     return conflictCandidates;
 };
+
+/** Collect route-base-path values that can conflict with a search page path. */
+export const getSearchPagePathConflictCandidates = (
+    configObjectExpression: Readonly<TSESTree.ObjectExpression>,
+    programNode: Readonly<TSESTree.Program>
+): readonly SearchPagePathConflictCandidate[] => [
+    ...getClassicPresetConflictCandidates(configObjectExpression, programNode),
+    ...getContentPluginConflictCandidates(configObjectExpression, programNode),
+];

@@ -136,6 +136,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-ignored-site-validations",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 avoidIgnoredValidation:
                     'Do not set `{{ settingName }}` to `"ignore"`; Docusaurus would silently skip that site validation. Use `"{{ defaultSeverity }}"` or another non-ignore severity instead.',

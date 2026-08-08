@@ -44,7 +44,7 @@ const getEnclosingThemeConfigLinkContext = (
 export const getDocusaurusThemeConfigArrayItemContext = (
     objectExpression: Readonly<TSESTree.ObjectExpression>
 ): DocusaurusThemeConfigLinkContext | null =>
-    objectExpression.parent?.type === AST_NODE_TYPES.ArrayExpression
+    objectExpression.parent.type === AST_NODE_TYPES.ArrayExpression
         ? getEnclosingThemeConfigLinkContext(objectExpression)
         : null;
 

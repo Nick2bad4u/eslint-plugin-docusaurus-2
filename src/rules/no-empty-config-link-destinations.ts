@@ -147,6 +147,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-config-link-destinations",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noEmptyConfigLinkDestinations:
                     "Remove or replace empty `href` / `to` destination values on Docusaurus theme-config link items.",

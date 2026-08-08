@@ -113,6 +113,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-theme-config-docsearch",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noConflictingThemeConfigSearchKeys:
                     "Do not define both `themeConfig.docsearch` and `themeConfig.algolia`. Keep only the canonical `themeConfig.docsearch` key.",

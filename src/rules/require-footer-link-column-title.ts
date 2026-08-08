@@ -100,6 +100,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-footer-link-column-title",
             },
+            languages: ["js/js"],
             messages: {
                 requireFooterLinkColumnTitle:
                     "Docusaurus footer link columns should include a non-empty `title`.",

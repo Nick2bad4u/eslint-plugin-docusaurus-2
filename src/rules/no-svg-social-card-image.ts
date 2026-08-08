@@ -102,6 +102,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-svg-social-card-image",
             },
+            languages: ["js/js"],
             messages: {
                 noSvgSocialCardImage:
                     "Docusaurus `{{ propertyPath }}` social-card images should not be SVG. Use a raster format such as PNG, JPG, or WebP instead.",

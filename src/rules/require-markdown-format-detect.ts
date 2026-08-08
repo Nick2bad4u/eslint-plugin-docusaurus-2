@@ -158,6 +158,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-markdown-format-detect",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requireMarkdownFormatDetect:
                     'Set `markdown.format` to `"detect"` when configuring `markdown`. Docusaurus recommends `detect` so `.md` files use CommonMark while `.mdx` files keep MDX parsing.',

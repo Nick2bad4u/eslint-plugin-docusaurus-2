@@ -164,6 +164,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-use-base-url-for-static-assets",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 preferUseBaseUrlForStaticAssets:
                     "Prefer `useBaseUrl` or an imported asset for static paths like this so the docs site keeps working correctly under a non-root `baseUrl`.",

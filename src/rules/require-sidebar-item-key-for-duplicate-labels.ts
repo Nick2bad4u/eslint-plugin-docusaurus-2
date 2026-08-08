@@ -53,7 +53,7 @@ const isSidebarItemsArrayExpression = (
 
     const propertyOwner = parentProperty.parent;
 
-    if (propertyOwner?.type !== AST_NODE_TYPES.ObjectExpression) {
+    if (propertyOwner.type !== AST_NODE_TYPES.ObjectExpression) {
         return false;
     }
 
@@ -255,6 +255,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-item-key-for-duplicate-labels",
             },
+            languages: ["js/js"],
             messages: {
                 requireSidebarItemKeyForDuplicateLabels:
                     "Duplicate sidebar label {{ label }} should declare an explicit `key` to avoid translation key conflicts.",

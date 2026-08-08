@@ -24,7 +24,7 @@ import {
 } from "./module-import-bindings.js";
 
 /** Module source containing Docusaurus translation APIs. */
-export const docusaurusTranslateModuleSource = "@docusaurus/Translate" as const;
+const docusaurusTranslateModuleSource = "@docusaurus/Translate" as const;
 
 /** Imported bindings used by the Docusaurus translation API. */
 export type DocusaurusTranslateBindings = Readonly<{
@@ -88,7 +88,7 @@ export const isDocusaurusTranslateCall = <
     );
 
 /** Resolve hardcoded JSX text or expression text without substitutions. */
-export const getStaticTextFromJsxChild = (
+const getStaticTextFromJsxChild = (
     child: Readonly<TSESTree.JSXChild>
 ): null | string => {
     if (child.type === AST_NODE_TYPES.JSXText) {

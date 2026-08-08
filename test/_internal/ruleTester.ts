@@ -35,7 +35,11 @@ const assertRuleTesterHook: (
 };
 
 assertRuleTesterHook(afterAll, "afterAll");
-RuleTester.afterAll = afterAll;
+RuleTester.afterAll = (
+    ...hookArguments: readonly [...Parameters<typeof RuleTester.afterAll>]
+) => {
+    Reflect.apply(afterAll, undefined, hookArguments);
+};
 assertRuleTesterHook(describe, "describe");
 RuleTester.describe = describe;
 assertRuleTesterHook(it, "it");
@@ -43,9 +47,9 @@ RuleTester.it = it;
 const vitestItOnly: unknown = Reflect.get(it, "only");
 assertRuleTesterHook(vitestItOnly, "it.only");
 RuleTester.itOnly = (
-    ...arguments_: readonly [...Parameters<typeof RuleTester.itOnly>]
+    ...hookArguments: readonly [...Parameters<typeof RuleTester.itOnly>]
 ) => {
-    Reflect.apply(vitestItOnly, undefined, arguments_);
+    Reflect.apply(vitestItOnly, undefined, hookArguments);
 };
 
 /** Rule module parameter type accepted by `RuleTester#run`. */

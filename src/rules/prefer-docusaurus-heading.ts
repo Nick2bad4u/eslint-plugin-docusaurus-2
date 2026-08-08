@@ -15,7 +15,7 @@ import { getJsxAttributeByName } from "../_internal/docusaurus-jsx-ast.js";
 import {
     collectModuleImportBindings,
     combineImportBindings,
-    getVisibleImportLocalNameAtNode,
+    getVisibleDefaultImportJsxTagNameAtNode,
 } from "../_internal/module-import-bindings.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
@@ -63,22 +63,12 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                 const intrinsicHeadingName = node.name.name;
 
-                const directHeadingLocalName = getVisibleImportLocalNameAtNode(
+                const headingTagName = getVisibleDefaultImportJsxTagNameAtNode(
                     context,
                     node,
-                    directHeadingBindings
+                    directHeadingBindings,
+                    moduleBindings.namespaceBindings
                 );
-                const namespaceHeadingLocalName =
-                    getVisibleImportLocalNameAtNode(
-                        context,
-                        node,
-                        moduleBindings.namespaceBindings
-                    );
-                const headingTagName = isDefined(directHeadingLocalName)
-                    ? directHeadingLocalName
-                    : isDefined(namespaceHeadingLocalName)
-                      ? `${namespaceHeadingLocalName}.default`
-                      : undefined;
                 const parent = node.parent;
                 const hasAmbiguousAttributes =
                     getJsxAttributeByName(node, "as") !== null ||

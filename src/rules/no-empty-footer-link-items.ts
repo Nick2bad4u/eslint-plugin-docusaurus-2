@@ -120,6 +120,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-footer-link-items",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noEmptyFooterLinkItems:
                     "Remove empty footer link item objects that do not contribute any label, destination, or HTML content.",

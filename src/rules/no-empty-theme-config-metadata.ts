@@ -107,6 +107,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-theme-config-metadata",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noEmptyThemeConfigMetadata:
                     "Remove empty `themeConfig.metadata` arrays that do not contribute any metadata entries.",

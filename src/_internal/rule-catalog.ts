@@ -218,7 +218,7 @@ export const ruleCatalogEntries: readonly RuleCatalogEntry[] = (() => {
 })();
 
 /** Fast lookup map for rule catalog metadata by rule name. */
-export const ruleCatalogByRuleName: Readonly<
+const ruleCatalogByRuleName: Readonly<
     Partial<Record<string, RuleCatalogEntry>>
 > = objectFromEntries(
     ruleCatalogEntries.map((entry) => [entry.ruleName, entry])
@@ -255,7 +255,7 @@ export const getRuleCatalogEntryForRuleName = (
 };
 
 /** Resolve stable catalog metadata by rule id. */
-export const ruleCatalogByRuleId: ReadonlyMap<RuleCatalogId, RuleCatalogEntry> =
+const ruleCatalogByRuleId: ReadonlyMap<RuleCatalogId, RuleCatalogEntry> =
     new Map(ruleCatalogEntries.map((entry) => [entry.ruleId, entry]));
 
 /** Resolve stable catalog metadata for a catalog id. */

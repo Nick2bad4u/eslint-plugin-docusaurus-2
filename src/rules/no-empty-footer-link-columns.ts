@@ -147,6 +147,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-footer-link-columns",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noEmptyFooterLinkColumns:
                     "Remove empty footer link columns whose `items` arrays do not contain any links.",

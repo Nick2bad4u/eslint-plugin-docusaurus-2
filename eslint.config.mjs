@@ -124,6 +124,72 @@ const config = [
             "unicorn/no-non-function-verb-prefix": "off",
             "unicorn/prefer-includes-over-repeated-comparisons": "off",
             "unicorn/prefer-minimal-ternary": "off",
+            // AST analysis loops intentionally use guard-clause continues to
+            // keep node narrowing flat. S135 has no threshold option, and
+            // replacing these guards with nested branches obscures behavior.
+            "sonarjs/too-many-break-or-continue-in-loop": "off",
+        },
+    },
+    {
+        files: ["src/rules/**/*.{ts,mts,cts}"],
+        name: "Local ESLint Rule Listener Selectors",
+        rules: {
+            // ESLint requires PascalCase AST node names as listener keys, while
+            // func-name-matching requires method names to match those keys.
+            "sonarjs/function-name": [
+                "warn",
+                {
+                    format: "^[_A-Za-z][a-zA-Z0-9]*$",
+                },
+            ],
+        },
+    },
+    {
+        files: ["src/plugin.ts"],
+        name: "Local Package Metadata Import",
+        rules: {
+            // JSON module specifiers require the .json extension at runtime.
+            "import-x/extensions": [
+                "warn",
+                "never",
+                {
+                    json: "always",
+                },
+            ],
+        },
+    },
+    {
+        files: ["docs/docusaurus/sidebars.rules.ts"],
+        name: "Local Workspace Self Reference",
+        rules: {
+            // Docusaurus loads this build-time sidebar source directly through
+            // jiti, so the private root source must use a relative .js specifier.
+            "import-x/extensions": "off",
+            "import-x/no-relative-packages": "off",
+        },
+    },
+    {
+        files: [
+            "src/_internal/rule-docs-metadata.ts",
+            "src/_internal/runtime-utils.ts",
+            "src/_internal/type-checker-compat.ts",
+            "src/plugin.ts",
+        ],
+        name: "Local Typed Runtime Boundaries",
+        rules: {
+            // These files validate dynamic records or construct generic total
+            // maps before exposing exact public types. Assertions stay inside
+            // these reviewed boundaries instead of leaking to rule code.
+            "@typescript-eslint/no-unsafe-type-assertion": "off",
+        },
+    },
+    {
+        files: ["src/_internal/type-checker-compat.ts"],
+        name: "Local TypeScript Version Compatibility",
+        rules: {
+            // Optional calls intentionally support TypeScript runtimes whose
+            // TypeChecker surface can differ from the compile-time version.
+            "@typescript-eslint/no-unnecessary-condition": "off",
         },
     },
     {

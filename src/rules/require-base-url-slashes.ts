@@ -147,6 +147,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-base-url-slashes",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requireBaseUrlSlashes:
                     "Configure `baseUrl` as a rooted path that starts and ends with `/` (for example `/docs/`).",

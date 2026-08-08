@@ -56,7 +56,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
                     const parentArray = node.parent;
 
-                    if (parentArray?.type !== AST_NODE_TYPES.ArrayExpression) {
+                    if (parentArray.type !== AST_NODE_TYPES.ArrayExpression) {
                         return;
                     }
 
@@ -99,6 +99,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-sidebar-categories",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noEmptySidebarCategories:
                     "Remove empty sidebar category objects whose `items` arrays do not contain any entries.",

@@ -7,7 +7,7 @@ import {
     type TSESLint,
     type TSESTree,
 } from "@typescript-eslint/utils";
-import { arrayFirst, arrayLast } from "ts-extras";
+import { arrayFirst, arrayLast, isDefined } from "ts-extras";
 
 import type { UnknownArray } from "./types.js";
 
@@ -129,7 +129,7 @@ export const combineImportBindings = (
 };
 
 /** Check whether an imported local binding is the visible binding at a node. */
-export const isImportBindingVisibleAtNode = <
+const isImportBindingVisibleAtNode = <
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
 >(
@@ -153,7 +153,7 @@ export const isImportBindingVisibleAtNode = <
 };
 
 /** Check whether a direct identifier resolves to one of the imported bindings. */
-export const isDirectImportedIdentifier = <
+const isDirectImportedIdentifier = <
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
 >(
@@ -187,8 +187,39 @@ export const getVisibleImportLocalNameAtNode = <
     return undefined;
 };
 
+/** Resolve a visible default-import JSX tag from direct or namespace bindings. */
+export const getVisibleDefaultImportJsxTagNameAtNode = <
+    MessageIds extends string,
+    Options extends Readonly<UnknownArray>,
+>(
+    context: Readonly<TSESLint.RuleContext<MessageIds, Options>>,
+    node: Readonly<TSESTree.Node>,
+    directBindings: ReadonlyMap<string, TSESTree.Identifier>,
+    namespaceBindings: ReadonlyMap<string, TSESTree.Identifier>
+): string | undefined => {
+    const directLocalName = getVisibleImportLocalNameAtNode(
+        context,
+        node,
+        directBindings
+    );
+
+    if (isDefined(directLocalName)) {
+        return directLocalName;
+    }
+
+    const namespaceLocalName = getVisibleImportLocalNameAtNode(
+        context,
+        node,
+        namespaceBindings
+    );
+
+    return isDefined(namespaceLocalName)
+        ? `${namespaceLocalName}.default`
+        : undefined;
+};
+
 /** Check a direct `namespace.exportName` member against an imported namespace. */
-export const isImportedNamespaceMember = <
+const isImportedNamespaceMember = <
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
 >(

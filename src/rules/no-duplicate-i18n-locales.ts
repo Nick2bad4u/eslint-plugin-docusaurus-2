@@ -248,6 +248,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 noDuplicateI18nLocales:
                     "Remove duplicate locale entries from `i18n.locales` (duplicates: {{ duplicateLocales }}).",

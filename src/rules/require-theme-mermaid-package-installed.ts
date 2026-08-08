@@ -75,6 +75,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-mermaid-package-installed",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeMermaidPackageInstalled:
                     "`@docusaurus/theme-mermaid` is configured in this Docusaurus site config but is not declared in the nearest `package.json` dependency fields.",

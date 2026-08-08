@@ -82,6 +82,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-classic-package-installed",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeClassicPackageInstalled:
                     "`@docusaurus/theme-classic` is configured directly in this Docusaurus site config but neither `@docusaurus/theme-classic` nor `@docusaurus/preset-classic` is declared in the nearest `package.json` dependency fields.",

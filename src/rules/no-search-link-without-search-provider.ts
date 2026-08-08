@@ -103,6 +103,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-search-link-without-search-provider",
             },
+            languages: ["js/js"],
             messages: {
                 noSearchLinkWithoutSearchProvider:
                     "Do not link to `/search` from theme-config navbar or footer items unless a known search provider is configured for the site.",

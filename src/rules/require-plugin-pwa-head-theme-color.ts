@@ -145,6 +145,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-plugin-pwa-head-theme-color",
             },
+            languages: ["js/js"],
             messages: {
                 requirePluginPwaHeadThemeColor:
                     'When `@docusaurus/plugin-pwa` is configured, its `pwaHead` should include a theme-color meta tag (`{ tagName: "meta", name: "theme-color", content: ... }`).',

@@ -30,7 +30,7 @@ const isNavbarItemsArrayExpression = (
 ): boolean => {
     const parentNode = arrayExpression.parent;
 
-    if (parentNode?.type !== AST_NODE_TYPES.Property) {
+    if (parentNode.type !== AST_NODE_TYPES.Property) {
         return false;
     }
 
@@ -40,14 +40,14 @@ const isNavbarItemsArrayExpression = (
 
     const ownerObject = parentNode.parent;
 
-    if (ownerObject?.type !== AST_NODE_TYPES.ObjectExpression) {
+    if (ownerObject.type !== AST_NODE_TYPES.ObjectExpression) {
         return false;
     }
 
     const ownerProperty = ownerObject.parent;
 
     if (
-        ownerProperty?.type === AST_NODE_TYPES.Property &&
+        ownerProperty.type === AST_NODE_TYPES.Property &&
         getObjectPropertyName(ownerProperty) === "navbar"
     ) {
         return true;
@@ -149,6 +149,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-navbar-item-labels",
             },
+            languages: ["js/js"],
             messages: {
                 noDuplicateNavbarItemLabels:
                     "Avoid duplicate navbar item labels in the same menu array; found repeated label {{ label }}.",

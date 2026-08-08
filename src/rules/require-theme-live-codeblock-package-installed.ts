@@ -77,6 +77,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-live-codeblock-package-installed",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeLiveCodeblockPackageInstalled:
                     "`@docusaurus/theme-live-codeblock` is configured in this Docusaurus site config but is not declared in the nearest `package.json` dependency fields.",

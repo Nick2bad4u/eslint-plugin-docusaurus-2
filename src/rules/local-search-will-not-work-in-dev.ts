@@ -63,6 +63,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/local-search-will-not-work-in-dev",
             },
+            languages: ["js/js"],
             messages: {
                 localSearchWillNotWorkInDev:
                     "Configured local-search provider `{{ pluginName }}` builds a static index and does not provide a reliable search experience during `docusaurus start`. Test it with `docusaurus build` and `docusaurus serve` instead.",

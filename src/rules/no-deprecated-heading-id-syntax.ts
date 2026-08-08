@@ -143,6 +143,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-heading-id-syntax",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDeprecatedHeadingIdSyntax:
                     "Docusaurus 3.10 strict MDX prefers heading IDs written as MDX comments (`{/* #my-id */}`) instead of deprecated `{#my-id}` syntax.",

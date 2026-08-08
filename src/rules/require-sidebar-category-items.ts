@@ -30,7 +30,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
 
             return {
                 ObjectExpression(node: Readonly<TSESTree.ObjectExpression>) {
-                    if (node.parent?.type !== AST_NODE_TYPES.ArrayExpression) {
+                    if (node.parent.type !== AST_NODE_TYPES.ArrayExpression) {
                         return;
                     }
 
@@ -73,6 +73,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-sidebar-category-items",
             },
+            languages: ["js/js"],
             messages: {
                 requireSidebarCategoryItems:
                     "Explicit Docusaurus sidebar category objects should include an `items` array.",

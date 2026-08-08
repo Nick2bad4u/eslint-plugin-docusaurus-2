@@ -167,6 +167,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-unknown-i18n-locale-configs",
             },
+            languages: ["js/js"],
             messages: {
                 noUnknownI18nLocaleConfigs:
                     "`i18n.localeConfigs` key {{ localeName }} should also appear in `i18n.locales`.",

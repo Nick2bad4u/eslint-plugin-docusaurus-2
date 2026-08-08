@@ -61,7 +61,7 @@ describe("rule-reporting helpers", () => {
             node,
         });
 
-        expect(report).toHaveBeenCalledOnce();
+        expect(report).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             messageId: "reportMessage",
             node,
@@ -82,7 +82,7 @@ describe("rule-reporting helpers", () => {
             node,
         });
 
-        expect(report).toHaveBeenCalledOnce();
+        expect(report).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             fix,
             messageId: "reportMessage",
@@ -109,7 +109,7 @@ describe("rule-reporting helpers", () => {
             node,
         });
 
-        expect(report).toHaveBeenCalledOnce();
+        expect(report).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             messageId: "reportMessage",
             node,
@@ -167,7 +167,7 @@ describe("rule-reporting helpers", () => {
             suggestionMessageId: "suggestMessage",
         });
 
-        expect(report).toHaveBeenCalledOnce();
+        expect(report).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             messageId: "reportMessage",
             node,
@@ -200,7 +200,7 @@ describe("rule-reporting helpers", () => {
             suggestionMessageId: "suggestMessage",
         });
 
-        expect(report).toHaveBeenCalledOnce();
+        expect(report).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             data: {
                 value: "x",
@@ -226,7 +226,7 @@ describe("rule-reporting helpers", () => {
             suggestionMessageId: "suggestMessage",
         });
 
-        expect(report).toHaveBeenCalledOnce();
+        expect(report).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             messageId: "reportMessage",
             node,
@@ -257,7 +257,7 @@ describe("rule-reporting helpers", () => {
             suggestionMessageId: "suggestMessage",
         });
 
-        expect(report).toHaveBeenCalledOnce();
+        expect(report).toHaveBeenCalledExactlyOnceWith(expect.any(Object));
         expect(report.mock.calls[0]?.[0]).toMatchObject({
             messageId: "reportMessage",
             node,

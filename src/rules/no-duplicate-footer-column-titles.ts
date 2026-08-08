@@ -102,6 +102,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-footer-column-titles",
             },
+            languages: ["js/js"],
             messages: {
                 noDuplicateFooterColumnTitles:
                     "Avoid duplicate footer column titles; found repeated title {{ title }}.",

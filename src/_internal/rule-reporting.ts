@@ -33,7 +33,7 @@ type ReportDescriptor<
 /**
  * Report using plugin-aware autofix policy handling.
  */
-export const reportWithPluginPolicy = <
+const reportWithPluginPolicy = <
     MessageIds extends string,
     Options extends Readonly<UnknownArray>,
 >({

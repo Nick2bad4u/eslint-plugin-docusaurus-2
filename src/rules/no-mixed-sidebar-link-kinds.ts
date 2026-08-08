@@ -46,6 +46,54 @@ type MixedSidebarLinkKindSuggestion = ArrayElement<
     >
 >;
 
+type RuleContext = TSESLint.RuleContext<MessageIds, typeof defaultOptions>;
+
+const createLinkKindSuggestions = (
+    context: Readonly<RuleContext>,
+    linkObject: Readonly<TSESTree.ObjectExpression>,
+    idProperty: Readonly<TSESTree.Property>,
+    metadataProperties: readonly Readonly<TSESTree.Property>[],
+    typeValue: null | string
+): readonly MixedSidebarLinkKindSuggestion[] | undefined => {
+    if (typeValue === "generated-index") {
+        return [
+            {
+                fix: (fixer) =>
+                    createRemoveCommaSeparatedItemsFixes(
+                        fixer,
+                        context.sourceCode,
+                        {
+                            container: linkObject,
+                            items: linkObject.properties,
+                            itemsToRemove: [idProperty],
+                        }
+                    ),
+                messageId: "removeDocIdFromGeneratedIndexLink",
+            },
+        ];
+    }
+
+    if (typeValue === "doc" && metadataProperties.length > 0) {
+        return [
+            {
+                fix: (fixer) =>
+                    createRemoveCommaSeparatedItemsFixes(
+                        fixer,
+                        context.sourceCode,
+                        {
+                            container: linkObject,
+                            items: linkObject.properties,
+                            itemsToRemove: metadataProperties,
+                        }
+                    ),
+                messageId: "removeGeneratedIndexMetadataFromDocLink",
+            },
+        ];
+    }
+
+    return undefined;
+};
+
 /** Rule module for `no-mixed-sidebar-link-kinds`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
@@ -74,8 +122,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const parentObject = node.parent;
 
                     if (
-                        parentObject?.type !==
-                            AST_NODE_TYPES.ObjectExpression ||
+                        parentObject.type !== AST_NODE_TYPES.ObjectExpression ||
                         !isDocusaurusSidebarCategoryObject(parentObject)
                     ) {
                         return;
@@ -106,52 +153,20 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                               );
                     const metadataProperties =
                         generatedIndexMetadataPropertyNames
-                            .map((propertyName_) =>
+                            .map((metadataPropertyName) =>
                                 findObjectPropertyByName(
                                     linkObject,
-                                    propertyName_
+                                    metadataPropertyName
                                 )
                             )
                             .filter(isPresent);
-                    const suggestions:
-                        readonly MixedSidebarLinkKindSuggestion[] | undefined =
-                        typeValue === "generated-index"
-                            ? [
-                                  {
-                                      fix: (fixer) =>
-                                          createRemoveCommaSeparatedItemsFixes(
-                                              fixer,
-                                              context.sourceCode,
-                                              {
-                                                  container: linkObject,
-                                                  items: linkObject.properties,
-                                                  itemsToRemove: [idProperty],
-                                              }
-                                          ),
-                                      messageId:
-                                          "removeDocIdFromGeneratedIndexLink",
-                                  },
-                              ]
-                            : typeValue === "doc" &&
-                                metadataProperties.length > 0
-                              ? [
-                                    {
-                                        fix: (fixer) =>
-                                            createRemoveCommaSeparatedItemsFixes(
-                                                fixer,
-                                                context.sourceCode,
-                                                {
-                                                    container: linkObject,
-                                                    items: linkObject.properties,
-                                                    itemsToRemove:
-                                                        metadataProperties,
-                                                }
-                                            ),
-                                        messageId:
-                                            "removeGeneratedIndexMetadataFromDocLink",
-                                    },
-                                ]
-                              : undefined;
+                    const suggestions = createLinkKindSuggestions(
+                        context,
+                        linkObject,
+                        idProperty,
+                        metadataProperties,
+                        typeValue
+                    );
 
                     context.report({
                         messageId: "noMixedSidebarLinkKinds",
@@ -179,6 +194,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-mixed-sidebar-link-kinds",
             },
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 noMixedSidebarLinkKinds:
                     "Do not mix `id` with generated-index metadata in the same sidebar category link object. Choose one Docusaurus link kind and keep its fields consistent.",

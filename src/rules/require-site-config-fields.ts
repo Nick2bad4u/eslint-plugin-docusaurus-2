@@ -7,7 +7,7 @@ import {
     type TSESLint,
     type TSESTree,
 } from "@typescript-eslint/utils";
-import { arrayFirst, isDefined, setHas } from "ts-extras";
+import { isDefined, setHas } from "ts-extras";
 
 import {
     findObjectPropertyByName,
@@ -43,7 +43,7 @@ const defaultOptions: Options = [
             "projectName",
         ],
     },
-] as const;
+];
 
 type MessageIds =
     | "requireBooleanConfigField"
@@ -131,7 +131,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
             return {};
         }
 
-        const resolvedOptions = options ?? arrayFirst(defaultOptions);
+        const resolvedOptions = options;
 
         return {
             Program(programNode: TSESTree.Program) {
@@ -249,6 +249,7 @@ const rule: TSESLint.RuleModule<MessageIds, Options> = createTypedRule({
             recommended: false,
             url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-site-config-fields",
         },
+        languages: ["js/js"],
         messages: {
             requireBooleanConfigField:
                 "Configure `{{ fieldName }}` explicitly with `true` or `false` in `docusaurus.config.*`.",

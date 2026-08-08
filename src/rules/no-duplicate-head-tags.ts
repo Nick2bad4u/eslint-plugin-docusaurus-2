@@ -31,97 +31,110 @@ const isPresentArrayElement = (
     element: Readonly<ArrayElement<TSESTree.ArrayExpression["elements"]>>
 ): element is TSESTree.Expression | TSESTree.SpreadElement => element !== null;
 
-const getExpressionSignature = (
-    expression: Readonly<TSESTree.Expression>,
+function getArrayExpressionSignature(
+    expression: Readonly<TSESTree.ArrayExpression>,
     sourceCode: Readonly<TSESLint.SourceCode>
-): null | string => {
-    if (expression.type === AST_NODE_TYPES.ArrayExpression) {
-        const elementSignatures: string[] = [];
+): null | string {
+    const elementSignatures: string[] = [];
 
-        for (const element of expression.elements) {
-            if (element === null) {
-                elementSignatures.push("null");
-                continue;
-            }
-
-            if (element.type === AST_NODE_TYPES.SpreadElement) {
-                return `spread:${sourceCode.getText(element).trim()}`;
-            }
-
-            const elementSignature = getExpressionSignature(
-                element,
-                sourceCode
-            );
-
-            if (elementSignature === null) {
-                return null;
-            }
-
-            elementSignatures.push(elementSignature);
+    for (const element of expression.elements) {
+        if (element === null) {
+            elementSignatures.push("null");
+            continue;
         }
 
-        return `array:[${arrayJoin(elementSignatures, ",")}]`;
+        if (element.type === AST_NODE_TYPES.SpreadElement) {
+            return `spread:${sourceCode.getText(element).trim()}`;
+        }
+
+        const elementSignature = getExpressionSignature(element, sourceCode);
+
+        if (elementSignature === null) {
+            return null;
+        }
+
+        elementSignatures.push(elementSignature);
     }
 
-    if (expression.type === AST_NODE_TYPES.Identifier) {
+    return `array:[${arrayJoin(elementSignatures, ",")}]`;
+}
+
+function getExpressionSignature(
+    expression: Readonly<TSESTree.Expression>,
+    sourceCode: Readonly<TSESLint.SourceCode>
+): null | string {
+    let comparableExpression = expression;
+
+    while (
+        comparableExpression.type === AST_NODE_TYPES.TSAsExpression ||
+        comparableExpression.type === AST_NODE_TYPES.TSSatisfiesExpression ||
+        comparableExpression.type === AST_NODE_TYPES.TSTypeAssertion
+    ) {
+        comparableExpression = comparableExpression.expression;
+    }
+
+    if (comparableExpression.type === AST_NODE_TYPES.ArrayExpression) {
+        return getArrayExpressionSignature(comparableExpression, sourceCode);
+    }
+
+    if (comparableExpression.type === AST_NODE_TYPES.Identifier) {
         return null;
     }
 
-    if (expression.type === AST_NODE_TYPES.Literal) {
-        return `literal:${JSON.stringify(expression.value)}`;
+    if (comparableExpression.type === AST_NODE_TYPES.Literal) {
+        return `literal:${JSON.stringify(comparableExpression.value)}`;
     }
 
-    if (expression.type === AST_NODE_TYPES.ObjectExpression) {
-        const propertyEntries: string[] = [];
-
-        for (const property of expression.properties) {
-            if (property.type !== AST_NODE_TYPES.Property) {
-                return `spread:${sourceCode.getText(property).trim()}`;
-            }
-
-            if (property.computed || property.kind !== "init") {
-                return null;
-            }
-
-            const propertyName = getObjectPropertyName(property);
-
-            if (propertyName === null) {
-                return null;
-            }
-
-            const propertyValueSignature = getExpressionSignature(
-                getObjectPropertyValueExpression(property),
-                sourceCode
-            );
-
-            if (propertyValueSignature === null) {
-                return null;
-            }
-
-            propertyEntries.push(`${propertyName}:${propertyValueSignature}`);
-        }
-
-        propertyEntries.sort((left, right) => left.localeCompare(right));
-
-        return `object:{${arrayJoin(propertyEntries, "|")}}`;
+    if (comparableExpression.type === AST_NODE_TYPES.ObjectExpression) {
+        return getObjectExpressionSignature(comparableExpression, sourceCode);
     }
 
-    if (expression.type === AST_NODE_TYPES.TemplateLiteral) {
-        return expression.expressions.length === 0
-            ? `template:${arrayFirst(expression.quasis)?.value.cooked ?? ""}`
+    if (comparableExpression.type === AST_NODE_TYPES.TemplateLiteral) {
+        return comparableExpression.expressions.length === 0
+            ? `template:${arrayFirst(comparableExpression.quasis)?.value.cooked ?? ""}`
             : null;
     }
 
-    if (
-        expression.type === AST_NODE_TYPES.TSAsExpression ||
-        expression.type === AST_NODE_TYPES.TSSatisfiesExpression ||
-        expression.type === AST_NODE_TYPES.TSTypeAssertion
-    ) {
-        return getExpressionSignature(expression.expression, sourceCode);
+    return `text:${sourceCode.getText(comparableExpression).trim()}`;
+}
+
+function getObjectExpressionSignature(
+    expression: Readonly<TSESTree.ObjectExpression>,
+    sourceCode: Readonly<TSESLint.SourceCode>
+): null | string {
+    const propertyEntries: string[] = [];
+
+    for (const property of expression.properties) {
+        if (property.type !== AST_NODE_TYPES.Property) {
+            return `spread:${sourceCode.getText(property).trim()}`;
+        }
+
+        if (property.computed || property.kind !== "init") {
+            return null;
+        }
+
+        const propertyName = getObjectPropertyName(property);
+
+        if (propertyName === null) {
+            return null;
+        }
+
+        const propertyValueSignature = getExpressionSignature(
+            getObjectPropertyValueExpression(property),
+            sourceCode
+        );
+
+        if (propertyValueSignature === null) {
+            return null;
+        }
+
+        propertyEntries.push(`${propertyName}:${propertyValueSignature}`);
     }
 
-    return `text:${sourceCode.getText(expression).trim()}`;
-};
+    propertyEntries.sort((left, right) => left.localeCompare(right));
+
+    return `object:{${arrayJoin(propertyEntries, "|")}}`;
+}
 
 /** Rule module for `no-duplicate-head-tags`. */
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
@@ -228,6 +241,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-duplicate-head-tags",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noDuplicateHeadTags:
                     "Remove duplicate top-level `headTags` entries that repeat an earlier tag definition.",

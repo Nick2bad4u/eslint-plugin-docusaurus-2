@@ -76,6 +76,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-footer-html-item-props",
             },
+            languages: ["js/js"],
             messages: {
                 noConflictingFooterHtmlItemProps:
                     "Docusaurus footer HTML pass-through items should not mix `html` with `label`, `to`, or `href`. Use either raw HTML or a normal footer link item.",

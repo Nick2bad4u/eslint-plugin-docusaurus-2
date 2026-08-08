@@ -88,6 +88,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/prefer-href-for-external-link-components",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 preferHrefForExternalLinkComponent:
                     "Use `href` instead of `to` for external `@docusaurus/Link` destinations so the component matches Docusaurus link semantics.",

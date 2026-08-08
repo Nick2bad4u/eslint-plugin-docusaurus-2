@@ -92,6 +92,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-docusaurus-faster-package-installed",
             },
+            languages: ["js/js"],
             messages: {
                 requireDocusaurusFasterPackageInstalled:
                     "Configure `@docusaurus/faster` in the nearest package manifest when using `future.faster` or deprecated `future.experimental_faster` flags.",

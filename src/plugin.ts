@@ -7,28 +7,23 @@ import type { ESLint, Linter } from "eslint";
 import type { ArrayValues, Except } from "type-fest";
 
 import typeScriptParser from "@typescript-eslint/parser";
-import {
-    isDefined,
-    isEmpty,
-    keyIn,
-    objectEntries,
-    safeCastTo,
-} from "ts-extras";
+import { isDefined, isEmpty, objectEntries, safeCastTo } from "ts-extras";
 
-import type { AdditionalConfigName } from "./_internal/preset-config-references.js";
-import type { UnknownArray, UnknownRecord } from "./_internal/types.js";
-
-import packageJson from "../package.json" with { type: "json" };
-import {
-    presetConfigMetadataByName,
+import type {
+    AdditionalConfigName,
     presetConfigNames,
 } from "./_internal/preset-config-references.js";
+import type { UnknownArray } from "./_internal/types.js";
+
+import packageJson from "../package.json" with { type: "json" };
+import { presetConfigMetadataByName } from "./_internal/preset-config-references.js";
 import {
     deriveRuleAdditionalConfigMembershipByRuleName,
     deriveRuleDocsMetadataByName,
     deriveRulePresetMembershipByRuleName,
 } from "./_internal/rule-docs-metadata.js";
 import { docusaurusRules } from "./_internal/rules-registry.js";
+import { objectHasIn } from "./_internal/runtime-utils.js";
 import textContentParser from "./_internal/text-content-parser.js";
 
 /** ESLint severity used by generated preset rule maps. */
@@ -73,13 +68,11 @@ const getPackageVersion = (pkg: unknown): string => {
         return "0.0.0";
     }
 
-    const pkgRecord = pkg as UnknownRecord;
-
-    if (!keyIn(pkgRecord, "version")) {
+    if (!objectHasIn(pkg, "version")) {
         return "0.0.0";
     }
 
-    const { version } = pkgRecord;
+    const { version } = pkg;
 
     return typeof version === "string" ? version : "0.0.0";
 };
@@ -134,15 +127,15 @@ const docusaurusRuleEntries = objectEntries(runtimeRules);
 const createEmptyPresetRuleMap = (): Record<
     Docusaurus2PresetConfigName,
     string[]
-> => {
-    const presetRuleMap = {} as Record<Docusaurus2PresetConfigName, string[]>;
-
-    for (const configName of presetConfigNames) {
-        presetRuleMap[configName] = [];
-    }
-
-    return presetRuleMap;
-};
+> =>
+    ({
+        all: [],
+        config: [],
+        experimental: [],
+        minimal: [],
+        recommended: [],
+        strict: [],
+    }) satisfies Record<Docusaurus2PresetConfigName, string[]>;
 
 const dedupeRuleNames = (ruleNames: readonly string[]): string[] => [
     ...new Set(ruleNames),
@@ -297,15 +290,12 @@ const createConfigsDefinition = (): Record<
     Docusaurus2ConfigName,
     Docusaurus2PresetConfig
 > => {
-    const configs = {} as Record<
-        Docusaurus2ConfigName,
-        Docusaurus2PresetConfig
-    >;
-
-    for (const configName of presetConfigNames) {
+    const createPresetConfig = (
+        configName: Docusaurus2PresetConfigName
+    ): Docusaurus2PresetConfig => {
         const configMetadata = presetConfigMetadataByName[configName];
 
-        configs[configName] = withDocusaurusPlugin(
+        return withDocusaurusPlugin(
             {
                 name: configMetadata.presetName,
                 rules: errorRulesFor(
@@ -314,29 +304,33 @@ const createConfigsDefinition = (): Record<
             },
             pluginForConfigs
         );
-    }
+    };
 
-    configs["strict-mdx-upgrade"] = createTextContentConfig({
-        files: ["**/*.mdx"],
-        name: "docusaurus-2:strict-mdx-upgrade",
-        ruleNames: additionalConfigRuleNamesByConfig["strict-mdx-upgrade"],
-    });
-
-    configs.content = createTextContentConfig({
-        files: ["**/*.{md,mdx}"],
-        name: "docusaurus-2:content",
-        ruleNames: additionalConfigRuleNamesByConfig.content,
-    });
-
-    configs.i18n = withDocusaurusPlugin(
-        {
-            name: "docusaurus-2:i18n",
-            rules: errorRulesFor(additionalConfigRuleNamesByConfig.i18n),
-        },
-        pluginForConfigs
-    );
-
-    return configs;
+    return {
+        all: createPresetConfig("all"),
+        config: createPresetConfig("config"),
+        content: createTextContentConfig({
+            files: ["**/*.{md,mdx}"],
+            name: "docusaurus-2:content",
+            ruleNames: additionalConfigRuleNamesByConfig.content,
+        }),
+        experimental: createPresetConfig("experimental"),
+        i18n: withDocusaurusPlugin(
+            {
+                name: "docusaurus-2:i18n",
+                rules: errorRulesFor(additionalConfigRuleNamesByConfig.i18n),
+            },
+            pluginForConfigs
+        ),
+        minimal: createPresetConfig("minimal"),
+        recommended: createPresetConfig("recommended"),
+        strict: createPresetConfig("strict"),
+        "strict-mdx-upgrade": createTextContentConfig({
+            files: ["**/*.mdx"],
+            name: "docusaurus-2:strict-mdx-upgrade",
+            ruleNames: additionalConfigRuleNamesByConfig["strict-mdx-upgrade"],
+        }),
+    };
 };
 
 const configsDefinition = createConfigsDefinition();

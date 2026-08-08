@@ -193,6 +193,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-empty-head-tags",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noEmptyHeadTags:
                     "Remove empty top-level `headTags` entries that do not contribute any attributes or inline content.",

@@ -138,6 +138,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-conflicting-theme-config-color-mode-flags",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 noConflictingThemeConfigColorModeFlags:
                     "Do not combine `disableSwitch: true` with `respectPrefersColorScheme: true`; if the switch is disabled, respecting the user's preferred color scheme should also be disabled.",

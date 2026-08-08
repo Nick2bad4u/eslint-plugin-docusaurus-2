@@ -128,6 +128,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-classic-custom-css-files-exist",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeClassicCustomCssFilesExist:
                     "`customCss` entry {{ configuredPath }} does not resolve to an existing file.",

@@ -175,6 +175,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: true,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-theme-config-docsearch-config",
             },
+            languages: ["js/js"],
             messages: {
                 requireThemeConfigDocsearchConfig:
                     "{{ searchConfigKey }} should declare non-empty `appId`, `apiKey`, and `indexName` values. Missing or invalid keys: {{ missingKeys }}.",

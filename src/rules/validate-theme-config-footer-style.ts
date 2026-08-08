@@ -227,6 +227,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             },
             fixable: "code",
             hasSuggestions: true,
+            languages: ["js/js"],
             messages: {
                 setFooterStyleDark:
                     'Set `themeConfig.footer.style` to `"dark"`.',

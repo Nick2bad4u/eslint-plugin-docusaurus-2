@@ -121,6 +121,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-base-url-issue-banner-enabled",
             },
             fixable: "code",
+            languages: ["js/js"],
             messages: {
                 requireBaseUrlIssueBannerEnabled:
                     "Configure `baseUrlIssueBanner` as `true` so Docusaurus surfaces base URL mismatch warnings in non-production environments.",
