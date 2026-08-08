@@ -115,7 +115,7 @@ function applySidebarLabelTokenColoring(): CleanupFunction {
             return;
         }
 
-        const linkLabel = link.textContent.trim();
+        const linkLabel = getTrimmedNodeTextContent(link);
 
         if (!linkLabel) {
             return;
@@ -372,6 +372,11 @@ function getRuntimeSidebarKindPrefix(
     }
 
     return null;
+}
+
+/** Read and normalize text from a DOM node without assuming it is present. */
+function getTrimmedNodeTextContent(node: Readonly<Node>): string {
+    return node.textContent?.trim() ?? "";
 }
 
 /**
