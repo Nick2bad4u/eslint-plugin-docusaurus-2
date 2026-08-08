@@ -6,7 +6,7 @@ Thanks for using `eslint-plugin-docusaurus-2`.
 
 1. Check project docs first:
    - [README.md](./README.md)
-   - [docs/](./docs/)
+   - [Rules overview](./docs/rules/overview.md)
 2. Search existing issues:
    - <https://github.com/Nick2bad4u/eslint-plugin-docusaurus-2/issues>
 3. Open a new issue if needed:

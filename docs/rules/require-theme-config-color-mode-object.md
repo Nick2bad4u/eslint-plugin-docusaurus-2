@@ -44,4 +44,4 @@ Do not use this rule if your project intentionally leaves color-mode behavior im
 
 ## Further reading
 
-- [Docusaurus color mode configuration](https://docusaurus.io/docs/api/themes/configuration#color-mode)
+- [Docusaurus color mode configuration](https://docusaurus.io/docs/api/themes/configuration#color-mode---dark-mode)

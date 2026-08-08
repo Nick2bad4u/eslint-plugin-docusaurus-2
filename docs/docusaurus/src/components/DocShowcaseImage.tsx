@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 import useBaseUrl from "@docusaurus/useBaseUrl";
 
 type DocShowcaseImageProps = Readonly<{
@@ -19,7 +21,7 @@ export default function DocShowcaseImage({
     alt,
     assetPath,
     compact = false,
-}: DocShowcaseImageProps) {
+}: DocShowcaseImageProps): ReactElement {
     return (
         <img
             alt={alt}

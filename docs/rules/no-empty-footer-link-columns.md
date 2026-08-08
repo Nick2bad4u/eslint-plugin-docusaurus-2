@@ -55,4 +55,4 @@ Do not use this rule if your footer intentionally includes placeholder columns f
 
 ## Further reading
 
-- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer)
+- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer-1)

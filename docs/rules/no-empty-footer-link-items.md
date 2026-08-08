@@ -60,4 +60,4 @@ Do not use this rule if your footer items intentionally use placeholder objects 
 
 ## Further reading
 
-- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer)
+- [Docusaurus footer configuration](https://docusaurus.io/docs/api/themes/configuration#footer-1)

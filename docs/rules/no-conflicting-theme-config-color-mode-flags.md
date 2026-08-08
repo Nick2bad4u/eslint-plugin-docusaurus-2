@@ -55,4 +55,4 @@ Do not use this rule if your site intentionally treats the system preference as 
 
 ## Further reading
 
-- [Docusaurus color mode configuration](https://docusaurus.io/docs/api/themes/configuration#color-mode)
+- [Docusaurus color mode configuration](https://docusaurus.io/docs/api/themes/configuration#color-mode---dark-mode)

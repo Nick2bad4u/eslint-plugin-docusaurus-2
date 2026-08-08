@@ -99,4 +99,4 @@ Do not use this rule if your project intentionally keeps `useBaseUrl(...)` wrapp
 ## Further reading
 
 - [Docusaurus client API: `<Link />`](https://docusaurus.io/docs/docusaurus-core#link)
-- [Docusaurus client API: `useBaseUrl`](https://docusaurus.io/docs/docusaurus-core#usebaseurl)
+- [Docusaurus client API: `useBaseUrl`](https://docusaurus.io/docs/docusaurus-core#useBaseUrl)

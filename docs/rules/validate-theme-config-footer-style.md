@@ -64,4 +64,4 @@ Do not use this rule if your project intentionally injects nonstandard footer st
 
 ## Further reading
 
-- [Docusaurus theme config footer](https://docusaurus.io/docs/api/themes/configuration#footer)
+- [Docusaurus theme config footer](https://docusaurus.io/docs/api/themes/configuration#footer-1)

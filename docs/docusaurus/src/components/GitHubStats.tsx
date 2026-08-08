@@ -1,3 +1,5 @@
+import type { ReactElement } from "react";
+
 import Link from "@docusaurus/Link";
 
 import styles from "./GitHubStats.module.css";
@@ -54,7 +56,9 @@ const getStyleClassName = (className: string): string =>
     styles[className] ?? "";
 
 /** Displays a row of live GitHub badge stats for the plugin repository. */
-export default function GitHubStats({ className = "" }: GitHubStatsProps) {
+export default function GitHubStats({
+    className = "",
+}: GitHubStatsProps): ReactElement {
     const badgeListClassName = [getStyleClassName("liveBadgeList"), className]
         .filter(Boolean)
         .join(" ");
