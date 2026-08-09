@@ -10,6 +10,7 @@ import { arrayFirst, isDefined, stringSplit } from "ts-extras";
 import { isPackageDeclaredInNearestManifest } from "../_internal/package-manifest.js";
 import {
     collectFencedCodeBlocks,
+    createTextContentRootListener,
     createTextSourceLocator,
 } from "../_internal/text-content-lint.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
@@ -71,39 +72,37 @@ const usesMermaidElkLayout = (blockContent: string): boolean => {
 const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
     createTypedRule({
         create: (context) =>
-            ({
-                Program(): void {
-                    const text = context.sourceCode.getText();
-                    const locator = createTextSourceLocator(text);
+            createTextContentRootListener(() => {
+                const text = context.sourceCode.getText();
+                const locator = createTextSourceLocator(text);
 
+                if (
+                    isPackageDeclaredInNearestManifest(
+                        context.filename,
+                        mermaidElkPackageName
+                    )
+                ) {
+                    return;
+                }
+
+                for (const codeBlock of collectFencedCodeBlocks(text)) {
                     if (
-                        isPackageDeclaredInNearestManifest(
-                            context.filename,
-                            mermaidElkPackageName
-                        )
+                        getPrimaryFenceLanguage(codeBlock.infoString) !==
+                            "mermaid" ||
+                        !usesMermaidElkLayout(codeBlock.content)
                     ) {
-                        return;
+                        continue;
                     }
 
-                    for (const codeBlock of collectFencedCodeBlocks(text)) {
-                        if (
-                            getPrimaryFenceLanguage(codeBlock.infoString) !==
-                                "mermaid" ||
-                            !usesMermaidElkLayout(codeBlock.content)
-                        ) {
-                            continue;
-                        }
-
-                        context.report({
-                            loc: locator.createLoc(
-                                codeBlock.contentStart,
-                                codeBlock.contentEnd
-                            ),
-                            messageId: "requireMermaidElkPackageInstalled",
-                        });
-                    }
-                },
-            }) satisfies TSESLint.RuleListener,
+                    context.report({
+                        loc: locator.createLoc(
+                            codeBlock.contentStart,
+                            codeBlock.contentEnd
+                        ),
+                        messageId: "requireMermaidElkPackageInstalled",
+                    });
+                }
+            }),
         defaultOptions,
         meta: {
             deprecated: false,
@@ -116,7 +115,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 recommended: false,
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/require-mermaid-elk-package-installed",
             },
-            languages: ["js/js"],
+            languages: [
+                "js/js",
+                "markdown/commonmark",
+                "markdown/gfm",
+            ],
             messages: {
                 requireMermaidElkPackageInstalled:
                     "Mermaid ELK layouts require the `@mermaid-js/layout-elk` package to be declared in the nearest package.json.",

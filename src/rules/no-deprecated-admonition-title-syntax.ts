@@ -9,6 +9,7 @@ import { isDefined } from "ts-extras";
 
 import {
     collectFencedCodeBlockRanges,
+    createTextContentRootListener,
     createTextSourceLocator,
     doesRangeOverlapIgnoredRanges,
     getTextContentLines,
@@ -97,43 +98,41 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 return {};
             }
 
-            return {
-                Program(): void {
-                    const text = context.sourceCode.getText();
-                    const ignoredRanges = collectFencedCodeBlockRanges(text);
-                    const locator = createTextSourceLocator(text);
+            return createTextContentRootListener(() => {
+                const text = context.sourceCode.getText();
+                const ignoredRanges = collectFencedCodeBlockRanges(text);
+                const locator = createTextSourceLocator(text);
 
-                    for (const line of getTextContentLines(text)) {
-                        const parsedAdmonitionLine =
-                            parseDeprecatedAdmonitionTitleLine(line.text);
+                for (const line of getTextContentLines(text)) {
+                    const parsedAdmonitionLine =
+                        parseDeprecatedAdmonitionTitleLine(line.text);
 
-                        if (parsedAdmonitionLine === null) {
-                            continue;
-                        }
-
-                        if (
-                            doesRangeOverlapIgnoredRanges(
-                                line.start,
-                                line.end,
-                                ignoredRanges
-                            )
-                        ) {
-                            continue;
-                        }
-
-                        context.report({
-                            fix: (fixer) =>
-                                // eslint-disable-next-line eslint-plugin/prefer-replace-text -- Raw text rules replace an exact source slice; there is no narrower AST node to target.
-                                fixer.replaceTextRange(
-                                    [line.start, line.end],
-                                    `${parsedAdmonitionLine.directive}[${parsedAdmonitionLine.title}]`
-                                ),
-                            loc: locator.createLoc(line.start, line.end),
-                            messageId: "noDeprecatedAdmonitionTitleSyntax",
-                        });
+                    if (parsedAdmonitionLine === null) {
+                        continue;
                     }
-                },
-            } satisfies TSESLint.RuleListener;
+
+                    if (
+                        doesRangeOverlapIgnoredRanges(
+                            line.start,
+                            line.end,
+                            ignoredRanges
+                        )
+                    ) {
+                        continue;
+                    }
+
+                    context.report({
+                        fix: (fixer) =>
+                            // eslint-disable-next-line eslint-plugin/prefer-replace-text -- Raw text rules replace an exact source slice; there is no narrower AST node to target.
+                            fixer.replaceTextRange(
+                                [line.start, line.end],
+                                `${parsedAdmonitionLine.directive}[${parsedAdmonitionLine.title}]`
+                            ),
+                        loc: locator.createLoc(line.start, line.end),
+                        messageId: "noDeprecatedAdmonitionTitleSyntax",
+                    });
+                }
+            });
         },
         defaultOptions,
         meta: {
@@ -148,7 +147,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-admonition-title-syntax",
             },
             fixable: "code",
-            languages: ["js/js"],
+            languages: [
+                "js/js",
+                "markdown/commonmark",
+                "markdown/gfm",
+            ],
             messages: {
                 noDeprecatedAdmonitionTitleSyntax:
                     "Docusaurus 3.10 strict MDX prefers admonition titles written as `:::type[Title]` instead of deprecated `:::type Title` syntax.",

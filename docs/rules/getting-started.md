@@ -43,7 +43,12 @@ The plugin also exposes three non-preset configs:
 - `docusaurus2.configs.i18n` for both JSX translation rules
 - `docusaurus2.configs["strict-mdx-upgrade"]` for `*.mdx` only
 
-The content configs use the plugin's text-content parser. The `i18n` config uses the normal TypeScript parser and can be composed with `recommended` when both translation rules are wanted without the full strict preset.
+The content configs use the plugin's text-content parser by default. Their rules
+also support the `markdown/commonmark` and `markdown/gfm` languages from
+`@eslint/markdown`, including when a later flat-config entry selects one of
+those languages. The `i18n` config uses the normal TypeScript parser and can be
+composed with `recommended` when both translation rules are wanted without the
+full strict preset.
 
 `strict-mdx-upgrade` is intentionally scoped to the **Docusaurus 3.10 MDX syntax migration** rules only.
 The earlier 3.8 and 3.9 release-upgrade rules stay in the normal config-level preset ladder.
