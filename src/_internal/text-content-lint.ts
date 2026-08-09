@@ -3,7 +3,7 @@
  * Shared text-scanning helpers for Markdown/MDX content rules.
  */
 
-import type { TSESTree } from "@typescript-eslint/utils";
+import type { TSESLint, TSESTree } from "@typescript-eslint/utils";
 
 import { isFinite } from "ts-extras";
 
@@ -35,6 +35,26 @@ export type TextSourceLocator = Readonly<{
     createLoc: (start: number, end: number) => TSESTree.SourceLocation;
     locate: (index: number) => TSESTree.Position;
 }>;
+
+/**
+ * Create root visitors for both the plugin's text parser and ESLint Markdown.
+ *
+ * @remarks
+ * The internal text parser emits an ESTree `Program`, while `@eslint/markdown`
+ * emits an mdast `root`. Text-scanning rules do not depend on either AST shape,
+ * so sharing the callback keeps their behavior identical across both language
+ * implementations.
+ *
+ * @param visitRoot - Callback that scans the current source text once.
+ *
+ * @returns An ESLint listener that runs for either supported root node type.
+ */
+export const createTextContentRootListener = (
+    visitRoot: () => void
+): TSESLint.RuleListener => ({
+    Program: visitRoot,
+    root: visitRoot,
+});
 
 /** Check whether a file path points to an MDX document. */
 export const isMdxFilePath = (filePath: string): boolean =>

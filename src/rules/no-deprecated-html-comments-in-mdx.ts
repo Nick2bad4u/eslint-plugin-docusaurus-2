@@ -9,6 +9,7 @@ import { isDefined } from "ts-extras";
 
 import {
     collectFencedCodeBlockRanges,
+    createTextContentRootListener,
     createTextSourceLocator,
     doesRangeOverlapIgnoredRanges,
     isMdxFilePath,
@@ -43,47 +44,42 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 return {};
             }
 
-            return {
-                Program(): void {
-                    const text = context.sourceCode.getText();
-                    const ignoredRanges = collectFencedCodeBlockRanges(text);
-                    const locator = createTextSourceLocator(text);
+            return createTextContentRootListener(() => {
+                const text = context.sourceCode.getText();
+                const ignoredRanges = collectFencedCodeBlockRanges(text);
+                const locator = createTextSourceLocator(text);
 
-                    for (const match of text.matchAll(htmlCommentPattern)) {
-                        const matchedComment = match[0];
-                        const matchStart = match.index;
+                for (const match of text.matchAll(htmlCommentPattern)) {
+                    const matchedComment = match[0];
+                    const matchStart = match.index;
 
-                        if (
-                            !isDefined(matchedComment) ||
-                            !isDefined(matchStart)
-                        ) {
-                            continue;
-                        }
-
-                        const matchEnd = matchStart + matchedComment.length;
-
-                        if (
-                            doesRangeOverlapIgnoredRanges(
-                                matchStart,
-                                matchEnd,
-                                ignoredRanges
-                            )
-                        ) {
-                            continue;
-                        }
-
-                        context.report({
-                            fix: (fixer) =>
-                                fixer.replaceTextRange(
-                                    [matchStart, matchEnd],
-                                    toJsxCommentReplacement(matchedComment)
-                                ),
-                            loc: locator.createLoc(matchStart, matchEnd),
-                            messageId: "noDeprecatedHtmlCommentsInMdx",
-                        });
+                    if (!isDefined(matchedComment) || !isDefined(matchStart)) {
+                        continue;
                     }
-                },
-            } satisfies TSESLint.RuleListener;
+
+                    const matchEnd = matchStart + matchedComment.length;
+
+                    if (
+                        doesRangeOverlapIgnoredRanges(
+                            matchStart,
+                            matchEnd,
+                            ignoredRanges
+                        )
+                    ) {
+                        continue;
+                    }
+
+                    context.report({
+                        fix: (fixer) =>
+                            fixer.replaceTextRange(
+                                [matchStart, matchEnd],
+                                toJsxCommentReplacement(matchedComment)
+                            ),
+                        loc: locator.createLoc(matchStart, matchEnd),
+                        messageId: "noDeprecatedHtmlCommentsInMdx",
+                    });
+                }
+            });
         },
         defaultOptions,
         meta: {
@@ -98,7 +94,11 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                 url: "https://nick2bad4u.github.io/eslint-plugin-docusaurus-2/docs/rules/no-deprecated-html-comments-in-mdx",
             },
             fixable: "code",
-            languages: ["js/js"],
+            languages: [
+                "js/js",
+                "markdown/commonmark",
+                "markdown/gfm",
+            ],
             messages: {
                 noDeprecatedHtmlCommentsInMdx:
                     "Docusaurus 3.10 strict MDX prefers JSX comments (`{/* ... */}`) instead of deprecated HTML comments (`<!-- ... -->`) in `.mdx` files.",

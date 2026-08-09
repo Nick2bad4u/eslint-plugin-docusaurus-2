@@ -230,6 +230,7 @@
         "@csstools/stylelint-formatter-github": "^2.0.0",
         "@double-great/remark-lint-alt-text": "^1.1.1",
         "@eslint/config-inspector": "^3.2.0",
+        "@eslint/markdown": "^8.0.3",
         "@microsoft/tsdoc-config": "^0.18.1",
         "@stryker-ignorer/console-all": "^0.3.2",
         "@stryker-mutator/core": "^9.6.1",

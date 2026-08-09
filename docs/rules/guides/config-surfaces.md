@@ -32,6 +32,11 @@ This is useful when `recommended` should retain its lower-noise translation poli
 
 Use this when you want rules that inspect Markdown or MDX content directly.
 
+The config uses the plugin's lightweight text parser by default. Its rules also
+support `markdown/commonmark` and `markdown/gfm`, so a later flat-config entry
+can select an `@eslint/markdown` language without disabling the Docusaurus
+content checks.
+
 Current examples include:
 
 - MDX migration rules
