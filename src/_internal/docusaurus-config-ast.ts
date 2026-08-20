@@ -123,7 +123,12 @@ const getExpressionNodeOrNull = (
     return node;
 };
 
-/** Resolve an object-property value to an expression or throw for pattern nodes. */
+/**
+ * Resolve an object-property value to an expression.
+ *
+ * @throws TypeError when the property value is a pattern node rather than an
+ *   expression.
+ */
 export const getObjectPropertyValueExpression = (
     property: Readonly<TSESTree.Property>
 ): Readonly<TSESTree.Expression> => {

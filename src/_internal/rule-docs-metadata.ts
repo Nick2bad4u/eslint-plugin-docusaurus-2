@@ -87,7 +87,12 @@ const isRuleIdInCanonicalFormat = (value: string): boolean => {
 const isUnknownRecord = (value: unknown): value is Readonly<UnknownRecord> =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
-/** Convert rule docs `presets` into a normalized, deduped preset-name list. */
+/**
+ * Convert rule docs `presets` into a normalized, deduped preset-name list.
+ *
+ * @throws TypeError when a declared preset name is not part of the supported
+ *   preset contract.
+ */
 const normalizePresetNames = (
     ruleName: string,
     presets: PluginRuleDocsContract["presets"]
@@ -240,7 +245,12 @@ const normalizePresetsFromUnknown = (
     return normalizedPresetNames;
 };
 
-/** Validate and narrow dynamic `meta.docs` values to the plugin docs contract. */
+/**
+ * Validate and narrow dynamic `meta.docs` values to the plugin docs contract.
+ *
+ * @throws TypeError when the metadata is absent or violates the canonical rule
+ *   documentation contract.
+ */
 const getRuleDocsContract = (
     ruleName: string,
     docs: unknown
