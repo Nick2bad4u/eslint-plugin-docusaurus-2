@@ -118,6 +118,9 @@ type PluginRuleMetadata<
  *
  * @returns Rule module factory output that auto-registers program settings and
  *   preserves the authored rule contract.
+ *
+ * @throws TypeError when the rule definition has missing or non-canonical docs
+ *   metadata, or when a stable rule is absent from the rule catalog.
  */
 export const createTypedRule: PluginRuleCreator = (ruleDefinition) => {
     const catalogEntry = getRuleCatalogEntryForRuleNameOrNull(
