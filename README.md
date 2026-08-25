@@ -6,6 +6,8 @@
 
 `eslint-plugin-docusaurus-2` is an ESLint plugin for Docusaurus sites, docs repositories, and TypeDoc-integrated documentation workflows.
 
+> **Oxlint:** Not compatible as a complete plugin (verified with Oxlint 1.80.0). Individual syntactic JavaScript rules can work, but the `content` and `strict-mdx-upgrade` configs require a custom Markdown/MDX text parser, and [Oxlint JavaScript plugins do not support custom formats](https://oxc.rs/docs/guide/usage/linter/js-plugins.html#api-support). Use ESLint for the full 126-rule, nine-config surface.
+
 It ships focused Docusaurus-specific rules and Flat Config presets for teams that want stricter guarantees around:
 
 - `docusaurus.config.*`
