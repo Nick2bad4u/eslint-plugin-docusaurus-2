@@ -12,11 +12,14 @@ import {
     getDefaultExportedObjectExpression,
     isDocusaurusConfigFilePath,
 } from "../_internal/docusaurus-config-ast.js";
+import { hasAnyTopLevelModuleConfigurationByName } from "../_internal/docusaurus-module-config.js";
 import { reportWithOptionalFix } from "../_internal/rule-reporting.js";
 import {
+    docsearchAdapterPluginModuleName,
     docsearchThemeConfigPropertyName,
     getThemeConfigSearchProperties,
 } from "../_internal/search-config.js";
+import { themeSearchAlgoliaModuleName } from "../_internal/theme-classic-config.js";
 import { createTypedRule } from "../_internal/typed-rule.js";
 
 const defaultOptions = [] as const;
@@ -29,7 +32,9 @@ const createPropertyKeyReplacementText = (
     replacementPropertyName: string
 ): null | string => {
     if (property.key.type === AST_NODE_TYPES.Identifier) {
-        return replacementPropertyName;
+        return property.shorthand
+            ? `${replacementPropertyName}: ${property.key.name}`
+            : replacementPropertyName;
     }
 
     return property.key.type === AST_NODE_TYPES.Literal &&
@@ -51,7 +56,19 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
                     const configObjectExpression =
                         getDefaultExportedObjectExpression(programNode);
 
-                    if (configObjectExpression === null) {
+                    if (
+                        configObjectExpression === null ||
+                        !hasAnyTopLevelModuleConfigurationByName(
+                            configObjectExpression,
+                            docsearchAdapterPluginModuleName,
+                            programNode
+                        ) ||
+                        hasAnyTopLevelModuleConfigurationByName(
+                            configObjectExpression,
+                            themeSearchAlgoliaModuleName,
+                            programNode
+                        )
+                    ) {
                         return;
                     }
 
@@ -100,7 +117,7 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             deprecated: false,
             docs: {
                 description:
-                    "enforce the canonical `themeConfig.docsearch` key over the backward-compatible `themeConfig.algolia` alias.",
+                    "enforce `themeConfig.docsearch` when the standalone DocSearch adapter is configured.",
                 frozen: false,
                 presets: [
                     "config",
@@ -116,9 +133,9 @@ const rule: TSESLint.RuleModule<MessageIds, typeof defaultOptions> =
             languages: ["js/js"],
             messages: {
                 noConflictingThemeConfigSearchKeys:
-                    "Do not define both `themeConfig.docsearch` and `themeConfig.algolia`. Keep only the canonical `themeConfig.docsearch` key.",
+                    "Keep one DocSearch adapter configuration under `themeConfig.docsearch`.",
                 preferThemeConfigDocsearch:
-                    "Prefer `themeConfig.docsearch` over the backward-compatible `themeConfig.algolia` alias so DocSearch config stays on the canonical key.",
+                    "Prefer `themeConfig.docsearch` when using the standalone DocSearch adapter.",
             },
             schema: [],
             type: "suggestion",

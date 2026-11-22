@@ -1,37 +1,27 @@
 # prefer-theme-config-docsearch
 
-Prefer the canonical `themeConfig.docsearch` key over the backward-compatible `themeConfig.algolia` alias.
+Prefer `themeConfig.docsearch` for sites that configure the standalone DocSearch adapter.
 
 ## Targeted pattern scope
 
-This rule focuses on `docusaurus.config.*` files.
-
-It targets the search provider config keys inside `themeConfig`:
-
-- `themeConfig.docsearch`
-- `themeConfig.algolia`
+This rule checks `docusaurus.config.*` files that statically register `@docsearch/docusaurus-adapter` in `plugins` or `themes`. Docusaurus's built-in Algolia integration reads `themeConfig.algolia`. The rule leaves that key alone on sites that rely on the classic preset's built-in search, explicitly register `@docusaurus/theme-search-algolia`, or have no recognized adapter registration.
 
 ## What this rule reports
 
-This rule reports two situations:
+With the standalone adapter configured, the rule reports:
 
-- `themeConfig.algolia` is used on its own instead of the canonical `themeConfig.docsearch` key
-- both `themeConfig.docsearch` and `themeConfig.algolia` are defined at the same time
+- `themeConfig.algolia` in place of `themeConfig.docsearch`
+- both `themeConfig.docsearch` and `themeConfig.algolia` in the same configuration
 
 ## Why this rule exists
 
-The DocSearch adapter docs explicitly describe `themeConfig.docsearch` as the canonical key and `themeConfig.algolia` as a backward-compatible alias.
-
-Using the canonical key is better because it:
-
-- keeps the config aligned with current DocSearch guidance
-- avoids drift between old alias usage and newer DocSearch examples
-- makes future search-related docs and migrations easier to follow
+The standalone adapter uses `themeConfig.docsearch`. Version 4 also accepts `themeConfig.algolia` as a legacy alias. Changing the key on a site that uses the built-in integration can remove search because the classic preset loads the built-in search theme when `themeConfig.algolia` is present.
 
 ## ❌ Incorrect
 
 ```ts
 export default {
+ plugins: ["@docsearch/docusaurus-adapter"],
  themeConfig: {
   algolia: {
    appId: "APP",
@@ -46,6 +36,7 @@ export default {
 
 ```ts
 export default {
+ plugins: ["@docsearch/docusaurus-adapter"],
  themeConfig: {
   docsearch: {
    appId: "APP",
@@ -58,37 +49,19 @@ export default {
 
 ## Behavior and migration notes
 
-This rule autofixes the simple alias-only case by renaming the property key from `algolia` to `docsearch`.
+The autofix renames the property and preserves its value. When both keys are present, the rule reports the conflict and leaves both values for you to resolve.
 
-If both keys are already defined, the rule still reports the conflict but does **not** autofix it because the intended final merge is ambiguous.
+The examples use DocSearch v4 options. Upgrading to v5 also requires updating the options, such as replacing `indexName` with `indices`.
 
 ## Additional examples
 
-### ❌ Incorrect — conflicting alias and canonical key
+### ✅ Correct — built-in Algolia search with the classic preset
 
 ```ts
 export default {
+ presets: ["classic"],
  themeConfig: {
-  docsearch: {
-   appId: "APP",
-   apiKey: "KEY",
-   indexName: "docs",
-  },
   algolia: {
-   appId: "APP",
-   apiKey: "KEY",
-   indexName: "docs",
-  },
- },
-};
-```
-
-### ✅ Correct — only the canonical key remains
-
-```ts
-export default {
- themeConfig: {
-  docsearch: {
    appId: "APP",
    apiKey: "KEY",
    indexName: "docs",
@@ -107,11 +80,12 @@ export default [docusaurus2.configs.recommended];
 
 ## When not to use it
 
-Do not use this rule if you deliberately keep the legacy alias for a short compatibility window and do not want linting to normalize it yet.
+Disable the rule if a DocSearch v4 site deliberately keeps the legacy alias during a migration.
 
 > **Rule catalog ID:** R089
 
 ## Further reading
 
-- [Algolia DocSearch adapter docs: `docsearch` vs `algolia`](https://docsearch.algolia.com/docs/docusaurus-adapter/)
-- [Docusaurus search docs](https://docusaurus.io/docs/3.8.1/search)
+- [Algolia DocSearch v4 adapter configuration](https://docsearch.algolia.com/docs/v4/docusaurus-adapter/)
+- [Migrate the Docusaurus adapter from v4](https://docsearch.algolia.com/docs/packages/docusaurus-adapter/migrating-from-v4/)
+- [Docusaurus search docs](https://docusaurus.io/docs/search)
